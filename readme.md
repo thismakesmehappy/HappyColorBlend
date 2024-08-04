@@ -1,3 +1,5 @@
+**Using https://github.com/gnchrv/figma-plugin-boilerplate as a starting point**
+
 # Figma Plugin Boilerplate
 
 > A little template for creating Figma plugins with React and TypeScript, while [Vite](https://vitejs.dev) and [esbuild](https://esbuild.github.io) are used to bundle the code. The code contains an example of the sample plugin that creates rectangles on the canvas when user clicks a button.
