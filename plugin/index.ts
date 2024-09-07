@@ -1,4 +1,6 @@
 // Handle the execution of the first command
+import {TITLE, WINDOW_HEIGHT, WINDOW_WIDTH} from "../consts/appConsts";
+
 if (figma.command == 'plugin-command')
     figma.closePlugin('The plugin command was executed')
 
@@ -8,8 +10,9 @@ if (figma.command == 'plugin-command-with-ui') {
     // Present a UI, providing it with Figma CSS color variables
     figma.showUI(__html__, {
         themeColors: true,
-        width: 600,
-        height: 200
+        width: WINDOW_WIDTH,
+        height: WINDOW_HEIGHT,
+        title: TITLE,
     })
 
     // Create a variable to store the rectangles that will be created
