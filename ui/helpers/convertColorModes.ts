@@ -3,8 +3,7 @@ import ColorRGB from "../interfaces/ColorRGB";
 export const hexToRgb = (hex: string): ColorRGB => {
     const hexPrefix = "0x";
 
-    const isInvalidHex: boolean = !(hex.length === 6 && /^[0-9a-fA-F]+$/.test(hex));
-    if (isInvalidHex) {
+    if (!isValidHex(hex)) {
         throw new Error("Input must be a valid hex color; with six characters (omitting the #)");
     }
 
@@ -31,3 +30,7 @@ export const rgbToHex = (r: number, g: number, b: number): string => {
 
     return rDec + gDec + bDec
 }
+
+export const isValidHex = (hex:string) => {
+    return (hex.length === 6 && /^[0-9a-fA-F]+$/.test(hex));
+    }

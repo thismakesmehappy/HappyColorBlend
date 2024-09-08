@@ -1,0 +1,9 @@
+$spacer: 10px;
+$spacers: (
+        0: 0,
+        1: $spacer * 1,
+        2: $spacer * 1.5,
+        3: $spacer * 2,
+        4: $spacer * 2.5,
+        5: $spacer * 3,
+);

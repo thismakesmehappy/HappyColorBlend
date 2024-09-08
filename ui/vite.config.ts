@@ -29,7 +29,7 @@ export default defineConfig({
 
         // Specify the output folder and ask to rewrite upon each compilation
         outDir: '../dist/ui',
-        emptyOutDir: true,
+        emptyOutDir: false,
 
         // Inline every asset and load it as a single chunk
         assetsInlineLimit: 100000000,
