@@ -6,7 +6,7 @@ import {GenerateChips} from "./components/GenerateChips/GenerateChips.tsx";
 function App() {
 
    return (
-      <div>
+      <div className={'container-fluid padded'}>
           <Title/>
           <UserInput/>
           <PreviewChips/>
