@@ -1,14 +1,10 @@
 import TextareaAutosize from "react-textarea-autosize";
 import Accordion from "react-bootstrap/Accordion";
 import {PRESETS} from "../../../consts/valueConsts.ts";
+import useSteps from "../../hooks/useSteps.ts";
 
-interface Props {
-    steps: string;
-    setSteps: (steps: string) => void;
-}
-
-// @ts-ignore
-const StepsInput = ({steps, setSteps}: Props) => {
+const StepsInput = () => {
+    const {steps, setSteps} = useSteps();
     return (
         <div className={'row vstack gap-1'}>
             <p className={'mb-1'}>
