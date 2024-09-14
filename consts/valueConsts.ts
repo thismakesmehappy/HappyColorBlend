@@ -4,12 +4,12 @@ export const STEPS_MAX_VALUE = 1000
 export const PRESETS = [
     {
         name: "Base values",
-        values: "0, 500, 100",
+        values: "0, 500, 1000",
         showValues: true
     },
     {
         name: "5 steps",
-        values: "0, 250, 500, 750, 100",
+        values: "0, 250, 500, 750, 1000",
         showValues: true
     },
     {

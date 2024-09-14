@@ -6,14 +6,16 @@ import './styles/index.scss'
 
 function App() {
 
-   return (
-      <div className={'container-fluid padded'}>
-          <Title/>
-          <UserInput/>
-          <PreviewChips/>
-          <GenerateChips/>
-      </div>
-   )
+    return (
+        <div className={'container-fluid padded'}>
+            <div className={"vstack gap-1"}>
+                <Title />
+                <UserInput />
+                <GenerateChips />
+                <PreviewChips />
+            </div>
+        </div>
+    )
 }
 
 export default App
