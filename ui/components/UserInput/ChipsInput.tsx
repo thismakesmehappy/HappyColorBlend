@@ -34,7 +34,7 @@ const ChipsInput = ({lightColor, setLightColor, darkColor, setDarkColor, baseCol
                     />
                 </div>
                 <div className={'col'}>
-                    <ChipInput name="light-color"
+                    <ChipInput name="dark-color"
                                label="DarkestShade"
                                stepValue={1000}
                                value={darkColor}
