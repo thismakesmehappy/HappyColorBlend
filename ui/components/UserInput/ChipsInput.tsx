@@ -1,18 +1,10 @@
 import ChipInput from "./ChipInput.tsx";
 import {DEFAULT_DARK, DEFAULT_LIGHT} from "../../../consts/defaultConsts.ts";
-import {Dispatch, SetStateAction} from "react";
 import {isValidHex} from "../../helpers/convertColorModes.ts";
+import useChipColors from "../../hooks/useChipColors.ts";
 
-interface Props {
-    lightColor: string;
-    setLightColor: Dispatch<SetStateAction<string>>;
-    darkColor: string;
-    setDarkColor: Dispatch<SetStateAction<string>>;
-    baseColor: string;
-    setBaseColor: Dispatch<SetStateAction<string>>;
-}
-
-const ChipsInput = ({lightColor, setLightColor, darkColor, setDarkColor, baseColor, setBaseColor}: Props) => {
+const ChipsInput = () => {
+    const {lightColor, setLightColor, darkColor, setDarkColor, baseColor, setBaseColor} = useChipColors();
     return (
         <div className={"vstack gap-1 mb-0"}>
             <div className={'row'}>

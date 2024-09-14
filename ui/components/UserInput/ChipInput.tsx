@@ -1,4 +1,3 @@
-import {Dispatch, SetStateAction} from "react";
 import {ChipColor} from "../chips/ChipColor.tsx";
 import "../../styles/index.scss";
 
@@ -8,7 +7,7 @@ interface Props {
     stepValue: number;
     value: string;
     defaultValue?: string;
-    setValue: Dispatch<SetStateAction<string>>
+    setValue: (color: string) => void;
 }
 
 const ChipInput = ({name, label, stepValue, value, setValue, defaultValue}: Props) => {

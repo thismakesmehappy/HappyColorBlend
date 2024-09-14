@@ -1,19 +1,29 @@
 import {create} from 'zustand'
-import {PRESETS} from "../../consts/valueConsts.ts";
-import {commaSeparatedToListOfNumbers} from "../helpers/manipulateData.ts";
+import {DEFAULT_DARK, DEFAULT_LIGHT} from "../../consts/defaultConsts.ts";
+import {randomColor} from "../helpers/randomColor.ts";
 
-interface StepsStore {
-    steps: string;
-    stepsArray: number[];
-    setSteps: (steps: string) => void;
+interface ChipsColorStore {
+    lightColor: string;
+    setLightColor: (lightColor: string) => void;
+    darkColor: string;
+    setDarkColor: (darkColor: string) => void;
+    baseColor: string;
+    setBaseColor: (baseColor: string) => void;
 }
 
-const useStepsStore = create<StepsStore>((set) => ({
-    steps: PRESETS[0].values,
-    stepsArray: commaSeparatedToListOfNumbers(PRESETS[0].values),
-    setSteps: (steps: string) => {
-        set({steps: steps});
-    }
+const useChipColors = create<ChipsColorStore>((set) => ({
+    lightColor: DEFAULT_LIGHT,
+    setLightColor: (lightColor: string) => {
+        set({lightColor: lightColor})
+    },
+    darkColor: DEFAULT_DARK,
+    setDarkColor: (darkColor: string) => {
+        set({darkColor: darkColor})
+    },
+    baseColor: randomColor(),
+    setBaseColor: (baseColor: string) => {
+        set({baseColor: baseColor})
+    },
 }))
 
-export default useStepsStore;
+export default useChipColors;
