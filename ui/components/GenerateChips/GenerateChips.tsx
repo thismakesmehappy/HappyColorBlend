@@ -1,21 +1,13 @@
 import useStepsStore from "../../hooks/useSteps.ts";
 
 export const GenerateChips = () => {
-    const {steps, setStepsClean} = useStepsStore()
+    const {steps} = useStepsStore()
     return (
         <div className={"hstack gap-1"}>
             <button
                 className="btn btn-secondary col"
                 onClick={() => {
-                    setStepsClean(steps)
-                }}>
-                Preview chips
-            </button>
-
-            <button
-                className="btn btn-secondary col"
-                onClick={() => {
-                    setStepsClean(steps)
+                    console.log(steps)
                 }}>
                 Create chips in document
             </button>

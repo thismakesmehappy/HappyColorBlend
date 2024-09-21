@@ -1,24 +1,37 @@
 import {create} from 'zustand'
-import {PRESETS} from "../../consts/valueConsts.ts";
 import {commaSeparatedToListOfNumbers} from "../helpers/manipulateData.ts";
+import {PRESETS} from "../../consts/valueConsts.ts";
 
 interface StepsStore {
-    steps: string;
-    stepsArray: number[];
-    setSteps: (steps: string) => void;
-    setStepsClean: (steps: string) => void;
+    steps: number[];
+    addSteps: (stepList: string) => void;
+    addStep: (step: number) => void;
+    removeStep: (step: number) => void;
 }
 
 const useStepsStore = create<StepsStore>((set) => ({
-    steps: PRESETS[0].values,
-    stepsArray: commaSeparatedToListOfNumbers(PRESETS[0].values),
-    setSteps: (steps: string) => set({steps: steps}),
-    setStepsClean: (steps: string) => {
-        const stepsArray = commaSeparatedToListOfNumbers(steps);
-        set({steps: stepsArray.join(", ")})
-        set({stepsArray: stepsArray})
-        console.log(stepsArray);
-    }
+    steps: commaSeparatedToListOfNumbers(PRESETS[0].values),
+    addSteps: (stepList: string) => {
+        set((state) => {
+            const newSteps = commaSeparatedToListOfNumbers(stepList);
+            newSteps.push(...state.steps);
+            return {steps: [...new Set(newSteps)].sort((a, b) => a - b)};
+        });
+    },
+    addStep: (step: number) => {
+        set((state) => {
+            const newSteps = [...state.steps];
+            newSteps.push(step);
+            return {steps: [... new Set(newSteps)].sort((a, b) => a - b)};
+        });
+    },
+    removeStep: (step: number) => {
+        set((state) => {
+            const newSteps = new Set(state.steps);
+            newSteps.delete(step);
+            return {steps: [...newSteps].sort((a, b) => a - b)};
+        });
+    },
 }))
 
 export default useStepsStore;
