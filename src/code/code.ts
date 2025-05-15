@@ -1,7 +1,9 @@
 // This file contains the business logic for the plugin
 
 // Show the UI
-figma.showUI(__html__, { width: 400, height: 300 });
+import {WINDOW_HEIGHT, WINDOW_WIDTH} from "../constants/uiConstants";
+
+figma.showUI(__html__, { width: WINDOW_WIDTH, height: WINDOW_HEIGHT });
 
 // Handle messages from the UI
 figma.ui.onmessage = (msg) => {

@@ -6,9 +6,12 @@ const App: React.FC = () => {
   useEffect(() => {
     // Listen for messages from the plugin code
     window.onmessage = (event) => {
-      const { type, message } = event.data.pluginMessage;
-      if (type === 'hello') {
-        setMessage(message);
+      // Check if pluginMessage exists before destructuring
+      if (event.data.pluginMessage) {
+        const { type, message } = event.data.pluginMessage;
+        if (type === 'hello') {
+          setMessage(message);
+        }
       }
     };
 

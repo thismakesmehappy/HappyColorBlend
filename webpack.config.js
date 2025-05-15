@@ -76,7 +76,7 @@ module.exports = (env, argv) => ({
     compress: true,
     port: process.env.PORT || 3002,
     hot: true,
-    // Open browser.html by default
-    open: ['browser.html'],
+    // Don't open browser automatically, our custom script will handle it
+    open: false,
   },
 });
