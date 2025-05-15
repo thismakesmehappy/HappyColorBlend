@@ -24,11 +24,29 @@ module.exports = (env, argv) => ({
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      // SCSS
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader', 
+          'css-loader', 
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass'),
+              sassOptions: {
+                outputStyle: 'compressed',
+              },
+              api: 'modern',
+            },
+          }
+        ],
+      },
     ],
   },
 
   resolve: {
-    extensions: ['.tsx', '.ts', '.jsx', '.js'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.scss', '.css'],
   },
 
   output: {

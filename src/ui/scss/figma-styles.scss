@@ -1,0 +1,259 @@
+/* Figma Plugin Styles - Helper Classes */
+
+// Colors
+$color-primary: #18a0fb;
+$color-primary-hover: #0d8fe0;
+$color-secondary: #f0f0f0;
+$color-secondary-hover: #e1e1e1;
+$color-dark: #2c2c2c;
+$color-light: #ffffff;
+$color-danger: #f24822;
+$color-danger-hover: #d93c1a;
+$color-success: #14ae5c;
+$color-success-hover: #0f9a4f;
+$color-warning: #ffb800;
+$color-text-primary: #333333;
+$color-text-secondary: #666666;
+$color-border: #e5e5e5;
+
+// Spacing
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+
+// Border radius
+$border-radius-sm: 2px;
+$border-radius-md: 4px;
+$border-radius-lg: 6px;
+$border-radius-xl: 8px;
+
+// Typography
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-lg: 16px;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+// Transitions
+$transition-default: all 0.2s ease;
+$transition-tooltip: opacity 0.3s;
+
+// Shadows
+$shadow-card: 0 1px 2px rgba(0, 0, 0, 0.1);
+$shadow-focus: 0 0 0 2px rgba($color-primary, 0.2);
+
+/* Figma Colors */
+.figma-bg-primary {
+  background-color: $color-primary;
+}
+
+.figma-text-primary {
+  color: $color-primary;
+}
+
+.figma-bg-secondary {
+  background-color: $color-secondary;
+}
+
+.figma-text-secondary {
+  color: $color-text-primary;
+}
+
+.figma-bg-dark {
+  background-color: $color-dark;
+}
+
+.figma-text-dark {
+  color: $color-dark;
+}
+
+.figma-bg-light {
+  background-color: $color-light;
+}
+
+.figma-text-light {
+  color: $color-light;
+}
+
+.figma-bg-danger {
+  background-color: $color-danger;
+}
+
+.figma-text-danger {
+  color: $color-danger;
+}
+
+.figma-bg-success {
+  background-color: $color-success;
+}
+
+.figma-text-success {
+  color: $color-success;
+}
+
+.figma-bg-warning {
+  background-color: $color-warning;
+}
+
+.figma-text-warning {
+  color: $color-warning;
+}
+
+/* Figma Buttons */
+.figma-btn {
+  border-radius: $border-radius-lg;
+  font-weight: $font-weight-medium;
+  padding: $spacing-sm $spacing-md;
+  transition: $transition-default;
+  border: none;
+}
+
+.figma-btn-primary {
+  background-color: $color-primary;
+  color: $color-light;
+}
+
+.figma-btn-primary:hover {
+  background-color: $color-primary-hover;
+}
+
+.figma-btn-secondary {
+  background-color: $color-secondary;
+  color: $color-text-primary;
+}
+
+.figma-btn-secondary:hover {
+  background-color: $color-secondary-hover;
+}
+
+.figma-btn-danger {
+  background-color: $color-danger;
+  color: $color-light;
+}
+
+.figma-btn-danger:hover {
+  background-color: $color-danger-hover;
+}
+
+.figma-btn-success {
+  background-color: $color-success;
+  color: $color-light;
+}
+
+.figma-btn-success:hover {
+  background-color: $color-success-hover;
+}
+
+/* Figma Inputs */
+.figma-input {
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  padding: $spacing-sm $spacing-sm + 4px;
+  font-size: $font-size-md;
+  transition: $transition-default;
+}
+
+.figma-input:focus {
+  border-color: $color-primary;
+  outline: none;
+  box-shadow: $shadow-focus;
+}
+
+/* Figma Cards */
+.figma-card {
+  background-color: $color-light;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-card;
+  padding: $spacing-md;
+}
+
+/* Figma Typography */
+.figma-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-sm;
+}
+
+.figma-subtitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-sm;
+  color: $color-text-primary;
+}
+
+.figma-text {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.figma-text-small {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+/* Figma Spacing */
+.figma-p-1 {
+  padding: $spacing-sm;
+}
+
+.figma-p-2 {
+  padding: $spacing-md;
+}
+
+.figma-p-3 {
+  padding: $spacing-lg;
+}
+
+.figma-m-1 {
+  margin: $spacing-sm;
+}
+
+.figma-m-2 {
+  margin: $spacing-md;
+}
+
+.figma-m-3 {
+  margin: $spacing-lg;
+}
+
+/* Figma Dividers */
+.figma-divider {
+  height: 1px;
+  background-color: $color-border;
+  margin: $spacing-md 0;
+}
+
+/* Figma Icons */
+.figma-icon {
+  width: $spacing-md;
+  height: $spacing-md;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Figma Tooltips */
+.figma-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.figma-tooltip .figma-tooltip-text {
+  visibility: hidden;
+  background-color: $color-text-primary;
+  color: $color-light;
+  text-align: center;
+  border-radius: $border-radius-md;
+  padding: $spacing-sm;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: $transition-tooltip;
+}
+
+.figma-tooltip:hover .figma-tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
