@@ -191,7 +191,8 @@ $shadow-focus: 0 0 0 2px rgba($color-primary, 0.2);
   color: $color-text-secondary;
 }
 
-/* Figma Spacing */
+/* Figma Spacing - Removed */
+/*
 .figma-p-1 {
   padding: $spacing-sm;
 }
@@ -202,6 +203,57 @@ $shadow-focus: 0 0 0 2px rgba($color-primary, 0.2);
 
 .figma-p-3 {
   padding: $spacing-lg;
+}
+*/
+
+/* Padding - Top, Right, Bottom, Left - Removed */
+/*
+.figma-p-1-t {
+  padding-top: $spacing-sm;
+}
+
+.figma-p-2-t {
+  padding-top: $spacing-md;
+}
+
+.figma-p-3-t {
+  padding-top: $spacing-lg;
+}
+
+.figma-p-1-r {
+  padding-right: $spacing-sm;
+}
+
+.figma-p-2-r {
+  padding-right: $spacing-md;
+}
+
+.figma-p-3-r {
+  padding-right: $spacing-lg;
+}
+
+.figma-p-1-b {
+  padding-bottom: $spacing-sm;
+}
+
+.figma-p-2-b {
+  padding-bottom: $spacing-md;
+}
+
+.figma-p-3-b {
+  padding-bottom: $spacing-lg;
+}
+
+.figma-p-1-l {
+  padding-left: $spacing-sm;
+}
+
+.figma-p-2-l {
+  padding-left: $spacing-md;
+}
+
+.figma-p-3-l {
+  padding-left: $spacing-lg;
 }
 
 .figma-m-1 {
@@ -215,8 +267,60 @@ $shadow-focus: 0 0 0 2px rgba($color-primary, 0.2);
 .figma-m-3 {
   margin: $spacing-lg;
 }
+*/
 
-/* Figma Dividers */
+/* Margin - Top, Right, Bottom, Left - Removed */
+/*
+.figma-m-1-t {
+  margin-top: $spacing-sm;
+}
+
+.figma-m-2-t {
+  margin-top: $spacing-md;
+}
+
+.figma-m-3-t {
+  margin-top: $spacing-lg;
+}
+
+.figma-m-1-r {
+  margin-right: $spacing-sm;
+}
+
+.figma-m-2-r {
+  margin-right: $spacing-md;
+}
+
+.figma-m-3-r {
+  margin-right: $spacing-lg;
+}
+
+.figma-m-1-b {
+  margin-bottom: $spacing-sm;
+}
+
+.figma-m-2-b {
+  margin-bottom: $spacing-md;
+}
+
+.figma-m-3-b {
+  margin-bottom: $spacing-lg;
+}
+
+.figma-m-1-l {
+  margin-left: $spacing-sm;
+}
+
+.figma-m-2-l {
+  margin-left: $spacing-md;
+}
+
+.figma-m-3-l {
+  margin-left: $spacing-lg;
+}
+*/
+
+/* Figma Dividers - Removed */
 .figma-divider {
   height: 1px;
   background-color: $color-border;

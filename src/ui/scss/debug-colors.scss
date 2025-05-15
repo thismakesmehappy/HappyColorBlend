@@ -1,0 +1,65 @@
+/* Debug Colors - Helper Classes for Debugging Layout */
+
+// Define a set of distinct, high-contrast colors for debugging
+$debug-color-1: #ff5252; // Red
+$debug-color-2: #4caf50; // Green
+$debug-color-3: #2196f3; // Blue
+$debug-color-4: #ff9800; // Orange
+$debug-color-5: #9c27b0; // Purple
+$debug-color-6: #00bcd4; // Cyan
+$debug-color-7: #ffeb3b; // Yellow
+$debug-color-8: #795548; // Brown
+$debug-color-9: #607d8b; // Blue Grey
+$debug-color-10: #e91e63; // Pink
+
+// Debug styles for each div in App.tsx
+#container {
+  background-color: rgba($debug-color-1, 0.2);
+  border: 1px solid $debug-color-1;
+}
+
+/* Replaced figma-flex-container with the container in App.tsx */
+#container > div:first-child {
+  background-color: rgba($debug-color-2, 0.2);
+  border: 1px solid $debug-color-2;
+}
+
+#left-column {
+  background-color: rgba($debug-color-3, 0.2);
+  border: 1px solid $debug-color-3;
+}
+
+#dark-light {
+  background-color: rgba($debug-color-4, 0.2);
+  border: 1px solid $debug-color-4;
+}
+
+#bases {
+  background-color: rgba($debug-color-6, 0.2);
+  border: 1px solid $debug-color-6;
+}
+
+#right-column {
+  background-color: rgba($debug-color-8, 0.2);
+  border: 1px solid $debug-color-8;
+}
+
+#steps {
+  background-color: rgba($debug-color-9, 0.2);
+  border: 1px solid $debug-color-9;
+}
+
+#equal-steps {
+  background-color: rgba($debug-color-10, 0.2);
+  border: 1px solid $debug-color-10;
+}
+
+#step-labels {
+  background-color: rgba($debug-color-2, 0.2);
+  border: 1px solid $debug-color-2;
+}
+
+#swatches {
+  background-color: rgba($debug-color-3, 0.2);
+  border: 1px solid $debug-color-3;
+}
