@@ -1,4 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
+import RowDivider from './components/RowDivider';
+import ColumnDivider from './components/ColumnDivider';
 
 const App: React.FC = () => {
     const [message, setMessage] = useState<string>('');
@@ -95,7 +97,7 @@ const App: React.FC = () => {
                         dark-light<br />
                         dark-light
                     </div>
-                    <div className="row-divider"></div>
+                    <RowDivider />
                     <div id="bases">
                         {/* Bases content */}
                         bases<br />
@@ -133,7 +135,7 @@ const App: React.FC = () => {
                         bases
                     </div>
                 </div>
-                <div className="column-divider"></div>
+                <ColumnDivider />
                 <div id="right-column">
                     <div id="steps" ref={stepsRef}>
                         <div id="equal-steps" ref={equalStepsRef}>
@@ -142,7 +144,7 @@ const App: React.FC = () => {
                             equal-steps<br />
                             equal-steps<br />
                         </div>
-                        <div className="column-divider"></div>
+                        <ColumnDivider />
                         <div id="step-labels">
                             {/* Step-labels content */}
                             steps-labels<br />
@@ -152,7 +154,7 @@ const App: React.FC = () => {
                             steps-labels
                         </div>
                     </div>
-                    <div className="row-divider"></div>
+                    <RowDivider />
                     <div id="swatches">
                         {/* Swatches content */}
                         swatches<br />
