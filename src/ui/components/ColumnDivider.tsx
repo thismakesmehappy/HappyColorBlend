@@ -1,12 +1,9 @@
 import React from 'react';
 import '../scss/column-layout.scss';
 
-interface ColumnDividerProps {
-  className?: string;
-}
 
-const ColumnDivider: React.FC<ColumnDividerProps> = ({ className }) => {
-  return <div className={`column-divider ${className || ''}`}></div>;
+const ColumnDivider = () => {
+    return <div className={`column-divider`}></div>;
 };
 
 export default ColumnDivider;

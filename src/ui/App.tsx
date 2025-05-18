@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react';
-import RowDivider from './components/RowDivider';
+import LeftColumn from './components/LeftColumn';
+import RightColumn from './components/RightColumn';
 import ColumnDivider from './components/ColumnDivider';
+import Area from "./components/Area";
 
 const App: React.FC = () => {
     const [message, setMessage] = useState<string>('');
@@ -89,109 +91,13 @@ const App: React.FC = () => {
     }, []);
 
     return (
-        <div id="container">
+        <Area id="container">
             <div>
-                <div id="left-column">
-                    <div id="dark-light" ref={darkLightRef}>
-                        {/* Dark-light content */}
-                        dark-light<br />
-                        dark-light
-                    </div>
-                    <RowDivider />
-                    <div id="bases">
-                        {/* Bases content */}
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases<br />
-                        bases
-                    </div>
-                </div>
+                <LeftColumn darkLightRef={darkLightRef} />
                 <ColumnDivider />
-                <div id="right-column">
-                    <div id="steps" ref={stepsRef}>
-                        <div id="equal-steps" ref={equalStepsRef}>
-                            {/* Equal-steps content */}
-                            equal-steps<br />
-                            equal-steps<br />
-                            equal-steps<br />
-                        </div>
-                        <ColumnDivider />
-                        <div id="step-labels">
-                            {/* Step-labels content */}
-                            steps-labels<br />
-                            steps-labels<br />
-                            steps-labels<br />
-                            steps-labels<br />
-                            steps-labels
-                        </div>
-                    </div>
-                    <RowDivider />
-                    <div id="swatches">
-                        {/* Swatches content */}
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches<br />
-                        swatches
-                    </div>
-                </div>
+                <RightColumn stepsRef={stepsRef} equalStepsRef={equalStepsRef} />
             </div>
-
-        </div>
+        </Area>
     );
 };
 
