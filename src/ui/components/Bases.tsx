@@ -14,41 +14,43 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
             className={className}
             style={style}
         >
-            {/* Bases content */}
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases<br />
-            bases
+            <div>
+                {/* Bases content */}
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases<br />
+                bases
+            </div>
         </Section>
     );
 };

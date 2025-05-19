@@ -1,12 +1,10 @@
 import React from 'react';
 import '../scss/column-layout.scss';
+import OptionalClassName from "../interfaces/OptionalClassName";
 
-interface RowDividerProps {
-  className?: string;
-}
 
-const RowDivider: React.FC<RowDividerProps> = ({ className }) => {
-  return <div className={`row-divider ${className || ''}`}></div>;
+const RowDivider: React.FC<OptionalClassName> = ({className}) => {
+    return <div className={`row-divider ${className || ''}`}></div>;
 };
 
 export default RowDivider;

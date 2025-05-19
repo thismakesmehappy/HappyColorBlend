@@ -1,8 +1,11 @@
 @use './figma-styles' as figma;
 
+$dividerPadding: figma.$spacing-md;
+$dividerWidth: 1px;
+$dividerSize: 2 * $dividerPadding + $dividerWidth;
 
 .section {
-  padding: figma.$spacing-sm;
+  //padding: figma.$spacing-sm;
 }
 
 /* Column Layout Styles */
@@ -12,26 +15,31 @@
   right: 0;
   top: 0;
   bottom: 0;
+  height: 100%;
+  width: 100%;
+  padding: figma.$spacing-md;
 }
 
 // Vertical divider between columns
 .column-divider {
-  width: 1px;
+  width: $dividerWidth;
   height: 100%;
   background-color: figma.$color-border; // Using $color-border from figma-styles.scss
-  margin: 0 figma.$spacing-md; // Using $spacing-md from figma-styles.scss
+  margin: 0 $dividerPadding; // Using $spacing-md from figma-styles.scss
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
+  horiz-align: center;
 }
 
 
 .row-divider {
-  height: 1px;
+  height: $dividerWidth;
   width: 100%;
   background-color: figma.$color-border; // Using $color-border from figma-styles.scss
-  margin: figma.$spacing-md 0; // Using $spacing-md from figma-styles.scss
+  margin: $dividerPadding 0; // Using $spacing-md from figma-styles.scss
   display: inline-block;
   vertical-align: top;
+  horiz-align: center;
 }
 
 // Left column with fixed width
@@ -52,7 +60,7 @@
 // Bases section expands to fill remaining space and scrolls when it overflows
 #bases {
   position: absolute;
-  top: calc(var(--dark-light-height, 0px) + 1px + 32px); // Position after dark-light and row-divider (1px + 16px*2 margins)
+  top: calc(var(--dark-light-height, 0px) + $dividerSize); // Position after dark-light and row-divider (1px + 16px*2 margins)
   bottom: 0;
   left: 0;
   right: 0;
@@ -61,7 +69,7 @@
 
 // Right column with auto width
 #right-column {
-  width: calc(100% - 250px - 33px); // Adjusted for divider width (1px) and margins (16px * 2)
+  width: calc(100% - 250px - $dividerSize); // Adjusted for divider width (1px) and margins (16px * 2)
   height: 100%;
   display: inline-block;
   vertical-align: top;
@@ -73,6 +81,7 @@
   position: relative;
   white-space: nowrap; // Keep children on the same line
   width: 100%;
+  height: var(--equal-steps-height, auto);
 }
 
 // Equal-steps takes only the width and height of its content
@@ -88,7 +97,7 @@
 #step-labels {
   display: inline-block;
   height: var(--equal-steps-height, auto);
-  width: calc(100% - var(--equal-steps-width, 0px) - 33px); // Adjusted for divider width (1px) and margins (16px * 2)
+  width: calc(100% - var(--equal-steps-width, 0px) - $dividerSize); // Adjusted for divider width (1px) and margins (16px * 2)
   white-space: normal; // Allow text to wrap inside
   vertical-align: top;
   overflow-y: auto; // Enable vertical scrolling if content overflows
@@ -104,15 +113,9 @@
 // Swatches section takes the remaining vertical space and scrolls when it overflows
 #swatches {
   position: absolute;
-  top: calc(var(--steps-height, 0px) + 1px + 32px); // Position after steps and row-divider (1px + 16px*2 margins)
+  top: calc(var(--steps-height, 0px) + $dividerSize); // Position after steps and row-divider (1px + 16px*2 margins)
   bottom: 0;
   left: 0;
   right: 0;
   overflow-y: auto; // Enable vertical scrolling if content overflows
-}
-
-// Main container
-#container {
-  height: 100%;
-  width: 100%;
 }
