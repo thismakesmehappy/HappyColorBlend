@@ -1,0 +1,48 @@
+import React, {useState} from "react";
+import Chip from "./Chip";
+import SwatchProps from "../../interfaces/SwatchProps";
+import SwatchControls from "./SwatchControls";
+import SwatchLabels from "./SwatchLabels";
+
+const Swatch = ({color, name, canDelete, display, horizontal}: SwatchProps) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [swatchColor, setSwatchColor] = useState(color);
+    const [tempSwatchColor, setTempSwatchColor] = useState(color);
+    const [swatchName, setSwatchName] = useState(name);
+    const [tempSwatchName, setTempSwatchName] = useState(name);
+
+    return (
+        <div className={horizontal && "hstack" || ''}>
+            <div className='d-inline-block'>
+                <Chip color={color} className={"figma-border"} />
+                {!display &&
+                    <SwatchControls
+                        isEditing={isEditing}
+                        setIsEditing={setIsEditing}
+                        canDelete={canDelete}
+                        swatchColor={swatchColor}
+                        setSwatchColor={setSwatchColor}
+                        swatchName={swatchName}
+                        setSwatchName={setSwatchName}
+                        tempSwatchColor={tempSwatchColor}
+                        setTempSwatchColor={setTempSwatchColor}
+                        tempSwatchName={tempSwatchName}
+                        setTempSwatchName={setTempSwatchName}
+                    />
+                }
+            </div>
+            <div>
+                <SwatchLabels isEditing={isEditing}
+                              swatchColor={swatchColor}
+                              swatchName={swatchName}
+                              tempSwatchColor={tempSwatchColor}
+                              setTempSwatchColor={setTempSwatchColor}
+                              tempSwatchName={tempSwatchName}
+                              setTempSwatchName={setTempSwatchName}
+                />
+            </div>
+        </div>
+    );
+};
+
+export default Swatch;

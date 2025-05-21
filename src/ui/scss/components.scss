@@ -1,0 +1,8 @@
+@use './figma-styles' as figma;
+
+.chip {
+  border-radius: 100%;
+  border-color: figma.$color-border;
+  border-width: 2px;
+  border-style: solid;
+}

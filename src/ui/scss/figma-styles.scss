@@ -168,20 +168,20 @@ $shadow-focus: 0 0 0 2px rgba($color-primary, 0.2);
 }
 
 /* Figma Typography */
-.figma-title {
+.figma-title, h1 {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   margin-bottom: $spacing-sm;
 }
 
-.figma-subtitle {
+.figma-subtitle, h2 {
   font-size: $font-size-md;
   font-weight: $font-weight-medium;
   margin-bottom: $spacing-sm;
   color: $color-text-primary;
 }
 
-.figma-text {
+.figma-text, html {
   font-size: $font-size-md;
   color: $color-text-primary;
 }

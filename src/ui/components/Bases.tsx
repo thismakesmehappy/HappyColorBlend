@@ -1,6 +1,7 @@
 import React from 'react';
 import '../scss/column-layout.scss';
 import Section from "./Section";
+import Swatch from "./swatch/Swatch";
 
 interface BasesProps {
     className?: string;
@@ -16,7 +17,7 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
         >
             <div>
                 {/* Bases content */}
-                bases<br />
+                <Swatch color='00ffff' name={'Pepper'} canDelete={true} />
                 bases<br />
                 bases<br />
                 bases<br />
