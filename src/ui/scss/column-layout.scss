@@ -6,6 +6,7 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
 
 .section {
   //padding: figma.$spacing-sm;
+  overflow-x: hidden; // Prevent horizontal scrolling
 }
 
 /* Column Layout Styles */
@@ -18,6 +19,7 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   height: 100%;
   width: 100%;
   padding: figma.$spacing-md;
+  overflow-x: hidden; // Prevent horizontal scrolling
 }
 
 // Vertical divider between columns
@@ -49,12 +51,14 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   display: inline-block;
   vertical-align: top;
   position: relative;
+  overflow-x: hidden; // Prevent horizontal scrolling
 }
 
 // Dark-light section takes height of its content
 #dark-light {
   height: auto;
   width: 100%;
+  overflow-x: hidden; // Prevent horizontal scrolling
 }
 
 // Bases section expands to fill remaining space and scrolls when it overflows
@@ -65,6 +69,7 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   left: 0;
   right: 0;
   overflow-y: auto; // Enable vertical scrolling
+  overflow-x: hidden; // Prevent horizontal scrolling
 }
 
 // Right column with auto width
@@ -74,6 +79,7 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   display: inline-block;
   vertical-align: top;
   position: relative; // Added for absolute positioning of children
+  overflow-x: hidden; // Prevent horizontal scrolling
 }
 
 // Steps container with horizontal alignment
@@ -82,6 +88,7 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   white-space: nowrap; // Keep children on the same line
   width: 100%;
   height: var(--equal-steps-height, auto);
+  overflow-x: hidden; // Prevent horizontal scrolling
 }
 
 // Equal-steps takes only the width and height of its content
@@ -91,6 +98,7 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   width: auto;
   white-space: normal; // Allow text to wrap inside
   vertical-align: top;
+  overflow-x: hidden; // Prevent horizontal scrolling
 }
 
 // Step-labels takes the height of equal-steps and the rest of the horizontal space
@@ -101,6 +109,7 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   white-space: normal; // Allow text to wrap inside
   vertical-align: top;
   overflow-y: auto; // Enable vertical scrolling if content overflows
+  overflow-x: hidden; // Prevent horizontal scrolling
 }
 
 // Container for both columns
@@ -108,6 +117,7 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   height: 100%;
   width: 100%;
   white-space: nowrap; // Prevent columns from wrapping
+  overflow-x: hidden; // Prevent horizontal scrolling
 }
 
 // Swatches section takes the remaining vertical space and scrolls when it overflows

@@ -12,7 +12,7 @@ const Section = forwardRef<HTMLDivElement, SectionProps>(
         return (
             <div
                 id={id}
-                className={{className} + " section"}
+                className={(className || "") + " section"}
                 ref={ref}
                 style={style}
             >
