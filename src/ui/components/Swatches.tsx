@@ -2,13 +2,13 @@ import React from 'react';
 import '../scss/column-layout.scss';
 import Section from "./Section";
 import Swatch from "./swatch/Swatch";
+import testSwatches from "../../constants/testSwatches";
 
 interface SwatchesProps {
     className?: string;
     style?: React.CSSProperties;
 }
 
-const swatches = ['ff9483', '9304fb', 'abef73']
 
 const Swatches: React.FC<SwatchesProps> = ({className, style}) => {
     return (
@@ -17,41 +17,25 @@ const Swatches: React.FC<SwatchesProps> = ({className, style}) => {
             className={className}
             style={style}
         >
-            {/* Swatches content */}
-            {swatches.map((swatch, index) => (
-                <Swatch name={String(index)} color={swatch} horizontal={true} display={true} />
-            ))
-            }
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches<br />
-            swatches
+            <p className={"figma-subtitle"}>A Color</p>
+            <div className={"row"}>
+                {/* Swatches content */}
+                {testSwatches.map(({name, hex}, index) => (
+                    <Swatch name={String(name)} color={String(hex)} horizontal={true} display={true}
+                            className={"col col-3 figma-pb-sm"} />
+                ))
+                }
+            </div>
+            <div className={"separator-xl"}></div>
+            <p className={"figma-subtitle"}>Another Color</p>
+            <div className={"row"}>
+                {/* Swatches content */}
+                {testSwatches.map(({name, hex}, index) => (
+                    <Swatch name={String(name)} color={String(hex)} horizontal={true} display={true}
+                            className={"col col-3"} />
+                ))
+                }
+            </div>
         </Section>
     );
 };

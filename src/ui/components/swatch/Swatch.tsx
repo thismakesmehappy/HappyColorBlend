@@ -4,7 +4,7 @@ import SwatchProps from "../../interfaces/SwatchProps";
 import SwatchControls from "./SwatchControls";
 import SwatchLabels from "./SwatchLabels";
 
-const Swatch = ({color, name, canDelete, display, horizontal}: SwatchProps) => {
+const Swatch = ({color, name, canDelete, display, horizontal, className}: SwatchProps) => {
     const [isEditing, setIsEditing] = useState(false);
     const [swatchColor, setSwatchColor] = useState(color);
     const [tempSwatchColor, setTempSwatchColor] = useState(color);
@@ -12,9 +12,9 @@ const Swatch = ({color, name, canDelete, display, horizontal}: SwatchProps) => {
     const [tempSwatchName, setTempSwatchName] = useState(name);
 
     return (
-        <div className={horizontal && "hstack" || ''}>
+        <div className={(horizontal && "hstack " || 'text-center ') + className}>
             <div className='d-inline-block'>
-                <Chip color={color} className={"figma-border"} />
+                <Chip color={color} className={"figma-border"} width={75} height={75} />
                 {!display &&
                     <SwatchControls
                         isEditing={isEditing}
@@ -31,6 +31,7 @@ const Swatch = ({color, name, canDelete, display, horizontal}: SwatchProps) => {
                     />
                 }
             </div>
+            <div className={"separator-md"}></div>
             <div>
                 <SwatchLabels isEditing={isEditing}
                               swatchColor={swatchColor}

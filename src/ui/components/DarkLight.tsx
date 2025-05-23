@@ -25,11 +25,13 @@ const DarkLight = forwardRef<HTMLDivElement, DarkLightProps>(
                 style={style}
             >
                 {/* Dark-light content */}
-                <div style={{display: 'flex', justifyContent: 'space-around', padding: '10px'}}>
-                    <div>
+                <div className={"row"}>
+                    <div className={"col col-6"}>
+                        <p className={"figma-subtitle"}>Light</p>
                         <Swatch color={lightColor} name={lightName} />
                     </div>
-                    <div>
+                    <div className={"col col-6"}>
+                        <p className={"figma-subtitle"}>Dark</p>
                         <Swatch color={darkColor} name={darkName} />
                     </div>
                 </div>

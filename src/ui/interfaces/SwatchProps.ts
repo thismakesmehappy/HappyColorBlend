@@ -4,6 +4,7 @@ interface SwatchProps {
     canDelete?: boolean;
     display?: boolean;
     horizontal?: boolean;
+    className?: string;
 }
 
 export default SwatchProps;

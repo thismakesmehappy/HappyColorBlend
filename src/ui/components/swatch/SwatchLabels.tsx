@@ -21,23 +21,23 @@ const SwatchLabels = ({
                       }: SwatchLabelsProps) => {
 
     if (isEditing) return (
-        <>
+        <div className={"vstack"}>
             <div>
-                <input type="text" className="swatch-label" value={tempSwatchName}
+                <input type="text" className="swatch-label figma-input mw-100" value={tempSwatchName}
                        onChange={(e) => setTempSwatchName(e.target.value)} />
             </div>
             <div>
-                <input type="text" className="swatch-label" value={tempSwatchColor}
+                <input type="text" className="swatch-label figma-input mw-100" value={tempSwatchColor}
                        onChange={(e) => setTempSwatchColor(e.target.value)} />
             </div>
-        </>
+        </div>
     )
 
     return (
-        <>
-            <div className="swatch-label">{swatchName}</div>
-            <div className="swatch-label">{swatchColor}</div>
-        </>
+        <div className={"vstack"}>
+            <div className="swatch-label swatch-label-text mw-100 d-inline-block fw-bold">{swatchName}</div>
+            <div className="swatch-label swatch-label-text mw-100 d-inline-block">{swatchColor}</div>
+        </div>
     );
 };
 

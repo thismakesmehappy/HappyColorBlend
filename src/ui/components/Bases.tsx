@@ -2,6 +2,7 @@ import React from 'react';
 import '../scss/column-layout.scss';
 import Section from "./Section";
 import Swatch from "./swatch/Swatch";
+import testSwatches from "../../constants/testSwatches";
 
 interface BasesProps {
     className?: string;
@@ -15,42 +16,14 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
             className={className}
             style={style}
         >
-            <div>
+            <p className={"figma-subtitle"}>Bases</p>
+            <div className={"row"}>
                 {/* Bases content */}
-                <Swatch color='00ffff' name={'Pepper'} canDelete={true} />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases<br />
-                bases
+                {testSwatches.map(({name, hex}, index) => (
+                    <Swatch name={String(name)} color={String(hex)}
+                            className={"col col-6 mb-4"} canDelete={true} />
+                ))
+                }
             </div>
         </Section>
     );

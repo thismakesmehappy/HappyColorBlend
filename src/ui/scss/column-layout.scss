@@ -119,3 +119,23 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   right: 0;
   overflow-y: auto; // Enable vertical scrolling if content overflows
 }
+
+.separator-sm {
+  width: figma.$spacing-sm;
+  height: figma.$spacing-sm;
+}
+
+.separator-md {
+  width: figma.$spacing-md;
+  height: figma.$spacing-md;
+}
+
+.separator-lg {
+  width: figma.$spacing-lg;
+  height: figma.$spacing-lg;
+}
+
+.separator-xl {
+  width: figma.$spacing-lg * 2;
+  height: figma.$spacing-lg * 2;
+}
