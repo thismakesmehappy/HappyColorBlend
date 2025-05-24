@@ -14,7 +14,8 @@ const Swatch = ({color, name, canDelete, display, horizontal, className}: Swatch
     return (
         <div className={(horizontal && "hstack " || 'text-center ') + className}>
             <div className='d-inline-block'>
-                <Chip color={color} className={"figma-border"} width={75} height={75} />
+                <Chip color={isEditing ? tempSwatchColor : swatchColor} className={"figma-border"} width={75}
+                      height={75} />
                 {!display &&
                     <SwatchControls
                         isEditing={isEditing}
