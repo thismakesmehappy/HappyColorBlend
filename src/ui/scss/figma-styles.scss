@@ -247,7 +247,7 @@ $sizes: ('sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
   border-radius: $border-radius-md;
   padding: $spacing-sm;
   position: absolute;
-  z-index: 1;
+  z-index: 100;
   bottom: 125%;
   left: 50%;
   transform: translateX(-50%);
@@ -258,4 +258,47 @@ $sizes: ('sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
 .figma-tooltip:hover .figma-tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+/* Figma Toast Notifications */
+.figma-toast-container {
+  position: fixed;
+  top: $spacing-md;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.figma-toast {
+  background-color: $color-text-primary;
+  color: $color-light;
+  text-align: center;
+  border-radius: $border-radius-md;
+  padding: $spacing-sm $spacing-md;
+  margin-bottom: $spacing-sm;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s, transform 0.3s;
+  width: max-content;
+  max-width: 300px;
+}
+
+.figma-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.figma-toast-error {
+  background-color: $color-danger;
+}
+
+.figma-toast-success {
+  background-color: $color-success;
+}
+
+.figma-toast-warning {
+  background-color: $color-warning;
+  color: $color-text-primary;
 }

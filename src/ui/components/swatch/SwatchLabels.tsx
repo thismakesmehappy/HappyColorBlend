@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {isValidHexColor} from "../../helpeers/colorMethods";
 
 interface SwatchLabelsProps {
     isEditing: boolean;
@@ -17,8 +18,16 @@ const SwatchLabels = ({
                           tempSwatchColor,
                           setTempSwatchColor,
                           tempSwatchName,
-                          setTempSwatchName
+                          setTempSwatchName,
                       }: SwatchLabelsProps) => {
+
+    const [isValidColor, setIsValidColor] = useState(isValidHexColor(tempSwatchColor))
+
+
+    useEffect(() => {
+        setIsValidColor(isValidHexColor(tempSwatchColor));
+    }, [tempSwatchColor]);
+
 
     if (isEditing) return (
         <div className={"vstack"}>
@@ -27,9 +36,14 @@ const SwatchLabels = ({
                        onChange={(e) => setTempSwatchName(e.target.value)} />
             </div>
             <div>
-                <input type="text" className="swatch-label figma-input mw-100" value={tempSwatchColor}
-                       onChange={(e) => setTempSwatchColor(e.target.value)} />
+                <input
+                    type="text"
+                    className={`swatch-label figma-input mw-100 ${!isValidColor ? 'border-danger' : ''}`}
+                    value={tempSwatchColor}
+                    onChange={(e) => setTempSwatchColor(e.target.value)}
+                />
             </div>
+            <div>{isValidColor}</div>
         </div>
     )
 
@@ -37,6 +51,7 @@ const SwatchLabels = ({
         <div className={"vstack"}>
             <div className="swatch-label swatch-label-text mw-100 d-inline-block fw-bold">{swatchName}</div>
             <div className="swatch-label swatch-label-text mw-100 d-inline-block">{swatchColor}</div>
+            <div>{isValidColor}</div>
         </div>
     );
 };

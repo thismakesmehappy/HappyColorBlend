@@ -1,5 +1,6 @@
 import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {isValidHexColor} from "../../helpeers/colorMethods";
 
 interface SwatchControlsProps {
     isEditing: boolean;
@@ -26,13 +27,34 @@ const SwatchControls = ({
                             tempSwatchColor,
                             setTempSwatchColor,
                             tempSwatchName,
-                            setTempSwatchName
+                            setTempSwatchName,
                         }: SwatchControlsProps) => {
+
+    const [isValidColor, setIsValidColor] = useState(isValidHexColor(tempSwatchColor));
+    const [showToast, setShowToast] = useState(false);
+
+    useEffect(() => {
+        setIsValidColor(isValidHexColor(tempSwatchColor));
+    }, [tempSwatchColor]);
+
+    // Function to show toast and automatically hide it after a delay
+    const showToastMessage = () => {
+        setShowToast(true);
+        setTimeout(() => {
+            setShowToast(false);
+        }, 3000); // Hide after 3 seconds
+    };
     const alignPencil = canDelete ? 'space-between' : 'start';
     const update = () => {
-        setSwatchName(tempSwatchName);
-        setSwatchColor(tempSwatchColor);
-        setIsEditing(false);
+        // Only update if the color is valid
+        if (isValidHexColor(tempSwatchColor)) {
+            setSwatchName(tempSwatchName);
+            setSwatchColor(tempSwatchColor);
+            setIsEditing(false);
+        } else {
+            // Show toast notification if color is invalid
+            showToastMessage();
+        }
     }
 
     const reset = () => {
@@ -43,15 +65,28 @@ const SwatchControls = ({
 
     if (isEditing) {
         return (
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <div onClick={() => reset()}>
-                    <FontAwesomeIcon icon={"circle-xmark"} className={"figma-icon figma-text-primary"} />
+            <>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <div onClick={() => reset()}>
+                        <FontAwesomeIcon icon={"circle-xmark"} className={"figma-icon figma-text-primary"} />
+                    </div>
+                    <div onClick={() => update()}>
+                        <FontAwesomeIcon
+                            icon={"circle-check"}
+                            className={`figma-icon ${isValidColor ? "figma-text-primary" : "figma-text-disabled"}`}
+                        />
+                    </div>
                 </div>
-                <div onClick={() => update()}>
-                    <FontAwesomeIcon icon={"circle-check"} className={"figma-icon figma-text-primary"} />
-                </div>
-            </div>
 
+                {/* Toast notification container */}
+                {showToast && (
+                    <div className="figma-toast-container">
+                        <div className={`figma-toast figma-toast-error show`}>
+                            Input should be six digits hex without the #
+                        </div>
+                    </div>
+                )}
+            </>
         );
     }
     return (
