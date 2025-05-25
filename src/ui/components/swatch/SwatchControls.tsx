@@ -1,6 +1,8 @@
 import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
 import React, {useEffect, useState} from "react";
 import {isValidHexColor} from "../../helpeers/colorMethods";
+import {Toast} from "../common";
+import {INVALID_HEX_COLOR_MESSAGE, TOAST_DURATION} from "../../../constants/uiConstants";
 
 interface SwatchControlsProps {
     isEditing: boolean;
@@ -37,12 +39,14 @@ const SwatchControls = ({
         setIsValidColor(isValidHexColor(tempSwatchColor));
     }, [tempSwatchColor]);
 
-    // Function to show toast and automatically hide it after a delay
+    // Function to show toast
     const showToastMessage = () => {
         setShowToast(true);
-        setTimeout(() => {
-            setShowToast(false);
-        }, 3000); // Hide after 3 seconds
+    };
+
+    // Function to hide toast
+    const hideToast = () => {
+        setShowToast(false);
     };
     const alignPencil = canDelete ? 'space-between' : 'start';
     const update = () => {
@@ -78,14 +82,13 @@ const SwatchControls = ({
                     </div>
                 </div>
 
-                {/* Toast notification container */}
-                {showToast && (
-                    <div className="figma-toast-container">
-                        <div className={`figma-toast figma-toast-error show`}>
-                            Input should be six digits hex without the #
-                        </div>
-                    </div>
-                )}
+                <Toast
+                    message={INVALID_HEX_COLOR_MESSAGE}
+                    type="error"
+                    duration={TOAST_DURATION}
+                    isVisible={showToast}
+                    onClose={hideToast}
+                />
             </>
         );
     }

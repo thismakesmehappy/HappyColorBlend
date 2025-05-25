@@ -281,8 +281,6 @@ $sizes: ('sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
   opacity: 0;
   transform: translateY(-20px);
   transition: opacity 0.3s, transform 0.3s;
-  width: max-content;
-  max-width: 300px;
 }
 
 .figma-toast.show {
