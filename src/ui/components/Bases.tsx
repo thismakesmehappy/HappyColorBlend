@@ -5,6 +5,7 @@ import Swatch from "./swatch/Swatch";
 import useSwatchStore, {SwatchStoreInputSwatch} from "../store/useSwatchStore";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import {v4 as uuidv4} from 'uuid';
+import ColorNamer from 'color-namer';
 
 interface BasesProps {
     className?: string;
@@ -17,7 +18,7 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
     const addBase = useSwatchStore((state) => state.addBase);
     const createRandomBase = () => {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-        const randomName = Math.random().toString(36).substring(2, 15);
+        const randomName = ColorNamer(`#${randomColor}`).ntc[0].name;
         const newBase: SwatchStoreInputSwatch = {
             color: randomColor,
             name: randomName,
