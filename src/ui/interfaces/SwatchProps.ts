@@ -5,6 +5,8 @@ interface SwatchProps {
     display?: boolean;
     horizontal?: boolean;
     className?: string;
+    id?: string;
+    updateSwatch: (color: string, name: string, id?: string) => void;
 }
 
 export default SwatchProps;

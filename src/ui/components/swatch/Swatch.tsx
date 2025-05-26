@@ -4,12 +4,22 @@ import SwatchProps from "../../interfaces/SwatchProps";
 import SwatchControls from "./SwatchControls";
 import SwatchLabels from "./SwatchLabels";
 
-const Swatch = ({color, name, canDelete, display, horizontal, className}: SwatchProps) => {
+const Swatch = ({color, name, canDelete, display, horizontal, className, updateSwatch, id}: SwatchProps) => {
     const [isEditing, setIsEditing] = useState(false);
     const [swatchColor, setSwatchColor] = useState(color);
     const [tempSwatchColor, setTempSwatchColor] = useState(color);
     const [swatchName, setSwatchName] = useState(name);
     const [tempSwatchName, setTempSwatchName] = useState(name);
+    const [hasUpdated, updateHasUpdated] = useState(false);
+
+    useEffect(() => {
+        console.log("triggered update " + hasUpdated)
+        if (hasUpdated) {
+            updateSwatch(swatchColor, swatchName, id);
+        } else {
+            updateHasUpdated(true);
+        }
+    }, [swatchColor, swatchName]);
 
     return (
         <div className={(horizontal && "hstack " || 'text-center ') + className}>

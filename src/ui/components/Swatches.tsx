@@ -22,7 +22,10 @@ const Swatches: React.FC<SwatchesProps> = ({className, style}) => {
                 {/* Swatches content */}
                 {testSwatches.map(({name, hex}, index) => (
                     <Swatch name={String(name)} color={String(hex)} horizontal={true} display={true}
-                            className={"col col-3 figma-pb-sm"} />
+                            className={"col col-3 figma-pb-sm"}
+                            updateSwatch={function (color: string, name: string, id?: string): void {
+
+                            }} />
                 ))
                 }
             </div>
@@ -32,7 +35,10 @@ const Swatches: React.FC<SwatchesProps> = ({className, style}) => {
                 {/* Swatches content */}
                 {testSwatches.map(({name, hex}, index) => (
                     <Swatch name={String(name)} color={String(hex)} horizontal={true} display={true}
-                            className={"col col-3"} />
+                            className={"col col-3"}
+                            updateSwatch={function (color: string, name: string, id?: string): void {
+                                
+                            }} />
                 ))
                 }
             </div>

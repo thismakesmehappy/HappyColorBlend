@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {isValidHexColor} from "../../helpeers/colorMethods";
+import {isValidHexColor} from "../../helpers/colorMethods";
 
 interface SwatchLabelsProps {
     isEditing: boolean;

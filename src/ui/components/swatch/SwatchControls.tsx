@@ -1,6 +1,6 @@
 import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
 import React, {useEffect, useState} from "react";
-import {isValidHexColor} from "../../helpeers/colorMethods";
+import {isValidHexColor} from "../../helpers/colorMethods";
 import {Toast} from "../common";
 import {INVALID_HEX_COLOR_MESSAGE, TOAST_DURATION} from "../../../constants/uiConstants";
 

@@ -21,7 +21,10 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
                 {/* Bases content */}
                 {testSwatches.map(({name, hex}, index) => (
                     <Swatch name={String(name)} color={String(hex)}
-                            className={"col col-6 mb-4"} canDelete={true} />
+                            className={"col col-6 mb-4"} canDelete={true}
+                            updateSwatch={function (color: string, name: string, id?: string): void {
+                                
+                            }} />
                 ))
                 }
             </div>
