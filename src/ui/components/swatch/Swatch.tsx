@@ -21,6 +21,13 @@ const Swatch = ({color, name, canDelete, display, horizontal, className, updateS
         }
     }, [swatchColor, swatchName]);
 
+    useEffect(() => {
+        setSwatchColor(color);
+        setTempSwatchColor(color);
+        setSwatchName(name);
+        setTempSwatchName(name);
+    }, [color, name]);
+
     return (
         <div className={(horizontal && "hstack " || 'text-center ') + className}>
             <div className='d-inline-block'>
