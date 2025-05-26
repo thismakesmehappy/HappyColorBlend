@@ -55,11 +55,7 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
     // Initial state
     dark: {color: "000000", name: "Black", id: "dark"},
     light: {color: "FFFFFF", name: "White", id: "light"},
-    bases: [
-        {color: "FF0000", name: "Red", id: uuidv4()},
-        {color: "00FF00", name: "Green", id: uuidv4()},
-        {color: "0000FF", name: "Blue", id: uuidv4()}
-    ],
+    bases: [],
     swatches: [],
     numberOfSteps: 1,
     customSteps: [],

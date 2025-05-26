@@ -3,6 +3,8 @@ import '../scss/column-layout.scss';
 import Section from "./Section";
 import Swatch from "./swatch/Swatch";
 import useSwatchStore, {SwatchStoreInputSwatch} from "../store/useSwatchStore";
+import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
+import {v4 as uuidv4} from 'uuid';
 
 interface BasesProps {
     className?: string;
@@ -12,6 +14,17 @@ interface BasesProps {
 const Bases: React.FC<BasesProps> = ({className, style}) => {
     const bases = useSwatchStore((state) => state.bases);
     const updateBase = useSwatchStore((state) => state.updateBase);
+    const addBase = useSwatchStore((state) => state.addBase);
+    const createRandomBase = () => {
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        const randomName = Math.random().toString(36).substring(2, 15);
+        const newBase: SwatchStoreInputSwatch = {
+            color: randomColor,
+            name: randomName,
+            id: uuidv4()
+        };
+        addBase(newBase);
+    };
     return (
         <Section
             id="bases"
@@ -19,6 +32,9 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
             style={style}
         >
             <p className={"figma-subtitle"}>Bases</p>
+            <div onClick={createRandomBase}>
+                <FontAwesomeIcon icon={"circle-plus"} className={"figma-icon figma-text-primary fa-2x"} />
+            </div>
             <div className={"row"}>
                 {/* Bases content */}
                 {bases.map((base: SwatchStoreInputSwatch) => (
