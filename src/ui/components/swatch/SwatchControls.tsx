@@ -16,6 +16,7 @@ interface SwatchControlsProps {
     setTempSwatchColor: (newState: any) => void;
     tempSwatchName: string;
     setTempSwatchName: (newState: any) => void;
+    onDelete?: () => void;
 }
 
 const SwatchControls = ({
@@ -30,6 +31,7 @@ const SwatchControls = ({
                             setTempSwatchColor,
                             tempSwatchName,
                             setTempSwatchName,
+                            onDelete,
                         }: SwatchControlsProps) => {
 
     const [isValidColor, setIsValidColor] = useState(isValidHexColor(tempSwatchColor));
@@ -98,7 +100,7 @@ const SwatchControls = ({
                 <FontAwesomeIcon icon={"pencil"} className={"figma-icon figma-text-primary"} />
             </div>
             {canDelete &&
-                <div>
+                <div onClick={onDelete}>
                     <FontAwesomeIcon icon={"trash"} className={"figma-icon figma-text-primary"} />
                 </div>}
         </div>

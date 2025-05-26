@@ -16,6 +16,7 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
     const bases = useSwatchStore((state) => state.bases);
     const updateBase = useSwatchStore((state) => state.updateBase);
     const addBase = useSwatchStore((state) => state.addBase);
+    const removeBase = useSwatchStore((state) => state.removeBase);
     const createRandomBase = () => {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
         const randomName = ColorNamer(`#${randomColor}`).ntc[0].name;
@@ -45,6 +46,7 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
                                 updateBase(id!, color, name);
                                 console.log("updated " + id)
                             }}
+                            onDelete={removeBase}
                             id={base.id} />
                 ))
                 }
