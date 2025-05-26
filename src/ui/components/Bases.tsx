@@ -2,7 +2,7 @@ import React from 'react';
 import '../scss/column-layout.scss';
 import Section from "./Section";
 import Swatch from "./swatch/Swatch";
-import testSwatches from "../../constants/testSwatches";
+import useSwatchStore, {SwatchStoreInputSwatch} from "../store/useSwatchStore";
 
 interface BasesProps {
     className?: string;
@@ -10,6 +10,8 @@ interface BasesProps {
 }
 
 const Bases: React.FC<BasesProps> = ({className, style}) => {
+    const bases = useSwatchStore((state) => state.bases);
+    const updateBase = useSwatchStore((state) => state.updateBase);
     return (
         <Section
             id="bases"
@@ -19,12 +21,14 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
             <p className={"figma-subtitle"}>Bases</p>
             <div className={"row"}>
                 {/* Bases content */}
-                {testSwatches.map(({name, hex}, index) => (
-                    <Swatch name={String(name)} color={String(hex)}
+                {bases.map((base: SwatchStoreInputSwatch) => (
+                    <Swatch name={String(base.name)} color={String(base.color)}
                             className={"col col-6 mb-4"} canDelete={true}
                             updateSwatch={function (color: string, name: string, id?: string): void {
-                                
-                            }} />
+                                updateBase(id!, color, name);
+                                console.log("updated " + id)
+                            }}
+                            id={base.id} />
                 ))
                 }
             </div>

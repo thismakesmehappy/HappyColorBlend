@@ -4,7 +4,7 @@ import Section from './Section';
 import FontAwesomeIcon from './helpers/FontAwesomeIcon';
 import Chip from "./swatch";
 import Swatch from "./swatch/Swatch";
-import useSwatchStore from "../store/swatchStore";
+import useSwatchStore from "../store/useSwatchStore";
 
 interface DarkLightProps {
     className?: string;
@@ -37,7 +37,7 @@ const DarkLight = forwardRef<HTMLDivElement, DarkLightProps>(
                                 updateSwatch={function (color: string, name: string): void {
                                     setLight({color, name});
                                 }}
-
+                                id={light.id}
                         />
                     </div>
                     <div className={"col col-6"}>
@@ -46,6 +46,7 @@ const DarkLight = forwardRef<HTMLDivElement, DarkLightProps>(
                                 updateSwatch={function (color: string, name: string): void {
                                     setDark({color, name});
                                 }}
+                                id={dark.id}
                         />
                     </div>
                 </div>

@@ -45,6 +45,7 @@ interface SwatchStoreState {
     decreaseSteps: () => void;
     setSteps: (steps: number) => void;
     addBase: (base: SwatchStoreInputSwatch) => void;
+    updateBase: (id: string, color: string, name: string) => void;
     removeBase: (id: string) => void;
     flipIncludeDarkLight: () => void;
 }
@@ -80,6 +81,15 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
     decreaseSteps: () => set((state) => ({numberOfSteps: state.numberOfSteps - 2})),
     setSteps: (steps: number) => set({numberOfSteps: steps}),
     addBase: (base: SwatchStoreInputSwatch) => set((state) => ({bases: [...state.bases, base]})),
+    updateBase: (id: string, color: string, name: string) => set((state) => ({
+        bases: state.bases.map((b) => {
+            if (b.id === id) {
+                console.log("updated id " + id);
+                return {color: color, name: name, id: id};
+            }
+            return b;
+        })
+    })),
     removeBase: (id: string) => set((state) => ({bases: state.bases.filter((b) => b.id !== id)})),
     flipIncludeDarkLight: () => set((state) => ({includeDarkLight: !state.includeDarkLight})),
 }));
