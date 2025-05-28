@@ -18,7 +18,7 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
     const addBase = useSwatchStore((state) => state.addBase);
     const removeBase = useSwatchStore((state) => state.removeBase);
     const createRandomBase = () => {
-        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
         const randomName = ColorNamer(`#${randomColor}`).ntc[0].name;
         const newBase: SwatchStoreInputSwatch = {
             color: randomColor,
