@@ -1,4 +1,4 @@
-import React from "react";
+import React, {MouseEventHandler} from "react";
 import {Alerttype} from "../../interfaces/AlertLevel";
 import FontAwesomeIcon from "./FontAwesomeIcon";
 
@@ -8,13 +8,18 @@ interface BadgeProps {
     className?: string;
     iconRight?: any;
     iconLeft?: any;
+    onClick?: MouseEventHandler<HTMLSpanElement>;
 }
 
 /**
- * A reusable Toast component for displaying temporary notifications.
+ * A reusable Badge component for displaying labels or tags.
  *
- * @param chilrden - The message to display in the toast
- * @param type - The type of toast (error, success, warning, or default)
+ * @param children - The text to display in the badge
+ * @param type - The type of badge (error, success, warning, primary, or default)
+ * @param className - Additional CSS classes to apply to the badge
+ * @param iconLeft - Icon to display on the left side of the badge
+ * @param iconRight - Icon to display on the right side of the badge
+ * @param onClick - Function to call when the badge is clicked
  */
 const Badge: React.FC<BadgeProps> = ({
                                          children,
@@ -22,6 +27,7 @@ const Badge: React.FC<BadgeProps> = ({
                                          className = "",
                                          iconLeft = "",
                                          iconRight = "",
+                                         onClick,
                                      }: BadgeProps) => {
 
     const getBadgeClassName = () => {
@@ -51,8 +57,12 @@ const Badge: React.FC<BadgeProps> = ({
     };
 
     return (
-        <span className={getBadgeClassName()}>
-            <FontAwesomeIcon icon={iconLeft} /> {children} <FontAwesomeIcon icon={iconRight} />
+        <span
+            className={getBadgeClassName()}
+            onClick={onClick}
+        >
+            <FontAwesomeIcon icon={iconLeft} /> {iconLeft && " "} {children} {iconRight && " "} <FontAwesomeIcon
+            icon={iconRight} />
         </span>
     );
 }

@@ -27,7 +27,7 @@ interface SwatchStoreState {
     swatches: SwatchStoreSwatches[];
     numberOfSteps: number;
     steps: number[];
-    customSteps: number[];
+    customSteps: Set<number>;
     includeDarkLight: boolean;
 
     // Getters
@@ -36,7 +36,7 @@ interface SwatchStoreState {
     getBases: () => SwatchStoreInputSwatch[];
     getSwatches: () => SwatchStoreSwatches[];
     getNumberOfSteps: () => number;
-    getCustomSteps: () => number[];
+    getCustomSteps: () => Set<number>;
     getIncludeDarkLight: () => boolean;
 
     // Setters
@@ -50,6 +50,8 @@ interface SwatchStoreState {
     removeBase: (id: string) => void;
     flipIncludeDarkLight: () => void;
     createSteps: () => number[];
+    addCustomStep: (step: number) => void;
+    removeCustomStep: (step: number) => void;
 }
 
 // Create the store
@@ -61,7 +63,7 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
     swatches: [],
     numberOfSteps: 3,
     steps: [],
-    customSteps: [],
+    customSteps: new Set<number>(),
     includeDarkLight: true,
 
     // Getters
@@ -127,7 +129,23 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
         set((state) => ({includeDarkLight: !state.includeDarkLight}));
         get().createSteps();
     },
+
+    addCustomStep: (step: number) => {
+        set((state) => {
+            const newCustomSteps = new Set(state.customSteps);
+            newCustomSteps.add(step);
+            return {customSteps: newCustomSteps};
+        });
+    },
+    removeCustomStep: (step: number) => {
+        set((state) => {
+            const newCustomSteps = new Set(state.customSteps);
+            newCustomSteps.delete(step);
+            return {customSteps: newCustomSteps};
+        });
+    }
 }));
+
 
 // Initialize steps array
 useSwatchStore.getState().createSteps();
