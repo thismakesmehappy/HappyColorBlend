@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Alerttype} from "../../interfaces/AlertLevel";
+import FontAwesomeIcon from "./FontAwesomeIcon";
 
 interface BadgeProps {
     children: string;
     type?: Alerttype;
     className?: string;
+    iconRight?: any;
+    iconLeft?: any;
 }
 
 /**
@@ -17,6 +20,8 @@ const Badge: React.FC<BadgeProps> = ({
                                          children,
                                          type = "default",
                                          className = "",
+                                         iconLeft = "",
+                                         iconRight = "",
                                      }: BadgeProps) => {
 
     const getBadgeClassName = () => {
@@ -32,9 +37,13 @@ const Badge: React.FC<BadgeProps> = ({
             case "warning":
                 newClassName += " figma-bg-warning figma-text-dark";
                 break;
-            default:
+            case "primary":
                 // Default toast has no additional class
                 newClassName += " figma-bg-primary figma-text-light";
+                break;
+            default:
+                // Default toast has no additional class
+                newClassName += " figma-bg-component figma-text-light";
                 break;
         }
 
@@ -43,9 +52,9 @@ const Badge: React.FC<BadgeProps> = ({
 
     return (
         <span className={getBadgeClassName()}>
-            {children}
+            <FontAwesomeIcon icon={iconLeft} /> {children} <FontAwesomeIcon icon={iconRight} />
         </span>
     );
-};
+}
 
 export default Badge;

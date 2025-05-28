@@ -4,19 +4,22 @@
 
 
 // Colors
-$color-primary: #18a0fb;
-$color-primary-hover: #0d8fe0;
-$color-secondary: #f0f0f0;
+$color-primary: #0d99ff;
+$color-primary-hover: #007be5;
+$color-secondary: #ffffff;
 $color-secondary-hover: #e1e1e1;
 $color-dark: #2c2c2c;
 $color-light: #ffffff;
 $color-danger: #f24822;
-$color-danger-hover: #d93c1a;
+$color-danger-hover: #dc3412;
 $color-success: #14ae5c;
-$color-success-hover: #0f9a4f;
-$color-warning: #ffb800;
-$color-text-primary: #333333;
-$color-text-secondary: #666666;
+$color-success-hover: #009951;
+$color-warning: #fab815;
+$color-warning-hover: #ffc21a;
+$color-component: #9747ff;
+$color-component: #8638e5;
+$color-text-primary: #000000e5;
+$color-text-secondary: #0000004d;
 $color-border: #e5e5e5;
 
 // Spacing
@@ -123,6 +126,14 @@ $sizes: ('sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
 
 .figma-text-warning {
   color: $color-warning;
+}
+
+.figma-bg-component {
+  background-color: $color-component;
+}
+
+.figma-text-component {
+  color: $color-component;
 }
 
 /* Figma Buttons */
@@ -286,6 +297,14 @@ $sizes: ('sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
 .figma-toast.show {
   opacity: 1;
   transform: translateY(0);
+}
+
+.figma-toast-primary {
+  background-color: $color-primary;
+}
+
+.figma-toast-default {
+  background-color: $color-component;
 }
 
 .figma-toast-error {

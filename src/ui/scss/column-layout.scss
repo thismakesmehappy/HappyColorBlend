@@ -87,12 +87,12 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   position: relative;
   white-space: nowrap; // Keep children on the same line
   width: 100%;
-  height: var(--equal-steps-height, auto);
+  height: var(--steps-input-height, auto);
   overflow-x: hidden; // Prevent horizontal scrolling
 }
 
-// Equal-steps takes only the width and height of its content
-#equal-steps {
+// Steps-input takes only the width and height of its content
+#steps-input {
   display: inline-block;
   height: auto;
   width: auto;
@@ -101,11 +101,11 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   overflow-x: hidden; // Prevent horizontal scrolling
 }
 
-// Step-labels takes the height of equal-steps and the rest of the horizontal space
+// Step-labels takes the height of steps-input and the rest of the horizontal space
 #step-labels {
   display: inline-block;
-  height: var(--equal-steps-height, auto);
-  width: calc(100% - var(--equal-steps-width, 0px) - $dividerSize); // Adjusted for divider width (1px) and margins (16px * 2)
+  height: var(--steps-input-height, auto);
+  width: calc(100% - var(--steps-input-width, 0px) - $dividerSize); // Adjusted for divider width (1px) and margins (16px * 2)
   white-space: normal; // Allow text to wrap inside
   vertical-align: top;
   overflow-y: auto; // Enable vertical scrolling if content overflows

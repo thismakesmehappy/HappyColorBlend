@@ -7,7 +7,9 @@ export const EqualSteps = () => {
     const increaseSteps = useSwatchStore((state) => state.increaseSteps)
     const decreaseSteps = useSwatchStore((state) => state.decreaseSteps)
     return (
-        <div><span onClick={decreaseSteps}>
+        <div>
+            <span>Equal steps: </span>
+            <span onClick={decreaseSteps}>
             <FontAwesomeIcon icon={"circle-minus"} className={"figma-icon figma-text-primary"}
             />
         </span>

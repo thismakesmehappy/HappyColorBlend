@@ -7,7 +7,7 @@ import Area from "./components/Area";
 const App: React.FC = () => {
     const [message, setMessage] = useState<string>('');
     const darkLightRef = useRef<HTMLDivElement>(null);
-    const equalStepsRef = useRef<HTMLDivElement>(null);
+    const stepsInputRef = useRef<HTMLDivElement>(null);
     const stepsRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -33,13 +33,13 @@ const App: React.FC = () => {
             }
         };
 
-        // Function to update the equal-steps dimensions CSS variables
-        const updateEqualStepsDimensions = () => {
-            if (equalStepsRef.current) {
-                const height = equalStepsRef.current.offsetHeight;
-                const width = equalStepsRef.current.offsetWidth;
-                document.documentElement.style.setProperty('--equal-steps-height', `${height}px`);
-                document.documentElement.style.setProperty('--equal-steps-width', `${width}px`);
+        // Function to update the steps-input dimensions CSS variables
+        const updateStepsInputDimensions = () => {
+            if (stepsInputRef.current) {
+                const height = stepsInputRef.current.offsetHeight;
+                const width = stepsInputRef.current.offsetWidth;
+                document.documentElement.style.setProperty('--steps-input-height', `${height}px`);
+                document.documentElement.style.setProperty('--steps-input-width', `${width}px`);
             }
         };
 
@@ -53,20 +53,20 @@ const App: React.FC = () => {
 
         // Initial updates
         updateDarkLightHeight();
-        updateEqualStepsDimensions();
+        updateStepsInputDimensions();
         updateStepsHeight();
 
         // Set up resize observers to update dimensions when content changes
         const darkLightResizeObserver = new ResizeObserver(updateDarkLightHeight);
-        const equalStepsResizeObserver = new ResizeObserver(updateEqualStepsDimensions);
+        const stepsInputResizeObserver = new ResizeObserver(updateStepsInputDimensions);
         const stepsResizeObserver = new ResizeObserver(updateStepsHeight);
 
         if (darkLightRef.current) {
             darkLightResizeObserver.observe(darkLightRef.current);
         }
 
-        if (equalStepsRef.current) {
-            equalStepsResizeObserver.observe(equalStepsRef.current);
+        if (stepsInputRef.current) {
+            stepsInputResizeObserver.observe(stepsInputRef.current);
         }
 
         if (stepsRef.current) {
@@ -78,14 +78,14 @@ const App: React.FC = () => {
             if (darkLightRef.current) {
                 darkLightResizeObserver.unobserve(darkLightRef.current);
             }
-            if (equalStepsRef.current) {
-                equalStepsResizeObserver.unobserve(equalStepsRef.current);
+            if (stepsInputRef.current) {
+                stepsInputResizeObserver.unobserve(stepsInputRef.current);
             }
             if (stepsRef.current) {
                 stepsResizeObserver.unobserve(stepsRef.current);
             }
             darkLightResizeObserver.disconnect();
-            equalStepsResizeObserver.disconnect();
+            stepsInputResizeObserver.disconnect();
             stepsResizeObserver.disconnect();
         };
     }, []);
@@ -95,7 +95,7 @@ const App: React.FC = () => {
             <div>
                 <LeftColumn darkLightRef={darkLightRef} />
                 <ColumnDivider />
-                <RightColumn stepsRef={stepsRef} equalStepsRef={equalStepsRef} />
+                <RightColumn stepsRef={stepsRef} equalStepsRef={stepsInputRef} />
             </div>
         </Area>
     );

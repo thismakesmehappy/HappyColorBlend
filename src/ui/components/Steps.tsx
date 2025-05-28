@@ -7,6 +7,7 @@ import EqualSteps from "./equalSteps/EqualSteps";
 import useSwatchStore from "../store/useSwatchStore";
 import Toggle from "./helpers/Toggle";
 import Badge from "./helpers/Badge";
+import {IncludeLightDark} from "./equalSteps/IncludeLightDark";
 
 interface StepsProps {
     className?: string;
@@ -26,17 +27,10 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                 ref={ref}
                 style={style}
             >
-                <Section id="equal-steps" ref={equalStepsRef}>
-                    {/* Equal-steps content */}
-                    <p className={"figma-subtitle"}>How many steps</p>
+                <Section id="steps-input" ref={equalStepsRef}>
+                    {/* Steps-input content */}
                     <EqualSteps />
-                    <div className={""}>
-                        <div className={'d-inline-block align-middle'}> Include light and dark</div>
-                        {' '}
-                        <Toggle value={includeDarkLight}
-                                onChange={flipIncludeDarkLight}
-                                className={"d-inline-block align-middle"} />
-                    </div>
+                    <IncludeLightDark />
                 </Section>
                 <ColumnDivider />
                 <Section id="step-labels">
