@@ -166,9 +166,10 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
 
     addCustomStep: (step: number) => {
         set((state) => {
-            const newCustomSteps = new Set(state.customSteps);
-            newCustomSteps.add(step);
-            return {customSteps: newCustomSteps};
+            const customSteps = Array.from(state.customSteps);
+            customSteps.push(step);
+            customSteps.sort((a, b) => a - b)
+            return {customSteps: new Set(customSteps)};
         });
     },
     removeCustomStep: (step: number) => {
@@ -191,7 +192,7 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
         );
 
         // Update the swatches in the store
-        set({ swatches: newSwatches });
+        set({swatches: newSwatches});
 
         return newSwatches;
     }
