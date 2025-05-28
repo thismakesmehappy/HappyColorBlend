@@ -1,75 +1,51 @@
 import React, {useEffect, useState} from "react";
+import {Alerttype} from "../../interfaces/AlertLevel";
 
-interface ToastProps {
-    message: string;
-    type?: "error" | "success" | "warning" | "default";
-    duration?: number;
-    isVisible: boolean;
-    onClose: () => void;
+interface BadgeProps {
+    children: string;
+    type?: Alerttype;
+    className?: string;
 }
 
 /**
  * A reusable Toast component for displaying temporary notifications.
  *
- * @param message - The message to display in the toast
+ * @param chilrden - The message to display in the toast
  * @param type - The type of toast (error, success, warning, or default)
- * @param duration - How long the toast should be visible (in milliseconds)
- * @param isVisible - Whether the toast is currently visible
- * @param onClose - Callback function to call when the toast is closed
  */
-const Toast: React.FC<ToastProps> = ({
-                                         message,
+const Badge: React.FC<BadgeProps> = ({
+                                         children,
                                          type = "default",
-                                         duration = 3000,
-                                         isVisible,
-                                         onClose
-                                     }) => {
-    useEffect(() => {
-        let timer: number;
+                                         className = "",
+                                     }: BadgeProps) => {
 
-        if (isVisible) {
-            timer = setTimeout(() => {
-                onClose();
-            }, duration);
-        }
-
-        return () => {
-            if (timer) {
-                clearTimeout(timer);
-            }
-        };
-    }, [isVisible, duration, onClose]);
-
-    if (!isVisible) return null;
-
-    const getToastClassName = () => {
-        let className = "figma-toast show";
+    const getBadgeClassName = () => {
+        let newClassName = className! + ' badge';
 
         switch (type) {
             case "error":
-                className += " figma-toast-error";
+                newClassName += " figma-bg-danger figma-text-light";
                 break;
             case "success":
-                className += " figma-toast-success";
+                newClassName += " figma-bg-success figma-text-light";
                 break;
             case "warning":
-                className += " figma-toast-warning";
+                newClassName += " figma-bg-warning figma-text-dark";
                 break;
             default:
                 // Default toast has no additional class
+                newClassName += " figma-bg-primary figma-text-light";
                 break;
         }
 
-        return className;
+        return newClassName;
     };
 
     return (
-        <div className="figma-toast-container">
-            <div className={getToastClassName()}>
-                {message}
-            </div>
-        </div>
+        <span className={getBadgeClassName()}>
+            {children}
+        </span>
     );
 };
 
-export default Toast;
+export default Badge;

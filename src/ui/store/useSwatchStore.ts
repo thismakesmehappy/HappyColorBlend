@@ -1,4 +1,5 @@
 import {create} from 'zustand';
+import {MINIMUM_STEPS} from "../../constants/uiConstants";
 
 
 export interface SwatchStoreInputSwatch {
@@ -25,6 +26,7 @@ interface SwatchStoreState {
     bases: SwatchStoreInputSwatch[];
     swatches: SwatchStoreSwatches[];
     numberOfSteps: number;
+    steps: number[];
     customSteps: number[];
     includeDarkLight: boolean;
 
@@ -47,6 +49,7 @@ interface SwatchStoreState {
     updateBase: (id: string, color: string, name: string) => void;
     removeBase: (id: string) => void;
     flipIncludeDarkLight: () => void;
+    createSteps: () => number[];
 }
 
 // Create the store
@@ -56,7 +59,8 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
     light: {color: "FFFFFF", name: "White", id: "light"},
     bases: [],
     swatches: [],
-    numberOfSteps: 1,
+    numberOfSteps: 3,
+    steps: [],
     customSteps: [],
     includeDarkLight: true,
 
@@ -72,9 +76,20 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
     // Setters
     setDark: (dark: SwatchStoreInputSwatch) => set({dark}),
     setLight: (light: SwatchStoreInputSwatch) => set({light}),
-    increaseSteps: () => set((state) => ({numberOfSteps: state.numberOfSteps + 2})),
-    decreaseSteps: () => set((state) => ({numberOfSteps: state.numberOfSteps - 2})),
-    setSteps: (steps: number) => set({numberOfSteps: steps}),
+    increaseSteps: () => {
+        set((state) => ({numberOfSteps: state.numberOfSteps + 2}));
+        get().createSteps();
+    },
+    decreaseSteps: () => {
+        if (get().numberOfSteps > MINIMUM_STEPS) {
+            set((state) => ({numberOfSteps: state.numberOfSteps - 2}));
+            get().createSteps();
+        }
+    },
+    setSteps: (steps: number) => {
+        set({numberOfSteps: steps});
+        get().createSteps();
+    },
     addBase: (base: SwatchStoreInputSwatch) => set((state) => ({bases: [...state.bases, base]})),
     updateBase: (id: string, color: string, name: string) => set((state) => ({
         bases: state.bases.map((b) => {
@@ -86,7 +101,35 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
         })
     })),
     removeBase: (id: string) => set((state) => ({bases: state.bases.filter((b) => b.id !== id)})),
-    flipIncludeDarkLight: () => set((state) => ({includeDarkLight: !state.includeDarkLight})),
+    createSteps: () => {
+        const state = get();
+        const {numberOfSteps, includeDarkLight} = state;
+        let steps: number[] = [];
+
+        if (includeDarkLight) {
+            // Calculate steps including 0 and 1000
+            for (let i = 0; i <= numberOfSteps + 1; i++) {
+                const step = Math.round((i * 1000) / (numberOfSteps + 1));
+                steps.push(step);
+            }
+        } else {
+            // Calculate steps excluding 0 and 1000
+            for (let i = 1; i <= numberOfSteps; i++) {
+                const step = Math.round((i * 1000) / (numberOfSteps + 1));
+                steps.push(step);
+            }
+        }
+
+        set({steps});
+        return steps;
+    },
+    flipIncludeDarkLight: () => {
+        set((state) => ({includeDarkLight: !state.includeDarkLight}));
+        get().createSteps();
+    },
 }));
+
+// Initialize steps array
+useSwatchStore.getState().createSteps();
 
 export default useSwatchStore;

@@ -4,8 +4,9 @@ import ColumnDivider from './ColumnDivider';
 import Section from "./Section";
 import Area from "./Area";
 import EqualSteps from "./equalSteps/EqualSteps";
-import Toggle from "./equalSteps/Toggle";
 import useSwatchStore from "../store/useSwatchStore";
+import Toggle from "./helpers/Toggle";
+import Badge from "./helpers/Badge";
 
 interface StepsProps {
     className?: string;
@@ -17,6 +18,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
     ({className, style, equalStepsRef}, ref) => {
         const includeDarkLight = useSwatchStore((state) => state.includeDarkLight);
         const flipIncludeDarkLight = useSwatchStore((state) => state.flipIncludeDarkLight);
+        const steps = useSwatchStore((state) => state.steps);
         return (
             <Area
                 id="steps"
@@ -39,11 +41,9 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                 <ColumnDivider />
                 <Section id="step-labels">
                     {/* Step-labels content */}
-                    steps-labels<br />
-                    steps-labels<br />
-                    steps-labels<br />
-                    steps-labels<br />
-                    steps-labels
+                    {steps.map(step => {
+                        return <Badge className={"figma-mr-sm"}>{String(step)}</Badge>
+                    })}
                 </Section>
             </Area>
         );
