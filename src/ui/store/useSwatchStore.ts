@@ -1,5 +1,38 @@
 import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
+import {blendColor} from "../helpers/colorMethods";
+
+// Function to build swatches based on parameters
+export const buildNewSwatches = (
+    dark: SwatchStoreInputSwatch,
+    light: SwatchStoreInputSwatch,
+    bases: SwatchStoreInputSwatch[],
+    steps: number[],
+    customSteps: Set<number>,
+    includeDarkLight: boolean
+) => {
+    const combinedSteps = new Set([...steps, ...customSteps].sort((a, b) => a - b));
+    const swatches: SwatchStoreSwatches[] = [];
+
+    for (let base in bases) {
+        const swatch: SwatchStoreSwatches = {
+            base: bases[base],
+            swatches: []
+        };
+
+
+        for (let step of combinedSteps) {
+            swatch.swatches.push({color: blendColor(dark.color, light.color, bases[base].color, step), step: step});
+        }
+
+        swatches.push(swatch);
+    }
+
+    // Stub implementation - will be expanded later
+    console.log("buildSwatches called with:", {dark, light, bases, steps, customSteps, includeDarkLight});
+    console.log(swatches)
+    return swatches;
+};
 
 
 export interface SwatchStoreInputSwatch {
@@ -52,6 +85,7 @@ interface SwatchStoreState {
     createSteps: () => number[];
     addCustomStep: (step: number) => void;
     removeCustomStep: (step: number) => void;
+    buildSwatches: () => SwatchStoreSwatches[];
 }
 
 // Create the store
@@ -143,6 +177,23 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
             newCustomSteps.delete(step);
             return {customSteps: newCustomSteps};
         });
+    },
+
+    buildSwatches: () => {
+        const state = get();
+        const newSwatches = buildNewSwatches(
+            state.dark,
+            state.light,
+            state.bases,
+            state.steps,
+            state.customSteps,
+            state.includeDarkLight
+        );
+
+        // Update the swatches in the store
+        set({ swatches: newSwatches });
+
+        return newSwatches;
     }
 }));
 

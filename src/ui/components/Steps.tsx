@@ -9,6 +9,7 @@ import Toggle from "./helpers/Toggle";
 import Badge from "./helpers/Badge";
 import {IncludeLightDark} from "./steps/IncludeLightDark";
 import CustomSteps from "./steps/CustomSteps";
+import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 
 interface StepsProps {
     className?: string;
@@ -23,6 +24,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
         const steps = useSwatchStore((state) => state.steps);
         const customSteps = useSwatchStore((state) => state.customSteps);
         const removeCustomStep = useSwatchStore((state) => state.removeCustomStep);
+        const buildSwatches = useSwatchStore((state) => state.buildSwatches);
         return (
             <Area
                 id="steps"
@@ -56,6 +58,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                             })}
                         </div>
                     )}
+                    <div><FontAwesomeIcon icon={"plus"} onClick={buildSwatches} /></div>
                 </Section>
             </Area>
         );
