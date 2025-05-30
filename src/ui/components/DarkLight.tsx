@@ -5,6 +5,7 @@ import FontAwesomeIcon from './helpers/FontAwesomeIcon';
 import Chip from "./swatch";
 import Swatch from "./swatch/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
+import useUpdateSwatches from "../hooks/useUpdateSwatches";
 
 interface DarkLightProps {
     className?: string;
@@ -17,6 +18,7 @@ const DarkLight = forwardRef<HTMLDivElement, DarkLightProps>(
         const light = useSwatchStore(state => state.getLight());
         const setDark = useSwatchStore(state => state.setDark);
         const setLight = useSwatchStore(state => state.setLight);
+        const buildSwatches = useSwatchStore((state) => state.buildSwatches);
         const [darkName, setDarkName] = useState(dark.name);
         const [darkColor, setDarkColor] = useState(dark.color);
         const [lightName, setLightName] = useState(light.name);
@@ -36,6 +38,7 @@ const DarkLight = forwardRef<HTMLDivElement, DarkLightProps>(
                         <Swatch color={lightColor} name={lightName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setLight({color, name});
+                                    buildSwatches();
                                 }}
                                 id={light.id}
                         />
@@ -45,6 +48,7 @@ const DarkLight = forwardRef<HTMLDivElement, DarkLightProps>(
                         <Swatch color={darkColor} name={darkName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setDark({color, name});
+                                    buildSwatches();
                                 }}
                                 id={dark.id}
                         />

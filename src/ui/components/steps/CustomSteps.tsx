@@ -15,6 +15,7 @@ export const CustomSteps: React.FC = () => {
     const [toastMessage, setToastMessage] = useState<string>('');
     const addCustomStep = useSwatchStore((state) => state.addCustomStep);
     const customSteps = useSwatchStore((state) => state.customSteps);
+    const buildSwatches = useSwatchStore((state) => state.buildSwatches);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
@@ -75,6 +76,7 @@ export const CustomSteps: React.FC = () => {
         if (isValidInput()) {
             const step = parseInt(inputValue, 10);
             addCustomStep(step);
+            buildSwatches();
             setInputValue('');
         } else {
             showToastMessage(getErrorMessage());

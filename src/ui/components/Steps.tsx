@@ -5,7 +5,6 @@ import Section from "./Section";
 import Area from "./Area";
 import EqualSteps from "./steps/EqualSteps";
 import useSwatchStore from "../store/useSwatchStore";
-import Toggle from "./helpers/Toggle";
 import Badge from "./helpers/Badge";
 import {IncludeLightDark} from "./steps/IncludeLightDark";
 import CustomSteps from "./steps/CustomSteps";
@@ -19,8 +18,6 @@ interface StepsProps {
 
 const Steps = forwardRef<HTMLDivElement, StepsProps>(
     ({className, style, equalStepsRef}, ref) => {
-        const includeDarkLight = useSwatchStore((state) => state.includeDarkLight);
-        const flipIncludeDarkLight = useSwatchStore((state) => state.flipIncludeDarkLight);
         const steps = useSwatchStore((state) => state.steps);
         const customSteps = useSwatchStore((state) => state.customSteps);
         const removeCustomStep = useSwatchStore((state) => state.removeCustomStep);
@@ -52,13 +49,15 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                             <span className="figma-subtitle">Custom Steps: </span>
                             {Array.from(customSteps).map(step => {
                                 return <Badge key={`custom-${step}`} className={"figma-mr-sm"}
-                                              type="primary" iconRight={"minus"} onClick={() => removeCustomStep(step)}>
+                                              type="primary" iconRight={"minus"} onClick={() => {
+                                    removeCustomStep(step);
+                                    buildSwatches();
+                                }}>
                                     {String(step)}
                                 </Badge>
                             })}
                         </div>
                     )}
-                    <div><FontAwesomeIcon icon={"plus"} onClick={buildSwatches} /></div>
                 </Section>
             </Area>
         );

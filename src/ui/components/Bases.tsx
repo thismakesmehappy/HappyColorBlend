@@ -17,6 +17,7 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
     const updateBase = useSwatchStore((state) => state.updateBase);
     const addBase = useSwatchStore((state) => state.addBase);
     const removeBase = useSwatchStore((state) => state.removeBase);
+    const buildSwatches = useSwatchStore((state) => state.buildSwatches);
     const createRandomBase = () => {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
         const randomName = ColorNamer(`#${randomColor}`).ntc[0].name;
@@ -26,6 +27,7 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
             id: uuidv4()
         };
         addBase(newBase);
+        buildSwatches();
     };
     return (
         <Section
@@ -44,9 +46,12 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
                             className={"col col-6 mb-4"} canDelete={true}
                             updateSwatch={function (color: string, name: string, id?: string): void {
                                 updateBase(id!, color, name);
-                                console.log("updated " + id)
+                                buildSwatches();
                             }}
-                            onDelete={removeBase}
+                            onDelete={(id) => {
+                                removeBase(id);
+                                buildSwatches()
+                            }}
                             id={base.id} />
                 ))
                 }
