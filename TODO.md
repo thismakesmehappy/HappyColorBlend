@@ -44,7 +44,7 @@
 
 ## Dark Light
 
-- [ ] Generalize terms
+- [x] Generalize terms
 - [ ] Reverse dark and light swatches
 
 ## Bases
@@ -54,4 +54,4 @@
 ## Steps
 
 - [ ] Update height to tallest of two sides
-- [ ] Disable decrease steps if steps === 3
+- [x] Disable decrease steps if steps === 3

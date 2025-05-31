@@ -6,7 +6,7 @@ import Area from "./components/Area";
 
 const App: React.FC = () => {
     const [message, setMessage] = useState<string>('');
-    const darkLightRef = useRef<HTMLDivElement>(null);
+    const shadeTintRef = useRef<HTMLDivElement>(null);
     const stepsInputRef = useRef<HTMLDivElement>(null);
     const stepsRef = useRef<HTMLDivElement>(null);
 
@@ -25,11 +25,11 @@ const App: React.FC = () => {
         // Tell the plugin code that the UI is ready
         parent.postMessage({pluginMessage: {type: 'ui-ready'}}, '*');
 
-        // Function to update the dark-light height CSS variable
-        const updateDarkLightHeight = () => {
-            if (darkLightRef.current) {
-                const height = darkLightRef.current.offsetHeight;
-                document.documentElement.style.setProperty('--dark-light-height', `${height}px`);
+        // Function to update the shade-tint height CSS variable
+        const updateShadeTintHeight = () => {
+            if (shadeTintRef.current) {
+                const height = shadeTintRef.current.offsetHeight;
+                document.documentElement.style.setProperty('--shade-tint-height', `${height}px`);
             }
         };
 
@@ -52,17 +52,17 @@ const App: React.FC = () => {
         };
 
         // Initial updates
-        updateDarkLightHeight();
+        updateShadeTintHeight();
         updateStepsInputDimensions();
         updateStepsHeight();
 
         // Set up resize observers to update dimensions when content changes
-        const darkLightResizeObserver = new ResizeObserver(updateDarkLightHeight);
+        const shadeTintResizeObserver = new ResizeObserver(updateShadeTintHeight);
         const stepsInputResizeObserver = new ResizeObserver(updateStepsInputDimensions);
         const stepsResizeObserver = new ResizeObserver(updateStepsHeight);
 
-        if (darkLightRef.current) {
-            darkLightResizeObserver.observe(darkLightRef.current);
+        if (shadeTintRef.current) {
+            shadeTintResizeObserver.observe(shadeTintRef.current);
         }
 
         if (stepsInputRef.current) {
@@ -75,8 +75,8 @@ const App: React.FC = () => {
 
         // Clean up the observers when the component unmounts
         return () => {
-            if (darkLightRef.current) {
-                darkLightResizeObserver.unobserve(darkLightRef.current);
+            if (shadeTintRef.current) {
+                shadeTintResizeObserver.unobserve(shadeTintRef.current);
             }
             if (stepsInputRef.current) {
                 stepsInputResizeObserver.unobserve(stepsInputRef.current);
@@ -84,7 +84,7 @@ const App: React.FC = () => {
             if (stepsRef.current) {
                 stepsResizeObserver.unobserve(stepsRef.current);
             }
-            darkLightResizeObserver.disconnect();
+            shadeTintResizeObserver.disconnect();
             stepsInputResizeObserver.disconnect();
             stepsResizeObserver.disconnect();
         };
@@ -93,7 +93,7 @@ const App: React.FC = () => {
     return (
         <Area id="container">
             <div>
-                <LeftColumn darkLightRef={darkLightRef} />
+                <LeftColumn shadeTintRef={shadeTintRef} />
                 <ColumnDivider />
                 <RightColumn stepsRef={stepsRef} equalStepsRef={stepsInputRef} />
             </div>

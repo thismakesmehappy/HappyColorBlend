@@ -1,56 +1,53 @@
 import React, {forwardRef, useState} from 'react';
 import '../scss/column-layout.scss';
 import Section from './Section';
-import FontAwesomeIcon from './helpers/FontAwesomeIcon';
-import Chip from "./swatch";
 import Swatch from "./swatch/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
-import useUpdateSwatches from "../hooks/useUpdateSwatches";
 
-interface DarkLightProps {
+interface ShadeTintProps {
     className?: string;
     style?: React.CSSProperties;
 }
 
-const DarkLight = forwardRef<HTMLDivElement, DarkLightProps>(
+const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
     ({className, style}, ref) => {
-        const dark = useSwatchStore(state => state.getDark());
-        const light = useSwatchStore(state => state.getLight());
-        const setDark = useSwatchStore(state => state.setDark);
-        const setLight = useSwatchStore(state => state.setLight);
+        const shade = useSwatchStore(state => state.getShade());
+        const tint = useSwatchStore(state => state.getTint());
+        const setShade = useSwatchStore(state => state.setShade);
+        const setTint = useSwatchStore(state => state.setTint);
         const buildSwatches = useSwatchStore((state) => state.buildSwatches);
-        const [darkName, setDarkName] = useState(dark.name);
-        const [darkColor, setDarkColor] = useState(dark.color);
-        const [lightName, setLightName] = useState(light.name);
-        const [lightColor, setLightColor] = useState(light.color);
+        const [shadeName, setShadeName] = useState(shade.name);
+        const [shadeColor, setShadeColor] = useState(shade.color);
+        const [tintName, setTintName] = useState(tint.name);
+        const [tintColor, setTintColor] = useState(tint.color);
 
         return (
             <Section
-                id="dark-light"
+                id="shade-tint"
                 className={className}
                 ref={ref}
                 style={style}
             >
-                {/* Dark-light content */}
+                {/* Shade-tint content */}
                 <div className={"row"}>
                     <div className={"col col-6"}>
                         <p className={"figma-subtitle"}>Light</p>
-                        <Swatch color={lightColor} name={lightName}
+                        <Swatch color={tintColor} name={tintName}
                                 updateSwatch={function (color: string, name: string): void {
-                                    setLight({color, name});
+                                    setTint({color, name});
                                     buildSwatches();
                                 }}
-                                id={light.id}
+                                id={tint.id}
                         />
                     </div>
                     <div className={"col col-6"}>
-                        <p className={"figma-subtitle"}>Dark</p>
-                        <Swatch color={darkColor} name={darkName}
+                        <p className={"figma-subtitle"}>Shade</p>
+                        <Swatch color={shadeColor} name={shadeName}
                                 updateSwatch={function (color: string, name: string): void {
-                                    setDark({color, name});
+                                    setShade({color, name});
                                     buildSwatches();
                                 }}
-                                id={dark.id}
+                                id={shade.id}
                         />
                     </div>
                 </div>
@@ -59,4 +56,4 @@ const DarkLight = forwardRef<HTMLDivElement, DarkLightProps>(
     }
 );
 
-export default DarkLight;
+export default ShadeTint;

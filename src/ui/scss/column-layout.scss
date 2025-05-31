@@ -54,8 +54,8 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   overflow-x: hidden; // Prevent horizontal scrolling
 }
 
-// Dark-light section takes height of its content
-#dark-light {
+// Shade-tint section takes height of its content
+#shade-tint {
   height: auto;
   width: 100%;
   overflow-x: hidden; // Prevent horizontal scrolling
@@ -64,7 +64,7 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
 // Bases section expands to fill remaining space and scrolls when it overflows
 #bases {
   position: absolute;
-  top: calc(var(--dark-light-height, 0px) + $dividerSize); // Position after dark-light and row-divider (1px + 16px*2 margins)
+  top: calc(var(--shade-tint-height, 0px) + $dividerSize); // Position after shade-tint and row-divider (1px + 16px*2 margins)
   bottom: 0;
   left: 0;
   right: 0;

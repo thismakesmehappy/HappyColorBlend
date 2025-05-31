@@ -5,12 +5,12 @@ import {persist, createJSONStorage} from 'zustand/middleware'
 
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
-    dark: SwatchStoreInputSwatch,
-    light: SwatchStoreInputSwatch,
+    shade: SwatchStoreInputSwatch,
+    tint: SwatchStoreInputSwatch,
     bases: SwatchStoreInputSwatch[],
     steps: number[],
     customSteps: Set<number>,
-    includeDarkLight: boolean
+    includeShadeTint: boolean
 ) => {
     const combinedSteps = new Set([...steps, ...customSteps].sort((a, b) => a - b));
     const swatches: SwatchStoreSwatches[] = [];
@@ -23,14 +23,14 @@ export const buildNewSwatches = (
 
 
         for (let step of combinedSteps) {
-            swatch.swatches.push({color: blendColor(dark.color, light.color, bases[base].color, step), step: step});
+            swatch.swatches.push({color: blendColor(shade.color, tint.color, bases[base].color, step), step: step});
         }
 
         swatches.push(swatch);
     }
 
     // Stub implementation - will be expanded later
-    console.log("buildSwatches called with:", {dark, light, bases, steps, customSteps, includeDarkLight});
+    console.log("buildSwatches called with:", {shade, tint, bases, steps, customSteps, includeShadeTint});
     console.log(swatches)
     return swatches;
 };
@@ -55,34 +55,34 @@ interface SwatchStoreSwatches {
 // Define the store state interface
 interface SwatchStoreState {
     // State properties
-    dark: SwatchStoreInputSwatch;
-    light: SwatchStoreInputSwatch;
+    shade: SwatchStoreInputSwatch;
+    tint: SwatchStoreInputSwatch;
     bases: SwatchStoreInputSwatch[];
     swatches: SwatchStoreSwatches[];
     numberOfSteps: number;
     steps: number[];
     customSteps: Set<number>;
-    includeDarkLight: boolean;
+    includeShadeTint: boolean;
 
     // Getters
-    getDark: () => SwatchStoreInputSwatch;
-    getLight: () => SwatchStoreInputSwatch;
+    getShade: () => SwatchStoreInputSwatch;
+    getTint: () => SwatchStoreInputSwatch;
     getBases: () => SwatchStoreInputSwatch[];
     getSwatches: () => SwatchStoreSwatches[];
     getNumberOfSteps: () => number;
     getCustomSteps: () => Set<number>;
-    getIncludeDarkLight: () => boolean;
+    getIncludeShadeTint: () => boolean;
 
     // Setters
-    setDark: (dark: SwatchStoreInputSwatch) => void;
-    setLight: (dark: SwatchStoreInputSwatch) => void;
+    setShade: (shade: SwatchStoreInputSwatch) => void;
+    setTint: (tint: SwatchStoreInputSwatch) => void;
     increaseSteps: () => void;
     decreaseSteps: () => void;
     setSteps: (steps: number) => void;
     addBase: (base: SwatchStoreInputSwatch) => void;
     updateBase: (id: string, color: string, name: string) => void;
     removeBase: (id: string) => void;
-    flipIncludeDarkLight: () => void;
+    flipIncludeShadeTint: () => void;
     createSteps: () => number[];
     addCustomStep: (step: number) => void;
     removeCustomStep: (step: number) => void;
@@ -94,27 +94,27 @@ const useSwatchStore = create<SwatchStoreState>()(
   persist(
     (set, get) => ({
     // Initial state
-    dark: {color: "000000", name: "Black", id: "dark"},
-    light: {color: "FFFFFF", name: "White", id: "light"},
+    shade: {color: "000000", name: "Black", id: "shade"},
+    tint: {color: "FFFFFF", name: "White", id: "tint"},
     bases: [],
     swatches: [],
     numberOfSteps: 3,
     steps: [],
     customSteps: new Set<number>(),
-    includeDarkLight: true,
+    includeShadeTint: true,
 
     // Getters
-    getDark: () => get().dark,
-    getLight: () => get().light,
+    getShade: () => get().shade,
+    getTint: () => get().tint,
     getBases: () => get().bases,
     getSwatches: () => get().swatches,
     getNumberOfSteps: () => get().numberOfSteps,
     getCustomSteps: () => get().customSteps,
-    getIncludeDarkLight: () => get().includeDarkLight,
+    getIncludeShadeTint: () => get().includeShadeTint,
 
     // Setters
-    setDark: (dark: SwatchStoreInputSwatch) => set({dark}),
-    setLight: (light: SwatchStoreInputSwatch) => set({light}),
+    setShade: (shade: SwatchStoreInputSwatch) => set({shade}),
+    setTint: (tint: SwatchStoreInputSwatch) => set({tint}),
     increaseSteps: () => {
         set((state) => ({numberOfSteps: state.numberOfSteps + 2}));
         get().createSteps();
@@ -142,10 +142,10 @@ const useSwatchStore = create<SwatchStoreState>()(
     removeBase: (id: string) => set((state) => ({bases: state.bases.filter((b) => b.id !== id)})),
     createSteps: () => {
         const state = get();
-        const {numberOfSteps, includeDarkLight} = state;
+        const {numberOfSteps, includeShadeTint} = state;
         let steps: number[] = [];
 
-        if (includeDarkLight) {
+        if (includeShadeTint) {
             // Calculate steps including 0 and 1000
             for (let i = 0; i <= numberOfSteps + 1; i++) {
                 const step = Math.round((i * 1000) / (numberOfSteps + 1));
@@ -162,8 +162,8 @@ const useSwatchStore = create<SwatchStoreState>()(
         set({steps});
         return steps;
     },
-    flipIncludeDarkLight: () => {
-        set((state) => ({includeDarkLight: !state.includeDarkLight}));
+    flipIncludeShadeTint: () => {
+        set((state) => ({includeShadeTint: !state.includeShadeTint}));
         get().createSteps();
     },
 
@@ -186,12 +186,12 @@ const useSwatchStore = create<SwatchStoreState>()(
     buildSwatches: () => {
         const state = get();
         const newSwatches = buildNewSwatches(
-            state.dark,
-            state.light,
+            state.shade,
+            state.tint,
             state.bases,
             state.steps,
             state.customSteps,
-            state.includeDarkLight
+            state.includeShadeTint
         );
 
         // Update the swatches in the store

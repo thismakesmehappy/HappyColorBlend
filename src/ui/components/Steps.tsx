@@ -6,7 +6,7 @@ import Area from "./Area";
 import EqualSteps from "./steps/EqualSteps";
 import useSwatchStore from "../store/useSwatchStore";
 import Badge from "./helpers/Badge";
-import {IncludeLightDark} from "./steps/IncludeLightDark";
+import {IncludeShadeTint} from "./steps/IncludeShadeTint";
 import CustomSteps from "./steps/CustomSteps";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 
@@ -32,7 +32,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                 <Section id="steps-input" ref={equalStepsRef}>
                     {/* Steps-input content */}
                     <EqualSteps />
-                    <IncludeLightDark />
+                    <IncludeShadeTint />
                     <CustomSteps />
                 </Section>
                 <ColumnDivider />

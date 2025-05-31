@@ -1,23 +1,23 @@
 import React from 'react';
 import Area from './Area';
-import DarkLight from './DarkLight';
+import ShadeTint from './ShadeTint';
 import Bases from './Bases';
 import RowDivider from './RowDivider';
 
 interface LeftColumnProps {
     className?: string;
     style?: React.CSSProperties;
-    darkLightRef?: React.RefObject<HTMLDivElement>;
+    shadeTintRef?: React.RefObject<HTMLDivElement>;
 }
 
-const LeftColumn: React.FC<LeftColumnProps> = ({className, style, darkLightRef}) => {
+const LeftColumn: React.FC<LeftColumnProps> = ({className, style, shadeTintRef}) => {
     return (
         <Area
             id="left-column"
             className={className}
             style={style}
         >
-            <DarkLight ref={darkLightRef} />
+            <ShadeTint ref={shadeTintRef} />
             <RowDivider />
             <Bases />
         </Area>
