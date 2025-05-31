@@ -15,9 +15,9 @@
 
 ## Swatches
 
-- [ ] Vertical spacing between swatches of same base
+- [x] Vertical spacing between swatches of same base
 - [ ] Add option for token name prefix
-- [ ] Add space between each group of swatches for each base
+- [x] Add space between each group of swatches for each base
 - [ ] Create a footer to generate output
     - [ ] Generate swatches in document
     - [ ] Generate variables

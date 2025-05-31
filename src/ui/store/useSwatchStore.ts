@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
 import {blendColor} from "../helpers/colorMethods";
+import {persist, createJSONStorage} from 'zustand/middleware'
 
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
@@ -89,7 +90,9 @@ interface SwatchStoreState {
 }
 
 // Create the store
-const useSwatchStore = create<SwatchStoreState>((set, get) => ({
+const useSwatchStore = create<SwatchStoreState>()(
+  persist(
+    (set, get) => ({
     // Initial state
     dark: {color: "000000", name: "Black", id: "dark"},
     light: {color: "FFFFFF", name: "White", id: "light"},
@@ -195,6 +198,25 @@ const useSwatchStore = create<SwatchStoreState>((set, get) => ({
         set({swatches: newSwatches});
 
         return newSwatches;
+    }
+}), {
+    name: 'swatches-storage',
+    storage: createJSONStorage(() => localStorage),
+    partialize: (state) => ({
+        ...state,
+        customSteps: Array.from(state.customSteps)
+    }),
+    onRehydrateStorage: (state) => {
+        return (rehydratedState, error) => {
+            if (error) {
+                console.error('Error rehydrating swatches storage:', error);
+            } else if (rehydratedState) {
+                // Convert the array back to a Set
+                if (Array.isArray(rehydratedState.customSteps)) {
+                    rehydratedState.customSteps = new Set(rehydratedState.customSteps);
+                }
+            }
+        };
     }
 }));
 

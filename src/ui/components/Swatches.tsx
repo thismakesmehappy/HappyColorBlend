@@ -21,19 +21,19 @@ const Swatches: React.FC<SwatchesProps> = ({className, style}) => {
             style={style}
         >
             {swatches.map((base) => {
-                    return <>
-                        <p className={"figma-subtitle"}>{base.base.name} {base.base.color}</p>
+                    return <div className={"swatch-group figma-mb-lg figma-pb-sm"}>
+                        <p className={"figma-subtitle"}><strong>{base.base.name}</strong> {base.base.color}</p>
                         <div className={"row"}>
                             {base.swatches.map((swatch) => {
                                 return <Swatch name={String(swatch.step)} color={String(swatch.color)} horizontal={true}
                                                display={true}
-                                               className={"col col-3"}
+                                               className={"col col-3 figma-mb-sm"}
                                                updateSwatch={function (color: string, name: string, id?: string): void {
 
                                                }} />
                             })}
                         </div>
-                    </>
+                    </div>
                 }
             )}
         </Section>
