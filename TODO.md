@@ -45,11 +45,11 @@
 ## Dark Light
 
 - [x] Generalize terms
-- [ ] Reverse dark and light swatches
+- [x] Reverse dark and light swatches
 
 ## Bases
 
-- [ ] Move generate new to same line as title
+- [x] Move generate new to same line as title
 
 ## Steps
 

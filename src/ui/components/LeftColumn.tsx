@@ -1,7 +1,7 @@
 import React from 'react';
 import Area from './Area';
 import ShadeTint from './ShadeTint';
-import Bases from './Bases';
+import PrimaryColors from './PrimaryColors';
 import RowDivider from './RowDivider';
 
 interface LeftColumnProps {
@@ -19,7 +19,7 @@ const LeftColumn: React.FC<LeftColumnProps> = ({className, style, shadeTintRef})
         >
             <ShadeTint ref={shadeTintRef} />
             <RowDivider />
-            <Bases />
+            <PrimaryColors />
         </Area>
     );
 };

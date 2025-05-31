@@ -7,52 +7,52 @@ import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import {v4 as uuidv4} from 'uuid';
 import ColorNamer from 'color-namer';
 
-interface BasesProps {
+interface PrimaryColorsProps {
     className?: string;
     style?: React.CSSProperties;
 }
 
-const Bases: React.FC<BasesProps> = ({className, style}) => {
-    const bases = useSwatchStore((state) => state.bases);
-    const updateBase = useSwatchStore((state) => state.updateBase);
-    const addBase = useSwatchStore((state) => state.addBase);
-    const removeBase = useSwatchStore((state) => state.removeBase);
+const PrimaryColors: React.FC<PrimaryColorsProps> = ({className, style}) => {
+    const primaryColors = useSwatchStore((state) => state.primaryColors);
+    const updatePrimaryColor = useSwatchStore((state) => state.updatePrimaryColor);
+    const addPrimaryColor = useSwatchStore((state) => state.addPrimaryColor);
+    const removePrimaryColor = useSwatchStore((state) => state.removePrimaryColor);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
-    const createRandomBase = () => {
+    const createRandomPrimaryColor = () => {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
         const randomName = ColorNamer(`#${randomColor}`).ntc[0].name;
-        const newBase: SwatchStoreInputSwatch = {
+        const newPrimaryColor: SwatchStoreInputSwatch = {
             color: randomColor,
             name: randomName,
             id: uuidv4()
         };
-        addBase(newBase);
+        addPrimaryColor(newPrimaryColor);
         buildSwatches();
     };
     return (
         <Section
-            id="bases"
+            id="primary-colors"
             className={className}
             style={style}
         >
-            <p className={"figma-subtitle"}>Bases</p>
-            <div onClick={createRandomBase}>
+            <p className={"figma-subtitle"}>Primary Colors <span onClick={createRandomPrimaryColor}>
                 <FontAwesomeIcon icon={"circle-plus"} className={"figma-icon figma-text-primary fa-2x"} />
-            </div>
+            </span></p>
+
             <div className={"row"}>
-                {/* Bases content */}
-                {bases.map((base: SwatchStoreInputSwatch) => (
-                    <Swatch name={String(base.name)} color={String(base.color)}
+                {/* Primary Colors content */}
+                {primaryColors.map((primaryColor: SwatchStoreInputSwatch) => (
+                    <Swatch name={String(primaryColor.name)} color={String(primaryColor.color)}
                             className={"col col-6 mb-4"} canDelete={true}
                             updateSwatch={function (color: string, name: string, id?: string): void {
-                                updateBase(id!, color, name);
+                                updatePrimaryColor(id!, color, name);
                                 buildSwatches();
                             }}
                             onDelete={(id) => {
-                                removeBase(id);
+                                removePrimaryColor(id);
                                 buildSwatches()
                             }}
-                            id={base.id} />
+                            id={primaryColor.id} />
                 ))
                 }
             </div>
@@ -60,4 +60,4 @@ const Bases: React.FC<BasesProps> = ({className, style}) => {
     );
 };
 
-export default Bases;
+export default PrimaryColors;

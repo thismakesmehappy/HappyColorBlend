@@ -54,29 +54,29 @@ const interpolateColors = (
  * Blends colors based on a step value
  * @param shade - Shade hex color without the # (e.g., "000000")
  * @param tint - Tint hex color without the # (e.g., "FFFFFF")
- * @param base - Base hex color without the # (e.g., "808080")
+ * @param primaryColor - Base hex color without the # (e.g., "808080")
  * @param step - Step value between 0 and 1000
  * @returns Blended hex color without the #
  */
-export const blendColor = (shade: string, tint: string, base: string, step: number): string => {
+export const blendColor = (shade: string, tint: string, primaryColor: string, step: number): string => {
     // Ensure step is within bounds
     step = Math.max(0, Math.min(1000, step));
 
     // Convert hex colors to RGB
     const shadeRgb = hexToRgb(shade);
     const tintRgb = hexToRgb(tint);
-    const baseRgb = hexToRgb(base);
+    const primaryColorRgb = hexToRgb(primaryColor);
 
     let resultRgb;
 
     if (step < 500) {
-        // Interpolate between shade and base
-        const factor = step / 500; // 0 = 100% shade, 1 = 100% base
-        resultRgb = interpolateColors(shadeRgb, baseRgb, factor);
+        // Interpolate between shade and primaryColor
+        const factor = step / 500; // 0 = 100% shade, 1 = 100% primaryColor
+        resultRgb = interpolateColors(shadeRgb, primaryColorRgb, factor);
     } else {
-        // Interpolate between base and tint
-        const factor = (step - 500) / 500; // 0 = 100% base, 1 = 100% tint
-        resultRgb = interpolateColors(baseRgb, tintRgb, factor);
+        // Interpolate between primaryColor and tint
+        const factor = (step - 500) / 500; // 0 = 100% primaryColor, 1 = 100% tint
+        resultRgb = interpolateColors(primaryColorRgb, tintRgb, factor);
     }
 
     // Convert back to hex

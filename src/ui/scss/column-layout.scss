@@ -61,8 +61,8 @@ $dividerSize: 2 * $dividerPadding + $dividerWidth;
   overflow-x: hidden; // Prevent horizontal scrolling
 }
 
-// Bases section expands to fill remaining space and scrolls when it overflows
-#bases {
+// Primary Colors section expands to fill remaining space and scrolls when it overflows
+#primary-colors {
   position: absolute;
   top: calc(var(--shade-tint-height, 0px) + $dividerSize); // Position after shade-tint and row-divider (1px + 16px*2 margins)
   bottom: 0;
