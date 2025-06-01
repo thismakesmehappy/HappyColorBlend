@@ -12,6 +12,7 @@
 - [ ] Add # to hex (when displayed)
 - [ ] Accept on enter
 - [ ] cancel on escape
+- [ ] update toggle to go gray on off
 
 ## Swatches
 
@@ -31,6 +32,10 @@
     - [x] Update swatches when adding a base
     - [x] Update swatches when removing a base
     - [x] Update swatches when updating a base
+- [ ] Restyle to be better swatches
+- [ ] Blend tint to shade
+- [ ] Rename swatch to swatchInput
+- [ ] Refactor output swatches
 
 ## Test
 

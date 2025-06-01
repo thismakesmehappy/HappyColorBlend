@@ -9,6 +9,7 @@ import Badge from "./helpers/Badge";
 import {IncludeShadeTint} from "./steps/IncludeShadeTint";
 import CustomSteps from "./steps/CustomSteps";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
+import {PadZeros} from "./steps/PadZeros";
 
 interface StepsProps {
     className?: string;
@@ -33,6 +34,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                     {/* Steps-input content */}
                     <EqualSteps />
                     <IncludeShadeTint />
+                    <PadZeros />
                     <CustomSteps />
                 </Section>
                 <ColumnDivider />

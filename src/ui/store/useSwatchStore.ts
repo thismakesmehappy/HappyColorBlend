@@ -2,17 +2,17 @@ import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
 import {blendColor} from "../helpers/colorMethods";
 import {persist, createJSONStorage} from 'zustand/middleware'
+import steps from "../components/Steps";
 
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
     shade: SwatchStoreInputSwatch,
     tint: SwatchStoreInputSwatch,
     primaryColors: SwatchStoreInputSwatch[],
-    steps: number[],
-    customSteps: Set<number>,
-    includeShadeTint: boolean
+    state: SwatchStoreState,
 ) => {
-    const combinedSteps = new Set([...steps, ...customSteps].sort((a, b) => a - b));
+    state.setCombinedSteps();
+    const combinedSteps = state.getCombinedSteps();
     const swatches: SwatchStoreSwatches[] = [];
 
     for (let primary in primaryColors) {
@@ -33,8 +33,6 @@ export const buildNewSwatches = (
     }
 
     // Stub implementation - will be expanded later
-    console.log("buildSwatches called with:", {shade, tint, primaryColors, steps, customSteps, includeShadeTint});
-    console.log(swatches)
     return swatches;
 };
 
@@ -66,6 +64,8 @@ interface SwatchStoreState {
     steps: number[];
     customSteps: Set<number>;
     includeShadeTint: boolean;
+    combinedSteps: Set<number>;
+    shouldPadZeros: boolean;
 
     // Getters
     getShade: () => SwatchStoreInputSwatch;
@@ -75,6 +75,9 @@ interface SwatchStoreState {
     getNumberOfSteps: () => number;
     getCustomSteps: () => Set<number>;
     getIncludeShadeTint: () => boolean;
+    getTotalUniqueSteps: () => number;
+    getCombinedSteps: () => Set<number>;
+    getShouldPadZeros: () => boolean;
 
     // Setters
     setShade: (shade: SwatchStoreInputSwatch) => void;
@@ -82,6 +85,7 @@ interface SwatchStoreState {
     increaseSteps: () => void;
     decreaseSteps: () => void;
     setSteps: (steps: number) => void;
+    setCombinedSteps: () => void;
     addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => void;
     updatePrimaryColor: (id: string, color: string, name: string) => void;
     removePrimaryColor: (id: string) => void;
@@ -90,6 +94,7 @@ interface SwatchStoreState {
     addCustomStep: (step: number) => void;
     removeCustomStep: (step: number) => void;
     buildSwatches: () => SwatchStoreSwatches[];
+    flipShouldPadZeros: () => void;
 }
 
 // Create the store
@@ -105,6 +110,8 @@ const useSwatchStore = create<SwatchStoreState>()(
             steps: [],
             customSteps: new Set<number>(),
             includeShadeTint: true,
+            shouldPadZeros: true,
+            combinedSteps: new Set<number>(),
 
             // Getters
             getShade: () => get().shade,
@@ -114,6 +121,13 @@ const useSwatchStore = create<SwatchStoreState>()(
             getNumberOfSteps: () => get().numberOfSteps,
             getCustomSteps: () => get().customSteps,
             getIncludeShadeTint: () => get().includeShadeTint,
+            getTotalUniqueSteps: () => get().combinedSteps.size,
+            getCombinedSteps: () => get().combinedSteps,
+            setCombinedSteps: () => {
+                const {steps, customSteps} = get();
+                set({combinedSteps: new Set([...steps, ...customSteps].sort((a, b) => a - b))});
+            },
+            getShouldPadZeros: () => get().shouldPadZeros,
 
             // Setters
             setShade: (shade: SwatchStoreInputSwatch) => set({shade}),
@@ -169,6 +183,9 @@ const useSwatchStore = create<SwatchStoreState>()(
                 set((state) => ({includeShadeTint: !state.includeShadeTint}));
                 get().createSteps();
             },
+            flipShouldPadZeros: () => {
+                set((state) => ({shouldPadZeros: !state.shouldPadZeros}));
+            },
 
             addCustomStep: (step: number) => {
                 set((state) => {
@@ -188,14 +205,7 @@ const useSwatchStore = create<SwatchStoreState>()(
 
             buildSwatches: () => {
                 const state = get();
-                const newSwatches = buildNewSwatches(
-                    state.shade,
-                    state.tint,
-                    state.primaryColors,
-                    state.steps,
-                    state.customSteps,
-                    state.includeShadeTint
-                );
+                const newSwatches = buildNewSwatches(state.shade, state.tint, state.primaryColors, state);
 
                 // Update the swatches in the store
                 set({swatches: newSwatches});
