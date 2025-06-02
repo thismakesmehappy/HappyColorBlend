@@ -43,12 +43,12 @@ export interface SwatchStoreInputSwatch {
     id?: string;
 }
 
-interface SwatchStoreSwatch {
+export interface SwatchStoreSwatch {
     color: string;
     step: number;
 }
 
-interface SwatchStoreSwatches {
+export interface SwatchStoreSwatches {
     base: SwatchStoreInputSwatch;
     swatches: SwatchStoreSwatch[];
 }
