@@ -15,7 +15,7 @@ const Toggle: React.FC<ToggleProps> = ({value, onChange, className = "", size = 
 
     return (
         <div
-            className={`toggle-container figma-bg-primary ${className}`}
+            className={`toggle-container ${value ? 'figma-bg-primary' : 'figma-bg-secondary-gray'} ${className}`}
             onClick={handleToggle}
             style={{
                 display: "flex",
