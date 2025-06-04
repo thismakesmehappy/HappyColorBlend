@@ -12,7 +12,7 @@
 - [x] Add # to hex (when displayed)
 - [ ] Accept on enter
 - [ ] cancel on escape
-- [ ] update toggle to go gray on off
+- [x] update toggle to go gray on off
 
 ## Swatches
 
