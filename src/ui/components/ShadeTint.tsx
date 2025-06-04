@@ -1,7 +1,7 @@
 import React, {forwardRef, useState} from 'react';
 import '../scss/column-layout.scss';
 import Section from './Section';
-import Swatch from "./swatch/Swatch";
+import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
 
 interface ShadeTintProps {

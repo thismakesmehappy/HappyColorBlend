@@ -1,7 +1,7 @@
 import React from 'react';
 import '../scss/column-layout.scss';
 import Section from "./Section";
-import Swatch from "./swatch/Swatch";
+import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore, {SwatchStoreInputSwatch} from "../store/useSwatchStore";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import {v4 as uuidv4} from 'uuid';

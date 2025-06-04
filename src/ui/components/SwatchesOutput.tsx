@@ -2,7 +2,7 @@ import React from 'react';
 import '../scss/column-layout.scss';
 import Section from "./Section";
 import useSwatchStore, {SwatchStoreSwatch} from "../store/useSwatchStore";
-import SwatchGroupSwatches from "./Swatches/SwatchGroupSwatches";
+import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
 import {blendColor} from "../helpers/colorMethods";
 
 
@@ -11,7 +11,7 @@ interface SwatchesProps {
     style?: React.CSSProperties;
 }
 
-const Swatches: React.FC<SwatchesProps> = ({className, style}) => {
+const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
     const swatches = useSwatchStore((state) => state.getSwatches());
     const tintColor = useSwatchStore((state) => state.getTint());
     const shadeColor = useSwatchStore((state) => state.getShade());
@@ -39,4 +39,4 @@ const Swatches: React.FC<SwatchesProps> = ({className, style}) => {
     );
 };
 
-export default Swatches;
+export default SwatchesOutput;
