@@ -5,11 +5,11 @@
 ## App
 
 - [ ] Add title bar
-- [ ] Increase padding
+- [x] Increase padding
 - [ ] Update formulas to calculate section sizes
 - [ ] Refactor
 - [x] Hex to uppercase
-- [ ] Add # to hex (when displayed)
+- [x] Add # to hex (when displayed)
 - [ ] Accept on enter
 - [ ] cancel on escape
 - [ ] update toggle to go gray on off

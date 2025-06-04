@@ -50,7 +50,7 @@ const SwatchLabels = ({
     return (
         <div className={"vstack"}>
             <div className="swatch-label swatch-label-text mw-100 d-inline-block fw-bold">{swatchName}</div>
-            <div className="swatch-label swatch-label-text mw-100 d-inline-block">{swatchColor}</div>
+            <div className="swatch-label swatch-label-text mw-100 d-inline-block">#{swatchColor}</div>
             <div>{isValidColor}</div>
         </div>
     );
