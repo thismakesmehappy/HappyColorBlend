@@ -8,7 +8,7 @@
 - [ ] Increase padding
 - [ ] Update formulas to calculate section sizes
 - [ ] Refactor
-- [ ] Hex to uppercase
+- [x] Hex to uppercase
 - [ ] Add # to hex (when displayed)
 - [ ] Accept on enter
 - [ ] cancel on escape

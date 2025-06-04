@@ -55,7 +55,7 @@ const SwatchControls = ({
         // Only update if the color is valid
         if (isValidHexColor(tempSwatchColor)) {
             setSwatchName(tempSwatchName);
-            setSwatchColor(tempSwatchColor);
+            setSwatchColor(tempSwatchColor.toUpperCase());
             setIsEditing(false);
         } else {
             // Show toast notification if color is invalid

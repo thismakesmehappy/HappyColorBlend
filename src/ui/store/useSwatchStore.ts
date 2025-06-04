@@ -79,8 +79,8 @@ interface SwatchStoreState {
     getShouldPadZeros: () => boolean;
 
     // Setters
-    setShade: (shade: SwatchStoreInputSwatch) => void;
-    setTint: (tint: SwatchStoreInputSwatch) => void;
+    setShade: (color: string, name: string) => void;
+    setTint: (color: string, name: string) => void;
     increaseSteps: () => void;
     decreaseSteps: () => void;
     setSteps: (steps: number) => void;
@@ -130,8 +130,8 @@ const useSwatchStore = create<SwatchStoreState>()(
         getShouldPadZeros: () => get().shouldPadZeros,
 
         // Setters
-        setShade: (shade: SwatchStoreInputSwatch) => set({shade}),
-        setTint: (tint: SwatchStoreInputSwatch) => set({tint}),
+        setShade: (color: string, name: string) => set({shade: {color: color, name: name}}),
+        setTint: (color: string, name: string) => set({tint: {color: color, name: name}}),
         increaseSteps: () => {
             set((state) => ({numberOfSteps: state.numberOfSteps + 2}));
             get().createSteps();

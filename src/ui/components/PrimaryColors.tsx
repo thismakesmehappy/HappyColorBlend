@@ -19,7 +19,7 @@ const PrimaryColors: React.FC<PrimaryColorsProps> = ({className, style}) => {
     const removePrimaryColor = useSwatchStore((state) => state.removePrimaryColor);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
     const createRandomPrimaryColor = () => {
-        const randomColor = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
         const randomName = ColorNamer(`#${randomColor}`).ntc[0].name;
         const newPrimaryColor: SwatchStoreInputSwatch = {
             color: randomColor,
