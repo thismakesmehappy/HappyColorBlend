@@ -4,7 +4,7 @@ import {SwatchStoreSwatch, SwatchStoreSwatches} from "../../store/useSwatchStore
 
 interface SwatchGroupSwatchesProps {
     colorName: string;
-    color: string;
+    color?: string;
     swatches: SwatchStoreSwatch[];
 }
 

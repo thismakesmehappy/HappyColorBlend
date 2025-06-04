@@ -58,7 +58,7 @@ const interpolateColors = (
  * @param step - Step value between 0 and 1000
  * @returns Blended hex color without the #
  */
-export const blendColor = (shade: string, tint: string, primaryColor: string, step: number): string => {
+export const blendPrimaryColor = (shade: string, tint: string, primaryColor: string, step: number): string => {
     // Ensure step is within bounds
     step = Math.max(0, Math.min(1000, step));
 
@@ -78,6 +78,23 @@ export const blendColor = (shade: string, tint: string, primaryColor: string, st
         const factor = (step - 500) / 500; // 0 = 100% primaryColor, 1 = 100% tint
         resultRgb = interpolateColors(primaryColorRgb, tintRgb, factor);
     }
+
+    // Convert back to hex
+    return rgbToHex(resultRgb.r, resultRgb.g, resultRgb.b);
+};
+
+export const blendColor = (color1: string, color2: string, step: number): string => {
+    // Ensure step is within bounds
+    step = Math.max(0, Math.min(1000, step));
+
+    // Convert hex colors to RGB
+    const color1Rgb = hexToRgb(color1);
+    const color2Rgb = hexToRgb(color2);
+
+    let resultRgb;
+
+    const factor = step / 1000; // 0 = 100% shade, 1 = 100% primaryColor
+    resultRgb = interpolateColors(color1Rgb, color2Rgb, factor);
 
     // Convert back to hex
     return rgbToHex(resultRgb.r, resultRgb.g, resultRgb.b);

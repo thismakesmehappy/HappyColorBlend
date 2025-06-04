@@ -1,8 +1,7 @@
 import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
-import {blendColor} from "../helpers/colorMethods";
+import {blendPrimaryColor} from "../helpers/colorMethods";
 import {persist, createJSONStorage} from 'zustand/middleware'
-import steps from "../components/Steps";
 
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
@@ -24,7 +23,7 @@ export const buildNewSwatches = (
 
         for (let step of combinedSteps) {
             swatch.swatches.push({
-                color: blendColor(shade.color, tint.color, primaryColors[primary].color, step),
+                color: blendPrimaryColor(shade.color, tint.color, primaryColors[primary].color, step),
                 step: step
             });
         }
@@ -97,144 +96,151 @@ interface SwatchStoreState {
     flipShouldPadZeros: () => void;
 }
 
+
 // Create the store
 const useSwatchStore = create<SwatchStoreState>()(
-    persist(
-        (set, get) => ({
-            // Initial state
-            shade: {color: "000000", name: "Black", id: "shade"},
-            tint: {color: "FFFFFF", name: "White", id: "tint"},
-            primaryColors: [],
-            swatches: [],
-            numberOfSteps: 3,
-            steps: [],
-            customSteps: new Set<number>(),
-            includeShadeTint: true,
-            shouldPadZeros: true,
-            combinedSteps: new Set<number>(),
+    // persist(
+    (set, get) => ({
+        // Initial state
+        shade: {color: "000000", name: "Black", id: "shade"},
+        tint: {color: "FFFFFF", name: "White", id: "tint"},
+        primaryColors: [],
+        swatches: [],
+        numberOfSteps: 3,
+        steps: [0, 250, 500, 750, 1000],
+        customSteps: new Set<number>(),
+        includeShadeTint: true,
+        shouldPadZeros: true,
+        combinedSteps: new Set<number>(),
 
-            // Getters
-            getShade: () => get().shade,
-            getTint: () => get().tint,
-            getPrimaryColors: () => get().primaryColors,
-            getSwatches: () => get().swatches,
-            getNumberOfSteps: () => get().numberOfSteps,
-            getCustomSteps: () => get().customSteps,
-            getIncludeShadeTint: () => get().includeShadeTint,
-            getTotalUniqueSteps: () => get().combinedSteps.size,
-            getCombinedSteps: () => get().combinedSteps,
-            setCombinedSteps: () => {
-                const {steps, customSteps} = get();
-                set({combinedSteps: new Set([...steps, ...customSteps].sort((a, b) => a - b))});
-            },
-            getShouldPadZeros: () => get().shouldPadZeros,
+        // Getters
+        getShade: () => get().shade,
+        getTint: () => get().tint,
+        getPrimaryColors: () => get().primaryColors,
+        getSwatches: () => get().swatches,
+        getNumberOfSteps: () => get().numberOfSteps,
+        getCustomSteps: () => get().customSteps,
+        getIncludeShadeTint: () => get().includeShadeTint,
+        getTotalUniqueSteps: () => get().combinedSteps.size,
+        getCombinedSteps: () => get().combinedSteps,
+        setCombinedSteps: () => {
+            const {steps, customSteps} = get();
+            set({combinedSteps: new Set([...steps, ...customSteps].sort((a, b) => a - b))});
+        },
+        getShouldPadZeros: () => get().shouldPadZeros,
 
-            // Setters
-            setShade: (shade: SwatchStoreInputSwatch) => set({shade}),
-            setTint: (tint: SwatchStoreInputSwatch) => set({tint}),
-            increaseSteps: () => {
-                set((state) => ({numberOfSteps: state.numberOfSteps + 2}));
+        // Setters
+        setShade: (shade: SwatchStoreInputSwatch) => set({shade}),
+        setTint: (tint: SwatchStoreInputSwatch) => set({tint}),
+        increaseSteps: () => {
+            set((state) => ({numberOfSteps: state.numberOfSteps + 2}));
+            get().createSteps();
+        },
+        decreaseSteps: () => {
+            if (get().numberOfSteps > MINIMUM_STEPS) {
+                set((state) => ({numberOfSteps: state.numberOfSteps - 2}));
                 get().createSteps();
-            },
-            decreaseSteps: () => {
-                if (get().numberOfSteps > MINIMUM_STEPS) {
-                    set((state) => ({numberOfSteps: state.numberOfSteps - 2}));
-                    get().createSteps();
-                }
-            },
-            setSteps: (steps: number) => {
-                set({numberOfSteps: steps});
-                get().createSteps();
-            },
-            addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => set((state) => ({primaryColors: [...state.primaryColors, primaryColor]})),
-            updatePrimaryColor: (id: string, color: string, name: string) => set((state) => ({
-                primaryColors: state.primaryColors.map((p) => {
-                    if (p.id === id) {
-                        console.log("updated id " + id);
-                        return {color: color, name: name, id: id};
-                    }
-                    return p;
-                })
-            })),
-            removePrimaryColor: (id: string) => set((state) => ({primaryColors: state.primaryColors.filter((p) => p.id !== id)})),
-            createSteps: () => {
-                const state = get();
-                const {numberOfSteps, includeShadeTint} = state;
-                let steps: number[] = [];
-
-                if (includeShadeTint) {
-                    // Calculate steps including 0 and 1000
-                    for (let i = 0; i <= numberOfSteps + 1; i++) {
-                        const step = Math.round((i * 1000) / (numberOfSteps + 1));
-                        steps.push(step);
-                    }
-                } else {
-                    // Calculate steps excluding 0 and 1000
-                    for (let i = 1; i <= numberOfSteps; i++) {
-                        const step = Math.round((i * 1000) / (numberOfSteps + 1));
-                        steps.push(step);
-                    }
-                }
-
-                set({steps});
-                return steps;
-            },
-            flipIncludeShadeTint: () => {
-                set((state) => ({includeShadeTint: !state.includeShadeTint}));
-                get().createSteps();
-            },
-            flipShouldPadZeros: () => {
-                set((state) => ({shouldPadZeros: !state.shouldPadZeros}));
-            },
-
-            addCustomStep: (step: number) => {
-                set((state) => {
-                    const customSteps = Array.from(state.customSteps);
-                    customSteps.push(step);
-                    customSteps.sort((a, b) => a - b)
-                    return {customSteps: new Set(customSteps)};
-                });
-            },
-            removeCustomStep: (step: number) => {
-                set((state) => {
-                    const newCustomSteps = new Set(state.customSteps);
-                    newCustomSteps.delete(step);
-                    return {customSteps: newCustomSteps};
-                });
-            },
-
-            buildSwatches: () => {
-                const state = get();
-                const newSwatches = buildNewSwatches(state.shade, state.tint, state.primaryColors, state);
-
-                // Update the swatches in the store
-                set({swatches: newSwatches});
-
-                return newSwatches;
             }
-        }), {
-            name: 'swatches-storage',
-            storage: createJSONStorage(() => localStorage),
-            partialize: (state) => ({
-                ...state,
-                customSteps: Array.from(state.customSteps)
-            }),
-            onRehydrateStorage: (state) => {
-                return (rehydratedState, error) => {
-                    if (error) {
-                        console.error('Error rehydrating swatches storage:', error);
-                    } else if (rehydratedState) {
-                        // Convert the array back to a Set
-                        if (Array.isArray(rehydratedState.customSteps)) {
-                            rehydratedState.customSteps = new Set(rehydratedState.customSteps);
-                        }
-                    }
-                };
+        },
+        setSteps: (steps: number) => {
+            set({numberOfSteps: steps});
+            get().createSteps();
+        },
+        addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => set((state) => ({primaryColors: [...state.primaryColors, primaryColor]})),
+        updatePrimaryColor: (id: string, color: string, name: string) => set((state) => ({
+            primaryColors: state.primaryColors.map((p) => {
+                if (p.id === id) {
+                    console.log("updated id " + id);
+                    return {color: color, name: name, id: id};
+                }
+                return p;
+            })
+        })),
+        removePrimaryColor: (id: string) => set((state) => ({primaryColors: state.primaryColors.filter((p) => p.id !== id)})),
+        createSteps: () => {
+            const state = get();
+            const {numberOfSteps, includeShadeTint} = state;
+            let steps: number[] = [];
+
+            if (includeShadeTint) {
+                // Calculate steps including 0 and 1000
+                for (let i = 0; i <= numberOfSteps + 1; i++) {
+                    const step = Math.round((i * 1000) / (numberOfSteps + 1));
+                    steps.push(step);
+                }
+            } else {
+                // Calculate steps excluding 0 and 1000
+                for (let i = 1; i <= numberOfSteps; i++) {
+                    const step = Math.round((i * 1000) / (numberOfSteps + 1));
+                    steps.push(step);
+                }
             }
-        }));
+
+            set({steps});
+            return steps;
+        },
+        flipIncludeShadeTint: () => {
+            set((state) => ({includeShadeTint: !state.includeShadeTint}));
+            get().createSteps();
+        },
+        flipShouldPadZeros: () => {
+            set((state) => ({shouldPadZeros: !state.shouldPadZeros}));
+        },
+
+        addCustomStep: (step: number) => {
+            set((state) => {
+                const customSteps = Array.from(state.customSteps);
+                customSteps.push(step);
+                customSteps.sort((a, b) => a - b)
+                return {customSteps: new Set(customSteps)};
+            });
+        },
+        removeCustomStep: (step: number) => {
+            set((state) => {
+                const newCustomSteps = new Set(state.customSteps);
+                newCustomSteps.delete(step);
+                return {customSteps: newCustomSteps};
+            });
+        },
+
+        buildSwatches: () => {
+            const state = get();
+            const newSwatches = buildNewSwatches(state.shade, state.tint, state.primaryColors, state);
+
+            // Update the swatches in the store
+            set({swatches: newSwatches});
+
+            return newSwatches;
+        }
+    })
+    // ,
+    //     {
+    //         name: 'swatches-storage',
+    //         storage: createJSONStorage(() => localStorage),
+    //         partialize: (state) => ({
+    //             ...state,
+    //             customSteps: Array.from(state.customSteps)
+    //         }),
+    //         onRehydrateStorage: (state) => {
+    //             return (rehydratedState, error) => {
+    //                 if (error) {
+    //                     console.error('Error rehydrating swatches storage:', error);
+    //                 } else if (rehydratedState) {
+    //                     // Convert the array back to a Set
+    //                     if (Array.isArray(rehydratedState.customSteps)) {
+    //                         rehydratedState.customSteps = new Set(rehydratedState.customSteps);
+    //                     }
+    //                 }
+    //             };
+    //         }
+    //     }
+    // )
+);
 
 
 // Initialize steps array
 useSwatchStore.getState().createSteps();
+useSwatchStore.getState().setCombinedSteps();
+useSwatchStore.getState().buildSwatches();
 
 export default useSwatchStore;
