@@ -21,6 +21,7 @@
 - [x] Add space between each group of swatches for each base
 - [ ] Create a footer to generate output
     - [ ] Generate swatches in document
+    - [ ] Generate Styles
     - [ ] Generate variables
 - [x] Update swatches with different activities
     - [x] Update swatches when updating dark
@@ -36,7 +37,6 @@
 - [x] Blend tint to shade
 - [x] Rename swatch to swatchInput
 - [x] Refactor output swatches
-- [ ] Move should PadZeros logic to the store rather than the component
 
 ## Test
 

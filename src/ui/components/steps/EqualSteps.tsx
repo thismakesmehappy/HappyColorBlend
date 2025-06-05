@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import useSwatchStore from "../../store/useSwatchStore";
 import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
+import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
 
-export const EqualSteps = () => {
+export const EqualSteps = ({className = "", style = {}}: ClassAndStyle) => {
     const numberOfSteps = useSwatchStore((state) => state.numberOfSteps)
     const increaseSteps = useSwatchStore((state) => state.increaseSteps)
     const decreaseSteps = useSwatchStore((state) => state.decreaseSteps)
@@ -13,7 +14,7 @@ export const EqualSteps = () => {
         updateCanDecrease(numberOfSteps > 3)
     }, [numberOfSteps]);
     return (
-        <div>
+        <div className={className} style={style}>
             <span>Equal steps: </span>
             <span onClick={() => {
                 decreaseSteps();

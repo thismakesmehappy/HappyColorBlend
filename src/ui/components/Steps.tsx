@@ -8,7 +8,6 @@ import useSwatchStore from "../store/useSwatchStore";
 import Badge from "./helpers/Badge";
 import {IncludeShadeTint} from "./steps/IncludeShadeTint";
 import CustomSteps from "./steps/CustomSteps";
-import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import {PadZeros} from "./steps/PadZeros";
 
 interface StepsProps {
@@ -32,9 +31,9 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
             >
                 <Section id="steps-input" ref={equalStepsRef}>
                     {/* Steps-input content */}
-                    <EqualSteps />
-                    <IncludeShadeTint />
-                    <PadZeros />
+                    <EqualSteps className="figma-mb-sm" />
+                    <IncludeShadeTint className={"figma-mb-sm"} />
+                    <PadZeros className={"figma-mb-sm"} />
                     <CustomSteps />
                 </Section>
                 <ColumnDivider />

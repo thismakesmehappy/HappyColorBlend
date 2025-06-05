@@ -8,8 +8,9 @@ import {
     INVALID_CUSTOM_STEP_OUT_OF_RANGE,
     INVALID_CUSTOM_STEP_RESERVED, INVALID_CUSTOM_STEP_DUPLICATED
 } from '../../../constants/uiConstants';
+import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
 
-export const CustomSteps: React.FC = () => {
+export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyle) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [showToast, setShowToast] = useState<boolean>(false);
     const [toastMessage, setToastMessage] = useState<string>('');
@@ -84,7 +85,7 @@ export const CustomSteps: React.FC = () => {
     };
 
     return (
-        <div className="custom-steps">
+        <div className={`custom-steps ${className}`} style={style}>
             <span>Add custom step: </span>
             <span>
                 <input
