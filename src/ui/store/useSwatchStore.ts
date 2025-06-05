@@ -1,7 +1,6 @@
 import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
 import {blendPrimaryColor} from "../helpers/colorMethods";
-import {persist, createJSONStorage} from 'zustand/middleware'
 
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
@@ -40,6 +39,8 @@ export interface SwatchStoreInputSwatch {
     color: string;
     name: string;
     id?: string;
+    tokenName: string;
+    customToken: boolean;
 }
 
 export interface SwatchStoreSwatch {
@@ -79,14 +80,14 @@ interface SwatchStoreState {
     getShouldPadZeros: () => boolean;
 
     // Setters
-    setShade: (color: string, name: string) => void;
-    setTint: (color: string, name: string) => void;
+    setShade: (color: string, name: string, tokenName: string, customToken: boolean) => void;
+    setTint: (color: string, name: string, tokenName: string, customToken: boolean) => void;
     increaseSteps: () => void;
     decreaseSteps: () => void;
     setSteps: (steps: number) => void;
     setCombinedSteps: () => void;
     addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => void;
-    updatePrimaryColor: (id: string, color: string, name: string) => void;
+    updatePrimaryColor: (id: string, color: string, name: string, tokenName: string, customToken: boolean) => void;
     removePrimaryColor: (id: string) => void;
     flipIncludeShadeTint: () => void;
     createSteps: () => number[];
@@ -97,13 +98,22 @@ interface SwatchStoreState {
 }
 
 
+export function createTokenName(name: string, tokenName: string, isCustomToken: boolean) {
+    if (isCustomToken) {
+        return tokenName;
+    } else if (name) {
+        return name.toLowerCase().replace(/\s+/g, '-') + '-';
+    }
+    return "";
+}
+
 // Create the store
 const useSwatchStore = create<SwatchStoreState>()(
     // persist(
     (set, get) => ({
         // Initial state
-        shade: {color: "000000", name: "Black", id: "shade"},
-        tint: {color: "FFFFFF", name: "White", id: "tint"},
+        shade: {color: "000000", name: "Black", id: "shade", tokenName: "black", customToken: false},
+        tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "white", customToken: false},
         primaryColors: [],
         swatches: [],
         numberOfSteps: 3,
@@ -131,12 +141,30 @@ const useSwatchStore = create<SwatchStoreState>()(
 
         // Setters
         setShade: (color: string, name: string) => {
-            const colorUpper = color.toUpperCase()
-            set({shade: {color: colorUpper, name: name}})
+            const colorUpper = color.toUpperCase();
+            const isCustomToken = get().shade.customToken;
+            const tokenName = get().shade.tokenName;
+            set({
+                shade: {
+                    color: colorUpper,
+                    name: name,
+                    tokenName: createTokenName(name, tokenName, isCustomToken),
+                    customToken: isCustomToken
+                }
+            })
         },
         setTint: (color: string, name: string) => {
             const colorUpper = color.toUpperCase()
-            set({tint: {color: colorUpper, name: name}})
+            const isCustomToken = get().tint.customToken;
+            const tokenName = get().tint.tokenName;
+            set({
+                tint: {
+                    color: colorUpper,
+                    name: name,
+                    tokenName: createTokenName(name, tokenName, isCustomToken),
+                    customToken: isCustomToken
+                }
+            })
         },
         increaseSteps: () => {
             set((state) => ({numberOfSteps: state.numberOfSteps + 2}));
@@ -157,7 +185,13 @@ const useSwatchStore = create<SwatchStoreState>()(
             primaryColors: state.primaryColors.map((p) => {
                 if (p.id === id) {
                     console.log("updated id " + id);
-                    return {color: color, name: name, id: id};
+                    return {
+                        color: color,
+                        name: name,
+                        id: id,
+                        tokenName: createTokenName(name, p.tokenName, p.customToken),
+                        customToken: p.customToken
+                    };
                 }
                 return p;
             })

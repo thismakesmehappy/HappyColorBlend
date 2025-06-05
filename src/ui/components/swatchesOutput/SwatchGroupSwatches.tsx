@@ -6,11 +6,12 @@ interface SwatchGroupSwatchesProps {
     colorName: string;
     color?: string;
     swatches: SwatchStoreSwatch[];
+    tokenName?: string;
 }
 
-const SwatchGroupSwatches = ({colorName, color, swatches}: SwatchGroupSwatchesProps) => {
+const SwatchGroupSwatches = ({colorName, color, swatches, tokenName}: SwatchGroupSwatchesProps) => {
     return (<div className={"swatch-group figma-mb-lg figma-pb-sm"}>
-        <p className={"figma-subtitle"}><strong>{colorName}</strong> {color}
+        <p className={"figma-subtitle"}><strong>{colorName}</strong> {color} | token: {tokenName}
         </p>
         <div className={"swatches-container"}>
             {swatches.map((swatch) =>

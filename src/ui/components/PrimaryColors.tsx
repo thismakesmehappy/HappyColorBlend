@@ -2,7 +2,7 @@ import React from 'react';
 import '../scss/column-layout.scss';
 import Section from "./Section";
 import Swatch from "./swatchesInput/Swatch";
-import useSwatchStore, {SwatchStoreInputSwatch} from "../store/useSwatchStore";
+import useSwatchStore, {createTokenName, SwatchStoreInputSwatch} from "../store/useSwatchStore";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import {v4 as uuidv4} from 'uuid';
 import ColorNamer from 'color-namer';
@@ -24,7 +24,9 @@ const PrimaryColors: React.FC<PrimaryColorsProps> = ({className, style}) => {
         const newPrimaryColor: SwatchStoreInputSwatch = {
             color: randomColor,
             name: randomName,
-            id: uuidv4()
+            id: uuidv4(),
+            tokenName: createTokenName(randomName, randomName, false),
+            customToken: false
         };
         addPrimaryColor(newPrimaryColor);
         buildSwatches();
@@ -45,7 +47,7 @@ const PrimaryColors: React.FC<PrimaryColorsProps> = ({className, style}) => {
                     <Swatch name={String(primaryColor.name)} color={String(primaryColor.color)}
                             className={"col col-6 mb-4"} canDelete={true}
                             updateSwatch={function (color: string, name: string, id?: string): void {
-                                updatePrimaryColor(id!, color, name);
+                                updatePrimaryColor(id!, color, name, name, primaryColor.customToken);
                                 buildSwatches();
                             }}
                             onDelete={(id) => {

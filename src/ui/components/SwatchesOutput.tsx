@@ -4,6 +4,7 @@ import Section from "./Section";
 import useSwatchStore, {SwatchStoreSwatch} from "../store/useSwatchStore";
 import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
 import {blendColor} from "../helpers/colorMethods";
+import RowDivider from "./RowDivider";
 
 
 interface SwatchesProps {
@@ -33,8 +34,14 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
 
             {swatches.map((primaryColor) =>
                 <SwatchGroupSwatches color={primaryColor.base.color} colorName={primaryColor.base.name}
-                                     swatches={primaryColor.swatches} />
+                                     swatches={primaryColor.swatches} tokenName={primaryColor.base.tokenName} />
             )}
+            <div className={"sticky-bottom bg-white generate text-end"}>
+                <div className={"divide"} />
+                <button className={"btn figma-bg-primary figma-text-light figma-mr-md"}>Add Variables</button>
+                <button className={"btn figma-bg-primary figma-text-light figma-mr-md"}>Add Styles</button>
+                <button className={"btn figma-bg-primary figma-text-light"}>Create Swatches in Page</button>
+            </div>
         </Section>
     );
 };
