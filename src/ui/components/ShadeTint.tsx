@@ -1,4 +1,4 @@
-import React, {forwardRef, useState} from 'react';
+import React, {forwardRef, useEffect, useState} from 'react';
 import '../scss/column-layout.scss';
 import Section from './Section';
 import Swatch from "./swatchesInput/Swatch";
@@ -20,6 +20,13 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         const [shadeColor, setShadeColor] = useState(shade.color);
         const [tintName, setTintName] = useState(tint.name);
         const [tintColor, setTintColor] = useState(tint.color);
+
+        useEffect(() => {
+            setShadeName(shade.name);
+            setShadeColor(shade.color);
+            setTintName(tint.name);
+            setTintColor(tint.color);
+        }, [shade, tint]);
 
         return (
             <Section

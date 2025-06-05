@@ -130,8 +130,14 @@ const useSwatchStore = create<SwatchStoreState>()(
         getShouldPadZeros: () => get().shouldPadZeros,
 
         // Setters
-        setShade: (color: string, name: string) => set({shade: {color: color, name: name}}),
-        setTint: (color: string, name: string) => set({tint: {color: color, name: name}}),
+        setShade: (color: string, name: string) => {
+            const colorUpper = color.toUpperCase()
+            set({shade: {color: colorUpper, name: name}})
+        },
+        setTint: (color: string, name: string) => {
+            const colorUpper = color.toUpperCase()
+            set({tint: {color: colorUpper, name: name}})
+        },
         increaseSteps: () => {
             set((state) => ({numberOfSteps: state.numberOfSteps + 2}));
             get().createSteps();

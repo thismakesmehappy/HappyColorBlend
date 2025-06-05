@@ -36,6 +36,7 @@
 - [x] Blend tint to shade
 - [x] Rename swatch to swatchInput
 - [x] Refactor output swatches
+- [ ] Move should PadZeros logic to the store rather than the component
 
 ## Test
 
