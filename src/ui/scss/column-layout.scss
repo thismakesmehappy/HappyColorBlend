@@ -88,7 +88,8 @@ $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 
   position: relative;
   white-space: nowrap; // Keep children on the same line
   width: 100%;
-  height: var(--steps-input-height, auto);
+  height: auto; // Allow height to adapt to content
+  min-height: var(--steps-input-height, auto); // Ensure minimum height matches steps-input
   overflow-x: hidden; // Prevent horizontal scrolling
 }
 
@@ -105,11 +106,10 @@ $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 
 // Step-labels takes the height of steps-input and the rest of the horizontal space
 #step-labels {
   display: inline-block;
-  height: var(--steps-input-height, auto);
+  height: auto; // Allow height to adapt to content
   width: calc(100% - var(--steps-input-width, 0px) - $dividerSize / 2); // Reduced divider spacing for better space utilization
   white-space: normal; // Allow text to wrap inside
   vertical-align: top;
-  overflow-y: auto; // Enable vertical scrolling if content overflows
   overflow-x: hidden; // Prevent horizontal scrolling
   padding-left: $dividerPadding; // Add consistent padding
 }
