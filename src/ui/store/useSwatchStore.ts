@@ -112,8 +112,8 @@ const useSwatchStore = create<SwatchStoreState>()(
     // persist(
     (set, get) => ({
         // Initial state
-        shade: {color: "000000", name: "Black", id: "shade", tokenName: "black", customToken: false},
-        tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "white", customToken: false},
+        shade: {color: "000000", name: "Black", id: "shade", tokenName: "black-", customToken: false},
+        tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "white-", customToken: false},
         primaryColors: [],
         swatches: [],
         numberOfSteps: 3,
