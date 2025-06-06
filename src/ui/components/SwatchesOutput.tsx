@@ -30,7 +30,10 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
             className={className}
             style={style}
         >
-            <SwatchGroupSwatches colorName={"Neutrals"} swatches={toneRamp} />
+            <SwatchGroupSwatches colorName={tintColor.name} tokenName={tintColor.tokenName} color={tintColor.color}
+                                 secondColorName={shadeColor.name} secondTokenName={shadeColor.tokenName}
+                                 secondColor={shadeColor.color}
+                                 swatches={toneRamp} />
 
             {swatches.map((primaryColor) =>
                 <SwatchGroupSwatches color={primaryColor.base.color} colorName={primaryColor.base.name}

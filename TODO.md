@@ -4,7 +4,7 @@
 
 ## App
 
-- [ ] Add title bar
+- ~~[ ] Add title bar~~
 - [x] Increase padding
 - [ ] Update formulas to calculate section sizes
 - [ ] Refactor
