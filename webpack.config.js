@@ -1,7 +1,12 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import sass from 'sass';
 
-module.exports = (env, argv) => ({
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default (env, argv) => ({
   mode: argv.mode === 'production' ? 'production' : 'development',
   devtool: argv.mode === 'production' ? false : 'inline-source-map',
 
@@ -33,7 +38,7 @@ module.exports = (env, argv) => ({
           {
             loader: 'sass-loader',
             options: {
-              implementation: require('sass'),
+              implementation: sass,
               sassOptions: {
                 outputStyle: 'compressed',
               },

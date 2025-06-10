@@ -1,6 +1,7 @@
-const { exec } = require('child_process');
-const path = require('path');
-const { WINDOW_WIDTH, WINDOW_HEIGHT } = require('./uiConstants');
+import { exec } from 'child_process';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { WINDOW_WIDTH, WINDOW_HEIGHT } from './uiConstants.js';
 
 // Get port from environment variable or use default
 const port = process.env.PORT || 3002;
