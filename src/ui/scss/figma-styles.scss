@@ -1,6 +1,7 @@
 /* Figma Plugin Styles - Helper Classes */
 @use 'sass:list';
 @use 'sass:map';
+@use 'sass:color';
 
 
 // Colors
@@ -138,6 +139,10 @@ $sizes: ('sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
 
 .figma-text-component {
   color: $color-component;
+}
+
+.figma-text-mid {
+  color: color.mix($color-text-primary, $color-secondary, 40%);
 }
 
 /* Figma Buttons */
@@ -322,4 +327,8 @@ $sizes: ('sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
 .figma-toast-warning {
   background-color: $color-warning;
   color: $color-text-primary;
+}
+
+.figma-border {
+  border: 1px solid $color-border;
 }

@@ -24,10 +24,11 @@ const SwatchGroupSwatches = ({
                              }: SwatchGroupSwatchesProps) => {
     return (<div className={"swatch-group figma-mb-lg figma-pb-sm"}>
         <p className={"figma-subtitle"}><ChipOutput
-            color={color!} /><strong>{colorName}</strong> {color} | token: {tokenName}<br />
+            color={color!} />#{color} | {tokenName}<span className={"figma-text-mid"}>500</span><br />
             {secondColorName &&
                 <><ChipOutput
-                    color={secondColor!} /><strong>{secondColorName}</strong> {secondColor} | token: {secondTokenName}</>
+                    color={secondColor!} />#{secondColor} | {secondTokenName}<span
+                    className={"figma-text-mid"}>500</span></>
             }
         </p>
         <div className={"swatches-container"}>

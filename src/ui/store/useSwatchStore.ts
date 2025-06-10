@@ -102,7 +102,7 @@ export function createTokenName(name: string, tokenName: string, isCustomToken: 
     if (isCustomToken) {
         return tokenName;
     } else if (name) {
-        return name.toLowerCase().replace(/\s+/g, '-') + '-';
+        return name.replace(/\s/g, '-');
     }
     return "";
 }
@@ -112,8 +112,8 @@ const useSwatchStore = create<SwatchStoreState>()(
     // persist(
     (set, get) => ({
         // Initial state
-        shade: {color: "000000", name: "Black", id: "shade", tokenName: "black-", customToken: false},
-        tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "white-", customToken: false},
+        shade: {color: "000000", name: "Black", id: "shade", tokenName: "Black", customToken: false},
+        tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "White", customToken: false},
         primaryColors: [],
         swatches: [],
         numberOfSteps: 3,
