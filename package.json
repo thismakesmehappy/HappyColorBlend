@@ -2,11 +2,10 @@
   "name": "figma-hello-world",
   "version": "1.0.0",
   "description": "A minimal Hello World Figma plugin",
-  "type": "module",
   "main": "dist/code.js",
   "scripts": {
-    "build": "node --experimental-json-modules ./node_modules/.bin/webpack --mode=production",
-    "dev": "node --experimental-json-modules ./node_modules/.bin/webpack --mode=development --watch",
+    "build": "webpack --mode=production",
+    "dev": "webpack --mode=development --watch",
     "preview": "node scripts/preview.js",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
