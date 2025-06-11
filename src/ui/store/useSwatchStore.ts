@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
 import {blendPrimaryColor} from "../helpers/colorMethods";
+import steps from "../components/Steps";
 
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
@@ -78,6 +79,7 @@ interface SwatchStoreState {
     getTotalUniqueSteps: () => number;
     getCombinedSteps: () => Set<number>;
     getShouldPadZeros: () => boolean;
+    getSteps: () => number[];
 
     // Setters
     setShade: (color: string, name: string, tokenName: string, customToken: boolean) => void;
@@ -85,6 +87,7 @@ interface SwatchStoreState {
     increaseSteps: () => void;
     decreaseSteps: () => void;
     setSteps: (steps: number) => void;
+    setNumberOfSteps: (numberOfSteps: number) => void;
     setCombinedSteps: () => void;
     addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => void;
     updatePrimaryColor: (id: string, color: string, name: string, tokenName: string, customToken: boolean) => void;
@@ -133,6 +136,7 @@ const useSwatchStore = create<SwatchStoreState>()(
         getIncludeShadeTint: () => get().includeShadeTint,
         getTotalUniqueSteps: () => get().combinedSteps.size,
         getCombinedSteps: () => get().combinedSteps,
+        getSteps: () => get().steps,
         setCombinedSteps: () => {
             const {steps, customSteps} = get();
             set({combinedSteps: new Set([...steps, ...customSteps].sort((a, b) => a - b))});
@@ -165,6 +169,10 @@ const useSwatchStore = create<SwatchStoreState>()(
                     customToken: isCustomToken
                 }
             })
+        },
+        setNumberOfSteps: (steps) => {
+            set({numberOfSteps: steps});
+            get().createSteps();
         },
         increaseSteps: () => {
             set((state) => ({numberOfSteps: state.numberOfSteps + 2}));
