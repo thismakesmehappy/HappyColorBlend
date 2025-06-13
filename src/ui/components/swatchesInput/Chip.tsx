@@ -21,6 +21,8 @@ const Chip: React.FC<SwatchProps> = ({color, width, height, style, className}) =
         <div
             className={"chip " + className || ""}
             style={combinedStyle}
+            data-testid="color-chip"
+            data-color={color}
         />
     );
 };

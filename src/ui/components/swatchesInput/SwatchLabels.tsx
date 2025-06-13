@@ -30,10 +30,15 @@ const SwatchLabels = ({
 
 
     if (isEditing) return (
-        <div className={"vstack"}>
+        <div className={"vstack"} data-testid="swatch-labels-edit">
             <div>
-                <input type="text" className="swatch-label figma-input mw-100" value={tempSwatchName}
-                       onChange={(e) => setTempSwatchName(e.target.value)} />
+                <input 
+                    type="text" 
+                    className="swatch-label figma-input mw-100" 
+                    value={tempSwatchName}
+                    onChange={(e) => setTempSwatchName(e.target.value)} 
+                    data-testid="swatch-name-input"
+                />
             </div>
             <div>
                 <input
@@ -41,6 +46,7 @@ const SwatchLabels = ({
                     className={`swatch-label figma-input mw-100 ${!isValidColor ? 'border-danger' : ''}`}
                     value={tempSwatchColor}
                     onChange={(e) => setTempSwatchColor(e.target.value)}
+                    data-testid="swatch-color-input"
                 />
             </div>
             <div>{isValidColor}</div>
@@ -48,9 +54,9 @@ const SwatchLabels = ({
     )
 
     return (
-        <div className={"vstack"}>
-            <div className="swatch-label swatch-label-text mw-100 d-inline-block fw-bold">{swatchName}</div>
-            <div className="swatch-label swatch-label-text mw-100 d-inline-block">#{swatchColor}</div>
+        <div className={"vstack"} data-testid="swatch-labels-display">
+            <div className="swatch-label swatch-label-text mw-100 d-inline-block fw-bold" data-testid="swatch-name-display">{swatchName}</div>
+            <div className="swatch-label swatch-label-text mw-100 d-inline-block" data-testid="swatch-color-display">#{swatchColor}</div>
             <div>{isValidColor}</div>
         </div>
     );

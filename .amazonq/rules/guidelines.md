@@ -35,9 +35,18 @@ This is a Figma plugin for color palette generation with tint/shade blending cap
 
 ## Testing
 
-- Test UI components for proper rendering and functionality
-- Test color calculation functions for accuracy
+- Jest is used for comprehensive automated testing
+- Test each component individually to ensure proper rendering and functionality
+- Cover all user cases and edge cases in tests
+- Test color calculation functions for accuracy across various inputs
 - Ensure responsive design works across different Figma plugin window sizes
+- Use data-testid attributes for test selectors instead of implementation-specific selectors
+- Follow these testing best practices:
+  - Test component rendering with different props
+  - Test user interactions and state changes
+  - Test conditional rendering based on props
+  - Test callback functions are called correctly
+  - Avoid testing implementation details
 
 ## Build Process
 

@@ -73,10 +73,10 @@ const SwatchControls = ({
         return (
             <>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <div onClick={() => reset()}>
+                    <div onClick={() => reset()} data-testid="cancel-button">
                         <FontAwesomeIcon icon={"circle-xmark"} className={"figma-icon figma-text-primary"} />
                     </div>
-                    <div onClick={() => update()}>
+                    <div onClick={() => update()} data-testid="save-button">
                         <FontAwesomeIcon
                             icon={"circle-check"}
                             className={`figma-icon ${isValidColor ? "figma-text-primary" : "figma-text-disabled"}`}
@@ -96,11 +96,11 @@ const SwatchControls = ({
     }
     return (
         <div style={{display: 'flex', justifyContent: alignPencil}}>
-            <div onClick={() => setIsEditing(true)}>
+            <div onClick={() => setIsEditing(true)} data-testid="edit-button">
                 <FontAwesomeIcon icon={"pencil"} className={"figma-icon figma-text-primary"} />
             </div>
             {canDelete &&
-                <div onClick={onDelete}>
+                <div onClick={onDelete} data-testid="delete-button">
                     <FontAwesomeIcon icon={"trash"} className={"figma-icon figma-text-primary"} />
                 </div>}
         </div>

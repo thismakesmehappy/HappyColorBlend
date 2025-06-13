@@ -29,10 +29,10 @@ const Swatch = ({color, name, canDelete, display, horizontal, className, updateS
     }, [color, name]);
 
     return (
-        <div className={(horizontal && "hstack " || 'text-center ') + className}>
-            <div className='d-inline-block'>
+        <div className={(horizontal && "hstack " || 'text-center ') + className} data-testid="swatch-container">
+            <div className='d-inline-block' data-testid="swatch-chip-container">
                 <Chip color={isEditing ? tempSwatchColor : swatchColor} className={"figma-border"} width={75}
-                      height={75} />
+                      height={75} data-testid="swatch-chip" />
                 {!display &&
                     <SwatchControls
                         isEditing={isEditing}
@@ -51,7 +51,7 @@ const Swatch = ({color, name, canDelete, display, horizontal, className, updateS
                 }
             </div>
             <div className={"separator-md"}></div>
-            <div>
+            <div data-testid="swatch-labels-container">
                 <SwatchLabels isEditing={isEditing}
                               swatchColor={swatchColor}
                               swatchName={swatchName}
