@@ -5,7 +5,7 @@ import SwatchLabels from './SwatchLabels';
 
 // Mock the colorMethods module
 jest.mock('../../helpers/colorMethods', () => ({
-  isValidHexColor: (color) => /^[0-9A-Fa-f]{6}$/.test(color)
+  isValidHexColor: (color: string) => /^[0-9A-Fa-f]{6}$/.test(color)
 }));
 
 describe('SwatchLabels Component', () => {
