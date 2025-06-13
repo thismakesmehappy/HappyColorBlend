@@ -1,7 +1,6 @@
-import {test, expect} from '@playwright/test';
 import {isValidHexColor, blendPrimaryColor, blendColor} from './colorMethods';
 
-test.describe('isValidHexColor', () => {
+describe('isValidHexColor', () => {
     // Success cases
     test('validates correct 6-digit hex color', () => {
         expect(isValidHexColor('FF0000')).toBe(true);
@@ -55,7 +54,7 @@ test.describe('isValidHexColor', () => {
     });
 });
 
-test.describe('blendPrimaryColor', () => {
+describe('blendPrimaryColor', () => {
     // Success cases
     test('blends colors correctly at midpoint (500)', () => {
         expect(blendPrimaryColor('000000', 'FFFFFF', 'FF0000', 500)).toBe('FF0000');
@@ -101,7 +100,7 @@ test.describe('blendPrimaryColor', () => {
     });
 });
 
-test.describe('blendColor', () => {
+describe('blendColor', () => {
     // Success cases
     test('blends two colors correctly at midpoint', () => {
         expect(blendColor('000000', 'FFFFFF', 500)).toBe('808080');

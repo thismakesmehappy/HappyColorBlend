@@ -3,6 +3,18 @@ import {MINIMUM_STEPS} from "../../constants/uiConstants";
 import {blendPrimaryColor} from "../helpers/colorMethods";
 import steps from "../components/Steps";
 
+export const initialState = {
+    shade: {color: "000000", name: "Black", id: "shade", tokenName: "Black", customToken: false},
+    tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "White", customToken: false},
+    primaryColors: [],
+    swatches: [],
+    numberOfSteps: 3,
+    steps: [0, 250, 500, 750, 1000],
+    customSteps: new Set<number>(),
+    includeShadeTint: true,
+    shouldPadZeros: true,
+    combinedSteps: new Set<number>(),
+}
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
     shade: SwatchStoreInputSwatch,
@@ -115,16 +127,7 @@ const useSwatchStore = create<SwatchStoreState>()(
     // persist(
     (set, get) => ({
         // Initial state
-        shade: {color: "000000", name: "Black", id: "shade", tokenName: "Black", customToken: false},
-        tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "White", customToken: false},
-        primaryColors: [],
-        swatches: [],
-        numberOfSteps: 3,
-        steps: [0, 250, 500, 750, 1000],
-        customSteps: new Set<number>(),
-        includeShadeTint: true,
-        shouldPadZeros: true,
-        combinedSteps: new Set<number>(),
+        ...initialState,
 
         // Getters
         getShade: () => get().shade,

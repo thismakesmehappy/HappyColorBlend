@@ -1,30 +1,20 @@
-import {test, expect} from '@playwright/test';
 import useSwatchStore, {
     buildNewSwatches,
     SwatchStoreInputSwatch,
-    createTokenName
+    createTokenName, initialState
 } from './useSwatchStore';
 
 // Reset the store before each test
-test.beforeEach(() => {
+beforeEach(() => {
     const store = useSwatchStore.getState();
 
     // Reset to initial state
     useSwatchStore.setState({
-        shade: {color: "000000", name: "Black", id: "shade", tokenName: "Black", customToken: false},
-        tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "White", customToken: false},
-        primaryColors: [],
-        swatches: [],
-        numberOfSteps: 3,
-        steps: [0, 250, 500, 750, 1000],
-        customSteps: new Set<number>(),
-        includeShadeTint: true,
-        shouldPadZeros: true,
-        combinedSteps: new Set<number>([0, 250, 500, 750, 1000])
+        ...initialState
     });
 });
 
-test.describe('useSwatchStore', () => {
+describe('useSwatchStore', () => {
     test('initial state is set correctly', () => {
         const state = useSwatchStore.getState();
 
@@ -34,7 +24,7 @@ test.describe('useSwatchStore', () => {
         expect(state.getNumberOfSteps()).toBe(3);
         expect(state.getIncludeShadeTint()).toBe(true);
         expect(state.getShouldPadZeros()).toBe(true);
-        expect(Array.from(state.getCombinedSteps())).toEqual([0, 250, 500, 750, 1000]);
+        expect(Array.from(state.getCombinedSteps())).toEqual([]);
     });
 
     test('setShade updates shade color and name', () => {
@@ -192,7 +182,7 @@ test.describe('useSwatchStore', () => {
     });
 });
 
-test.describe('buildNewSwatches', () => {
+describe('buildNewSwatches', () => {
     test('builds swatches correctly', () => {
         const store = useSwatchStore.getState();
 
