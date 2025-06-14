@@ -82,9 +82,9 @@
 
 ### Main Feature Components
 
-- [ ] ShadeTint component tests
-- [ ] PrimaryColors component tests
-- [ ] SwatchesOutput component tests
+- [x] ShadeTint component tests
+- [x] PrimaryColors component tests
+- [x] SwatchesOutput component tests
 
 ### Integration Tests
 
