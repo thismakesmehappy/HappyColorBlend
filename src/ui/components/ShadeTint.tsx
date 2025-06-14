@@ -1,6 +1,6 @@
 import React, {forwardRef, useEffect, useState} from 'react';
 import '../scss/column-layout.scss';
-import Section from './Section';
+import Section from './helpers/Section';
 import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
 

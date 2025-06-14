@@ -1,8 +1,8 @@
 import React from 'react';
-import Area from './Area';
+import Area from './helpers/Area';
 import ShadeTint from './ShadeTint';
 import PrimaryColors from './PrimaryColors';
-import RowDivider from './RowDivider';
+import RowDivider from './helpers/RowDivider';
 
 interface LeftColumnProps {
     className?: string;

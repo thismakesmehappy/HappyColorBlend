@@ -1,10 +1,9 @@
 import React from 'react';
 import '../scss/column-layout.scss';
-import Section from "./Section";
+import Section from "./helpers/Section";
 import useSwatchStore, {SwatchStoreSwatch} from "../store/useSwatchStore";
 import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
 import {blendColor} from "../helpers/colorMethods";
-import RowDivider from "./RowDivider";
 
 
 interface SwatchesProps {

@@ -1,6 +1,6 @@
 import React from 'react';
 import '../scss/column-layout.scss';
-import Section from "./Section";
+import Section from "./helpers/Section";
 import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore, {createTokenName, SwatchStoreInputSwatch} from "../store/useSwatchStore";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";

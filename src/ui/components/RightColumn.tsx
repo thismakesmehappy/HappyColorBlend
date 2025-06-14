@@ -1,8 +1,8 @@
 import React from 'react';
-import Area from './Area';
+import Area from './helpers/Area';
 import Steps from './Steps';
 import SwatchesOutput from './SwatchesOutput';
-import RowDivider from './RowDivider';
+import RowDivider from './helpers/RowDivider';
 
 interface RightColumnProps {
     className?: string;

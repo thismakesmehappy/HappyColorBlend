@@ -1,8 +1,8 @@
 import React, {forwardRef} from 'react';
 import '../scss/column-layout.scss';
-import ColumnDivider from './ColumnDivider';
-import Section from "./Section";
-import Area from "./Area";
+import ColumnDivider from './helpers/ColumnDivider';
+import Section from "./helpers/Section";
+import Area from "./helpers/Area";
 import EqualSteps from "./steps/EqualSteps";
 import useSwatchStore from "../store/useSwatchStore";
 import Badge from "./helpers/Badge";
@@ -43,7 +43,8 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                     <div data-testid="equal-steps-badges">
                         <span className="figma-subtitle">Equal Steps: </span>
                         {steps.map(step => {
-                            return <Badge key={`step-${step}`} className={"figma-mr-sm"} data-testid={`equal-step-badge-${step}`}>{String(step)}</Badge>
+                            return <Badge key={`step-${step}`} className={"figma-mr-sm"}
+                                          data-testid={`equal-step-badge-${step}`}>{String(step)}</Badge>
                         })}
                     </div>
                     {customSteps.size > 0 && (

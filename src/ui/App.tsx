@@ -1,8 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react';
 import LeftColumn from './components/LeftColumn';
 import RightColumn from './components/RightColumn';
-import ColumnDivider from './components/ColumnDivider';
-import Area from "./components/Area";
+import ColumnDivider from './components/helpers/ColumnDivider';
+import Area from "./components/helpers/Area";
 
 const App: React.FC = () => {
     const [message, setMessage] = useState<string>('');
