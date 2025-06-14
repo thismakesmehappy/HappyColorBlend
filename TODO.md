@@ -45,7 +45,7 @@
 - [x] Test Interactions with swatches
 - [x] Test equal steps
 - [x] Test custom steps
-- [ ] Test badges
+- [x] Test badges
 - [x] Test swatches
 
 ## Dark Light
@@ -65,52 +65,61 @@
 ## Testing Plan
 
 ### Core Components
-- [ ] Area component tests
-- [ ] Section component tests
-- [ ] ColumnDivider component tests
-- [ ] RowDivider component tests
+
 - [ ] LeftColumn component tests
 - [ ] RightColumn component tests
 
 ### Helper Components
-- [ ] Badge component tests
-- [ ] Toggle component tests
-- [ ] Toast component tests
-- [ ] FontAwesomeIcon component tests
+
+- [x] Section component tests
+- [x] RowDivider component tests
+- [x] ColumnDivider component tests
+- [x] Area component tests
+- [x] Badge component tests
+- [x] Toggle component tests
+- [x] Toast component tests
+- [x] FontAwesomeIcon component tests
 
 ### Main Feature Components
+
 - [ ] ShadeTint component tests
 - [ ] PrimaryColors component tests
 - [ ] SwatchesOutput component tests
 
 ### Integration Tests
+
 - [ ] Test App component
 - [ ] Test interactions between components
 - [ ] Test state management with Zustand store
 - [ ] Test color generation workflow end-to-end
 
 ### UI/UX Tests
+
 - [ ] Test responsive design
 - [ ] Test keyboard navigation
 - [ ] Test accessibility features
 
 ### Edge Cases
+
 - [ ] Test with invalid color inputs
 - [ ] Test with minimum and maximum step values
 - [ ] Test with empty primary colors
 - [ ] Test with many primary colors
 
 ### Performance Tests
+
 - [ ] Test rendering performance with many swatches
 - [ ] Test color calculation performance with complex blends
 
 ### Browser Compatibility
+
 - [ ] Test in Chrome
 - [ ] Test in Firefox
 - [ ] Test in Safari
 - [ ] Test in Edge
 
 ### Figma Plugin Integration
+
 - [ ] Test plugin initialization
 - [ ] Test communication between UI and plugin code
 - [ ] Test color generation in Figma environment
