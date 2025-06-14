@@ -26,7 +26,7 @@ const Toast: React.FC<ToastProps> = ({
                                          onClose
                                      }) => {
     useEffect(() => {
-        let timer: number;
+        let timer: ReturnType<typeof setTimeout>;
 
         if (isVisible) {
             timer = setTimeout(() => {

@@ -13,10 +13,13 @@ const SwatchColorChip = ({color, step}: SwatchColorChipProps) => {
     const textColor = ratioWhite > 3 ? "#FFFFFF" : "#000000";
 
     return (
-        <div className='color-chip-container'>
+        <div className='color-chip-container' data-testid="swatch-color-chip-container">
             <div
                 style={{backgroundColor: "#" + color, color: textColor}}
-                className={`color-chip fw-bold`}>
+                className={`color-chip fw-bold`}
+                data-testid="swatch-color-chip"
+                data-color={color}
+                data-step={step}>
                 {step.toString().padStart(shouldPadZeros ? 3 : 0, '0')}<br />
                 #{color}
             </div>
