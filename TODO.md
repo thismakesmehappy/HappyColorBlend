@@ -66,8 +66,8 @@
 
 ### Core Components
 
-- [ ] LeftColumn component tests
-- [ ] RightColumn component tests
+- [x] LeftColumn component tests
+- [x] RightColumn component tests
 
 ### Helper Components
 
