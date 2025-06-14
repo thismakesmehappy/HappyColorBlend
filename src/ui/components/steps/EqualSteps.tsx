@@ -14,23 +14,29 @@ export const EqualSteps = ({className = "", style = {}}: ClassAndStyle) => {
         updateCanDecrease(numberOfSteps > 3)
     }, [numberOfSteps]);
     return (
-        <div className={className} style={style}>
+        <div className={className} style={style} data-testid="equal-steps">
             <span>Equal steps: </span>
-            <span onClick={() => {
-                decreaseSteps();
-                buildSwatches();
-            }}>
-            <FontAwesomeIcon icon={"circle-minus"}
-                             className={`figma-icon ${canDecrease ? 'figma-text-primary' : 'figma-text-secondary'}`}
-            />
-        </span>
-            <span className={"figma-text figma-pl-md figma-pr-md"}>{numberOfSteps}</span>
-            <span onClick={() => {
-                increaseSteps();
-                buildSwatches();
-            }}>
-            <FontAwesomeIcon icon={"circle-plus"} className={"figma-icon figma-text-primary"}
-            />
+            <span 
+                onClick={() => {
+                    decreaseSteps();
+                    buildSwatches();
+                }}
+                data-testid="decrease-steps-button"
+            >
+                <FontAwesomeIcon icon={"circle-minus"}
+                                className={`figma-icon ${canDecrease ? 'figma-text-primary' : 'figma-text-secondary'}`}
+                />
+            </span>
+            <span className={"figma-text figma-pl-md figma-pr-md"} data-testid="steps-count">{numberOfSteps}</span>
+            <span 
+                onClick={() => {
+                    increaseSteps();
+                    buildSwatches();
+                }}
+                data-testid="increase-steps-button"
+            >
+                <FontAwesomeIcon icon={"circle-plus"} className={"figma-icon figma-text-primary"}
+                />
             </span>
         </div>
     );

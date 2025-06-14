@@ -85,7 +85,7 @@ export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyl
     };
 
     return (
-        <div className={`custom-steps ${className}`} style={style}>
+        <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps">
             <span>Add custom step: </span>
             <span>
                 <input
@@ -95,10 +95,12 @@ export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyl
                     value={inputValue}
                     onChange={handleInputChange}
                     style={{width: '8ch'}}
+                    data-testid="custom-step-input"
                 />
                 <span
                     onClick={handleAddStep}
                     style={{marginLeft: '8px', cursor: 'pointer'}}
+                    data-testid="add-custom-step-button"
                 >
                     <FontAwesomeIcon
                         icon="circle-plus"
@@ -112,6 +114,7 @@ export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyl
                 duration={TOAST_DURATION}
                 isVisible={showToast}
                 onClose={hideToast}
+                data-testid="custom-step-toast"
             />
         </div>
     );

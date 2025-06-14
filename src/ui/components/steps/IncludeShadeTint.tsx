@@ -8,15 +8,18 @@ export const IncludeShadeTint = ({className = "", style = {}}: ClassAndStyle) =>
     const flipIncludeShadeTint = useSwatchStore((state) => state.flipIncludeShadeTint);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
     return (
-        <div className={className} style={style}>
-            <div className={'d-inline-block align-middle'}> Include tint and shade</div>
+        <div className={className} style={style} data-testid="include-shade-tint">
+            <div className={'d-inline-block align-middle'} data-testid="include-shade-tint-label"> Include tint and shade</div>
             {' '}
-            <Toggle value={includeShadeTint}
-                    onChange={() => {
-                        flipIncludeShadeTint();
-                        buildSwatches();
-                    }}
-                    className={"d-inline-block align-middle"} />
+            <Toggle 
+                value={includeShadeTint}
+                onChange={() => {
+                    flipIncludeShadeTint();
+                    buildSwatches();
+                }}
+                className={"d-inline-block align-middle"}
+                data-testid="include-shade-tint-toggle"
+            />
         </div>
     );
 };
