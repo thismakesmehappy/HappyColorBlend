@@ -4,8 +4,8 @@ import {blendPrimaryColor} from "../helpers/colorMethods";
 import steps from "../components/Steps";
 
 export const initialState = {
-    shade: {color: "000000", name: "Black", id: "shade", tokenName: "Black", customToken: false},
-    tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "White", customToken: false},
+    shade: {color: "000000", name: "Black", id: "shade", tokenName: "Black"},
+    tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "White"},
     primaryColors: [],
     swatches: [],
     numberOfSteps: 3,
@@ -53,7 +53,6 @@ export interface SwatchStoreInputSwatch {
     name: string;
     id?: string;
     tokenName: string;
-    customToken: boolean;
 }
 
 export interface SwatchStoreSwatch {
@@ -94,15 +93,15 @@ interface SwatchStoreState {
     getSteps: () => number[];
 
     // Setters
-    setShade: (color: string, name: string, tokenName: string, customToken: boolean) => void;
-    setTint: (color: string, name: string, tokenName: string, customToken: boolean) => void;
+    setShade: (color: string, name: string, tokenName: string) => void;
+    setTint: (color: string, name: string, tokenName: string) => void;
     increaseSteps: () => void;
     decreaseSteps: () => void;
     setSteps: (steps: number) => void;
     setNumberOfSteps: (numberOfSteps: number) => void;
     setCombinedSteps: () => void;
     addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => void;
-    updatePrimaryColor: (id: string, color: string, name: string, tokenName: string, customToken: boolean) => void;
+    updatePrimaryColor: (id: string, color: string, name: string, tokenName: string) => void;
     removePrimaryColor: (id: string) => void;
     flipIncludeShadeTint: () => void;
     createSteps: () => number[];
@@ -147,29 +146,23 @@ const useSwatchStore = create<SwatchStoreState>()(
         getShouldPadZeros: () => get().shouldPadZeros,
 
         // Setters
-        setShade: (color: string, name: string) => {
+        setShade: (color: string, name: string, tokenName: string) => {
             const colorUpper = color.toUpperCase();
-            const isCustomToken = get().shade.customToken;
-            const tokenName = get().shade.tokenName;
             set({
                 shade: {
                     color: colorUpper,
                     name: name,
-                    tokenName: createTokenName(name, tokenName, isCustomToken),
-                    customToken: isCustomToken
+                    tokenName: tokenName,
                 }
             })
         },
-        setTint: (color: string, name: string) => {
+        setTint: (color: string, name: string, tokenName: string) => {
             const colorUpper = color.toUpperCase()
-            const isCustomToken = get().tint.customToken;
-            const tokenName = get().tint.tokenName;
             set({
                 tint: {
                     color: colorUpper,
                     name: name,
-                    tokenName: createTokenName(name, tokenName, isCustomToken),
-                    customToken: isCustomToken
+                    tokenName: tokenName,
                 }
             })
         },
@@ -192,7 +185,7 @@ const useSwatchStore = create<SwatchStoreState>()(
             get().createSteps();
         },
         addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => set((state) => ({primaryColors: [...state.primaryColors, primaryColor]})),
-        updatePrimaryColor: (id: string, color: string, name: string) => set((state) => ({
+        updatePrimaryColor: (id: string, color: string, name: string, tokenName: string) => set((state) => ({
             primaryColors: state.primaryColors.map((p) => {
                 if (p.id === id) {
                     console.log("updated id " + id);
@@ -200,8 +193,7 @@ const useSwatchStore = create<SwatchStoreState>()(
                         color: color,
                         name: name,
                         id: id,
-                        tokenName: createTokenName(name, p.tokenName, p.customToken),
-                        customToken: p.customToken
+                        tokenName: tokenName,
                     };
                 }
                 return p;
@@ -264,28 +256,6 @@ const useSwatchStore = create<SwatchStoreState>()(
             return newSwatches;
         }
     })
-    // ,
-    //     {
-    //         name: 'swatches-storage',
-    //         storage: createJSONStorage(() => localStorage),
-    //         partialize: (state) => ({
-    //             ...state,
-    //             customSteps: Array.from(state.customSteps)
-    //         }),
-    //         onRehydrateStorage: (state) => {
-    //             return (rehydratedState, error) => {
-    //                 if (error) {
-    //                     console.error('Error rehydrating swatches storage:', error);
-    //                 } else if (rehydratedState) {
-    //                     // Convert the array back to a Set
-    //                     if (Array.isArray(rehydratedState.customSteps)) {
-    //                         rehydratedState.customSteps = new Set(rehydratedState.customSteps);
-    //                     }
-    //                 }
-    //             };
-    //         }
-    //     }
-    // )
 );
 
 

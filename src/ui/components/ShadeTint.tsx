@@ -13,8 +13,6 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
     ({className, style}, ref) => {
         const shade = useSwatchStore(state => state.getShade());
         const tint = useSwatchStore(state => state.getTint());
-        const customTokenTint = useSwatchStore(state => state.getTint().customToken);
-        const customTokenShade = useSwatchStore(state => state.getShade().customToken);
         const setShade = useSwatchStore(state => state.setShade);
         const setTint = useSwatchStore(state => state.setTint);
         const buildSwatches = useSwatchStore((state) => state.buildSwatches);
@@ -43,7 +41,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                         <p className={"figma-subtitle"}>Shade — 0</p>
                         <Swatch color={shadeColor} name={shadeName}
                                 updateSwatch={function (color: string, name: string): void {
-                                    setShade(color, name, name, customTokenShade);
+                                    setShade(color, name, name);
                                     buildSwatches();
                                 }}
                                 id={shade.id}
@@ -53,7 +51,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                         <p className={"figma-subtitle"}>Tint — 1000</p>
                         <Swatch color={tintColor} name={tintName}
                                 updateSwatch={function (color: string, name: string): void {
-                                    setTint(color, name, name, customTokenTint);
+                                    setTint(color, name, name);
                                     buildSwatches();
                                 }}
                                 id={tint.id}

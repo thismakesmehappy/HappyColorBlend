@@ -1,8 +1,8 @@
-type spaceTreatment = 'keep' | 'dash' | 'underscore' | 'remove';
-type caseTreatment = 'lower' | 'upper' | 'title' | 'keep';
-type charType = 'dash' | 'underscore';
+export type SpaceTreatment = 'keep' | 'dash' | 'underscore' | 'remove';
+export type CaseTreatment = 'lower' | 'upper' | 'title' | 'keep';
+export type CharType = 'dash' | 'underscore';
 
-const treatSpace = (input: string, spaceTreatment: spaceTreatment) => {
+const treatSpace = (input: string, spaceTreatment: SpaceTreatment) => {
     switch (spaceTreatment) {
         case 'dash':
             return input.replace(/\s/g, '-');
@@ -15,7 +15,7 @@ const treatSpace = (input: string, spaceTreatment: spaceTreatment) => {
     }
 }
 
-const treatCase = (input: string, casing: caseTreatment) => {
+const treatCase = (input: string, casing: CaseTreatment) => {
     switch (casing) {
         case 'lower':
             return input.toLowerCase();
@@ -32,13 +32,13 @@ const treatCase = (input: string, casing: caseTreatment) => {
     }
 }
 
-const addLeadingChars = (input: string, count: number, charType: charType = 'dash') => {
+const addLeadingChars = (input: string, count: number, charType: CharType = 'dash') => {
     const char = charType === 'dash' ? '-' : '_';
     const chars = char.repeat(count);
     return chars + input;
 }
 
-const addTrailingChars = (input: string, count: number, charType: charType = 'dash') => {
+const addTrailingChars = (input: string, count: number, charType: CharType = 'dash') => {
     const char = charType === 'dash' ? '-' : '_';
     const chars = char.repeat(count);
     return input + chars;
@@ -46,12 +46,12 @@ const addTrailingChars = (input: string, count: number, charType: charType = 'da
 
 export const tokenName = (
     input: string,
-    caseTreatment: caseTreatment = 'keep',
-    spaceTreatment: spaceTreatment = 'keep',
+    caseTreatment: CaseTreatment = 'keep',
+    spaceTreatment: SpaceTreatment = 'keep',
     leadingCharsCount: number = 0,
-    trailingCharType: charType = 'dash',
     trailingCharsCount: number = 0,
-    leadingCharType: charType = 'dash'
+    leadingCharType: CharType = 'dash',
+    trailingCharType: CharType = 'dash'
 ) => {
     // First change the casing
     const casing = treatCase(input, caseTreatment);

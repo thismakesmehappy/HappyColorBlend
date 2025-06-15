@@ -26,7 +26,6 @@ const PrimaryColors: React.FC<PrimaryColorsProps> = ({className, style}) => {
             name: randomName,
             id: uuidv4(),
             tokenName: createTokenName(randomName, randomName, false),
-            customToken: false
         };
         addPrimaryColor(newPrimaryColor);
         buildSwatches();
@@ -47,7 +46,7 @@ const PrimaryColors: React.FC<PrimaryColorsProps> = ({className, style}) => {
                     <Swatch name={String(primaryColor.name)} color={String(primaryColor.color)}
                             className={"col col-6 mb-4"} canDelete={true}
                             updateSwatch={function (color: string, name: string, id?: string): void {
-                                updatePrimaryColor(id!, color, name, name, primaryColor.customToken);
+                                updatePrimaryColor(id!, color, name, name);
                                 buildSwatches();
                             }}
                             onDelete={(id) => {
