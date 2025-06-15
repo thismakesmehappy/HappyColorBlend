@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HappyColorBlendVibe React Component Playground</title>
+    <link rel="stylesheet" href="./dist/ui.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .playground-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .playground-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .component-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .component-description {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        .component-container {
+            padding: 15px;
+            border: 1px dashed #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            min-height: 50px;
+        }
+        .component-code {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #0d99ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0b87e0;
+        }
+        .figma-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .figma-text-primary {
+            color: #0d99ff;
+        }
+        .figma-text-secondary {
+            color: #aaa;
+        }
+        .figma-pl-md, .figma-pr-md {
+            padding: 0 10px;
+        }
+        .figma-text {
+            font-size: 16px;
+        }
+        #test-container {
+            margin-top: 20px;
+        }
+        .test-container {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+        .test-container h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+        }
+    </style>
+    <!-- Load React -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <!-- Load Babel for JSX support -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <h1 class="playground-title">HappyColorBlendVibe React Component Playground</h1>
+    <p>This playground allows you to test React components in isolation with different configurations.</p>
+
+    <div class="playground-section">
+        <h2 class="playground-title">NumberToggle Component</h2>
+        <div id="test-container"></div>
+    </div>
+
+    <!-- Mock FontAwesomeIcon component -->
+    <script type="text/babel">
+        window.FontAwesomeIcon = function({ icon, className }) {
+            const iconMap = {
+                'circle-minus': '⊖',
+                'circle-plus': '⊕'
+            };
+            
+            return (
+                <span className={className}>
+                    {iconMap[icon] || '●'}
+                </span>
+            );
+        };
+    </script>
+
+    <!-- NumberToggle component -->
+    <script type="text/babel">
+        function NumberToggle({ decreaseFunction, increaseFunction, minValue, maxValue, value }) {
+            const getCanIncrease = () => maxValue ? value < maxValue : true;
+            const getCanDecrease = () => minValue ? value > minValue : true;
+            const [canIncrease, updateCanIncrease] = React.useState(getCanIncrease());
+            const [canDecrease, updateCanDecrease] = React.useState(getCanDecrease());
+
+            React.useEffect(() => {
+                updateCanIncrease(getCanIncrease());
+                updateCanDecrease(getCanDecrease());
+            }, [value, minValue, maxValue]);
+
+            return (
+                <>
+                    <span
+                        onClick={() => {
+                            if (canDecrease) {
+                                decreaseFunction();
+                                updateCanDecrease(getCanDecrease());
+                            }
+                        }}
+                        data-testid="decrease-steps-button"
+                        style={{ cursor: canDecrease ? 'pointer' : 'default' }}
+                    >
+                        <FontAwesomeIcon 
+                            icon="circle-minus"
+                            className={`figma-icon ${canDecrease ? 'figma-text-primary' : 'figma-text-secondary'}`}
+                        />
+                    </span>
+                    <span className="figma-text figma-pl-md figma-pr-md" data-testid="steps-count">{value}</span>
+                    <span
+                        onClick={() => {
+                            if (canIncrease) {
+                                increaseFunction();
+                                updateCanIncrease(getCanIncrease());
+                            }
+                        }}
+                        data-testid="increase-steps-button"
+                        style={{ cursor: canIncrease ? 'pointer' : 'default' }}
+                    >
+                        <FontAwesomeIcon 
+                            icon="circle-plus"
+                            className={`figma-icon ${canIncrease ? 'figma-text-primary' : 'figma-text-secondary'}`}
+                        />
+                    </span>
+                </>
+            );
+        }
+
+        // Test components
+        function DefaultNumberToggle() {
+            const [value, setValue] = React.useState(5);
+            return (
+                <div>
+                    <h3>Default NumberToggle</h3>
+                    <p>Basic NumberToggle with no min/max constraints.</p>
+                    <div className="component-container">
+                        <NumberToggle
+                            decreaseFunction={() => setValue(value - 1)}
+                            increaseFunction={() => setValue(value + 1)}
+                            value={value}
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+        function MinValueNumberToggle() {
+            const [value, setValue] = React.useState(3);
+            return (
+                <div>
+                    <h3>NumberToggle with Min Value</h3>
+                    <p>NumberToggle with a minimum value of 1. The decrease button should be disabled when value is 1.</p>
+                    <div className="component-container">
+                        <NumberToggle
+                            decreaseFunction={() => setValue(value - 1)}
+                            increaseFunction={() => setValue(value + 1)}
+                            minValue={1}
+                            value={value}
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+        function MaxValueNumberToggle() {
+            const [value, setValue] = React.useState(8);
+            return (
+                <div>
+                    <h3>NumberToggle with Max Value</h3>
+                    <p>NumberToggle with a maximum value of 10. The increase button should be disabled when value is 10.</p>
+                    <div className="component-container">
+                        <NumberToggle
+                            decreaseFunction={() => setValue(value - 1)}
+                            increaseFunction={() => setValue(value + 1)}
+                            maxValue={10}
+                            value={value}
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+        function MinMaxNumberToggle() {
+            const [value, setValue] = React.useState(5);
+            return (
+                <div>
+                    <h3>NumberToggle with Min and Max Values</h3>
+                    <p>NumberToggle with a range of 1-10. Both buttons should be disabled at their respective limits.</p>
+                    <div className="component-container">
+                        <NumberToggle
+                            decreaseFunction={() => setValue(value - 1)}
+                            increaseFunction={() => setValue(value + 1)}
+                            minValue={1}
+                            maxValue={10}
+                            value={value}
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+        function AtMinNumberToggle() {
+            const [value, setValue] = React.useState(1);
+            return (
+                <div>
+                    <h3>NumberToggle at Min Value</h3>
+                    <p>NumberToggle initialized at its minimum value. The decrease button should be disabled.</p>
+                    <div className="component-container">
+                        <NumberToggle
+                            decreaseFunction={() => setValue(value - 1)}
+                            increaseFunction={() => setValue(value + 1)}
+                            minValue={1}
+                            maxValue={10}
+                            value={value}
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+        function AtMaxNumberToggle() {
+            const [value, setValue] = React.useState(10);
+            return (
+                <div>
+                    <h3>NumberToggle at Max Value</h3>
+                    <p>NumberToggle initialized at its maximum value. The increase button should be disabled.</p>
+                    <div className="component-container">
+                        <NumberToggle
+                            decreaseFunction={() => setValue(value - 1)}
+                            increaseFunction={() => setValue(value + 1)}
+                            minValue={1}
+                            maxValue={10}
+                            value={value}
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+        // Render all test components
+        function App() {
+            return (
+                <div>
+                    <DefaultNumberToggle />
+                    <MinValueNumberToggle />
+                    <MaxValueNumberToggle />
+                    <MinMaxNumberToggle />
+                    <AtMinNumberToggle />
+                    <AtMaxNumberToggle />
+                </div>
+            );
+        }
+
+        // Render the app
+        ReactDOM.render(<App />, document.getElementById('test-container'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HappyColorBlendVibe Component Playground</title>
+    <link rel="stylesheet" href="./dist/ui.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .playground-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .playground-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .component-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .component-description {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        .component-container {
+            padding: 15px;
+            border: 1px dashed #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            min-height: 50px;
+        }
+        .component-code {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #0d99ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0b87e0;
+        }
+        .figma-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .figma-text-primary {
+            color: #0d99ff;
+        }
+        .figma-text-secondary {
+            color: #aaa;
+        }
+        .figma-pl-md, .figma-pr-md {
+            padding: 0 10px;
+        }
+        .figma-text {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="playground-title">HappyColorBlendVibe Component Playground</h1>
+    <p>This playground allows you to test individual components in isolation with different configurations.</p>
+
+    <div class="playground-section">
+        <h2 class="playground-title">NumberToggle Component</h2>
+
+        <div>
+            <h3 class="component-title">Default NumberToggle</h3>
+            <p class="component-description">Basic NumberToggle with no min/max constraints.</p>
+            <div class="component-container" id="number-toggle-default">
+                <!-- Component will be rendered here by JavaScript -->
+            </div>
+            <div class="component-code">
+                const [value, setValue] = useState(5);
+                
+                &lt;NumberToggle
+                    decreaseFunction={() => setValue(value - 1)}
+                    increaseFunction={() => setValue(value + 1)}
+                    value={value}
+                /&gt;
+            </div>
+        </div>
+
+        <div>
+            <h3 class="component-title">NumberToggle with Min Value</h3>
+            <p class="component-description">NumberToggle with a minimum value of 1. The decrease button should be disabled when value is 1.</p>
+            <div class="component-container" id="number-toggle-min">
+                <!-- Component will be rendered here by JavaScript -->
+            </div>
+            <div class="component-code">
+                const [value, setValue] = useState(3);
+                
+                &lt;NumberToggle
+                    decreaseFunction={() => setValue(value - 1)}
+                    increaseFunction={() => setValue(value + 1)}
+                    minValue={1}
+                    value={value}
+                /&gt;
+            </div>
+        </div>
+
+        <div>
+            <h3 class="component-title">NumberToggle with Max Value</h3>
+            <p class="component-description">NumberToggle with a maximum value of 10. The increase button should be disabled when value is 10.</p>
+            <div class="component-container" id="number-toggle-max">
+                <!-- Component will be rendered here by JavaScript -->
+            </div>
+            <div class="component-code">
+                const [value, setValue] = useState(8);
+                
+                &lt;NumberToggle
+                    decreaseFunction={() => setValue(value - 1)}
+                    increaseFunction={() => setValue(value + 1)}
+                    maxValue={10}
+                    value={value}
+                /&gt;
+            </div>
+        </div>
+
+        <div>
+            <h3 class="component-title">NumberToggle with Min and Max Values</h3>
+            <p class="component-description">NumberToggle with a range of 1-10. Both buttons should be disabled at their respective limits.</p>
+            <div class="component-container" id="number-toggle-min-max">
+                <!-- Component will be rendered here by JavaScript -->
+            </div>
+            <div class="component-code">
+                const [value, setValue] = useState(5);
+                
+                &lt;NumberToggle
+                    decreaseFunction={() => setValue(value - 1)}
+                    increaseFunction={() => setValue(value + 1)}
+                    minValue={1}
+                    maxValue={10}
+                    value={value}
+                /&gt;
+            </div>
+        </div>
+
+        <div>
+            <h3 class="component-title">NumberToggle at Min Value</h3>
+            <p class="component-description">NumberToggle initialized at its minimum value. The decrease button should be disabled.</p>
+            <div class="component-container" id="number-toggle-at-min">
+                <!-- Component will be rendered here by JavaScript -->
+            </div>
+            <div class="component-code">
+                const [value, setValue] = useState(1);
+                
+                &lt;NumberToggle
+                    decreaseFunction={() => setValue(value - 1)}
+                    increaseFunction={() => setValue(value + 1)}
+                    minValue={1}
+                    maxValue={10}
+                    value={value}
+                /&gt;
+            </div>
+        </div>
+
+        <div>
+            <h3 class="component-title">NumberToggle at Max Value</h3>
+            <p class="component-description">NumberToggle initialized at its maximum value. The increase button should be disabled.</p>
+            <div class="component-container" id="number-toggle-at-max">
+                <!-- Component will be rendered here by JavaScript -->
+            </div>
+            <div class="component-code">
+                const [value, setValue] = useState(10);
+                
+                &lt;NumberToggle
+                    decreaseFunction={() => setValue(value - 1)}
+                    increaseFunction={() => setValue(value + 1)}
+                    minValue={1}
+                    maxValue={10}
+                    value={value}
+                /&gt;
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple implementation of the NumberToggle component for the playground
+        class NumberToggle {
+            constructor(container, options) {
+                this.container = container;
+                this.options = options;
+                this.value = options.value || 0;
+                this.minValue = options.minValue;
+                this.maxValue = options.maxValue;
+                this.render();
+            }
+
+            getCanIncrease() {
+                return this.maxValue ? this.value < this.maxValue : true;
+            }
+
+            getCanDecrease() {
+                return this.minValue ? this.value > this.minValue : true;
+            }
+
+            decrease() {
+                if (this.getCanDecrease()) {
+                    this.value--;
+                    this.render();
+                    if (this.options.decreaseFunction) {
+                        this.options.decreaseFunction();
+                    }
+                }
+            }
+
+            increase() {
+                if (this.getCanIncrease()) {
+                    this.value++;
+                    this.render();
+                    if (this.options.increaseFunction) {
+                        this.options.increaseFunction();
+                    }
+                }
+            }
+
+            render() {
+                const canDecrease = this.getCanDecrease();
+                const canIncrease = this.getCanIncrease();
+                
+                this.container.innerHTML = `
+                    <span class="decrease-button">
+                        <span class="figma-icon ${canDecrease ? 'figma-text-primary' : 'figma-text-secondary'}">
+                            ⊖
+                        </span>
+                    </span>
+                    <span class="figma-text figma-pl-md figma-pr-md">${this.value}</span>
+                    <span class="increase-button">
+                        <span class="figma-icon ${canIncrease ? 'figma-text-primary' : 'figma-text-secondary'}">
+                            ⊕
+                        </span>
+                    </span>
+                `;
+
+                // Add event listeners
+                const decreaseButton = this.container.querySelector('.decrease-button');
+                const increaseButton = this.container.querySelector('.increase-button');
+                
+                decreaseButton.addEventListener('click', () => this.decrease());
+                increaseButton.addEventListener('click', () => this.increase());
+            }
+        }
+
+        // Initialize the NumberToggle instances
+        document.addEventListener('DOMContentLoaded', () => {
+            // Default NumberToggle
+            new NumberToggle(document.getElementById('number-toggle-default'), {
+                value: 5,
+                decreaseFunction: () => console.log('Decreased default'),
+                increaseFunction: () => console.log('Increased default')
+            });
+
+            // NumberToggle with Min Value
+            new NumberToggle(document.getElementById('number-toggle-min'), {
+                value: 3,
+                minValue: 1,
+                decreaseFunction: () => console.log('Decreased min'),
+                increaseFunction: () => console.log('Increased min')
+            });
+
+            // NumberToggle with Max Value
+            new NumberToggle(document.getElementById('number-toggle-max'), {
+                value: 8,
+                maxValue: 10,
+                decreaseFunction: () => console.log('Decreased max'),
+                increaseFunction: () => console.log('Increased max')
+            });
+
+            // NumberToggle with Min and Max Values
+            new NumberToggle(document.getElementById('number-toggle-min-max'), {
+                value: 5,
+                minValue: 1,
+                maxValue: 10,
+                decreaseFunction: () => console.log('Decreased min-max'),
+                increaseFunction: () => console.log('Increased min-max')
+            });
+
+            // NumberToggle at Min Value
+            new NumberToggle(document.getElementById('number-toggle-at-min'), {
+                value: 1,
+                minValue: 1,
+                maxValue: 10,
+                decreaseFunction: () => console.log('Decreased at-min'),
+                increaseFunction: () => console.log('Increased at-min')
+            });
+
+            // NumberToggle at Max Value
+            new NumberToggle(document.getElementById('number-toggle-at-max'), {
+                value: 10,
+                minValue: 1,
+                maxValue: 10,
+                decreaseFunction: () => console.log('Decreased at-max'),
+                increaseFunction: () => console.log('Increased at-max')
+            });
+        });
+    </script>
+</body>
+</html>
