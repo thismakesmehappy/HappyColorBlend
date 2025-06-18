@@ -8,9 +8,9 @@ export const initialState = {
     tint: {color: "FFFFFF", name: "White", id: "tint"},
     primaryColors: [],
     swatches: [],
-    numberOfSteps: 3,
-    steps: [0, 250, 500, 750, 1000],
-    customSteps: new Set<number>(),
+    numberOfSteps: 9,
+    steps: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    customSteps: new Set<number>([50, 950]),
     combinedSteps: new Set<number>(),
 }
 // Function to build swatches based on parameters

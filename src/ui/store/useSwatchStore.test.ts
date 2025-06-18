@@ -19,7 +19,7 @@ describe('useSwatchStore', () => {
         expect(state.getShade().color).toBe('000000');
         expect(state.getTint().color).toBe('FFFFFF');
         expect(state.getPrimaryColors()).toEqual([]);
-        expect(state.getNumberOfSteps()).toBe(3);
+        expect(state.getNumberOfSteps()).toBe(9);
         expect(Array.from(state.getCombinedSteps())).toEqual([]);
     });
 
@@ -97,7 +97,7 @@ describe('useSwatchStore', () => {
         store.increaseSteps();
 
         expect(store.getNumberOfSteps()).toBe(initialSteps + 2);
-        expect(store.getSteps().length).toBe(5); // 5  steps (167, 333, 500, 667, 833)
+        expect(store.getSteps().length).toBe(11);
     });
 
     test('decreaseSteps decreases number of steps by 2', () => {
@@ -137,7 +137,7 @@ describe('useSwatchStore', () => {
         store.setCombinedSteps();
 
         const combinedSteps = Array.from(store.getCombinedSteps()).sort((a, b) => a - b);
-        expect(combinedSteps).toEqual([0, 250, 333, 500, 666, 750, 1000]);
+        expect(combinedSteps).toEqual([50, 100, 200, 300, 333, 400, 500, 600, 666, 700, 800, 900, 950]);
     });
 
 });
@@ -168,9 +168,9 @@ describe('buildNewSwatches', () => {
 
         expect(swatches.length).toBe(1);
         expect(swatches[0].base).toEqual(primaryColors[0]);
-        expect(swatches[0].swatches.length).toBe(5); // 5 steps (0, 250, 500, 750, 1000)
-        expect(swatches[0].swatches[0].step).toBe(0);
-        expect(swatches[0].swatches[2].step).toBe(500);
-        expect(swatches[0].swatches[2].color).toBe('FF0000'); // Middle step should be the primary color
+        expect(swatches[0].swatches.length).toBe(11);
+        expect(swatches[0].swatches[0].step).toBe(50);
+        expect(swatches[0].swatches[5].step).toBe(500);
+        expect(swatches[0].swatches[5].color).toBe('FF0000'); // Middle step should be the primary color
     });
 });
