@@ -93,8 +93,17 @@ $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 
   overflow-x: hidden; // Prevent horizontal scrolling
 }
 
+// Settings container
+#settings {
+  position: relative;
+  width: 100%;
+  height: auto; // Allow height to adapt to content
+  white-space: nowrap; // Keep children on the same line
+  overflow-x: hidden; // Prevent horizontal scrolling
+}
+
 // Steps-input takes only the width and height of its content
-#steps-input {
+#steps-input, #settings-internal, #settings-outer, #settings-steps, #settings-leading, #settings-trailing {
   display: inline-block;
   height: auto;
   width: auto;

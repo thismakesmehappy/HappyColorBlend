@@ -7,9 +7,17 @@ interface NumberToggleProps {
     minValue?: number;
     maxValue?: number;
     value: number;
+    className?: string;
 }
 
-const NumberToggle = ({decreaseFunction, increaseFunction, minValue, maxValue, value}: NumberToggleProps) => {
+const NumberToggle = ({
+                          className,
+                          decreaseFunction,
+                          increaseFunction,
+                          minValue,
+                          maxValue,
+                          value
+                      }: NumberToggleProps) => {
     const getCanIncrease = () => maxValue ? value < maxValue : true;
     const getCanDecrease = () => minValue ? value > minValue : true;
     const [canIncrease, setCanIncrease] = useState(getCanIncrease());
@@ -32,6 +40,7 @@ const NumberToggle = ({decreaseFunction, increaseFunction, minValue, maxValue, v
     return (
         <>
             <span
+                className={className}
                 onClick={() => {
                     if (canDecrease) {
                         decreaseFunction();

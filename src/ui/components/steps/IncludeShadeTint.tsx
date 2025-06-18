@@ -9,9 +9,11 @@ export const IncludeShadeTint = ({className = "", style = {}}: ClassAndStyle) =>
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
     return (
         <div className={className} style={style} data-testid="include-shade-tint">
-            <div className={'d-inline-block align-middle'} data-testid="include-shade-tint-label"> Include tint and shade</div>
+            <div className={'d-inline-block align-middle'}
+                 data-testid="include-shade-tint-label"> Include tint <br />and shade
+            </div>
             {' '}
-            <Toggle 
+            <Toggle
                 value={includeShadeTint}
                 onChange={() => {
                     flipIncludeShadeTint();

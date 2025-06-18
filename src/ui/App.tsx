@@ -95,7 +95,7 @@ const App: React.FC = () => {
             <div>
                 <LeftColumn shadeTintRef={shadeTintRef} />
                 <ColumnDivider />
-                <RightColumn stepsRef={stepsRef} equalStepsRef={stepsInputRef} />
+                <RightColumn />
             </div>
         </Area>
     );

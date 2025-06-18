@@ -25,7 +25,7 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
     console.log(toneRamp);
     return (
         <Section
-            id="swatches"
+            // id="swatches"
             className={className}
             style={style}
         >
@@ -38,12 +38,6 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
                 <SwatchGroupSwatches color={primaryColor.base.color} colorName={primaryColor.base.name}
                                      swatches={primaryColor.swatches} tokenName={primaryColor.base.tokenName} />
             )}
-            <div className={"sticky-bottom bg-white generate text-end"}>
-                <div className={"divide"} />
-                <button className={"btn figma-bg-primary figma-text-light figma-mr-md"}>Add Variables</button>
-                <button className={"btn figma-bg-primary figma-text-light figma-mr-md"}>Add Styles</button>
-                <button className={"btn figma-bg-primary figma-text-light"}>Create Swatches in Page</button>
-            </div>
         </Section>
     );
 };

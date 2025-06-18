@@ -33,8 +33,6 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                 <Section id="steps-input" ref={equalStepsRef} data-testid="steps-input-section">
                     {/* Steps-input content */}
                     <EqualSteps className="figma-mb-sm" />
-                    <IncludeShadeTint className={"figma-mb-sm"} />
-                    <PadZeros className={"figma-mb-sm"} />
                     <CustomSteps />
                 </Section>
                 <ColumnDivider />
