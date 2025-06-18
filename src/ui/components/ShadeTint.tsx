@@ -17,8 +17,8 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         const setShade = useSwatchStore(state => state.setShade);
         const setTint = useSwatchStore(state => state.setTint);
         const buildSwatches = useSwatchStore((state) => state.buildSwatches);
-        const neutralRampName = useSwatchStore(state => state.getNeutralRampName());
-        const setNeutralRampName = useSwatchStore(state => state.setNeutralRampName);
+        const shadeTintRampName = useSwatchStore(state => state.getShadeTintRampName());
+        const setShadeTintRampName = useSwatchStore(state => state.setShadeTintRampName);
         const [shadeName, setShadeName] = useState(shade.name);
         const [shadeColor, setShadeColor] = useState(shade.color);
         const [tintName, setTintName] = useState(tint.name);
@@ -62,14 +62,14 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                     </div>
                 </div>
 
-                {/* Neutral Ramp Name Editor */}
+                {/* Shade-Tint Ramp Name Editor */}
                 <div>
                     <div className={"figma-subtitle figma-mt-sm"}>
                         What should we call the shade/tint mix?:
                     </div>
                     <div className={"w-100"}>
-                        <TextAndInput inputText={neutralRampName}
-                                      setInputText={setNeutralRampName} />
+                        <TextAndInput inputText={shadeTintRampName}
+                                      setInputText={setShadeTintRampName} />
                     </div>
                 </div>
             </Section>

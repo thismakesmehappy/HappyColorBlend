@@ -16,7 +16,7 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
     const tintColor = useSwatchStore((state) => state.getTint());
     const shadeColor = useSwatchStore((state) => state.getShade());
     const combinedSteps: number[] = Array.from(useSwatchStore((state) => state.getCombinedSteps()));
-    const neutralRampName = useSwatchStore(state => state.getNeutralRampName());
+    const shadeTintRampName = useSwatchStore(state => state.getShadeTintRampName());
     const toneRamp: SwatchStoreSwatch[] = combinedSteps.map((step) => {
         return {
             color: blendColor(shadeColor.color, tintColor.color, step),
@@ -31,7 +31,7 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
         >
             <SwatchGroupSwatches
                 key="tint-shade"
-                colorName={neutralRampName}
+                colorName={shadeTintRampName}
                 color={tintColor.color}
                 secondColor={shadeColor.color}
                 swatches={toneRamp}
