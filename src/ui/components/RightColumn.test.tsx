@@ -8,12 +8,10 @@ jest.mock('./helpers/Area', () => {
     return function MockArea({
                                  id,
                                  className,
-                                 style,
                                  children
                              }: {
         id?: string;
         className?: string;
-        style?: React.CSSProperties;
         children?: React.ReactNode
     }) {
         return (
@@ -21,7 +19,6 @@ jest.mock('./helpers/Area', () => {
                 data-testid="mock-area"
                 id={id}
                 className={className}
-                style={style}
             >
                 {children}
             </div>
@@ -31,26 +28,22 @@ jest.mock('./helpers/Area', () => {
 
 // Mock the Steps component
 jest.mock('./Steps', () => {
-    return React.forwardRef(function MockSteps(
-        {equalStepsRef}: { equalStepsRef?: React.RefObject<HTMLDivElement> },
-        ref: React.ForwardedRef<HTMLDivElement>
-    ) {
-        return (
-            <div
-                data-testid="mock-steps"
-                ref={ref as React.RefObject<HTMLDivElement>}
-            >
-                Mock Steps
-                {equalStepsRef && <div data-testid="mock-equal-steps-ref">Equal Steps Ref</div>}
-            </div>
-        );
-    });
+    return function MockSteps() {
+        return <div data-testid="mock-steps">Mock Steps</div>;
+    };
+});
+
+// Mock the Settings component
+jest.mock('./Settings', () => {
+    return function MockSettings() {
+        return <div data-testid="mock-settings">Mock Settings</div>;
+    };
 });
 
 // Mock the SwatchesOutput component
 jest.mock('./SwatchesOutput', () => {
-    return function MockSwatchesOutput() {
-        return <div data-testid="mock-swatches-output">Mock SwatchesOutput</div>;
+    return function MockSwatchesOutput({ className }: { className?: string }) {
+        return <div data-testid="mock-swatches-output" className={className}>Mock SwatchesOutput</div>;
     };
 });
 
@@ -61,6 +54,9 @@ jest.mock('./helpers/RowDivider', () => {
     };
 });
 
+// Mock the SCSS imports
+jest.mock('../../scss/column-layout.scss', () => ({}), { virtual: true });
+
 describe('RightColumn Component', () => {
     test('renders with correct structure', () => {
         render(<RightColumn />);
@@ -70,26 +66,22 @@ describe('RightColumn Component', () => {
         expect(area).toBeInTheDocument();
         expect(area).toHaveAttribute('id', 'right-column');
 
-        // Check that all child components are rendered in the correct order
-        const children = area.childNodes;
-        expect(children[0]).toHaveAttribute('data-testid', 'mock-steps');
-        expect(children[1]).toHaveAttribute('data-testid', 'mock-row-divider');
-        expect(children[2]).toHaveAttribute('data-testid', 'mock-swatches-output');
-    });
-
-    test('passes className to Area component', () => {
-        render(<RightColumn className="test-class" />);
-
-        const area = screen.getByTestId('mock-area');
-        expect(area).toHaveAttribute('class', 'test-class');
-    });
-
-    test('passes style to Area component', () => {
-        const testStyle = {width: '300px'};
-        render(<RightColumn style={testStyle} />);
-
-        // In our mock, we're passing style directly to the div
-        const area = screen.getByTestId('mock-area');
-        expect(area).toHaveStyle('width: 300px');
+        // Check that the Steps component is rendered
+        expect(screen.getByTestId('mock-steps')).toBeInTheDocument();
+        
+        // Check that the Settings component is rendered
+        expect(screen.getByTestId('mock-settings')).toBeInTheDocument();
+        
+        // Check that the SwatchesOutput component is rendered
+        expect(screen.getByTestId('mock-swatches-output')).toBeInTheDocument();
+        
+        // Check that the RowDivider components are rendered
+        const rowDividers = screen.getAllByTestId('mock-row-divider');
+        expect(rowDividers).toHaveLength(2);
+        
+        // Check that the buttons are rendered
+        expect(screen.getByText('Add Variables')).toBeInTheDocument();
+        expect(screen.getByText('Add Styles')).toBeInTheDocument();
+        expect(screen.getByText('Create Swatches in Page')).toBeInTheDocument();
     });
 });

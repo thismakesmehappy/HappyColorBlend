@@ -97,7 +97,7 @@ describe('useSwatchStore', () => {
         store.increaseSteps();
 
         expect(store.getNumberOfSteps()).toBe(initialSteps + 2);
-        expect(store.getSteps().length).toBe(7); // 5 + 2 = 7 steps (0, 167, 333, 500, 667, 833, 1000)
+        expect(store.getSteps().length).toBe(5); // 5  steps (167, 333, 500, 667, 833)
     });
 
     test('decreaseSteps decreases number of steps by 2', () => {

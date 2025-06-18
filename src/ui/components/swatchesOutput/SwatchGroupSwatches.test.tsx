@@ -40,7 +40,7 @@ describe('SwatchGroupSwatches Component', () => {
 
         // Check that the title contains the primary color info
         const primaryColorInfo = screen.getByTestId('primary-color-info');
-        expect(primaryColorInfo).toHaveTextContent('#FF5733 | primary500');
+        expect(primaryColorInfo).toHaveTextContent('#FF5733 | --primary-color-500');
 
         // Check that the ChipOutput is rendered for the primary color
         const chipOutputs = screen.getAllByTestId('mock-chip-output');
@@ -58,7 +58,7 @@ describe('SwatchGroupSwatches Component', () => {
 
         // Check that the secondary color info is rendered
         const secondaryColorInfo = screen.getByTestId('secondary-color-info');
-        expect(secondaryColorInfo).toHaveTextContent('#3366FF | secondary500');
+        expect(secondaryColorInfo).toHaveTextContent('#3366FF | --secondary-color-500');
 
         // Check that the ChipOutput is rendered for the secondary color
         const chipOutputs = screen.getAllByTestId('mock-chip-output');

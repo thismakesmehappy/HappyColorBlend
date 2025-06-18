@@ -165,7 +165,7 @@ describe('PrimaryColors Component', () => {
         fireEvent.change(colorInput, {target: {value: 'FF5500'}});
 
         // Check that updatePrimaryColor was called with the correct values
-        expect(mockUpdatePrimaryColor).toHaveBeenCalledWith('color1', 'FF5500', 'Red', 'Red');
+        expect(mockUpdatePrimaryColor).toHaveBeenCalledWith('color1', 'FF5500', 'Red');
         expect(mockBuildSwatches).toHaveBeenCalled();
     });
 
@@ -177,7 +177,7 @@ describe('PrimaryColors Component', () => {
         fireEvent.change(nameInput, {target: {value: 'Bright Red'}});
 
         // Check that updatePrimaryColor was called with the correct values
-        expect(mockUpdatePrimaryColor).toHaveBeenCalledWith('color1', 'FF0000', 'Bright Red', 'Bright Red');
+        expect(mockUpdatePrimaryColor).toHaveBeenCalledWith('color1', 'FF0000', 'Bright Red');
         expect(mockBuildSwatches).toHaveBeenCalled();
     });
 
@@ -211,7 +211,6 @@ describe('PrimaryColors Component', () => {
             color: '7FFFFF', // Result of Math.floor(0.5 * 16777215).toString(16).padStart(6, '0').toUpperCase()
             name: 'Mock Color Name',
             id: 'mock-uuid',
-            tokenName: 'mock-color-name',
         });
         expect(mockBuildSwatches).toHaveBeenCalled();
 

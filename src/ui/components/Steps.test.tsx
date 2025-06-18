@@ -56,22 +56,6 @@ jest.mock('./steps/EqualSteps', () => {
     };
 });
 
-jest.mock('./steps/IncludeShadeTint', () => {
-    return {
-        IncludeShadeTint: function MockIncludeShadeTint({className}: { className?: string }) {
-            return <div data-testid="mock-include-shade-tint">Mock IncludeShadeTint</div>;
-        }
-    };
-});
-
-jest.mock('./steps/PadZeros', () => {
-    return {
-        PadZeros: function MockPadZeros({className}: { className?: string }) {
-            return <div data-testid="mock-pad-zeros">Mock PadZeros</div>;
-        }
-    };
-});
-
 jest.mock('./steps/CustomSteps', () => {
     return function MockCustomSteps() {
         return <div data-testid="mock-custom-steps">Mock CustomSteps</div>;
@@ -176,13 +160,9 @@ describe('Steps Component', () => {
 
         // Check that all step input components are rendered
         const equalSteps = screen.getByTestId('mock-equal-steps');
-        const includeShadeTint = screen.getByTestId('mock-include-shade-tint');
-        const padZeros = screen.getByTestId('mock-pad-zeros');
         const customSteps = screen.getByTestId('mock-custom-steps');
 
         expect(equalSteps).toBeInTheDocument();
-        expect(includeShadeTint).toBeInTheDocument();
-        expect(padZeros).toBeInTheDocument();
         expect(customSteps).toBeInTheDocument();
     });
 

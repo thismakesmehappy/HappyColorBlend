@@ -124,7 +124,7 @@ describe('ShadeTint Component', () => {
         fireEvent.change(shadeColorInput, {target: {value: '111111'}});
 
         // Check that setShade was called with the correct values
-        expect(mockSetShade).toHaveBeenCalledWith('111111', 'Black', 'Black');
+        expect(mockSetShade).toHaveBeenCalledWith('111111', 'Black');
         expect(mockBuildSwatches).toHaveBeenCalled();
     });
 
@@ -136,7 +136,7 @@ describe('ShadeTint Component', () => {
         fireEvent.change(shadeNameInput, {target: {value: 'Dark Black'}});
 
         // Check that setShade was called with the correct values
-        expect(mockSetShade).toHaveBeenCalledWith('000000', 'Dark Black', 'Dark Black');
+        expect(mockSetShade).toHaveBeenCalledWith('000000', 'Dark Black');
         expect(mockBuildSwatches).toHaveBeenCalled();
     });
 
@@ -148,7 +148,7 @@ describe('ShadeTint Component', () => {
         fireEvent.change(tintColorInput, {target: {value: 'EEEEEE'}});
 
         // Check that setTint was called with the correct values
-        expect(mockSetTint).toHaveBeenCalledWith('EEEEEE', 'White', 'White');
+        expect(mockSetTint).toHaveBeenCalledWith('EEEEEE', 'White');
         expect(mockBuildSwatches).toHaveBeenCalled();
     });
 
@@ -160,7 +160,7 @@ describe('ShadeTint Component', () => {
         fireEvent.change(tintNameInput, {target: {value: 'Pure White'}});
 
         // Check that setTint was called with the correct values
-        expect(mockSetTint).toHaveBeenCalledWith('FFFFFF', 'Pure White', 'Pure White');
+        expect(mockSetTint).toHaveBeenCalledWith('FFFFFF', 'Pure White');
         expect(mockBuildSwatches).toHaveBeenCalled();
     });
 

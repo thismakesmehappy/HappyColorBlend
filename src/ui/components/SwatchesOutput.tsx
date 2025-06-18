@@ -25,18 +25,25 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
     console.log(toneRamp);
     return (
         <Section
-            // id="swatches"
             className={className}
             style={style}
         >
-            <SwatchGroupSwatches colorName={tintColor.name} color={tintColor.color}
-                                 secondColorName={shadeColor.name}
-                                 secondColor={shadeColor.color}
-                                 swatches={toneRamp} />
+            <SwatchGroupSwatches 
+                key="tint-shade"
+                colorName={tintColor.name} 
+                color={tintColor.color}
+                secondColorName={shadeColor.name}
+                secondColor={shadeColor.color}
+                swatches={toneRamp} 
+            />
 
             {swatches.map((primaryColor) =>
-                <SwatchGroupSwatches color={primaryColor.base.color} colorName={primaryColor.base.name}
-                                     swatches={primaryColor.swatches} />
+                <SwatchGroupSwatches 
+                    key={primaryColor.base.id}
+                    color={primaryColor.base.color} 
+                    colorName={primaryColor.base.name}
+                    swatches={primaryColor.swatches} 
+                />
             )}
         </Section>
     );
