@@ -3,6 +3,7 @@ import '../scss/column-layout.scss';
 import Section from './helpers/Section';
 import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
+import TextAndInput from "./helpers/TextAndInput";
 
 interface ShadeTintProps {
     className?: string;
@@ -16,6 +17,8 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         const setShade = useSwatchStore(state => state.setShade);
         const setTint = useSwatchStore(state => state.setTint);
         const buildSwatches = useSwatchStore((state) => state.buildSwatches);
+        const neutralRampName = useSwatchStore(state => state.getNeutralRampName());
+        const setNeutralRampName = useSwatchStore(state => state.setNeutralRampName);
         const [shadeName, setShadeName] = useState(shade.name);
         const [shadeColor, setShadeColor] = useState(shade.color);
         const [tintName, setTintName] = useState(tint.name);
@@ -56,6 +59,17 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                                 }}
                                 id={tint.id}
                         />
+                    </div>
+                </div>
+
+                {/* Neutral Ramp Name Editor */}
+                <div>
+                    <div className={"figma-subtitle figma-mt-sm"}>
+                        What should we call the shade/tint mix?:
+                    </div>
+                    <div className={"w-100"}>
+                        <TextAndInput inputText={neutralRampName}
+                                      setInputText={setNeutralRampName} />
                     </div>
                 </div>
             </Section>

@@ -51,14 +51,13 @@ describe('SwatchGroupSwatches Component', () => {
         render(
             <SwatchGroupSwatches
                 {...defaultProps}
-                secondColorName="Secondary Color"
                 secondColor="3366FF"
             />
         );
 
         // Check that the secondary color info is rendered
         const secondaryColorInfo = screen.getByTestId('secondary-color-info');
-        expect(secondaryColorInfo).toHaveTextContent('#3366FF | --secondary-color-500');
+        expect(secondaryColorInfo).toHaveTextContent('#3366FF');
 
         // Check that the ChipOutput is rendered for the secondary color
         const chipOutputs = screen.getAllByTestId('mock-chip-output');

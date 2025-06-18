@@ -12,6 +12,7 @@ export const initialState = {
     steps: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     customSteps: new Set<number>([50, 950]),
     combinedSteps: new Set<number>(),
+    neutralRampName: "Gray",
 }
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
@@ -73,6 +74,7 @@ interface SwatchStoreState {
     steps: number[];
     customSteps: Set<number>;
     combinedSteps: Set<number>;
+    neutralRampName: string;
 
     // Getters
     getShade: () => SwatchStoreInputSwatch;
@@ -84,6 +86,7 @@ interface SwatchStoreState {
     getTotalUniqueSteps: () => number;
     getCombinedSteps: () => Set<number>;
     getSteps: () => number[];
+    getNeutralRampName: () => string;
 
     // Setters
     setShade: (color: string, name: string) => void;
@@ -100,6 +103,7 @@ interface SwatchStoreState {
     addCustomStep: (step: number) => void;
     removeCustomStep: (step: number) => void;
     buildSwatches: () => SwatchStoreSwatches[];
+    setNeutralRampName: (name: string) => void;
 }
 
 
@@ -120,6 +124,7 @@ const useSwatchStore = create<SwatchStoreState>()(
         getTotalUniqueSteps: () => get().combinedSteps.size,
         getCombinedSteps: () => get().combinedSteps,
         getSteps: () => get().steps,
+        getNeutralRampName: () => get().neutralRampName,
         setCombinedSteps: () => {
             const {steps, customSteps} = get();
             set({combinedSteps: new Set([...steps, ...customSteps].sort((a, b) => a - b))});
@@ -161,6 +166,9 @@ const useSwatchStore = create<SwatchStoreState>()(
         setSteps: (steps: number) => {
             set({numberOfSteps: steps});
             get().createSteps();
+        },
+        setNeutralRampName: (name: string) => {
+            set({neutralRampName: name});
         },
         addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => set((state) => ({primaryColors: [...state.primaryColors, primaryColor]})),
         updatePrimaryColor: (id: string, color: string, name: string) => set((state) => ({

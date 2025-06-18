@@ -1,15 +1,14 @@
 import SwatchColorChip from "./SwatchColorChip";
 import React from "react";
-import {SwatchStoreSwatch, SwatchStoreSwatches} from "../../store/useSwatchStore";
+import {SwatchStoreSwatch} from "../../store/useSwatchStore";
 import ChipOutput from "./ChipOutput";
-import {CaseTreatment, CharType, computeTokenName, SpaceTreatment} from "../../helpers/computeTokenName";
+import {computeTokenName} from "../../helpers/computeTokenName";
 import useTokenNameStore from "../../store/useTokenNameStore";
 
 interface SwatchGroupSwatchesProps {
     colorName: string;
     color?: string;
     swatches: SwatchStoreSwatch[];
-    secondColorName?: string;
     secondColor?: string;
 }
 
@@ -17,7 +16,6 @@ const SwatchGroupSwatches = ({
                                  colorName,
                                  color,
                                  swatches,
-                                 secondColorName,
                                  secondColor
                              }: SwatchGroupSwatchesProps) => {
     const caseTreatment = useTokenNameStore(state => state.caseTreatment)
@@ -35,28 +33,20 @@ const SwatchGroupSwatches = ({
         leadingCharType,
         trailingCharType
     );
-    const secondColorTokenName = secondColorName && computeTokenName(
-        secondColorName,
-        caseTreatment,
-        spaceTreatment,
-        leadingCharsCount,
-        trailingCharsCount,
-        leadingCharType,
-        trailingCharType
-    );
     return (<div className={"swatch-group figma-mb-lg figma-pb-sm"} data-testid="swatch-group">
         <p className={"figma-subtitle"} data-testid="swatch-group-title">
             <ChipOutput color={color!} />
 
-            <span data-testid="primary-color-info">#{color} | {colorTokenName}<span
-                className={"figma-text-mid"}>500</span></span>
+            <span data-testid="primary-color-info">#{color} |
+                {secondColor && (
+                    <span data-testid="secondary-color-info">
+                    <ChipOutput color={secondColor!} className="figma-ml-sm" />
+                    #{secondColor!} | </span>
+                )}
+                <span> {colorTokenName}<span
+                    className={"figma-text-mid"}>500</span></span></span>
             <br />
-            {secondColorName && (
-                <span data-testid="secondary-color-info">
-                    <ChipOutput color={secondColor!} />
-                    #{secondColor} | {secondColorTokenName}<span className={"figma-text-mid"}>500</span>
-                </span>
-            )}
+
         </p>
         <div className={"swatches-container"} data-testid="swatches-container">
             {swatches.map((swatch, index) =>
