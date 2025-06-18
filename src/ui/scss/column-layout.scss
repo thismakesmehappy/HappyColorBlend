@@ -100,10 +100,12 @@ $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 
   height: auto; // Allow height to adapt to content
   white-space: nowrap; // Keep children on the same line
   overflow-x: hidden; // Prevent horizontal scrolling
+  display: flex;
+  justify-content: space-evenly;
 }
 
 // Steps-input takes only the width and height of its content
-#steps-input, #settings-internal, #settings-outer, #settings-steps, #settings-leading, #settings-trailing {
+#steps-input, #settings-internal, #settings-outer, #settings-steps, #settings-leading, #settings-trailing, #settings-space, #settings-case {
   display: inline-block;
   height: auto;
   width: auto;

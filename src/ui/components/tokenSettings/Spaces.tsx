@@ -1,15 +1,16 @@
 import React from "react";
 import useTokenNameStore from "../../store/useTokenNameStore";
+import Section from "../helpers/Section";
 
 const Spaces = () => {
     const spaceTreatment = useTokenNameStore(state => state.spaceTreatment);
     const setSpaceTreatment = useTokenNameStore(state => state.setSpaceTreatment);
     return (
-        <>
-            <div className="figma-mt-sm">Spaces:</div>
-            <div>
-                <div data-testid="space-treatment-radio">
-                    <label className="figma-radio figma-mr-sm">
+        <Section id="settings-space">
+            <div>Spaces:</div>
+            <div data-testid="space-treatment-radio">
+                <div>
+                    <label className="figma-radio figma-mr-md">
                         <input
                             type="radio"
                             name="space-treatment"
@@ -18,7 +19,7 @@ const Spaces = () => {
                             onChange={() => setSpaceTreatment('keep')} />
                         <span>Keep</span>
                     </label>
-                    <label className="figma-mr-sm">
+                    <label className="figma-mr-md">
                         <input
                             type="radio"
                             name="space-treatment"
@@ -27,7 +28,9 @@ const Spaces = () => {
                             onChange={() => setSpaceTreatment('dash')} />
                         <span>Dash</span>
                     </label>
-                    <label className="figma-mr-sm">
+                </div>
+                <div>
+                    <label className="figma-mr-md">
                         <input
                             type="radio"
                             name="space-treatment"
@@ -36,7 +39,7 @@ const Spaces = () => {
                             onChange={() => setSpaceTreatment('underscore')} />
                         <span>Underscore</span>
                     </label>
-                    <label>
+                    <label className="figma-mr-md">
                         <input
                             type="radio"
                             name="space-treatment"
@@ -47,7 +50,8 @@ const Spaces = () => {
                     </label>
                 </div>
             </div>
-        </>);
+        </Section>
+    );
 };
 
 export default Spaces

@@ -20,8 +20,8 @@ const NumberToggle = ({
                       }: NumberToggleProps) => {
     const getCanIncrease = () => maxValue ? value < maxValue : true;
     const getCanDecrease = () => minValue ? value > minValue : true;
-    const [canIncrease, setCanIncrease] = useState(getCanIncrease());
-    const [canDecrease, setCanDecrease] = useState(getCanDecrease());
+    const [canIncrease, setCanIncrease] = useState(getCanIncrease);
+    const [canDecrease, setCanDecrease] = useState(getCanDecrease);
 
     // Update button states when value or min/max values change
     useEffect(() => {
@@ -38,9 +38,9 @@ const NumberToggle = ({
     };
 
     return (
-        <>
+        <span className={className}>
             <span
-                className={className}
+
                 onClick={() => {
                     if (canDecrease) {
                         decreaseFunction();
@@ -78,7 +78,7 @@ const NumberToggle = ({
                     className={`figma-icon ${canIncrease ? 'figma-text-primary' : 'figma-text-secondary'}`}
                 />
             </span>
-        </>
+        </span>
     );
 };
 

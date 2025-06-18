@@ -10,36 +10,35 @@ const Trailing = () => {
     const incrementTrailingChars = useTokenNameStore(state => state.incrementTrailingChars);
     const decrementTrailingChars = useTokenNameStore(state => state.decrementTrailingChars);
     return (
-        <>
-            <Section id="settings-trailing">
-                <div>Trailing:</div>
-                <NumberToggle
-                    decreaseFunction={decrementTrailingChars}
-                    increaseFunction={incrementTrailingChars}
-                    value={trailingCharsCount}
-                    minValue={0} />
-                <div data-testid="trailing-radio text-center">
-                    <label className="figma-mr-sm">
-                        <input
-                            type="radio"
-                            name="trailing"
-                            value="dash"
-                            checked={trailingCharType === 'dash'}
-                            onChange={() => setTrailingCharType('dash')} />
-                        <span>-</span>
-                    </label>
-                    <label className="figma-mr-sm">
-                        <input
-                            type="radio"
-                            name="trailing"
-                            value="underscore"
-                            checked={trailingCharType === 'underscore'}
-                            onChange={() => setTrailingCharType('underscore')} />
-                        <span>_</span>
-                    </label>
-                </div>
-            </Section>
-        </>
+        <Section id="settings-trailing">
+            <div>Trailing Character:</div>
+            <NumberToggle
+                decreaseFunction={decrementTrailingChars}
+                increaseFunction={incrementTrailingChars}
+                value={trailingCharsCount}
+                minValue={0} />
+            <div data-testid="trailing-radio text-center" className="figma-mt-sm">
+                <label className="figma-mr-sm">
+                    <input
+                        type="radio"
+                        name="trailing"
+                        value="dash"
+                        checked={trailingCharType === 'dash'}
+                        onChange={() => setTrailingCharType('dash')} />
+                    <span>Dash (-)</span>
+                </label>
+                <br />
+                <label className="figma-mr-sm">
+                    <input
+                        type="radio"
+                        name="trailing"
+                        value="underscore"
+                        checked={trailingCharType === 'underscore'}
+                        onChange={() => setTrailingCharType('underscore')} />
+                    <span>Underscore (_)</span>
+                </label>
+            </div>
+        </Section>
     );
 };
 

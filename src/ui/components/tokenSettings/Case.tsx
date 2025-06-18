@@ -1,15 +1,16 @@
 import React from "react";
 import useTokenNameStore from "../../store/useTokenNameStore";
+import Section from "../helpers/Section";
 
 const Case = () => {
     const caseTreatment = useTokenNameStore(state => state.caseTreatment);
     const setCaseTreatment = useTokenNameStore(state => state.setCaseTreatment);
     return (
-        <>
+        <Section id="settings-case">
             <div>Case:</div>
             <div>
                 <div data-testid="case-treatment-radio">
-                    <label className="figma-mr-sm">
+                    <label className="figma-mr-md">
                         <input
                             type="radio"
                             name="case-treatment"
@@ -18,7 +19,8 @@ const Case = () => {
                             onChange={() => setCaseTreatment('keep')} />
                         <span>Keep</span>
                     </label>
-                    <label className="figma-mr-sm">
+
+                    <label className="figma-mr-md">
                         <input
                             type="radio"
                             name="case-treatment"
@@ -27,7 +29,9 @@ const Case = () => {
                             onChange={() => setCaseTreatment('lower')} />
                         <span>Lower</span>
                     </label>
-                    <label className="figma-mr-sm">
+                </div>
+                <div>
+                    <label className="figma-mr-md">
                         <input
                             type="radio"
                             name="case-treatment"
@@ -36,7 +40,7 @@ const Case = () => {
                             onChange={() => setCaseTreatment('upper')} />
                         <span>Upper</span>
                     </label>
-                    <label className="">
+                    <label className="figma-mr-md">
                         <input
                             type="radio"
                             name="case-treatment"
@@ -47,7 +51,7 @@ const Case = () => {
                     </label>
                 </div>
             </div>
-        </>);
+        </Section>);
 
 };
 
