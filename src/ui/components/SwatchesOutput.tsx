@@ -29,14 +29,14 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
             className={className}
             style={style}
         >
-            <SwatchGroupSwatches colorName={tintColor.name} tokenName={tintColor.tokenName} color={tintColor.color}
-                                 secondColorName={shadeColor.name} secondTokenName={shadeColor.tokenName}
+            <SwatchGroupSwatches colorName={tintColor.name} color={tintColor.color}
+                                 secondColorName={shadeColor.name}
                                  secondColor={shadeColor.color}
                                  swatches={toneRamp} />
 
             {swatches.map((primaryColor) =>
                 <SwatchGroupSwatches color={primaryColor.base.color} colorName={primaryColor.base.name}
-                                     swatches={primaryColor.swatches} tokenName={primaryColor.base.tokenName} />
+                                     swatches={primaryColor.swatches} />
             )}
         </Section>
     );

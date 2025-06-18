@@ -6,9 +6,7 @@ import Area from "./helpers/Area";
 import EqualSteps from "./steps/EqualSteps";
 import useSwatchStore from "../store/useSwatchStore";
 import Badge from "./helpers/Badge";
-import {IncludeShadeTint} from "./steps/IncludeShadeTint";
 import CustomSteps from "./steps/CustomSteps";
-import {PadZeros} from "./steps/PadZeros";
 
 interface StepsProps {
     className?: string;

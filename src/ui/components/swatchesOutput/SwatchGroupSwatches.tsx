@@ -9,18 +9,14 @@ interface SwatchGroupSwatchesProps {
     colorName: string;
     color?: string;
     swatches: SwatchStoreSwatch[];
-    tokenName?: string;
     secondColorName?: string;
     secondColor?: string;
-    secondTokenName?: string;
 }
 
 const SwatchGroupSwatches = ({
                                  colorName,
                                  color,
                                  swatches,
-                                 tokenName,
-                                 secondTokenName,
                                  secondColorName,
                                  secondColor
                              }: SwatchGroupSwatchesProps) => {

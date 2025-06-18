@@ -1,5 +1,4 @@
 import React from "react";
-import useSwatchStore, {SwatchStoreSwatch} from "../../store/useSwatchStore";
 import {hex} from "wcag-contrast";
 
 interface SwatchColorChipProps {
@@ -8,7 +7,6 @@ interface SwatchColorChipProps {
 }
 
 const SwatchColorChip = ({color, step}: SwatchColorChipProps) => {
-    const shouldPadZeros = useSwatchStore((state) => state.getShouldPadZeros());
     const ratioWhite = hex("#FFF", "#" + color);
     const textColor = ratioWhite > 3 ? "#FFFFFF" : "#000000";
 
@@ -20,7 +18,7 @@ const SwatchColorChip = ({color, step}: SwatchColorChipProps) => {
                 data-testid="swatch-color-chip"
                 data-color={color}
                 data-step={step}>
-                {step.toString().padStart(shouldPadZeros ? 3 : 0, '0')}<br />
+                {step.toString().padStart(3, '0')}<br />
                 #{color}
             </div>
         </div>

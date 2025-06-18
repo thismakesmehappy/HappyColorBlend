@@ -4,15 +4,13 @@ import {blendPrimaryColor} from "../helpers/colorMethods";
 import steps from "../components/Steps";
 
 export const initialState = {
-    shade: {color: "000000", name: "Black", id: "shade", tokenName: "Black"},
-    tint: {color: "FFFFFF", name: "White", id: "tint", tokenName: "White"},
+    shade: {color: "000000", name: "Black", id: "shade"},
+    tint: {color: "FFFFFF", name: "White", id: "tint"},
     primaryColors: [],
     swatches: [],
     numberOfSteps: 3,
     steps: [0, 250, 500, 750, 1000],
     customSteps: new Set<number>(),
-    includeShadeTint: true,
-    shouldPadZeros: true,
     combinedSteps: new Set<number>(),
 }
 // Function to build swatches based on parameters
@@ -52,7 +50,6 @@ export interface SwatchStoreInputSwatch {
     color: string;
     name: string;
     id?: string;
-    tokenName: string;
 }
 
 export interface SwatchStoreSwatch {
@@ -75,9 +72,7 @@ interface SwatchStoreState {
     numberOfSteps: number;
     steps: number[];
     customSteps: Set<number>;
-    includeShadeTint: boolean;
     combinedSteps: Set<number>;
-    shouldPadZeros: boolean;
 
     // Getters
     getShade: () => SwatchStoreInputSwatch;
@@ -86,40 +81,27 @@ interface SwatchStoreState {
     getSwatches: () => SwatchStoreSwatches[];
     getNumberOfSteps: () => number;
     getCustomSteps: () => Set<number>;
-    getIncludeShadeTint: () => boolean;
     getTotalUniqueSteps: () => number;
     getCombinedSteps: () => Set<number>;
-    getShouldPadZeros: () => boolean;
     getSteps: () => number[];
 
     // Setters
-    setShade: (color: string, name: string, tokenName: string) => void;
-    setTint: (color: string, name: string, tokenName: string) => void;
+    setShade: (color: string, name: string) => void;
+    setTint: (color: string, name: string) => void;
     increaseSteps: () => void;
     decreaseSteps: () => void;
     setSteps: (steps: number) => void;
     setNumberOfSteps: (numberOfSteps: number) => void;
     setCombinedSteps: () => void;
     addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => void;
-    updatePrimaryColor: (id: string, color: string, name: string, tokenName: string) => void;
+    updatePrimaryColor: (id: string, color: string, name: string) => void;
     removePrimaryColor: (id: string) => void;
-    flipIncludeShadeTint: () => void;
     createSteps: () => number[];
     addCustomStep: (step: number) => void;
     removeCustomStep: (step: number) => void;
     buildSwatches: () => SwatchStoreSwatches[];
-    flipShouldPadZeros: () => void;
 }
 
-
-export function createTokenName(name: string, tokenName: string, isCustomToken: boolean) {
-    if (isCustomToken) {
-        return tokenName;
-    } else if (name) {
-        return name.replace(/\s/g, '-');
-    }
-    return "";
-}
 
 // Create the store
 const useSwatchStore = create<SwatchStoreState>()(
@@ -135,7 +117,6 @@ const useSwatchStore = create<SwatchStoreState>()(
         getSwatches: () => get().swatches,
         getNumberOfSteps: () => get().numberOfSteps,
         getCustomSteps: () => get().customSteps,
-        getIncludeShadeTint: () => get().includeShadeTint,
         getTotalUniqueSteps: () => get().combinedSteps.size,
         getCombinedSteps: () => get().combinedSteps,
         getSteps: () => get().steps,
@@ -143,26 +124,23 @@ const useSwatchStore = create<SwatchStoreState>()(
             const {steps, customSteps} = get();
             set({combinedSteps: new Set([...steps, ...customSteps].sort((a, b) => a - b))});
         },
-        getShouldPadZeros: () => get().shouldPadZeros,
 
         // Setters
-        setShade: (color: string, name: string, tokenName: string) => {
+        setShade: (color: string, name: string) => {
             const colorUpper = color.toUpperCase();
             set({
                 shade: {
                     color: colorUpper,
                     name: name,
-                    tokenName: tokenName,
                 }
             })
         },
-        setTint: (color: string, name: string, tokenName: string) => {
+        setTint: (color: string, name: string) => {
             const colorUpper = color.toUpperCase()
             set({
                 tint: {
                     color: colorUpper,
                     name: name,
-                    tokenName: tokenName,
                 }
             })
         },
@@ -185,7 +163,7 @@ const useSwatchStore = create<SwatchStoreState>()(
             get().createSteps();
         },
         addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => set((state) => ({primaryColors: [...state.primaryColors, primaryColor]})),
-        updatePrimaryColor: (id: string, color: string, name: string, tokenName: string) => set((state) => ({
+        updatePrimaryColor: (id: string, color: string, name: string) => set((state) => ({
             primaryColors: state.primaryColors.map((p) => {
                 if (p.id === id) {
                     console.log("updated id " + id);
@@ -193,7 +171,6 @@ const useSwatchStore = create<SwatchStoreState>()(
                         color: color,
                         name: name,
                         id: id,
-                        tokenName: tokenName,
                     };
                 }
                 return p;
@@ -202,32 +179,17 @@ const useSwatchStore = create<SwatchStoreState>()(
         removePrimaryColor: (id: string) => set((state) => ({primaryColors: state.primaryColors.filter((p) => p.id !== id)})),
         createSteps: () => {
             const state = get();
-            const {numberOfSteps, includeShadeTint} = state;
+            const {numberOfSteps} = state;
             let steps: number[] = [];
 
-            if (includeShadeTint) {
-                // Calculate steps including 0 and 1000
-                for (let i = 0; i <= numberOfSteps + 1; i++) {
-                    const step = Math.round((i * 1000) / (numberOfSteps + 1));
-                    steps.push(step);
-                }
-            } else {
-                // Calculate steps excluding 0 and 1000
-                for (let i = 1; i <= numberOfSteps; i++) {
-                    const step = Math.round((i * 1000) / (numberOfSteps + 1));
-                    steps.push(step);
-                }
+            // Calculate steps excluding 0 and 1000
+            for (let i = 1; i <= numberOfSteps; i++) {
+                const step = Math.round((i * 1000) / (numberOfSteps + 1));
+                steps.push(step);
             }
 
             set({steps});
             return steps;
-        },
-        flipIncludeShadeTint: () => {
-            set((state) => ({includeShadeTint: !state.includeShadeTint}));
-            get().createSteps();
-        },
-        flipShouldPadZeros: () => {
-            set((state) => ({shouldPadZeros: !state.shouldPadZeros}));
         },
 
         addCustomStep: (step: number) => {

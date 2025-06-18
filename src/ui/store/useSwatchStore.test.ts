@@ -1,7 +1,6 @@
 import useSwatchStore, {
     buildNewSwatches,
-    SwatchStoreInputSwatch,
-    createTokenName, initialState
+    SwatchStoreInputSwatch, initialState
 } from './useSwatchStore';
 
 // Reset the store before each test
@@ -21,14 +20,12 @@ describe('useSwatchStore', () => {
         expect(state.getTint().color).toBe('FFFFFF');
         expect(state.getPrimaryColors()).toEqual([]);
         expect(state.getNumberOfSteps()).toBe(3);
-        expect(state.getIncludeShadeTint()).toBe(true);
-        expect(state.getShouldPadZeros()).toBe(true);
         expect(Array.from(state.getCombinedSteps())).toEqual([]);
     });
 
     test('setShade updates shade color and name', () => {
         const store = useSwatchStore.getState();
-        store.setShade('FF0000', 'Red', 'red');
+        store.setShade('FF0000', 'Red');
 
         expect(store.getShade().color).toBe('FF0000');
         expect(store.getShade().name).toBe('Red');
@@ -36,7 +33,7 @@ describe('useSwatchStore', () => {
 
     test('setTint updates tint color and name', () => {
         const store = useSwatchStore.getState();
-        store.setTint('00ff00', 'Green', 'green');
+        store.setTint('00ff00', 'Green');
 
         expect(store.getTint().color).toBe('00FF00');
         expect(store.getTint().name).toBe('Green');
@@ -48,7 +45,6 @@ describe('useSwatchStore', () => {
             color: 'FF0000',
             name: 'Red',
             id: '1',
-            tokenName: 'Red',
         };
 
         store.addPrimaryColor(newColor);
@@ -63,11 +59,10 @@ describe('useSwatchStore', () => {
             color: 'FF0000',
             name: 'Red',
             id: '1',
-            tokenName: 'Red',
         };
 
         store.addPrimaryColor(newColor);
-        store.updatePrimaryColor('1', '00FF00', 'Green', 'Green');
+        store.updatePrimaryColor('1', '00FF00', 'Green');
 
         expect(store.getPrimaryColors()[0].color).toBe('00FF00');
         expect(store.getPrimaryColors()[0].name).toBe('Green');
@@ -79,14 +74,12 @@ describe('useSwatchStore', () => {
             color: 'FF0000',
             name: 'Red',
             id: '1',
-            tokenName: 'Red',
         };
 
         const color2: SwatchStoreInputSwatch = {
             color: '00FF00',
             name: 'Green',
             id: '2',
-            tokenName: 'Green',
         };
 
         store.addPrimaryColor(color1);
@@ -115,24 +108,6 @@ describe('useSwatchStore', () => {
         store.decreaseSteps();
 
         expect(store.getNumberOfSteps()).toBe(initialSteps - 2);
-    });
-
-    test('flipIncludeShadeTint toggles includeShadeTint', () => {
-        const store = useSwatchStore.getState();
-        const initialValue = store.getIncludeShadeTint();
-
-        store.flipIncludeShadeTint();
-
-        expect(store.getIncludeShadeTint()).toBe(!initialValue);
-    });
-
-    test('flipShouldPadZeros toggles shouldPadZeros', () => {
-        const store = useSwatchStore.getState();
-        const initialValue = store.getShouldPadZeros();
-
-        store.flipShouldPadZeros();
-
-        expect(store.getShouldPadZeros()).toBe(!initialValue);
     });
 
     test('addCustomStep adds a custom step', () => {
@@ -165,16 +140,6 @@ describe('useSwatchStore', () => {
         expect(combinedSteps).toEqual([0, 250, 333, 500, 666, 750, 1000]);
     });
 
-    test('createTokenName generates correct token names', () => {
-        // Regular case
-        expect(createTokenName('Test Name', '', false)).toBe('Test-Name');
-
-        // Custom token case
-        expect(createTokenName('Test Name', 'custom-token', true)).toBe('custom-token');
-
-        // Empty name case
-        expect(createTokenName('', '', false)).toBe('');
-    });
 });
 
 describe('buildNewSwatches', () => {
@@ -184,13 +149,11 @@ describe('buildNewSwatches', () => {
         const shade: SwatchStoreInputSwatch = {
             color: '000000',
             name: 'Black',
-            tokenName: 'Black',
         };
 
         const tint: SwatchStoreInputSwatch = {
             color: 'FFFFFF',
             name: 'White',
-            tokenName: 'White',
         };
 
         const primaryColors: SwatchStoreInputSwatch[] = [
@@ -198,7 +161,6 @@ describe('buildNewSwatches', () => {
                 color: 'FF0000',
                 name: 'Red',
                 id: '1',
-                tokenName: 'Red',
             }
         ];
 
