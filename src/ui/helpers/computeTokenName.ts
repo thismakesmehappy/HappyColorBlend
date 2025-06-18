@@ -44,7 +44,7 @@ const addTrailingChars = (input: string, count: number, charType: CharType = 'da
     return input + chars;
 }
 
-export const tokenName = (
+export const computeTokenName = (
     input: string,
     caseTreatment: CaseTreatment = 'keep',
     spaceTreatment: SpaceTreatment = 'keep',

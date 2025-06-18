@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import useTokenNameStore from "../../store/useTokenNameStore";
-import {tokenName} from "../../helpers/tokenName";
+import {computeTokenName} from "../../helpers/computeTokenName";
 
 const SampleToken = () => {
     const caseTreatment = useTokenNameStore(state => state.caseTreatment);
@@ -11,10 +11,10 @@ const SampleToken = () => {
     const trailingCharType = useTokenNameStore(state => state.trailingCharType);
 
     const sampleName = "This is AN eXAmple";
-    const [sampleToken, setSampleToken] = useState(tokenName(sampleName, caseTreatment, spaceTreatment, leadingCharsCount, trailingCharsCount, leadingCharType, trailingCharType));
+    const [sampleToken, setSampleToken] = useState(computeTokenName(sampleName, caseTreatment, spaceTreatment, leadingCharsCount, trailingCharsCount, leadingCharType, trailingCharType));
 
     useEffect(() => {
-        setSampleToken(tokenName(sampleName, caseTreatment, spaceTreatment, leadingCharsCount, trailingCharsCount, leadingCharType, trailingCharType));
+        setSampleToken(computeTokenName(sampleName, caseTreatment, spaceTreatment, leadingCharsCount, trailingCharsCount, leadingCharType, trailingCharType));
     }, [caseTreatment, spaceTreatment, leadingCharsCount, trailingCharsCount, leadingCharType, trailingCharType]);
     return (<div>{sampleToken}</div>);
 };
