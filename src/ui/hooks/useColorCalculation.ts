@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { ColorCalculationService, SwatchGenerationService } from '../services';
 import { SwatchStoreInputSwatch } from '../store/useSwatchStore';
+import { createHexColor } from '../interfaces/ColorTypes';
 
 /**
  * Custom hook for color calculations and swatch generation
@@ -42,7 +43,7 @@ export const useColorCalculation = (
   };
 
   const isLightColor = (color: string) => {
-    return ColorCalculationService.isLightColor(color);
+    return ColorCalculationService.isLightColor(createHexColor(color));
   };
 
   return {

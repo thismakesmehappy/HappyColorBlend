@@ -3,27 +3,66 @@ import LeftColumn from './components/LeftColumn';
 import RightColumn from './components/RightColumn';
 import ColumnDivider from './components/helpers/ColumnDivider';
 import Area from "./components/helpers/Area";
+import { 
+    dispatchPluginMessage, 
+    MessageHandlers, 
+    HelloMessage, 
+    UiReadyMessage 
+} from './interfaces/PluginMessageTypes';
 
 const App: React.FC = () => {
     const [message, setMessage] = useState<string>('');
+    const [validationErrors, setValidationErrors] = useState<string[]>([]);
     const shadeTintRef = useRef<HTMLDivElement>(null);
     const stepsInputRef = useRef<HTMLDivElement>(null);
     const stepsRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // Listen for messages from the plugin code
-        window.onmessage = (event) => {
-            // Check if pluginMessage exists before destructuring
-            if (event.data.pluginMessage) {
-                const {type, message} = event.data.pluginMessage;
-                if (type === 'hello') {
-                    setMessage(message);
-                }
+        // Type-safe message handlers
+        const messageHandlers: MessageHandlers = {
+            hello: (message: HelloMessage) => {
+                setMessage(message.message);
+                console.log('Received hello message:', message);
+            },
+            'ui-ready': (message: UiReadyMessage) => {
+                console.log('UI ready message received:', message);
+            },
+            'create-swatches': (message) => {
+                console.log('Create swatches request:', message);
+                // TODO: Implement swatch creation logic
+            },
+            'create-styles': (message) => {
+                console.log('Create styles request:', message);
+                // TODO: Implement styles creation logic
+            },
+            'create-variables': (message) => {
+                console.log('Create variables request:', message);
+                // TODO: Implement variables creation logic
+            },
+            error: (message) => {
+                console.error('Plugin error:', message.error, message.details);
+                setValidationErrors(prev => [...prev, `Plugin error: ${message.error}`]);
             }
         };
 
-        // Tell the plugin code that the UI is ready
-        parent.postMessage({pluginMessage: {type: 'ui-ready'}}, '*');
+        // Type-safe message listener with validation
+        window.onmessage = (event) => {
+            dispatchPluginMessage(
+                event.data,
+                messageHandlers,
+                (error: string) => {
+                    console.warn('Invalid plugin message received:', error);
+                    setValidationErrors(prev => [...prev, `Message validation error: ${error}`]);
+                }
+            );
+        };
+
+        // Tell the plugin code that the UI is ready with type safety
+        const uiReadyMessage: UiReadyMessage = {
+            type: 'ui-ready',
+            timestamp: Date.now()
+        };
+        parent.postMessage({pluginMessage: uiReadyMessage}, '*');
 
         // Function to update the shade-tint height CSS variable
         const updateShadeTintHeight = () => {

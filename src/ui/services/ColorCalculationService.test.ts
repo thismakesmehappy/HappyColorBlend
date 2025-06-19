@@ -1,4 +1,5 @@
 import { ColorCalculationService } from './ColorCalculationService';
+import { createHexColor } from '../interfaces/ColorTypes';
 
 describe('ColorCalculationService', () => {
   describe('validateHexColor', () => {
@@ -34,15 +35,15 @@ describe('ColorCalculationService', () => {
 
   describe('isLightColor', () => {
     test('identifies light colors correctly', () => {
-      expect(ColorCalculationService.isLightColor('FFFFFF')).toBe(true);
-      expect(ColorCalculationService.isLightColor('FFFF00')).toBe(true);
-      expect(ColorCalculationService.isLightColor('00FFFF')).toBe(true);
+      expect(ColorCalculationService.isLightColor(createHexColor('FFFFFF'))).toBe(true);
+      expect(ColorCalculationService.isLightColor(createHexColor('FFFF00'))).toBe(true);
+      expect(ColorCalculationService.isLightColor(createHexColor('00FFFF'))).toBe(true);
     });
 
     test('identifies dark colors correctly', () => {
-      expect(ColorCalculationService.isLightColor('000000')).toBe(false);
-      expect(ColorCalculationService.isLightColor('800000')).toBe(false);
-      expect(ColorCalculationService.isLightColor('008000')).toBe(false);
+      expect(ColorCalculationService.isLightColor(createHexColor('000000'))).toBe(false);
+      expect(ColorCalculationService.isLightColor(createHexColor('800000'))).toBe(false);
+      expect(ColorCalculationService.isLightColor(createHexColor('008000'))).toBe(false);
     });
   });
 
