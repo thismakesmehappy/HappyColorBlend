@@ -2,13 +2,9 @@ import React, {useState} from 'react';
 import FontAwesomeIcon from '../helpers/FontAwesomeIcon';
 import useSwatchStore from '../../store/useSwatchStore';
 import Toast from '../helpers/Toast';
-import {
-    TOAST_DURATION,
-    INVALID_CUSTOM_STEP_NON_NUMERIC,
-    INVALID_CUSTOM_STEP_OUT_OF_RANGE,
-    INVALID_CUSTOM_STEP_RESERVED, INVALID_CUSTOM_STEP_DUPLICATED
-} from '../../../constants/uiConstants';
-import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
+import { TOAST_DURATION } from '../../../constants/uiConstants';
+import { ClassAndStyle } from "../../interfaces/ClassAndStyle";
+import { ValidationService, SwatchGenerationService } from '../../services';
 
 export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyle) => {
     const [inputValue, setInputValue] = useState<string>('');
@@ -22,46 +18,23 @@ export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyl
         setInputValue(e.target.value);
     };
 
-    const isValidInput = (): boolean => {
-        // Check if input is empty
-        if (!inputValue.trim()) return false;
+    const validateInput = (): { isValid: boolean; errorMessage?: string } => {
+        if (!inputValue.trim()) {
+            return { isValid: false, errorMessage: 'Input cannot be empty' };
+        }
 
         // Check if input is numeric
         const numericRegex = /^[0-9]+$/;
-        if (!numericRegex.test(inputValue)) return false;
+        if (!numericRegex.test(inputValue)) {
+            return { isValid: false, errorMessage: 'Custom step must be a number' };
+        }
 
         const step = parseInt(inputValue, 10);
-
-        // Check if input is within range
-        if (step < 1 || step > 999) return false;
-
-        // Check if input is a reserved value
-        if (step === 0 || step === 500 || step === 1000) return false;
-
-        // Check if input is already in the store
-        return !customSteps.has(step);
-
-
-    };
-
-    const getErrorMessage = (): string => {
-        // Check if input is numeric
-        const numericRegex = /^[0-9|-]+$/;
-        if (!numericRegex.test(inputValue)) return INVALID_CUSTOM_STEP_NON_NUMERIC;
-
-        const step = parseInt(inputValue, 10);
-
-        // Check if input is a reserved value
-        if (step === 0 || step === 500 || step === 1000) return INVALID_CUSTOM_STEP_RESERVED;
-
-        // Check if input is within range
-        if (step < 1 || step > 999) return INVALID_CUSTOM_STEP_OUT_OF_RANGE;
-
-        // Check if input is already in the store
-        if (customSteps.has(step)) return INVALID_CUSTOM_STEP_DUPLICATED;
-
-
-        return '';
+        return SwatchGenerationService.validateCustomStep(
+            step,
+            customSteps,
+            [0, 500, 1000]
+        );
     };
 
     const showToastMessage = (message: string) => {
@@ -74,14 +47,20 @@ export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyl
     };
 
     const handleAddStep = () => {
-        if (isValidInput()) {
+        const validation = validateInput();
+        
+        if (validation.isValid) {
             const step = parseInt(inputValue, 10);
             addCustomStep(step);
             buildSwatches();
             setInputValue('');
         } else {
-            showToastMessage(getErrorMessage());
+            showToastMessage(validation.errorMessage || 'Invalid input');
         }
+    };
+
+    const isValidInput = (): boolean => {
+        return validateInput().isValid;
     };
 
     return (

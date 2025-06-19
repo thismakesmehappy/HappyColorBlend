@@ -131,7 +131,7 @@
 
 ### High Priority
 
-- [ ] **Extract Business Logic from Components**
+- [x] **Extract Business Logic from Components**
     - Move color calculation logic from components to dedicated service classes
     - Create `ColorCalculationService` and `SwatchGenerationService`
     - Separate UI logic from business logic for better testability

@@ -4,8 +4,7 @@ import Section from "./helpers/Section";
 import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore, {SwatchStoreInputSwatch} from "../store/useSwatchStore";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
-import {v4 as uuidv4} from 'uuid';
-import ColorNamer from 'color-namer';
+import { PrimaryColorService } from '../services';
 
 interface PrimaryColorsProps {
     className?: string;
@@ -18,14 +17,9 @@ const PrimaryColors: React.FC<PrimaryColorsProps> = ({className, style}) => {
     const addPrimaryColor = useSwatchStore((state) => state.addPrimaryColor);
     const removePrimaryColor = useSwatchStore((state) => state.removePrimaryColor);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
+    
     const createRandomPrimaryColor = () => {
-        const randomColor = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
-        const randomName = ColorNamer(`#${randomColor}`).ntc[0].name;
-        const newPrimaryColor: SwatchStoreInputSwatch = {
-            color: randomColor,
-            name: randomName,
-            id: uuidv4(),
-        };
+        const newPrimaryColor = PrimaryColorService.createRandomPrimaryColor();
         addPrimaryColor(newPrimaryColor);
         buildSwatches();
     };

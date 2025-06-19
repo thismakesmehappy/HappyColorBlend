@@ -1,7 +1,6 @@
 import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
-import {blendPrimaryColor} from "../helpers/colorMethods";
-import steps from "../components/Steps";
+import { SwatchGenerationService } from "../services";
 
 export const initialState = {
     shade: {color: "000000", name: "Black", id: "shade"},
@@ -14,6 +13,7 @@ export const initialState = {
     combinedSteps: new Set<number>(),
     shadeTintRampName: "Gray",
 }
+
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
     shade: SwatchStoreInputSwatch,
@@ -23,27 +23,13 @@ export const buildNewSwatches = (
 ) => {
     state.setCombinedSteps();
     const combinedSteps = state.getCombinedSteps();
-    const swatches: SwatchStoreSwatches[] = [];
 
-    for (let primary in primaryColors) {
-        const swatch: SwatchStoreSwatches = {
-            base: primaryColors[primary],
-            swatches: []
-        };
-
-
-        for (let step of combinedSteps) {
-            swatch.swatches.push({
-                color: blendPrimaryColor(shade.color, tint.color, primaryColors[primary].color, step),
-                step: step
-            });
-        }
-
-        swatches.push(swatch);
-    }
-
-    // Stub implementation - will be expanded later
-    return swatches;
+    return SwatchGenerationService.buildSwatches(
+        shade,
+        tint,
+        primaryColors,
+        combinedSteps
+    );
 };
 
 
@@ -127,7 +113,8 @@ const useSwatchStore = create<SwatchStoreState>()(
         getShadeTintRampName: () => get().shadeTintRampName,
         setCombinedSteps: () => {
             const {steps, customSteps} = get();
-            set({combinedSteps: new Set([...steps, ...customSteps].sort((a, b) => a - b))});
+            const combinedSteps = SwatchGenerationService.combineSteps(steps, customSteps);
+            set({combinedSteps});
         },
 
         // Setters
@@ -188,13 +175,9 @@ const useSwatchStore = create<SwatchStoreState>()(
         createSteps: () => {
             const state = get();
             const {numberOfSteps} = state;
-            let steps: number[] = [];
 
-            // Calculate steps excluding 0 and 1000
-            for (let i = 1; i <= numberOfSteps; i++) {
-                const step = Math.round((i * 1000) / (numberOfSteps + 1));
-                steps.push(step);
-            }
+            // Use SwatchGenerationService to create steps
+            const steps = SwatchGenerationService.createSteps(numberOfSteps);
 
             set({steps});
             return steps;
@@ -202,10 +185,9 @@ const useSwatchStore = create<SwatchStoreState>()(
 
         addCustomStep: (step: number) => {
             set((state) => {
-                const customSteps = Array.from(state.customSteps);
-                customSteps.push(step);
-                customSteps.sort((a, b) => a - b)
-                return {customSteps: new Set(customSteps)};
+                // Use SwatchGenerationService to add step to set and sort
+                const customSteps = SwatchGenerationService.addStepToSet(step, state.customSteps);
+                return {customSteps};
             });
         },
         removeCustomStep: (step: number) => {
