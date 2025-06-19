@@ -131,7 +131,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                         {/* Step-labels content */}
                         <div data-testid="equal-steps-badges" className="p-0">
                             <span className="figma-subtitle">Equal Steps: </span>
-                            {steps.map(step => {
+                            {steps.map((step: number) => {
                                 return <Badge key={`step-${step}`} className={"figma-mr-sm"}
                                               data-testid={`equal-step-badge-${step}`}>{String(step)}</Badge>
                             })}

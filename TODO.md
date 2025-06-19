@@ -136,10 +136,11 @@
     - Create `ColorCalculationService` and `SwatchGenerationService`
     - Separate UI logic from business logic for better testability
 
-- [ ] **Consolidate Store Management**
-    - Consider merging `useSwatchStore` and `useTokenNameStore` into a single store with slices
-    - Implement proper store persistence for user preferences
-    - Add store middleware for logging and debugging in development
+- [x] **Consolidate Store Management**
+    - Merged `useSwatchStore` and `useTokenNameStore` into a single `useAppStore` with slices
+    - Implemented proper store persistence for user preferences
+    - Added store middleware for logging and debugging in development
+    - Created compatibility layers to maintain backward compatibility
 
 - [ ] **Improve Type Safety**
     - Create comprehensive TypeScript interfaces for all data structures

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../scss/column-layout.scss';
 import Section from "./helpers/Section";
-import useSwatchStore, {SwatchStoreSwatch} from "../store/useSwatchStore";
+import useSwatchStore, {SwatchStoreSwatch, SwatchStoreSwatches} from "../store/useSwatchStore";
 import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
 import {blendColor} from "../helpers/colorMethods";
 
@@ -37,7 +37,7 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
                 swatches={toneRamp}
             />
 
-            {swatches.map((primaryColor) =>
+            {swatches.map((primaryColor: SwatchStoreSwatches) =>
                 <SwatchGroupSwatches
                     key={primaryColor.base.id}
                     color={primaryColor.base.color}

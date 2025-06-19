@@ -46,7 +46,7 @@ describe('SwatchGenerationService', () => {
       const equalSteps = [0, 250, 500, 750, 1000];
       const customSteps = new Set([100, 300, 700]);
       const combined = SwatchGenerationService.combineSteps(equalSteps, customSteps);
-      
+
       expect(combined.size).toBe(8);
       expect(combined.has(100)).toBe(true);
       expect(combined.has(300)).toBe(true);
@@ -57,8 +57,17 @@ describe('SwatchGenerationService', () => {
       const equalSteps = [0, 250, 500, 750, 1000];
       const customSteps = new Set([250, 500]); // Duplicates
       const combined = SwatchGenerationService.combineSteps(equalSteps, customSteps);
-      
+
       expect(combined.size).toBe(5); // No duplicates
+    });
+
+    test('combined steps can be sorted properly', () => {
+      const equalSteps = [100, 500, 900]; // Not in order
+      const customSteps = new Set([50, 750, 200]); // Not in order
+      const combined = SwatchGenerationService.combineSteps(equalSteps, customSteps);
+      const sorted = SwatchGenerationService.sortSteps(combined);
+
+      expect(sorted).toEqual([50, 100, 200, 500, 750, 900]);
     });
   });
 

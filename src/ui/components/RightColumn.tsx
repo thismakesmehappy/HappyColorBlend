@@ -6,13 +6,18 @@ import SwatchesOutput from "./SwatchesOutput";
 import React from "react";
 import {ClassAndStyle} from "../interfaces/ClassAndStyle";
 
-const RightColumn = ({className, style}: ClassAndStyle) => {
+interface RightColumnProps extends ClassAndStyle {
+    stepsInputRef?: React.RefObject<HTMLDivElement>;
+    stepsRef?: React.RefObject<HTMLDivElement>;
+}
+
+const RightColumn = ({className, style, stepsInputRef, stepsRef}: RightColumnProps) => {
     return (<Area
         id="right-column"
         className="h-100"
     >
         <div className={"sticky-top bg-white"}>
-            <Steps />
+            <Steps ref={stepsRef} equalStepsRef={stepsInputRef} />
             <RowDivider />
             <Settings />
             <RowDivider />
@@ -28,4 +33,3 @@ const RightColumn = ({className, style}: ClassAndStyle) => {
 };
 
 export default RightColumn
-
