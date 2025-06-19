@@ -42,7 +42,7 @@ const PrimaryColors: React.FC<PrimaryColorsProps> = ({className, style}) => {
             <div className={"row"}>
                 {/* Primary Colors content */}
                 {primaryColors.map((primaryColor: SwatchStoreInputSwatch) => (
-                    <Swatch name={String(primaryColor.name)} color={String(primaryColor.color)}
+                    <Swatch key={primaryColor.id} name={String(primaryColor.name)} color={String(primaryColor.color)}
                             className={"col col-6 mb-4"} canDelete={true}
                             updateSwatch={function (color: string, name: string, id?: string): void {
                                 updatePrimaryColor(id!, color, name);

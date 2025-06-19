@@ -65,6 +65,7 @@ jest.mock('./swatchesInput/Swatch', () => {
 const mockSetShade = jest.fn();
 const mockSetTint = jest.fn();
 const mockBuildSwatches = jest.fn();
+const mockSetShadeTintRampName = jest.fn();
 
 jest.mock('../store/useSwatchStore', () => ({
     __esModule: true,
@@ -82,9 +83,11 @@ jest.mock('../store/useSwatchStore', () => ({
                 color: 'FFFFFF',
                 customToken: false
             }),
+            getShadeTintRampName: () => 'Gray',
             setShade: mockSetShade,
             setTint: mockSetTint,
-            buildSwatches: mockBuildSwatches
+            buildSwatches: mockBuildSwatches,
+            setShadeTintRampName: mockSetShadeTintRampName
         };
         return selector(state);
     })

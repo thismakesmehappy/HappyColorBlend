@@ -110,7 +110,8 @@ jest.mock('../store/useSwatchStore', () => ({
                 color: '000000',
                 tokenName: 'black'
             }),
-            getCombinedSteps: () => new Set([0, 250, 500, 750, 1000])
+            getCombinedSteps: () => new Set([0, 250, 500, 750, 1000]),
+            getShadeTintRampName: () => 'Gray'
         };
         return selector(state);
     })
@@ -143,8 +144,8 @@ describe('SwatchesOutput Component', () => {
         const section = screen.getByTestId('mock-section');
         expect(section).toBeInTheDocument();
 
-        // Check that the tint-shade swatch group is rendered (now using White as the key)
-        const tintShadeGroup = screen.getByTestId('mock-swatch-group-White');
+        // Check that the tint-shade swatch group is rendered (now using Gray as the key from getShadeTintRampName)
+        const tintShadeGroup = screen.getByTestId('mock-swatch-group-Gray');
         expect(tintShadeGroup).toBeInTheDocument();
 
         // Check that the primary color swatch groups are rendered
@@ -154,7 +155,7 @@ describe('SwatchesOutput Component', () => {
         expect(blueGroup).toBeInTheDocument();
 
         // Check that the tint and shade colors are passed correctly
-        expect(screen.getByTestId('mock-swatch-group-color-White')).toHaveTextContent('FFFFFF');
+        expect(screen.getByTestId('mock-swatch-group-color-Gray')).toHaveTextContent('FFFFFF');
         expect(screen.getByTestId('mock-swatch-group-color-Black')).toHaveTextContent('000000');
 
         // Check that the primary colors are passed correctly
@@ -165,8 +166,8 @@ describe('SwatchesOutput Component', () => {
     test('creates tone ramp with blended colors', () => {
         render(<SwatchesOutput />);
 
-        // Check that the tint-shade swatch group has the correct number of swatches (now using White as the key)
-        const tintShadeSwatches = screen.getByTestId('mock-swatch-group-swatches-White');
+        // Check that the tint-shade swatch group has the correct number of swatches (now using Gray as the key from getShadeTintRampName)
+        const tintShadeSwatches = screen.getByTestId('mock-swatch-group-swatches-Gray');
         expect(tintShadeSwatches).toHaveTextContent('5 swatches');
 
         // Check that the blendColor function was called with the correct parameters
