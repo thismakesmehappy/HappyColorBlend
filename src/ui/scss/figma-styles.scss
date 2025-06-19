@@ -24,6 +24,7 @@ $color-text-secondary: #0000004d;
 $color-border: #e5e5e5;
 
 // Spacing
+$spacing-xs: 4px;
 $spacing-sm: 8px;
 $spacing-md: 16px;
 $spacing-lg: 24px;
@@ -194,7 +195,7 @@ $sizes: ('sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
 .figma-input {
   border: 1px solid $color-border;
   border-radius: $border-radius-sm;
-  padding: $spacing-sm $spacing-sm + 4px;
+  padding: calc($spacing-sm / 2) $spacing-sm;
   font-size: $font-size-md;
   //transition: $transition-default;
 }
@@ -223,7 +224,7 @@ $sizes: ('sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
 .figma-subtitle, h2 {
   font-size: $font-size-md;
   font-weight: $font-weight-medium;
-  margin-bottom: $spacing-sm;
+  margin-bottom: $spacing-xs;
   color: $color-text-primary;
 }
 

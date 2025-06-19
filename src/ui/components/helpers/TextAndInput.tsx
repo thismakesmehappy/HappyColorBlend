@@ -59,7 +59,7 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
                 <span>
                 <input
                     type="text"
-                    className="swatch-label figma-input mw-100 figma-mr-sm"
+                    className="swatch-label figma-input w-100"
                     value={tempText}
                     onChange={(e) => setTempText(e.target.value)}
                     data-testid="swatch-name-input"

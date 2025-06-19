@@ -63,11 +63,11 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                 </div>
 
                 {/* Shade-Tint Ramp Name Editor */}
-                <div className={"w-100 overflow-auto"}>
-                    <div className={"figma-subtitle figma-mt-sm w-100 overflow-auto"}>
-                        What do we call the shade/tint mix?
+                <div id="shade-tint-ramp-name" className={"row overflow-auto d-block text-wrap"}>
+                    <div className={"col col-12 figma-subtitle figma-mt-sm w-100 overflow-auto text-wrap"}>
+                        What do we call the mix?
                     </div>
-                    <div>
+                    <div className={"col col-12 w-100 d-block text-wrap"}>
                         <TextAndInput inputText={shadeTintRampName}
                                       setInputText={setShadeTintRampName} />
                     </div>

@@ -70,23 +70,22 @@ jest.mock('./helpers/ColumnDivider', () => {
 
 // Mock the Area and Section components
 jest.mock('./helpers/Area', () => {
-    return function MockArea({
-                                 children,
-                                 id,
-                                 className,
-                                 ref,
-                                 style,
-                                 'data-testid': dataTestId
-                             }: {
+    return React.forwardRef<HTMLDivElement, {
         children: React.ReactNode,
         id?: string,
         className?: string,
-        ref?: React.Ref<HTMLDivElement>,
         style?: React.CSSProperties,
         'data-testid'?: string
-    }) {
+    }>(function MockArea({
+                                 children,
+                                 id,
+                                 className,
+                                 style,
+                                 'data-testid': dataTestId
+                             }, ref) {
         return (
             <div
+                ref={ref}
                 id={id}
                 className={className}
                 style={style}
@@ -95,30 +94,29 @@ jest.mock('./helpers/Area', () => {
                 {children}
             </div>
         );
-    };
+    });
 });
 
 jest.mock('./helpers/Section', () => {
-    return function MockSection({
-                                    children,
-                                    id,
-                                    ref,
-                                    'data-testid': dataTestId
-                                }: {
+    return React.forwardRef<HTMLDivElement, {
         children: React.ReactNode,
         id?: string,
-        ref?: React.Ref<HTMLDivElement>,
         'data-testid'?: string
-    }) {
+    }>(function MockSection({
+                                    children,
+                                    id,
+                                    'data-testid': dataTestId
+                                }, ref) {
         return (
             <div
+                ref={ref}
                 id={id}
                 data-testid={dataTestId || `${id}-section`}
             >
                 {children}
             </div>
         );
-    };
+    });
 });
 
 // Mock the useSwatchStore hook
@@ -150,9 +148,9 @@ describe('Steps Component', () => {
         expect(inputSection).toBeInTheDocument();
         expect(labelsSection).toBeInTheDocument();
 
-        // Check that the column divider is rendered
-        const columnDivider = screen.getByTestId('mock-column-divider');
-        expect(columnDivider).toBeInTheDocument();
+        // Check that the column spacer is rendered
+        const columnSpacer = document.querySelector('.column-spacer');
+        expect(columnSpacer).toBeInTheDocument();
     });
 
     test('renders all step input components', () => {

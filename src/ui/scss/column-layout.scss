@@ -1,7 +1,7 @@
 @use './figma-styles' as figma;
 
 // Updated spacing variables for more flexible layout
-$dividerPadding: figma.$spacing-lg; // Reduced from lg to md for better space utilization
+$dividerPadding: figma.$spacing-md; // Reduced from lg to md for better space utilization
 $dividerWidth: 1px;
 $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 to 2 for tighter spacing
 
@@ -34,6 +34,12 @@ $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 
   horiz-align: center;
 }
 
+.column-spacer {
+  width: $dividerPadding;
+  display: inline-block;
+  vertical-align: middle;
+  horiz-align: center;
+}
 
 .row-divider {
   height: $dividerWidth;
@@ -45,9 +51,19 @@ $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 
   horiz-align: center;
 }
 
+.row-spacer {
+  height: $dividerWidth;
+  width: 100%;
+  background-color: figma.$color-border; // Using $color-border from figma-styles.scss
+  margin: $dividerPadding 0; // Using $spacing-md from figma-styles.scss
+  display: inline-block;
+  vertical-align: top;
+  horiz-align: center;
+}
+
 // Left column with responsive width
 #left-column {
-  width: min(250px, 30%); // Use the smaller of 250px or 30% of container width
+  width: min(200px, 30%); // Use the smaller of 250px or 30% of container width
   height: 100%;
   display: inline-block;
   vertical-align: top;
@@ -75,7 +91,7 @@ $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 
 
 // Right column with responsive width
 #right-column {
-  width: calc(100% - min(250px, 30%) - $dividerSize); // Adjusted to match left column's responsive width
+  width: calc(100% - min(200px, 30%) - $dividerSize); // Adjusted to match left column's responsive width
   height: 100%;
   display: inline-block;
   vertical-align: top;
@@ -84,17 +100,9 @@ $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 
 }
 
 // Steps container with horizontal alignment
-#steps {
-  position: relative;
-  white-space: nowrap; // Keep children on the same line
-  width: 100%;
-  height: auto; // Allow height to adapt to content
-  min-height: var(--steps-input-height, auto); // Ensure minimum height matches steps-input
-  overflow-x: hidden; // Prevent horizontal scrolling
-}
 
 // Settings container
-#settings {
+#settings, #steps, #equal-steps-badges {
   position: relative;
   width: 100%;
   height: auto; // Allow height to adapt to content
@@ -102,6 +110,7 @@ $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 
   overflow-x: hidden; // Prevent horizontal scrolling
   display: flex;
   justify-content: space-evenly;
+  padding: 0;
 }
 
 // Steps-input takes only the width and height of its content
@@ -112,17 +121,17 @@ $dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 
   white-space: normal; // Allow text to wrap inside
   vertical-align: top;
   overflow-x: hidden; // Prevent horizontal scrolling
+  padding: 0;
 }
 
 // Step-labels takes the height of steps-input and the rest of the horizontal space
 #step-labels {
   display: inline-block;
   height: auto; // Allow height to adapt to content
-  width: calc(100% - var(--steps-input-width, 0px) - $dividerSize / 2); // Reduced divider spacing for better space utilization
+  width: calc(100% - var(--steps-input-width, 0px) - $dividerPadding); // Account for the columnSpacer width
   white-space: normal; // Allow text to wrap inside
   vertical-align: top;
   overflow-x: hidden; // Prevent horizontal scrolling
-  padding-left: $dividerPadding; // Add consistent padding
 }
 
 // Container for both columns
