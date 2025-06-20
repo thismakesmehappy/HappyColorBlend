@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {hex} from "wcag-contrast";
 
 interface SwatchColorChipProps {
@@ -6,9 +6,15 @@ interface SwatchColorChipProps {
     step: number;
 }
 
-const SwatchColorChip = ({color, step}: SwatchColorChipProps) => {
-    const ratioWhite = hex("#FFF", "#" + color);
-    const textColor = ratioWhite > 3 ? "#FFFFFF" : "#000000";
+const SwatchColorChip = React.memo(({color, step}: SwatchColorChipProps) => {
+    const textColor = useMemo(() => {
+        const ratioWhite = hex("#FFF", "#" + color);
+        return ratioWhite > 3 ? "#FFFFFF" : "#000000";
+    }, [color]);
+
+    const formattedStep = useMemo(() => {
+        return step.toString().padStart(3, '0');
+    }, [step]);
 
     return (
         <div className='color-chip-container' data-testid="swatch-color-chip-container">
@@ -18,11 +24,11 @@ const SwatchColorChip = ({color, step}: SwatchColorChipProps) => {
                 data-testid="swatch-color-chip"
                 data-color={color}
                 data-step={step}>
-                {step.toString().padStart(3, '0')}<br />
+                {formattedStep}<br />
                 #{color}
             </div>
         </div>
     );
-};
+});
 
 export default SwatchColorChip

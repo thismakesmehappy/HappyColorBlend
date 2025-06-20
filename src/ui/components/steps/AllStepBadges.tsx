@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import useSwatchStore from '../../store/useSwatchStore';
 import StepBadges from "./StepBadges";
 
@@ -9,12 +9,18 @@ interface StepBadgesProps {
 
 /**
  * Component for rendering equal and custom step badges
+ * Optimized with useCallback for better performance.
  */
 const AllStepBadges: React.FC<StepBadgesProps> = ({className, 'data-testid': dataTestId}) => {
     const steps = useSwatchStore((state) => state.steps);
     const customSteps = useSwatchStore((state) => state.customSteps);
     const removeCustomStep = useSwatchStore((state) => state.removeCustomStep);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
+
+    const handleCustomStepRemove = useCallback((step: number) => {
+        removeCustomStep(step);
+        buildSwatches();
+    }, [removeCustomStep, buildSwatches]);
 
     return (
         <div className={className} data-testid={dataTestId}>
@@ -23,11 +29,7 @@ const AllStepBadges: React.FC<StepBadgesProps> = ({className, 'data-testid': dat
             {customSteps.size > 0 &&
                 <StepBadges steps={Array.from(customSteps)} title={"Custom Steps: "} keyLabel="custom"
                             testId="custom-steps" type="primary" iconRight="minus"
-                            onClick={(step) => {
-                                removeCustomStep(step);
-                                buildSwatches();
-                            }
-                            } />}
+                            onClick={handleCustomStepRemove} />}
         </div>
     );
 };

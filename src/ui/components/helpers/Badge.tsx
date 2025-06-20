@@ -1,4 +1,4 @@
-import React, {MouseEventHandler} from "react";
+import React, {MouseEventHandler, useMemo} from "react";
 import {Alerttype} from "../../interfaces/AlertLevel";
 import FontAwesomeIcon from "./FontAwesomeIcon";
 
@@ -14,6 +14,7 @@ interface BadgeProps {
 
 /**
  * A reusable Badge component for displaying labels or tags.
+ * Optimized with React.memo and useMemo for better performance.
  *
  * @param children - The text to display in the badge
  * @param type - The type of badge (error, success, warning, primary, or default)
@@ -23,7 +24,7 @@ interface BadgeProps {
  * @param onClick - Function to call when the badge is clicked
  * @param testId optional test id for testing
  */
-const Badge: React.FC<BadgeProps> = ({
+const Badge: React.FC<BadgeProps> = React.memo(({
                                          children,
                                          type = "default",
                                          className = "",
@@ -33,7 +34,7 @@ const Badge: React.FC<BadgeProps> = ({
                                          testId = "",
                                      }: BadgeProps) => {
 
-    const getBadgeClassName = () => {
+    const badgeClassName = useMemo(() => {
         let newClassName = className! + ' badge';
 
         switch (type) {
@@ -57,11 +58,11 @@ const Badge: React.FC<BadgeProps> = ({
         }
 
         return newClassName;
-    };
+    }, [className, type]);
 
     return (
         <span
-            className={getBadgeClassName()}
+            className={badgeClassName}
             onClick={onClick}
             data-testid={testId}
         >
@@ -71,6 +72,6 @@ const Badge: React.FC<BadgeProps> = ({
                 data-testid={`${testId}fa-right`} icon={iconRight} /></>}
         </span>
     );
-}
+});
 
 export default Badge;

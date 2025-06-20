@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import '../scss/column-layout.scss';
 import Section from "./helpers/Section";
 import Swatch from "./swatchesInput/Swatch";
@@ -11,18 +11,32 @@ interface PrimaryColorsProps {
     style?: React.CSSProperties;
 }
 
+/**
+ * Component for managing primary colors
+ * Optimized with useCallback for better performance.
+ */
 const PrimaryColors: React.FC<PrimaryColorsProps> = ({className, style}) => {
     const primaryColors = useSwatchStore((state) => state.primaryColors);
     const updatePrimaryColor = useSwatchStore((state) => state.updatePrimaryColor);
     const addPrimaryColor = useSwatchStore((state) => state.addPrimaryColor);
     const removePrimaryColor = useSwatchStore((state) => state.removePrimaryColor);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
-    
-    const createRandomPrimaryColor = () => {
+
+    const createRandomPrimaryColor = useCallback(() => {
         const newPrimaryColor = PrimaryColorService.createRandomPrimaryColor();
         addPrimaryColor(newPrimaryColor);
         buildSwatches();
-    };
+    }, [addPrimaryColor, buildSwatches]);
+
+    const handleUpdateSwatch = useCallback((color: string, name: string, id?: string) => {
+        updatePrimaryColor(id!, color, name);
+        buildSwatches();
+    }, [updatePrimaryColor, buildSwatches]);
+
+    const handleDeleteSwatch = useCallback((id: string) => {
+        removePrimaryColor(id);
+        buildSwatches();
+    }, [removePrimaryColor, buildSwatches]);
     return (
         <Section
             id="primary-colors"
@@ -38,14 +52,8 @@ const PrimaryColors: React.FC<PrimaryColorsProps> = ({className, style}) => {
                 {primaryColors.map((primaryColor: SwatchStoreInputSwatch) => (
                     <Swatch key={primaryColor.id} name={String(primaryColor.name)} color={String(primaryColor.color)}
                             className={"col col-6 mb-4"} canDelete={true}
-                            updateSwatch={function (color: string, name: string, id?: string): void {
-                                updatePrimaryColor(id!, color, name);
-                                buildSwatches();
-                            }}
-                            onDelete={(id) => {
-                                removePrimaryColor(id);
-                                buildSwatches()
-                            }}
+                            updateSwatch={handleUpdateSwatch}
+                            onDelete={handleDeleteSwatch}
                             id={primaryColor.id} />
                 ))
                 }
