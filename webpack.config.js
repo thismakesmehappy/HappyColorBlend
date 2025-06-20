@@ -18,7 +18,11 @@ module.exports = (env, argv) => ({
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
-                exclude: /node_modules/,
+                exclude: [
+                    /node_modules/,
+                    /\.test\.(ts|tsx)$/,
+                    /\.spec\.(ts|tsx)$/,
+                ],
             },
             // CSS
             {
@@ -79,5 +83,33 @@ module.exports = (env, argv) => ({
         hot: true,
         // Don't open browser automatically, our custom script will handle it
         open: false,
+    },
+
+    // Performance optimizations
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+                react: {
+                    test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+                    name: 'react',
+                    chunks: 'all',
+                },
+            },
+        },
+        usedExports: true,
+        sideEffects: false,
+    },
+
+    // Performance budgets and warnings
+    performance: {
+        maxAssetSize: 500000, // 500kb
+        maxEntrypointSize: 500000, // 500kb
+        hints: argv.mode === 'production' ? 'warning' : false,
     },
 });

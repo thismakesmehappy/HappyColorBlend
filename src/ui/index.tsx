@@ -1,7 +1,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import App from './App';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './scss/bootstrap-minimal.scss';
 import './scss/figma-styles.scss';
 // import './scss/debug-colors.scss';
 import './scss/column-layout.scss';

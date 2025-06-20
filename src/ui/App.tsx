@@ -3,11 +3,11 @@ import LeftColumn from './components/LeftColumn';
 import RightColumn from './components/RightColumn';
 import ColumnDivider from './components/helpers/ColumnDivider';
 import Area from "./components/helpers/Area";
-import { 
-    dispatchPluginMessage, 
-    MessageHandlers, 
-    HelloMessage, 
-    UiReadyMessage 
+import {
+    dispatchPluginMessage,
+    MessageHandlers,
+    HelloMessage,
+    UiReadyMessage
 } from './interfaces/PluginMessageTypes';
 
 const App: React.FC = () => {
@@ -129,15 +129,56 @@ const App: React.FC = () => {
         };
     }, []);
 
-    return (
-        <Area id="container">
-            <div>
-                <LeftColumn shadeTintRef={shadeTintRef} />
-                <ColumnDivider />
-                <RightColumn />
+    // Try to render the full UI with error boundary
+    try {
+        return (
+            <div style={{minHeight: '100vh'}}>
+                {/* Debug info at the top */}
+                {/*<div style={{ */}
+                {/*    padding: '10px', */}
+                {/*    backgroundColor: '#e3f2fd', */}
+                {/*    borderBottom: '1px solid #ccc',*/}
+                {/*    fontSize: '12px'*/}
+                {/*}}>*/}
+                {/*    <strong>Debug Info:</strong> Plugin loaded successfully*/}
+                {/*    {message && <span> | Message: {message}</span>}*/}
+                {/*    {validationErrors.length > 0 && <span> | Errors: {validationErrors.length}</span>}*/}
+                {/*</div>*/}
+
+                {/* Main UI */}
+                <Area id="container">
+                    <div>
+                        <LeftColumn shadeTintRef={shadeTintRef} />
+                        <ColumnDivider />
+                        <RightColumn />
+                    </div>
+                </Area>
             </div>
-        </Area>
-    );
+        );
+    } catch (error) {
+        console.error('Error rendering main UI:', error);
+        return (
+            <div style={{padding: '20px', backgroundColor: '#ffebee', minHeight: '100vh'}}>
+                <h1 style={{color: '#d32f2f', marginBottom: '20px'}}>HappyColorBlendVibe Plugin - Error</h1>
+                <p style={{color: '#666', marginBottom: '10px'}}>
+                    There was an error loading the main UI. Error: {error instanceof Error ? error.message : 'Unknown error'}
+                </p>
+                <button
+                    onClick={() => parent.postMessage({pluginMessage: {type: 'hello-requested'}}, '*')}
+                    style={{
+                        padding: '10px 20px',
+                        backgroundColor: '#007acc',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                    }}
+                >
+                    Test Communication
+                </button>
+            </div>
+        );
+    }
 };
 
 export default App;

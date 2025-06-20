@@ -3,7 +3,6 @@
 // Show the UI
 import {WINDOW_HEIGHT, WINDOW_WIDTH} from "../constants/uiConstants";
 
-console.log('showing UI')
 figma.showUI(__html__, {width: WINDOW_WIDTH, height: WINDOW_HEIGHT});
 
 // Handle messages from the UI
