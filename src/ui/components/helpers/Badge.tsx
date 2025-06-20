@@ -9,6 +9,7 @@ interface BadgeProps {
     iconRight?: any;
     iconLeft?: any;
     onClick?: MouseEventHandler<HTMLSpanElement>;
+    testId?: string;
 }
 
 /**
@@ -20,6 +21,7 @@ interface BadgeProps {
  * @param iconLeft - Icon to display on the left side of the badge
  * @param iconRight - Icon to display on the right side of the badge
  * @param onClick - Function to call when the badge is clicked
+ * @param testId optional test id for testing
  */
 const Badge: React.FC<BadgeProps> = ({
                                          children,
@@ -28,6 +30,7 @@ const Badge: React.FC<BadgeProps> = ({
                                          iconLeft = "",
                                          iconRight = "",
                                          onClick,
+                                         testId = "",
                                      }: BadgeProps) => {
 
     const getBadgeClassName = () => {
@@ -60,9 +63,12 @@ const Badge: React.FC<BadgeProps> = ({
         <span
             className={getBadgeClassName()}
             onClick={onClick}
+            data-testid={testId}
         >
-            <FontAwesomeIcon icon={iconLeft} /> {iconLeft && " "} {children} {iconRight && " "} <FontAwesomeIcon
-            icon={iconRight} />
+            {iconLeft && <><FontAwesomeIcon data-testid={`${testId}-fa-left`}
+                                            icon={iconLeft} /> {" "}</>} {children} {iconRight && <>{" "}
+            <FontAwesomeIcon
+                data-testid={`${testId}fa-right`} icon={iconRight} /></>}
         </span>
     );
 }

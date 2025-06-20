@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import useSwatchStore from "../../store/useSwatchStore";
-import { ClassAndStyle } from "../../interfaces/ClassAndStyle";
+import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
 import NumberToggle from "../helpers/NumberToggle";
 
-export const EqualSteps = ({ className = "", style = {} }: ClassAndStyle) => {
+export const EqualStepsInput = ({className = "", style = {}}: ClassAndStyle) => {
     const numberOfSteps = useSwatchStore((state) => state.numberOfSteps);
     const increaseSteps = useSwatchStore((state) => state.increaseSteps);
     const decreaseSteps = useSwatchStore((state) => state.decreaseSteps);
@@ -22,14 +22,14 @@ export const EqualSteps = ({ className = "", style = {} }: ClassAndStyle) => {
     return (
         <div className={className} style={style} data-testid="equal-steps">
             <span>Equal steps: </span>
-            <NumberToggle 
-                decreaseFunction={handleDecrease} 
-                increaseFunction={handleIncrease} 
+            <NumberToggle
+                decreaseFunction={handleDecrease}
+                increaseFunction={handleIncrease}
                 value={numberOfSteps}
-                minValue={3} 
+                minValue={3}
             />
         </div>
     );
 };
 
-export default EqualSteps;
+export default EqualStepsInput;

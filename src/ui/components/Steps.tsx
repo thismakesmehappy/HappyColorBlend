@@ -3,11 +3,11 @@ import '../scss/column-layout.scss';
 import ColumnDivider from './helpers/ColumnDivider';
 import Section from "./helpers/Section";
 import Area from "./helpers/Area";
-import EqualSteps from "./steps/EqualSteps";
+import EqualStepsInput from "./steps/EqualStepsInput";
 import useSwatchStore from "../store/useSwatchStore";
-import Badge from "./helpers/Badge";
-import CustomSteps from "./steps/CustomSteps";
+import CustomStepsInput from "./steps/CustomStepsInput";
 import ColumnSpacer from "./helpers/ColumnSpacer";
+import AllStepBadges from "./steps/AllStepBadges";
 
 interface StepsProps {
     className?: string;
@@ -19,8 +19,6 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
     ({className, style, equalStepsRef}, ref) => {
         const steps = useSwatchStore((state) => state.steps);
         const customSteps = useSwatchStore((state) => state.customSteps);
-        const removeCustomStep = useSwatchStore((state) => state.removeCustomStep);
-        const buildSwatches = useSwatchStore((state) => state.buildSwatches);
         const stepsInputRef = useRef<HTMLDivElement>(null);
         const areaRef = useRef<HTMLDivElement>(null);
         const [stepsInputNode, setStepsInputNode] = useState<HTMLDivElement | null>(null);
@@ -123,33 +121,13 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                         data-testid="steps-input-section"
                     >
                         {/* Steps-input content */}
-                        <EqualSteps className="figma-mb-sm" />
-                        <CustomSteps />
+                        <EqualStepsInput className="figma-mb-sm" />
+                        <CustomStepsInput />
                     </Section>
                     <ColumnSpacer />
                     <Section id="step-labels" data-testid="step-labels-section" className={"row"}>
                         {/* Step-labels content */}
-                        <div data-testid="equal-steps-badges" className="p-0">
-                            <span className="figma-subtitle">Equal Steps: </span>
-                            {steps.map((step: number) => {
-                                return <Badge key={`step-${step}`} className={"figma-mr-sm"}
-                                              data-testid={`equal-step-badge-${step}`}>{String(step)}</Badge>
-                            })}
-                        </div>
-                        {customSteps.size > 0 && (
-                            <div className="figma-mt-sm p-0" data-testid="custom-steps-badges">
-                                <span className="figma-subtitle">Custom Steps: </span>
-                                {Array.from(customSteps).map(step => {
-                                    return <Badge key={`custom-${step}`} className={"figma-mr-sm"}
-                                                  type="primary" iconRight={"minus"} onClick={() => {
-                                        removeCustomStep(step);
-                                        buildSwatches();
-                                    }} data-testid={`custom-step-badge-${step}`}>
-                                        {String(step)}
-                                    </Badge>
-                                })}
-                            </div>
-                        )}
+                        <AllStepBadges data-testid="step-badges" />
                     </Section>
                 </Area>
             </>

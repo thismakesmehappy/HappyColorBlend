@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import FontAwesomeIcon from '../helpers/FontAwesomeIcon';
 import useSwatchStore from '../../store/useSwatchStore';
 import Toast from '../helpers/Toast';
-import { TOAST_DURATION } from '../../../constants/uiConstants';
-import { ClassAndStyle } from "../../interfaces/ClassAndStyle";
-import { ValidationService, SwatchGenerationService } from '../../services';
+import {TOAST_DURATION} from '../../../constants/uiConstants';
+import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
+import {SwatchGenerationService} from '../../services';
 
-export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyle) => {
+export const CustomStepsInput: React.FC = ({className = "", style = {}}: ClassAndStyle) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [showToast, setShowToast] = useState<boolean>(false);
     const [toastMessage, setToastMessage] = useState<string>('');
@@ -20,13 +20,13 @@ export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyl
 
     const validateInput = (): { isValid: boolean; errorMessage?: string } => {
         if (!inputValue.trim()) {
-            return { isValid: false, errorMessage: 'Input cannot be empty' };
+            return {isValid: false, errorMessage: 'Input cannot be empty'};
         }
 
         // Check if input is numeric
         const numericRegex = /^[0-9]+$/;
         if (!numericRegex.test(inputValue)) {
-            return { isValid: false, errorMessage: 'Custom step must be a number' };
+            return {isValid: false, errorMessage: 'Custom step must be a number'};
         }
 
         const step = parseInt(inputValue, 10);
@@ -48,7 +48,7 @@ export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyl
 
     const handleAddStep = () => {
         const validation = validateInput();
-        
+
         if (validation.isValid) {
             const step = parseInt(inputValue, 10);
             addCustomStep(step);
@@ -99,4 +99,4 @@ export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyl
     );
 };
 
-export default CustomSteps;
+export default CustomStepsInput;

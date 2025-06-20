@@ -13,7 +13,6 @@ const Swatch = ({color, name, canDelete, className, updateSwatch, id, onDelete}:
     const [hasUpdated, updateHasUpdated] = useState(false);
 
     useEffect(() => {
-        console.log("triggered update " + hasUpdated)
         if (hasUpdated) {
             updateSwatch(swatchColor, swatchName, id);
         } else {

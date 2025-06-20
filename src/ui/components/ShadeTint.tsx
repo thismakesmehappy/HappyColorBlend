@@ -1,9 +1,9 @@
 import React, {forwardRef, useEffect, useState} from 'react';
 import '../scss/column-layout.scss';
 import Section from './helpers/Section';
-import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
-import TextAndInput from "./helpers/TextAndInput";
+import SwatchSection from "./swatchesInput/SwatchSection";
+import RampNameEditor from "./swatchesInput/RampNameEditor";
 
 interface ShadeTintProps {
     className?: string;
@@ -40,38 +40,35 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
             >
                 {/* Shade-tint content */}
                 <div className={"row"}>
-                    <div className={"col col-6"}>
-                        <p className={"figma-subtitle"}>Shade — 0</p>
-                        <Swatch color={shadeColor} name={shadeName}
-                                updateSwatch={function (color: string, name: string): void {
-                                    setShade(color, name);
-                                    buildSwatches();
-                                }}
-                                id={shade.id}
-                        />
-                    </div>
-                    <div className={"col col-6"}>
-                        <p className={"figma-subtitle"}>Tint — 1000</p>
-                        <Swatch color={tintColor} name={tintName}
-                                updateSwatch={function (color: string, name: string): void {
-                                    setTint(color, name);
-                                    buildSwatches();
-                                }}
-                                id={tint.id}
-                        />
-                    </div>
+                    <SwatchSection
+                        title="Shade"
+                        stepValue="0"
+                        color={shadeColor}
+                        name={shadeName}
+                        id={shade.id}
+                        onUpdateSwatch={(color: string, name: string) => {
+                            setShade(color, name);
+                            buildSwatches();
+                        }}
+                    />
+                    <SwatchSection
+                        title="Tint"
+                        stepValue="1000"
+                        color={tintColor}
+                        name={tintName}
+                        id={tint.id}
+                        onUpdateSwatch={(color: string, name: string) => {
+                            setTint(color, name);
+                            buildSwatches();
+                        }}
+                    />
                 </div>
 
                 {/* Shade-Tint Ramp Name Editor */}
-                <div id="shade-tint-ramp-name" className={"row overflow-auto d-block text-wrap"}>
-                    <div className={"col col-12 figma-subtitle figma-mt-sm w-100 overflow-auto text-wrap"}>
-                        What do we call the mix?
-                    </div>
-                    <div className={"col col-12 w-100 d-block text-wrap"}>
-                        <TextAndInput inputText={shadeTintRampName}
-                                      setInputText={setShadeTintRampName} />
-                    </div>
-                </div>
+                <RampNameEditor
+                    rampName={shadeTintRampName}
+                    onRampNameChange={setShadeTintRampName}
+                />
             </Section>
         );
     }

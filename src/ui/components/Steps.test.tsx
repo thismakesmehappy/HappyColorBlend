@@ -50,13 +50,13 @@ jest.mock('./helpers/FontAwesomeIcon', () => {
 });
 
 // Mock the child components
-jest.mock('./steps/EqualSteps', () => {
+jest.mock('./steps/EqualStepsInput', () => {
     return function MockEqualSteps({className}: { className?: string }) {
         return <div data-testid="mock-equal-steps">Mock EqualSteps</div>;
     };
 });
 
-jest.mock('./steps/CustomSteps', () => {
+jest.mock('./steps/CustomStepsInput', () => {
     return function MockCustomSteps() {
         return <div data-testid="mock-custom-steps">Mock CustomSteps</div>;
     };
@@ -77,12 +77,12 @@ jest.mock('./helpers/Area', () => {
         style?: React.CSSProperties,
         'data-testid'?: string
     }>(function MockArea({
-                                 children,
-                                 id,
-                                 className,
-                                 style,
-                                 'data-testid': dataTestId
-                             }, ref) {
+                             children,
+                             id,
+                             className,
+                             style,
+                             'data-testid': dataTestId
+                         }, ref) {
         return (
             <div
                 ref={ref}
@@ -103,10 +103,10 @@ jest.mock('./helpers/Section', () => {
         id?: string,
         'data-testid'?: string
     }>(function MockSection({
-                                    children,
-                                    id,
-                                    'data-testid': dataTestId
-                                }, ref) {
+                                children,
+                                id,
+                                'data-testid': dataTestId
+                            }, ref) {
         return (
             <div
                 ref={ref}
@@ -169,33 +169,33 @@ describe('Steps Component', () => {
 
         // Since we're using a mock for the Badge component, we need to check for the container
         // that would contain the badges rather than the badges themselves
-        const equalStepsBadges = screen.getByTestId('equal-steps-badges');
+        const equalStepsBadges = screen.getByTestId('step-badges');
         expect(equalStepsBadges).toBeInTheDocument();
 
         // Check that the equal steps title is rendered
         expect(equalStepsBadges).toHaveTextContent('Equal Steps:');
 
         // Check that the step values are rendered
-        expect(screen.getByTestId('equal-step-badge-0')).toBeInTheDocument();
-        expect(screen.getByTestId('equal-step-badge-250')).toBeInTheDocument();
-        expect(screen.getByTestId('equal-step-badge-500')).toBeInTheDocument();
-        expect(screen.getByTestId('equal-step-badge-750')).toBeInTheDocument();
-        expect(screen.getByTestId('equal-step-badge-1000')).toBeInTheDocument();
+        expect(screen.getByTestId('equal-steps-badge-0')).toBeInTheDocument();
+        expect(screen.getByTestId('equal-steps-badge-250')).toBeInTheDocument();
+        expect(screen.getByTestId('equal-steps-badge-500')).toBeInTheDocument();
+        expect(screen.getByTestId('equal-steps-badge-750')).toBeInTheDocument();
+        expect(screen.getByTestId('equal-steps-badge-1000')).toBeInTheDocument();
     });
 
     test('renders custom steps badges when customSteps is not empty', () => {
         render(<Steps />);
 
         // Check that the custom steps badges container is rendered
-        const customStepsBadges = screen.getByTestId('custom-steps-badges');
+        const customStepsBadges = screen.getByTestId('custom-steps-section');
         expect(customStepsBadges).toBeInTheDocument();
 
         // Check that the custom steps title is rendered
         expect(customStepsBadges).toHaveTextContent('Custom Steps:');
 
         // Check that the custom step values are rendered
-        expect(screen.getByTestId('custom-step-badge-100')).toBeInTheDocument();
-        expect(screen.getByTestId('custom-step-badge-300')).toBeInTheDocument();
-        expect(screen.getByTestId('custom-step-badge-700')).toBeInTheDocument();
+        expect(screen.getByTestId('custom-steps-badge-100')).toBeInTheDocument();
+        expect(screen.getByTestId('custom-steps-badge-300')).toBeInTheDocument();
+        expect(screen.getByTestId('custom-steps-badge-700')).toBeInTheDocument();
     });
 });

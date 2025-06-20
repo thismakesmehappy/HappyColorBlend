@@ -53,10 +53,11 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
 
     return (
         <div className={className}
-             style={style}>
+             style={style}
+             data-testid="text-and-input">
 
             {isEditing ? (
-                <span>
+                <span data-testid="text-and-input-editing">
                 <input
                     type="text"
                     className="swatch-label figma-input w-100"
@@ -78,7 +79,7 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
             </>
                   </span>
             ) : (
-                <span>
+                <span data-testid="text-and-input-field">
                 {inputText}
                     <span onClick={() => setIsEditing(true)} data-testid="edit-button" className="figma-ml-sm">
                 <FontAwesomeIcon icon={"pencil"} className={"figma-icon figma-text-primary"} />
