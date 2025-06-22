@@ -1,0 +1,1 @@
+export type Alerttype = "error" | "success" | "warning" | "primary" | "default" | "component";
