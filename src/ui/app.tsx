@@ -1,14 +1,12 @@
 import "@ui/styles/bootstrap/bootstrap.scss"
 import "@ui/styles/main.scss";
 import "@ui/styles/layout/main.scss";
-import ShadeTint from "@ui/components/ShadeTint";
+import LeftColumn from "@ui/components/LeftColumn";
 
 function App() {
   return (
         <div id = "main-box">
-        <div id = "left-column">
-            <ShadeTint/>
-        </div>
+       <LeftColumn className="h-100"/>
         <div id = "right-column">
           Right Column
         </div>

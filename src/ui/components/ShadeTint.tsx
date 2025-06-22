@@ -1,14 +1,11 @@
 import React, {forwardRef, useEffect, useState} from 'react';
-// import '../scss/column-layout.scss';
-import Section from './helpers/Section';
 import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
 import TextAndInput from "./helpers/TextAndInput";
 import {Type} from "react-figma-ui";
+import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 
-interface ShadeTintProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface ShadeTintProps extends ClassAndStyle {
 }
 
 const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
@@ -33,7 +30,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         }, [shade, tint]);
 
         return (
-            <>
+            <div className={className}>
                 {/* Shade-tint content */}
                 <div className={"row"}>
                     <div className={"col col-6"}>
@@ -68,7 +65,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                                       setInputText={setShadeTintRampName} />
                     </div>
                 </div>
-            </>
+            </div>
         );
     }
 );
