@@ -3,6 +3,7 @@ import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
 import Toast from "../helpers/Toast";
 import {INVALID_HEX_COLOR_MESSAGE, TOAST_DURATION} from "../../../constants/uiConstants";
 import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
+import {Input, Type} from "react-figma-ui";
 
 interface TextAndInputProps extends ClassAndStyle {
     inputText: string;
@@ -57,13 +58,10 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
 
             {isEditing ? (
                 <span>
-                <input
-                    type="text"
-                    className="swatch-label figma-input w-100"
-                    value={tempText}
-                    onChange={(e) => setTempText(e.target.value)}
-                    data-testid="swatch-name-input"
-                />
+                     <Input className="container-fluid" value ={tempText}
+                            onChange={(e) => setTempText(e.currentTarget.value)}
+                            data-testid="swatch-name-input"/>
+
                   <>
                     <span onClick={() => cancelEdit()} data-testid="cancel-button" className="figma-mr-sm">
                         <FontAwesomeIcon icon={"circle-xmark"} className={"figma-icon figma-text-primary"} />
@@ -79,7 +77,7 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
                   </span>
             ) : (
                 <span>
-                {inputText}
+                    <Type className="fw-bold">{inputText}</Type>
                     <span onClick={() => setIsEditing(true)} data-testid="edit-button" className="figma-ml-sm">
                 <FontAwesomeIcon icon={"pencil"} className={"figma-icon figma-text-primary"} />
             </span>

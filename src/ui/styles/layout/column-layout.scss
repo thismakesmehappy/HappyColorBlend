@@ -1,0 +1,173 @@
+@use '../figma/figma-styles' as figma;
+
+// Updated spacing variables for more flexible layout
+$dividerPadding: figma.$spacing-md; // Reduced from lg to md for better space utilization
+$dividerWidth: 1px;
+$dividerSize: 3 * $dividerPadding + $dividerWidth; // Reduced multiplier from 3 to 2 for tighter spacing
+
+.section {
+  //padding: figma.$spacing-sm;
+  overflow-x: hidden; // Prevent horizontal scrolling
+}
+
+/* Column Layout Styles */
+#container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  padding: figma.$spacing-md;
+  overflow-x: hidden; // Prevent horizontal scrolling
+}
+
+// Vertical divider between columns
+.column-divider {
+  width: $dividerWidth;
+  height: 100%;
+  background-color: figma.$color-border; // Using $color-border from figma-styles.scss
+  margin: 0 $dividerPadding; // Using $spacing-md from figma-styles.scss
+  display: inline-block;
+  vertical-align: middle;
+  horiz-align: center;
+}
+
+.column-spacer {
+  width: $dividerPadding;
+  display: inline-block;
+  vertical-align: middle;
+  horiz-align: center;
+}
+
+.row-divider {
+  height: $dividerWidth;
+  width: 100%;
+  background-color: figma.$color-border; // Using $color-border from figma-styles.scss
+  margin: $dividerPadding 0; // Using $spacing-md from figma-styles.scss
+  display: inline-block;
+  vertical-align: top;
+  horiz-align: center;
+}
+
+.row-spacer {
+  height: $dividerWidth;
+  width: 100%;
+  background-color: figma.$color-border; // Using $color-border from figma-styles.scss
+  margin: $dividerPadding 0; // Using $spacing-md from figma-styles.scss
+  display: inline-block;
+  vertical-align: top;
+  horiz-align: center;
+}
+
+// Left column with responsive width
+#left-column {
+  width: min(200px, 30%); // Use the smaller of 250px or 30% of container width
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  overflow-x: hidden; // Prevent horizontal scrolling
+}
+
+// Shade-tint section takes height of its content
+#shade-tint {
+  height: auto;
+  width: 100%;
+  overflow-x: hidden; // Prevent horizontal scrolling
+}
+
+// Primary Colors section expands to fill remaining space and scrolls when it overflows
+#primary-colors {
+  position: absolute;
+  top: calc(var(--shade-tint-height, 0px) + $dividerSize); // Position after shade-tint and row-divider (1px + 16px*2 margins)
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto; // Enable vertical scrolling
+  overflow-x: hidden; // Prevent horizontal scrolling
+}
+
+// Right column with responsive width
+#right-column {
+  width: calc(100% - min(200px, 30%) - $dividerSize); // Adjusted to match left column's responsive width
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  position: relative; // Added for absolute positioning of children
+  overflow-x: hidden; // Prevent horizontal scrolling
+}
+
+// Steps container with horizontal alignment
+
+// Settings container
+#settings, #steps, #equal-steps-badges {
+  position: relative;
+  width: 100%;
+  height: auto; // Allow height to adapt to content
+  white-space: nowrap; // Keep children on the same line
+  overflow-x: hidden; // Prevent horizontal scrolling
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0;
+}
+
+// Steps-input takes only the width and height of its content
+#steps-input, #settings-internal, #settings-outer, #settings-steps, #settings-leading, #settings-trailing, #settings-space, #settings-case {
+  display: inline-block;
+  height: auto;
+  width: auto;
+  white-space: normal; // Allow text to wrap inside
+  vertical-align: top;
+  overflow-x: hidden; // Prevent horizontal scrolling
+  padding: 0;
+}
+
+// Step-labels takes the height of steps-input and the rest of the horizontal space
+#step-labels {
+  display: inline-block;
+  height: auto; // Allow height to adapt to content
+  width: calc(100% - var(--steps-input-width, 0px) - $dividerPadding); // Account for the columnSpacer width
+  white-space: normal; // Allow text to wrap inside
+  vertical-align: top;
+  overflow-x: hidden; // Prevent horizontal scrolling
+}
+
+// Container for both columns
+#container > div:first-child {
+  height: 100%;
+  width: 100%;
+  white-space: nowrap; // Prevent columns from wrapping
+  overflow-x: hidden; // Prevent horizontal scrolling
+}
+
+// Swatches section takes the remaining vertical space and scrolls when it overflows
+#swatches {
+  position: absolute;
+  top: calc(var(--steps-height, 0px) + $dividerSize); // Position after steps and row-divider (1px + 16px*2 margins)
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto; // Enable vertical scrolling if content overflows
+}
+
+.separator-sm {
+  width: figma.$spacing-sm;
+  height: figma.$spacing-sm;
+}
+
+.separator-md {
+  width: figma.$spacing-md;
+  height: figma.$spacing-md;
+}
+
+.separator-lg {
+  width: figma.$spacing-lg;
+  height: figma.$spacing-lg;
+}
+
+.separator-xl {
+  width: figma.$spacing-lg * 2;
+  height: figma.$spacing-lg * 2;
+}

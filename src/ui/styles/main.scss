@@ -2,18 +2,21 @@
 @forward "abstracts/variables";
 
 // 2. Vendors
-@forward "vendors/normalize";
+//@forward "vendors/normalize";
 
 // 3. Base stuff
-@forward "base/base";
-@forward "base/fonts";
-@forward "base/typography";
+//@forward "base/base";
+//@forward "base/fonts";
+//@forward "base/typography";
 
 // 4. Layout-related sections
 
 // 5. Components
 
 // 6. Page-specific styles
-@forward "pages/home";
+//@forward "pages/home";
 
 // 7. Themes
+@forward "figma/figma-styles";
+@forward "components/components";
+@forward "layout/column-layout";

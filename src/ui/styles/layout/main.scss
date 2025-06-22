@@ -1,0 +1,25 @@
+@use '../figma/figma-styles' as figma;
+
+#main-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+#left-column {
+  width: 250px;
+  height: 100%;
+  padding: figma.$spacing-sm 0 figma.$spacing-sm figma.$spacing-sm;
+  background-color: #61dafb;
+  display: inline-block;
+}
+
+#right-column {
+  width: 750px;
+  height: 100%;
+  padding: figma.$spacing-sm;
+  background-color: lightpink;
+  display: inline-block;
+}
