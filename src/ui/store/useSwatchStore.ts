@@ -174,7 +174,6 @@ const useSwatchStore = create<SwatchStoreState>()(
         updatePrimaryColor: (id: string, color: string, name: string) => set((state) => ({
             primaryColors: state.primaryColors.map((p) => {
                 if (p.id === id) {
-                    console.log("updated id " + id);
                     return {
                         color: color,
                         name: name,

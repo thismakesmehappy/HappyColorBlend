@@ -4,20 +4,27 @@
   width: 100%;
   height: 100%;
   display: flex;
-  margin:0;
+  margin: 0;
   padding: 0;
 }
 
-#left-column {
+#input-section {
   width: 250px;
   height: 100%;
-  background-color: #61dafb;
   display: inline-block;
+  overflow: auto;
 }
 
-#right-column {
-  width: 750px;
+#settings-section {
+  width: 250px;
   height: 100%;
-  background-color: lightpink;
   display: inline-block;
+  overflow: auto;
+}
+
+#output-section {
+  width: 500px;
+  height: 100%;
+  display: inline-block;
+  overflow: auto;
 }

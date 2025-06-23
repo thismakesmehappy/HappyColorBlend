@@ -1,9 +1,9 @@
 import React, {forwardRef, useEffect, useState} from 'react';
 import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
-import TextAndInput from "./helpers/TextAndInput";
 import {Type} from "react-figma-ui";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
+import RampNameEditor from "@ui/components/shadeTint/RampNameEditor";
 
 interface ShadeTintProps extends ClassAndStyle {
 }
@@ -15,8 +15,6 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         const setShade = useSwatchStore(state => state.setShade);
         const setTint = useSwatchStore(state => state.setTint);
         const buildSwatches = useSwatchStore((state) => state.buildSwatches);
-        const shadeTintRampName = useSwatchStore(state => state.getShadeTintRampName());
-        const setShadeTintRampName = useSwatchStore(state => state.setShadeTintRampName);
         const [shadeName, setShadeName] = useState(shade.name);
         const [shadeColor, setShadeColor] = useState(shade.color);
         const [tintName, setTintName] = useState(tint.name);
@@ -44,7 +42,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                         />
                     </div>
                     <div className={"col col-6"}>
-                        <Type  className={"figma-subtitle"}>Tint — 1000</Type>
+                        <Type className={"figma-subtitle"}>Tint — 1000</Type>
                         <Swatch color={tintColor} name={tintName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setTint(color, name);
@@ -56,15 +54,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                 </div>
 
                 {/* Shade-Tint Ramp Name Editor */}
-                <div id="shade-tint-ramp-name" className={"row overflow-auto d-block text-wrap"}>
-                    <Type className={"col col-12 figma-subtitle figma-mt-sm w-100 overflow-auto text-wrap"}>
-                        What do we call the mix?
-                    </Type>
-                    <div className={"col col-12 w-100 d-block text-wrap"}>
-                        <TextAndInput inputText={shadeTintRampName}
-                                      setInputText={setShadeTintRampName} />
-                    </div>
-                </div>
+                <RampNameEditor />
             </div>
         );
     }

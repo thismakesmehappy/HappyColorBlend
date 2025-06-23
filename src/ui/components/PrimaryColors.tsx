@@ -7,7 +7,8 @@ import ColorNamer from 'color-namer';
 import {Type} from "react-figma-ui";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 
-interface PrimaryColorsProps extends ClassAndStyle {}
+interface PrimaryColorsProps extends ClassAndStyle {
+}
 
 const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
     const primaryColors = useSwatchStore((state) => state.primaryColors);

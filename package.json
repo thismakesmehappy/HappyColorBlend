@@ -31,11 +31,14 @@
     "@types/jest": "^30.0.0",
     "bootstrap": "^5.3.7",
     "color-namer": "^1.4.0",
+    "figma-plugin-ds": "^1.0.1",
     "monorepo-networker": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-figma-plugin-ds": "^2.3.0",
     "react-figma-ui": "^1.1.0",
     "uuid": "^11.1.0",
+    "wcag-contrast": "^3.0.0",
     "zustand": "^5.0.5"
   },
   "devDependencies": {
@@ -45,6 +48,7 @@
     "@types/postcss-url": "^10.0.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/wcag-contrast": "^3.0.3",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.21",
     "npm-run-all": "^4.1.5",

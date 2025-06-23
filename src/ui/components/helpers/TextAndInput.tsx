@@ -6,8 +6,8 @@ import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
 import {Input, Type} from "react-figma-ui";
 
 interface TextAndInputProps extends ClassAndStyle {
-    inputText: string;
-    setInputText: (value: string) => void;
+    inputText: string,
+    setInputText: (value: string) => void,
 }
 
 
@@ -58,9 +58,9 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
 
             {isEditing ? (
                 <span>
-                     <Input className="container-fluid" value ={tempText}
+                     <Input value={tempText}
                             onChange={(e) => setTempText(e.currentTarget.value)}
-                            data-testid="swatch-name-input"/>
+                            data-testid="swatch-name-input" />
 
                   <>
                     <span onClick={() => cancelEdit()} data-testid="cancel-button" className="figma-mr-sm">
