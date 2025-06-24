@@ -1,7 +1,6 @@
 import React, {forwardRef, useEffect, useState} from 'react';
 import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
-import {Type} from "react-figma-ui";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import RampNameEditor from "@ui/components/shadeTint/RampNameEditor";
 
@@ -32,7 +31,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                 {/* Shade-tint content */}
                 <div className={"row"}>
                     <div className={"col col-6"}>
-                        <Type className={"figma-subtitle"}>Shade — 0</Type>
+                        <p className={"figma-subtitle"}>Shade — 0</p>
                         <Swatch color={shadeColor} name={shadeName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setShade(color, name);
@@ -42,7 +41,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                         />
                     </div>
                     <div className={"col col-6"}>
-                        <Type className={"figma-subtitle"}>Tint — 1000</Type>
+                        <p className={"figma-subtitle"}>Tint — 1000</p>
                         <Swatch color={tintColor} name={tintName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setTint(color, name);

@@ -10,21 +10,25 @@
 
 #input-section {
   width: 250px;
-  height: 100%;
+  //height: 100%;
   display: inline-block;
   overflow: auto;
+  padding: figma.$spacing-md;
 }
 
 #settings-section {
   width: 250px;
-  height: 100%;
+  //height: 100%;
   display: inline-block;
   overflow: auto;
+  padding: figma.$spacing-md figma.$spacing-md figma.$spacing-md 0;
+
 }
 
 #output-section {
   width: 500px;
-  height: 100%;
+  //height: 100%;
   display: inline-block;
   overflow: auto;
+  padding: figma.$spacing-md figma.$spacing-md figma.$spacing-md 0;
 }

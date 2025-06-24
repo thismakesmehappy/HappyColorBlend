@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {isValidHexColor} from "../../helpers/colorMethods";
-import {Input, Type} from "react-figma-ui";
 
 interface SwatchLabelsProps {
     isEditing: boolean;
@@ -33,14 +32,14 @@ const SwatchLabels = ({
     if (isEditing) return (
         <div className={"vstack"} data-testid="swatch-labels-edit">
             <div>
-                <Input className="container-fluid text-center fw-bold" value ={tempSwatchName}
+                <input className="container-fluid text-center fw-bold" value={tempSwatchName}
                        onChange={(e) => setTempSwatchName(e.currentTarget.value)}
-                       data-testid="swatch-name-input"/>
+                       data-testid="swatch-name-input" />
             </div>
             <div>
-                <Input className="container-fluid text-center" value ={tempSwatchColor}
-                        onChange={(e) => setTempSwatchColor(e.currentTarget.value)}
-                        data-testid="swatch-name-input"/>
+                <input className="container-fluid text-center" value={tempSwatchColor}
+                       onChange={(e) => setTempSwatchColor(e.currentTarget.value)}
+                       data-testid="swatch-name-input" />
             </div>
             <div>{isValidColor}</div>
         </div>
@@ -48,11 +47,11 @@ const SwatchLabels = ({
 
     return (
         <div className={"vstack"} data-testid="swatch-labels-display">
-            <Type className="container-fluid fw-bold" data-testid="swatch-name-display">
-            {swatchName}
-            </Type>
-            <Type className="container-fluid"  data-testid="swatch-color-display">
-                {swatchColor}</Type>
+            <p className="container-fluid fw-bold" data-testid="swatch-name-display">
+                {swatchName}
+            </p>
+            <p className="container-fluid" data-testid="swatch-color-display">
+                {swatchColor}</p>
         </div>
     );
 };

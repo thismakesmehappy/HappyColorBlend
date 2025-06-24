@@ -8,9 +8,9 @@ import SwatchInputSection from "@ui/components/SwatchInputSection";
 function App() {
     return (
         <div id="main-box">
-            <SwatchInputSection className="h-100 figma-pt-md figma-pl-md figma-pb-md figma-pr-sm" />
-            <SettingsSection className="h-100 figma-pt-md figma-pl-sm figma-pb-md figma-pr-sm" />
-            <OutputSection className="h-100 figma-pt-md figma-pl-sm figma-pb-md figma-pr-md" />
+            <SwatchInputSection />
+            <SettingsSection />
+            <OutputSection />
         </div>
     );
 }

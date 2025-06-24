@@ -57,7 +57,7 @@ $sides: (
         ("short":"l", "long":"-left"),
         ("short":"r", "long":"-right")
 );
-$sizes: ('sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
+$sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
 
 @each $side in $sides {
   $side-short: map.get($side, "short");

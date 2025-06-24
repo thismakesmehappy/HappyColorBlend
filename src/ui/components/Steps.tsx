@@ -32,8 +32,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                         data-testid="steps-input-section"
                     >
                         {/* Steps-input content */}
-                        <EqualSteps className="figma-mb-sm" />
-                        <CustomSteps />
+
                     </div>
                     <div id="step-labels" data-testid="step-labels-section">
                         {/* Step-labels content */}

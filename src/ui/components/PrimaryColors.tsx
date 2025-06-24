@@ -4,7 +4,6 @@ import useSwatchStore, {SwatchStoreInputSwatch} from "../store/useSwatchStore";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import {v4 as uuidv4} from 'uuid';
 import ColorNamer from 'color-namer';
-import {Type} from "react-figma-ui";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 
 interface PrimaryColorsProps extends ClassAndStyle {
@@ -32,9 +31,9 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
             className={className}
             id="primary-colors"
         >
-            <Type className={"figma-subtitle"}>Primary Colors <span onClick={createRandomPrimaryColor}>
+            <p className={"figma-subtitle"}>Primary Colors <span onClick={createRandomPrimaryColor}>
                 <FontAwesomeIcon icon={"circle-plus"} className={"figma-icon figma-text-primary fa-2x"} />
-            </span></Type>
+            </span></p>
 
             <div className={"row"}>
                 {/* Primary Colors content */}
