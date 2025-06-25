@@ -19,13 +19,18 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
     const customSteps = useSwatchStore((state) => state.customSteps);
     return (
         <div id="settings-section" className={className}>
+            <div className="figma-subtitle">Equal Steps</div>
             <EqualSteps className="figma-mb-sm" />
             <EqualStepsBadges />
+            <hr />
+            <div className="figma-subtitle">Custom Steps</div>
+
             <CustomSteps />
             {customSteps.size > 0 && (
                 <CustomStepBadges />
             )}
-
+            <hr />
+            <div className="figma-subtitle">Token Name Settings</div>
             <Case />
             <Spaces />
             <Leading />

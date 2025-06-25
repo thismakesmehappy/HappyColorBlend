@@ -6,7 +6,7 @@ const Spaces = () => {
     const setSpaceTreatment = useTokenNameStore(state => state.setSpaceTreatment);
     return (
         <div id="settings-space">
-            <div>Spaces:</div>
+            <div className={"figma-mt-sm"}>Spaces:</div>
             <div data-testid="space-treatment-radio">
                 <div>
                     <label className="figma-radio figma-mr-md">
@@ -22,10 +22,10 @@ const Spaces = () => {
                         <input
                             type="radio"
                             name="space-treatment"
-                            value="dash"
-                            checked={spaceTreatment === 'dash'}
-                            onChange={() => setSpaceTreatment('dash')} />
-                        <span>Dash</span>
+                            value="remove"
+                            checked={spaceTreatment === 'remove'}
+                            onChange={() => setSpaceTreatment('remove')} />
+                        <span>Remove</span>
                     </label>
                 </div>
                 <div>
@@ -33,19 +33,19 @@ const Spaces = () => {
                         <input
                             type="radio"
                             name="space-treatment"
-                            value="underscore"
-                            checked={spaceTreatment === 'underscore'}
-                            onChange={() => setSpaceTreatment('underscore')} />
-                        <span>Underscore</span>
+                            value="dash"
+                            checked={spaceTreatment === 'dash'}
+                            onChange={() => setSpaceTreatment('dash')} />
+                        <span>Dash (-)</span>
                     </label>
                     <label className="figma-mr-md">
                         <input
                             type="radio"
                             name="space-treatment"
-                            value="remove"
-                            checked={spaceTreatment === 'remove'}
-                            onChange={() => setSpaceTreatment('remove')} />
-                        <span>Remove</span>
+                            value="underscore"
+                            checked={spaceTreatment === 'underscore'}
+                            onChange={() => setSpaceTreatment('underscore')} />
+                        <span>Under (_)</span>
                     </label>
                 </div>
             </div>

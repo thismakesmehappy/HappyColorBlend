@@ -86,17 +86,16 @@ export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyl
 
     return (
         <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps">
-            <span>Add custom step: </span>
             <span>
-                <input
-                    type="text"
-                    maxLength={4}
-                    className="figma-input"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    style={{width: '8ch'}}
-                    data-testid="custom-step-input"
-                />
+                Add <input
+                type="text"
+                maxLength={4}
+                // className="figma-input"
+                value={inputValue}
+                onChange={handleInputChange}
+                style={{width: '8ch'}}
+                data-testid="custom-step-input"
+            />
                 <span
                     onClick={handleAddStep}
                     style={{marginLeft: '8px', cursor: 'pointer'}}

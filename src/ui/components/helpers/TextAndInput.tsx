@@ -78,7 +78,7 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
                 </div>
             ) : (
                 <span>
-                    <p className="fw-bold d-inline-block">{inputText}</p>
+                    <p className="fw-bold d-inline-block mb-0">{inputText}</p>
                     <span onClick={() => setIsEditing(true)} data-testid="edit-button" className="figma-ml-sm">
                 <FontAwesomeIcon icon={"pencil"} className={"figma-icon figma-text-primary"} />
             </span>

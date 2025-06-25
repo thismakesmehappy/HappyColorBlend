@@ -11,7 +11,7 @@ const Leading = () => {
     return (
         <>
             <div id="settings-leading">
-                <div>Leading Character:</div>
+                <div className={"figma-mt-sm"}>Leading Character:</div>
                 <NumberToggle
                     decreaseFunction={decrementLeadingChars}
                     increaseFunction={incrementLeadingChars}
@@ -28,7 +28,6 @@ const Leading = () => {
                             onChange={() => setLeadingCharType('dash')} />
                         <span>Dash (-)</span>
                     </label>
-                    <br />
                     <label className="figma-mr-sm">
                         <input
                             type="radio"
@@ -36,7 +35,7 @@ const Leading = () => {
                             value="underscore"
                             checked={leadingCharType === 'underscore'}
                             onChange={() => setLeadingCharType('underscore')} />
-                        <span>Underscore (_)</span>
+                        <span>Under (_)</span>
                     </label>
                 </div>
             </div>

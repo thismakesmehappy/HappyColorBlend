@@ -10,7 +10,7 @@ const Trailing = () => {
     const decrementTrailingChars = useTokenNameStore(state => state.decrementTrailingChars);
     return (
         <div id="settings-trailing">
-            <div>Trailing Character:</div>
+            <div className={"figma-mt-sm"}>Trailing Character:</div>
             <NumberToggle
                 decreaseFunction={decrementTrailingChars}
                 increaseFunction={incrementTrailingChars}
@@ -26,7 +26,6 @@ const Trailing = () => {
                         onChange={() => setTrailingCharType('dash')} />
                     <span>Dash (-)</span>
                 </label>
-                <br />
                 <label className="figma-mr-sm">
                     <input
                         type="radio"
@@ -34,7 +33,7 @@ const Trailing = () => {
                         value="underscore"
                         checked={trailingCharType === 'underscore'}
                         onChange={() => setTrailingCharType('underscore')} />
-                    <span>Underscore (_)</span>
+                    <span>Under (_)</span>
                 </label>
             </div>
         </div>

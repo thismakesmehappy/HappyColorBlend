@@ -2,6 +2,7 @@ import React from 'react';
 import useSwatchStore, {SwatchStoreSwatch} from "../store/useSwatchStore";
 import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
 import {blendColor} from "../helpers/colorMethods";
+import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
 
 
 interface SwatchesProps {
