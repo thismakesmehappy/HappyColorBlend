@@ -9,26 +9,26 @@
 }
 
 #input-section {
-  width: 250px;
+  width: 240px !important;
   //height: 100%;
-  display: inline-block;
   overflow: auto;
   padding: figma.$spacing-md;
+  white-space: wrap;
 }
 
 #settings-section {
-  width: 250px;
+  width: 250px !important;
   //height: 100%;
-  display: inline-block;
   overflow: auto;
   padding: figma.$spacing-md figma.$spacing-md figma.$spacing-md 0;
+  white-space: wrap;
 
 }
 
 #output-section {
-  width: 500px;
+  width: 500px !important;
   //height: 100%;
-  display: inline-block;
   overflow: auto;
   padding: figma.$spacing-md figma.$spacing-md figma.$spacing-md 0;
+  white-space: wrap;
 }

@@ -29,9 +29,11 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         return (
             <div className={className}>
                 {/* Shade-tint content */}
+                {/* <div className={"row"}> */}
                 <div className={"row"}>
+                    {/* <div className={"col col-6"}> */}
                     <div className={"col col-6"}>
-                        <p className={"figma-subtitle"}>Shade — 0</p>
+                        <p className={"figma-subtitle"}>Shade</p>
                         <Swatch color={shadeColor} name={shadeName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setShade(color, name);
@@ -40,8 +42,9 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                                 id={shade.id}
                         />
                     </div>
+                    {/* <div className={"col col-6"}> */}
                     <div className={"col col-6"}>
-                        <p className={"figma-subtitle"}>Tint — 1000</p>
+                        <p className={"figma-subtitle"}>Tint</p>
                         <Swatch color={tintColor} name={tintName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setTint(color, name);
@@ -52,8 +55,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                     </div>
                 </div>
 
-                {/* Shade-Tint Ramp Name Editor */}
-                <RampNameEditor />
+
             </div>
         );
     }

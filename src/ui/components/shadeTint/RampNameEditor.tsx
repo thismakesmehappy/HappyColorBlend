@@ -6,11 +6,11 @@ const RampNameEditor = () => {
     const shadeTintRampName = useSwatchStore(state => state.getShadeTintRampName());
     const setShadeTintRampName = useSwatchStore(state => state.setShadeTintRampName);
 
-    return (<div id="shade-tint-ramp-name" className={"row overflow-auto d-block text-wrap"}>
-        <p className={"col col-12 figma-subtitle figma-mt-sm w-100 overflow-auto text-wrap"}>
+    return (<div id="shade-tint-ramp-name">
+        <p className={"figma-subtitle"}>
             What do we call the mix?
         </p>
-        <div className={"col col-12 w-100 d-block text-wrap"}>
+        <div>
             <TextAndInput inputText={shadeTintRampName}
                           setInputText={setShadeTintRampName}
             />

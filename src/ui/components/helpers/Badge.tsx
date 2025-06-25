@@ -1,6 +1,9 @@
 import React, {MouseEventHandler} from "react";
-import {Alerttype} from "../../interfaces/AlertLevel";
+import {Alerttype} from "@ui/interfaces/AlertLevel";
 import FontAwesomeIcon from "./FontAwesomeIcon";
+import '@ui/styles/main.scss'
+import "bootstrap/dist/css/bootstrap.min.css"
+
 
 interface BadgeProps {
     children: string;

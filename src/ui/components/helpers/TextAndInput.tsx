@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
 import Toast from "../helpers/Toast";
 import {TOAST_DURATION} from "../../../constants/uiConstants";
-import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
+import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 
 interface TextAndInputProps extends ClassAndStyle {
     inputText: string,

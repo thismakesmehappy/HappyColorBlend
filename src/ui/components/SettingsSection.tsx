@@ -7,30 +7,31 @@ import Spaces from "@ui/components/tokenSettings/Spaces";
 import Leading from "@ui/components/tokenSettings/Leading";
 import Trailing from "@ui/components/tokenSettings/Trailing";
 import "@ui/styles/bootstrap/bootstrap.scss"
-import StepLabels from "@ui/components/steps/StepLabels";
+import EqualStepsBadges from "@ui/components/steps/EqualStepsBadges";
+import CustomStepBadges from "@ui/components/steps/CustomStepBadges";
+import useSwatchStore from "@ui/store/useSwatchStore";
 
 
 interface LeftColumnProps extends ClassAndStyle {
 }
 
 const SettingsColumn = ({className, style}: LeftColumnProps) => {
+    const customSteps = useSwatchStore((state) => state.customSteps);
     return (
-        <div id="steps-section" className={className}>
+        <div id="settings-section" className={className}>
             <EqualSteps className="figma-mb-sm" />
+            <EqualStepsBadges />
             <CustomSteps />
-            <StepLabels />
-            {/*<Steps />*/}
+            {customSteps.size > 0 && (
+                <CustomStepBadges />
+            )}
+
             <Case />
             <Spaces />
             <Leading />
             <Trailing />
             {/*<Settings />*/}
-            <div className={"sticky-bottom bg-white generate text-end figma-p-md"}>
-                <button className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-md"}>Add Variables
-                </button>
-                <button className={"btn figma-bg-primary figma-text-light figma-mr-md"}>Add Styles</button>
-                <button className={"btn figma-bg-primary figma-text-light"}>Create Swatches in Page</button>
-            </div>
+
         </div>);
 };
 
