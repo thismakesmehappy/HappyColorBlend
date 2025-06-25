@@ -1,7 +1,5 @@
 import React from 'react';
 import {ClassAndStyle} from '../interfaces/ClassAndStyle';
-import Area from "./helpers/Area";
-import ColumnDivider from "./helpers/ColumnDivider";
 import Case from "./tokenSettings/Case";
 import Spaces from "./tokenSettings/Spaces";
 import Leading from "./tokenSettings/Leading";
@@ -15,19 +13,16 @@ export const Settings: React.FC<ClassAndStyle> = ({className = '', style = {}}) 
     return (
         <>
             <div className={"figma-subtitle"}>Token Name Options</div>
-            <Area
+            <div
                 id="settings"
-                className={`${className} h-100 figma-text`}
+                className={`${className} figma-text`}
                 style={style}>
 
                 <Case />
-                <ColumnDivider />
                 <Spaces />
-                <ColumnDivider />
                 <Leading />
-                <ColumnDivider />
                 <Trailing />
-            </Area>
+            </div>
         </>
     );
 };

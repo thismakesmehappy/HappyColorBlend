@@ -1,6 +1,9 @@
-import React, {MouseEventHandler, useMemo} from "react";
-import {Alerttype} from "../../interfaces/AlertLevel";
+import React, {MouseEventHandler} from "react";
+import {Alerttype} from "@ui/interfaces/AlertLevel";
 import FontAwesomeIcon from "./FontAwesomeIcon";
+import '@ui/styles/main.scss'
+import "bootstrap/dist/css/bootstrap.min.css"
+
 
 interface BadgeProps {
     children: string;
@@ -9,12 +12,10 @@ interface BadgeProps {
     iconRight?: any;
     iconLeft?: any;
     onClick?: MouseEventHandler<HTMLSpanElement>;
-    testId?: string;
 }
 
 /**
  * A reusable Badge component for displaying labels or tags.
- * Optimized with React.memo and useMemo for better performance.
  *
  * @param children - The text to display in the badge
  * @param type - The type of badge (error, success, warning, primary, or default)
@@ -22,19 +23,17 @@ interface BadgeProps {
  * @param iconLeft - Icon to display on the left side of the badge
  * @param iconRight - Icon to display on the right side of the badge
  * @param onClick - Function to call when the badge is clicked
- * @param testId optional test id for testing
  */
-const Badge: React.FC<BadgeProps> = React.memo(({
+const Badge: React.FC<BadgeProps> = ({
                                          children,
                                          type = "default",
                                          className = "",
                                          iconLeft = "",
                                          iconRight = "",
                                          onClick,
-                                         testId = "",
                                      }: BadgeProps) => {
 
-    const badgeClassName = useMemo(() => {
+    const getBadgeClassName = () => {
         let newClassName = className! + ' badge';
 
         switch (type) {
@@ -58,20 +57,17 @@ const Badge: React.FC<BadgeProps> = React.memo(({
         }
 
         return newClassName;
-    }, [className, type]);
+    };
 
     return (
         <span
-            className={badgeClassName}
+            className={getBadgeClassName()}
             onClick={onClick}
-            data-testid={testId}
         >
-            {iconLeft && <><FontAwesomeIcon data-testid={`${testId}-fa-left`}
-                                            icon={iconLeft} /> {" "}</>} {children} {iconRight && <>{" "}
-            <FontAwesomeIcon
-                data-testid={`${testId}fa-right`} icon={iconRight} /></>}
+            <FontAwesomeIcon icon={iconLeft} /> {iconLeft && " "} {children} {iconRight && " "} <FontAwesomeIcon
+            icon={iconRight} />
         </span>
     );
-});
+}
 
 export default Badge;

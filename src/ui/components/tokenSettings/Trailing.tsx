@@ -1,5 +1,4 @@
 import NumberToggle from "../helpers/NumberToggle";
-import Section from "../helpers/Section";
 import React from "react";
 import useTokenNameStore from "../../store/useTokenNameStore";
 
@@ -10,8 +9,8 @@ const Trailing = () => {
     const incrementTrailingChars = useTokenNameStore(state => state.incrementTrailingChars);
     const decrementTrailingChars = useTokenNameStore(state => state.decrementTrailingChars);
     return (
-        <Section id="settings-trailing">
-            <div>Trailing Character:</div>
+        <div id="settings-trailing">
+            <div className={"figma-mt-sm"}>Trailing Character:</div>
             <NumberToggle
                 decreaseFunction={decrementTrailingChars}
                 increaseFunction={incrementTrailingChars}
@@ -27,7 +26,6 @@ const Trailing = () => {
                         onChange={() => setTrailingCharType('dash')} />
                     <span>Dash (-)</span>
                 </label>
-                <br />
                 <label className="figma-mr-sm">
                     <input
                         type="radio"
@@ -35,10 +33,10 @@ const Trailing = () => {
                         value="underscore"
                         checked={trailingCharType === 'underscore'}
                         onChange={() => setTrailingCharType('underscore')} />
-                    <span>Underscore (_)</span>
+                    <span>Under (_)</span>
                 </label>
             </div>
-        </Section>
+        </div>
     );
 };
 

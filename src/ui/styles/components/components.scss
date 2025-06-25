@@ -1,0 +1,57 @@
+@use '../figma/figma-styles' as figma;
+
+.chip {
+  border-radius: 100%;
+  border-color: figma.$color-border;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.swatch-label-text {
+  font-size: figma.$font-size-md;
+  text-wrap: auto;
+}
+
+.swatch-group {
+  width: 100%;
+  overflow: clip;
+}
+
+.swatches-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.color-chip-container {
+  min-width: calc(2 * (4ch + 2 * figma.$spacing-sm));
+  text-align: center;
+  vertical-align: center;
+}
+
+.color-chip {
+  box-sizing: border-box;
+  width: 100%;
+  padding: figma.$spacing-xs;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+//.badge {
+//  border-radius: figma.$spacing-sm;
+//  padding: figma.$spacing-xs figma.$spacing-sm;
+//  font-size: figma.$font-size-sm;
+//}
+
+//.generate {
+//  padding-top: figma.$spacing-sm;
+//  padding-bottom: figma.$spacing-sm;
+//  .divide {
+//    padding-top: figma.$spacing-md;
+//    border-top: figma.$color-border 1px solid;
+//  }
+//}
+
+input[type=radio] {
+  margin-right: figma.$spacing-sm;
+}
+

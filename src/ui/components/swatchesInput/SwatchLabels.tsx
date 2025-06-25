@@ -32,22 +32,14 @@ const SwatchLabels = ({
     if (isEditing) return (
         <div className={"vstack"} data-testid="swatch-labels-edit">
             <div>
-                <input 
-                    type="text" 
-                    className="swatch-label figma-input mw-100" 
-                    value={tempSwatchName}
-                    onChange={(e) => setTempSwatchName(e.target.value)} 
-                    data-testid="swatch-name-input"
-                />
+                <input className="container-fluid text-center fw-bold" value={tempSwatchName}
+                       onChange={(e) => setTempSwatchName(e.currentTarget.value)}
+                       data-testid="swatch-name-input" />
             </div>
             <div>
-                <input
-                    type="text"
-                    className={`swatch-label figma-input mw-100 ${!isValidColor ? 'border-danger' : ''}`}
-                    value={tempSwatchColor}
-                    onChange={(e) => setTempSwatchColor(e.target.value)}
-                    data-testid="swatch-color-input"
-                />
+                <input className="container-fluid text-center" value={tempSwatchColor}
+                       onChange={(e) => setTempSwatchColor(e.currentTarget.value)}
+                       data-testid="swatch-name-input" />
             </div>
             <div>{isValidColor}</div>
         </div>
@@ -55,9 +47,11 @@ const SwatchLabels = ({
 
     return (
         <div className={"vstack"} data-testid="swatch-labels-display">
-            <div className="swatch-label swatch-label-text mw-100 d-inline-block fw-bold" data-testid="swatch-name-display">{swatchName}</div>
-            <div className="swatch-label swatch-label-text mw-100 d-inline-block" data-testid="swatch-color-display">#{swatchColor}</div>
-            <div>{isValidColor}</div>
+            <p className="container-fluid fw-bold mb-0" data-testid="swatch-name-display">
+                {swatchName}
+            </p>
+            <p className="container-fluid" data-testid="swatch-color-display">
+                {swatchColor}</p>
         </div>
     );
 };

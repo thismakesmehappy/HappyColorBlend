@@ -1,9 +1,8 @@
 import React from 'react';
-import '../scss/column-layout.scss';
-import Section from "./helpers/Section";
-import useSwatchStore, {SwatchStoreSwatch, SwatchStoreSwatches} from "../store/useSwatchStore";
+import useSwatchStore, {SwatchStoreSwatch} from "../store/useSwatchStore";
 import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
 import {blendColor} from "../helpers/colorMethods";
+import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
 
 
 interface SwatchesProps {
@@ -23,11 +22,11 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
             step: step,
         }
     });
-    console.log(toneRamp);
     return (
-        <Section
+        <div
             className={className}
             style={style}
+            id="swatches-output"
         >
             <SwatchGroupSwatches
                 key="tint-shade"
@@ -37,7 +36,7 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
                 swatches={toneRamp}
             />
 
-            {swatches.map((primaryColor: SwatchStoreSwatches) =>
+            {swatches.map((primaryColor) =>
                 <SwatchGroupSwatches
                     key={primaryColor.base.id}
                     color={primaryColor.base.color}
@@ -45,7 +44,7 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
                     swatches={primaryColor.swatches}
                 />
             )}
-        </Section>
+        </div>
     );
 };
 

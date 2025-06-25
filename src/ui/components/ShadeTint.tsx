@@ -1,13 +1,10 @@
 import React, {forwardRef, useEffect, useState} from 'react';
-import '../scss/column-layout.scss';
-import Section from './helpers/Section';
+import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
-import SwatchSection from "./swatchesInput/SwatchSection";
-import RampNameEditor from "./swatchesInput/RampNameEditor";
+import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
+import RampNameEditor from "@ui/components/shadeTint/RampNameEditor";
 
-interface ShadeTintProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface ShadeTintProps extends ClassAndStyle {
 }
 
 const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
@@ -17,8 +14,6 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         const setShade = useSwatchStore(state => state.setShade);
         const setTint = useSwatchStore(state => state.setTint);
         const buildSwatches = useSwatchStore((state) => state.buildSwatches);
-        const shadeTintRampName = useSwatchStore(state => state.getShadeTintRampName());
-        const setShadeTintRampName = useSwatchStore(state => state.setShadeTintRampName);
         const [shadeName, setShadeName] = useState(shade.name);
         const [shadeColor, setShadeColor] = useState(shade.color);
         const [tintName, setTintName] = useState(tint.name);
@@ -32,44 +27,36 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         }, [shade, tint]);
 
         return (
-            <Section
-                id="shade-tint"
-                className={className}
-                ref={ref}
-                style={style}
-            >
+            <div className={className}>
                 {/* Shade-tint content */}
+                {/* <div className={"row"}> */}
                 <div className={"row"}>
-                    <SwatchSection
-                        title="Shade"
-                        stepValue="0"
-                        color={shadeColor}
-                        name={shadeName}
-                        id={shade.id}
-                        onUpdateSwatch={(color: string, name: string) => {
-                            setShade(color, name);
-                            buildSwatches();
-                        }}
-                    />
-                    <SwatchSection
-                        title="Tint"
-                        stepValue="1000"
-                        color={tintColor}
-                        name={tintName}
-                        id={tint.id}
-                        onUpdateSwatch={(color: string, name: string) => {
-                            setTint(color, name);
-                            buildSwatches();
-                        }}
-                    />
+                    {/* <div className={"col col-6"}> */}
+                    <div className={"col col-6"}>
+                        <p className={"figma-subtitle"}>Shade</p>
+                        <Swatch color={shadeColor} name={shadeName}
+                                updateSwatch={function (color: string, name: string): void {
+                                    setShade(color, name);
+                                    buildSwatches();
+                                }}
+                                id={shade.id}
+                        />
+                    </div>
+                    {/* <div className={"col col-6"}> */}
+                    <div className={"col col-6"}>
+                        <p className={"figma-subtitle"}>Tint</p>
+                        <Swatch color={tintColor} name={tintName}
+                                updateSwatch={function (color: string, name: string): void {
+                                    setTint(color, name);
+                                    buildSwatches();
+                                }}
+                                id={tint.id}
+                        />
+                    </div>
                 </div>
 
-                {/* Shade-Tint Ramp Name Editor */}
-                <RampNameEditor
-                    rampName={shadeTintRampName}
-                    onRampNameChange={setShadeTintRampName}
-                />
-            </Section>
+
+            </div>
         );
     }
 );

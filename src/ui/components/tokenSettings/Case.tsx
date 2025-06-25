@@ -1,12 +1,13 @@
 import React from "react";
 import useTokenNameStore from "../../store/useTokenNameStore";
-import Section from "../helpers/Section";
 
 const Case = () => {
     const caseTreatment = useTokenNameStore(state => state.caseTreatment);
     const setCaseTreatment = useTokenNameStore(state => state.setCaseTreatment);
+
+
     return (
-        <Section id="settings-case">
+        <div id="settings-case">
             <div>Case:</div>
             <div>
                 <div data-testid="case-treatment-radio">
@@ -14,7 +15,7 @@ const Case = () => {
                         <input
                             type="radio"
                             name="case-treatment"
-                            value="keep"
+                            value="case"
                             checked={caseTreatment === 'keep'}
                             onChange={() => setCaseTreatment('keep')} />
                         <span>Keep</span>
@@ -51,7 +52,7 @@ const Case = () => {
                     </label>
                 </div>
             </div>
-        </Section>);
+        </div>);
 
 };
 

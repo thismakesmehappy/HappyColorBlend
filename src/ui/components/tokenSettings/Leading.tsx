@@ -1,5 +1,4 @@
 import NumberToggle from "../helpers/NumberToggle";
-import Section from "../helpers/Section";
 import React from "react";
 import useTokenNameStore from "../../store/useTokenNameStore";
 
@@ -11,8 +10,8 @@ const Leading = () => {
     const decrementLeadingChars = useTokenNameStore(state => state.decrementLeadingChars);
     return (
         <>
-            <Section id="settings-leading">
-                <div>Leading Character:</div>
+            <div id="settings-leading">
+                <div className={"figma-mt-sm"}>Leading Character:</div>
                 <NumberToggle
                     decreaseFunction={decrementLeadingChars}
                     increaseFunction={incrementLeadingChars}
@@ -29,7 +28,6 @@ const Leading = () => {
                             onChange={() => setLeadingCharType('dash')} />
                         <span>Dash (-)</span>
                     </label>
-                    <br />
                     <label className="figma-mr-sm">
                         <input
                             type="radio"
@@ -37,10 +35,10 @@ const Leading = () => {
                             value="underscore"
                             checked={leadingCharType === 'underscore'}
                             onChange={() => setLeadingCharType('underscore')} />
-                        <span>Underscore (_)</span>
+                        <span>Under (_)</span>
                     </label>
                 </div>
-            </Section>
+            </div>
         </>);
 };
 

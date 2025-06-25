@@ -1,11 +1,11 @@
-// Compatibility layer for useTokenNameStore using the new consolidated store
-import useAppStore, { SpaceTreatment, CaseTreatment, CharType } from './useAppStore';
-import { useMemo } from 'react';
+import {create} from 'zustand';
 
-// Re-export types for backward compatibility
-export { SpaceTreatment, CaseTreatment, CharType };
+// Re-export types for convenience
+export type SpaceTreatment = 'keep' | 'dash' | 'underscore' | 'remove';
+export type CaseTreatment = 'lower' | 'upper' | 'title' | 'keep';
+export type CharType = 'dash' | 'underscore';
 
-// Re-export the initial state for backward compatibility
+// Initial state for the token name store
 export const initialState = {
     caseTreatment: 'lower' as CaseTreatment,
     spaceTreatment: 'dash' as SpaceTreatment,
@@ -15,7 +15,7 @@ export const initialState = {
     trailingCharType: 'dash' as CharType,
 };
 
-// Define the token name store interface for backward compatibility
+// Define the store state interface
 interface TokenNameStoreState {
     // State properties
     caseTreatment: CaseTreatment;
@@ -45,110 +45,33 @@ interface TokenNameStoreState {
     resetToDefaults: () => void;
 }
 
-// Create a selector-based wrapper that maintains the same API
-function useTokenNameStore(): TokenNameStoreState;
-function useTokenNameStore<T>(selector: (state: TokenNameStoreState) => T): T;
-function useTokenNameStore<T>(selector?: (state: TokenNameStoreState) => T): T | TokenNameStoreState {
-    // Select individual properties to avoid creating new objects unnecessarily
-    const caseTreatment = useAppStore(state => state.caseTreatment);
-    const spaceTreatment = useAppStore(state => state.spaceTreatment);
-    const leadingCharsCount = useAppStore(state => state.leadingCharsCount);
-    const trailingCharsCount = useAppStore(state => state.trailingCharsCount);
-    const leadingCharType = useAppStore(state => state.leadingCharType);
-    const trailingCharType = useAppStore(state => state.trailingCharType);
+// Create the store
+const useTokenNameStore = create<TokenNameStoreState>()((set) => ({
+    // Initial state
+    ...initialState,
 
-    // Select functions (these should be stable references)
-    const setCaseTreatment = useAppStore(state => state.setCaseTreatment);
-    const setSpaceTreatment = useAppStore(state => state.setSpaceTreatment);
-    const setLeadingCharsCount = useAppStore(state => state.setLeadingCharsCount);
-    const setTrailingCharsCount = useAppStore(state => state.setTrailingCharsCount);
-    const setLeadingCharType = useAppStore(state => state.setLeadingCharType);
-    const setTrailingCharType = useAppStore(state => state.setTrailingCharType);
-    const incrementLeadingChars = useAppStore(state => state.incrementLeadingChars);
-    const decrementLeadingChars = useAppStore(state => state.decrementLeadingChars);
-    const incrementTrailingChars = useAppStore(state => state.incrementTrailingChars);
-    const decrementTrailingChars = useAppStore(state => state.decrementTrailingChars);
-    const toggleLeadingCharType = useAppStore(state => state.toggleLeadingCharType);
-    const toggleTrailingCharType = useAppStore(state => state.toggleTrailingCharType);
-    const resetToDefaults = useAppStore(state => state.resetTokenNamingToDefaults);
+    // Setters
+    setCaseTreatment: (caseTreatment: CaseTreatment) => set({caseTreatment}),
+    setSpaceTreatment: (spaceTreatment: SpaceTreatment) => set({spaceTreatment}),
+    setLeadingCharsCount: (leadingCharsCount: number) => set({leadingCharsCount: Math.max(0, leadingCharsCount)}),
+    setTrailingCharsCount: (trailingCharsCount: number) => set({trailingCharsCount: Math.max(0, trailingCharsCount)}),
+    setLeadingCharType: (leadingCharType: CharType) => set({leadingCharType}),
+    setTrailingCharType: (trailingCharType: CharType) => set({trailingCharType}),
 
-    // Memoize the token name slice object to prevent unnecessary re-renders
-    const tokenNameSlice = useMemo((): TokenNameStoreState => ({
-        caseTreatment,
-        spaceTreatment,
-        leadingCharsCount,
-        trailingCharsCount,
-        leadingCharType,
-        trailingCharType,
-        setCaseTreatment,
-        setSpaceTreatment,
-        setLeadingCharsCount,
-        setTrailingCharsCount,
-        setLeadingCharType,
-        setTrailingCharType,
-        incrementLeadingChars,
-        decrementLeadingChars,
-        incrementTrailingChars,
-        decrementTrailingChars,
-        toggleLeadingCharType,
-        toggleTrailingCharType,
-        resetToDefaults,
-    }), [
-        caseTreatment,
-        spaceTreatment,
-        leadingCharsCount,
-        trailingCharsCount,
-        leadingCharType,
-        trailingCharType,
-        setCaseTreatment,
-        setSpaceTreatment,
-        setLeadingCharsCount,
-        setTrailingCharsCount,
-        setLeadingCharType,
-        setTrailingCharType,
-        incrementLeadingChars,
-        decrementLeadingChars,
-        incrementTrailingChars,
-        decrementTrailingChars,
-        toggleLeadingCharType,
-        toggleTrailingCharType,
-        resetToDefaults,
-    ]);
+    // Actions
+    incrementLeadingChars: () => set((state) => ({leadingCharsCount: state.leadingCharsCount + 1})),
+    decrementLeadingChars: () => set((state) => ({leadingCharsCount: Math.max(0, state.leadingCharsCount - 1)})),
+    incrementTrailingChars: () => set((state) => ({trailingCharsCount: state.trailingCharsCount + 1})),
+    decrementTrailingChars: () => set((state) => ({trailingCharsCount: Math.max(0, state.trailingCharsCount - 1)})),
+    toggleLeadingCharType: () => set((state) => ({
+        leadingCharType: state.leadingCharType === 'dash' ? 'underscore' : 'dash'
+    })),
+    toggleTrailingCharType: () => set((state) => ({
+        trailingCharType: state.trailingCharType === 'dash' ? 'underscore' : 'dash'
+    })),
 
-    if (selector) {
-        return selector(tokenNameSlice);
-    }
-
-    return tokenNameSlice;
-}
-
-// Add static methods for direct access (used in tests)
-useTokenNameStore.getState = () => {
-    const state = useAppStore.getState();
-    return {
-        caseTreatment: state.caseTreatment,
-        spaceTreatment: state.spaceTreatment,
-        leadingCharsCount: state.leadingCharsCount,
-        trailingCharsCount: state.trailingCharsCount,
-        leadingCharType: state.leadingCharType,
-        trailingCharType: state.trailingCharType,
-        setCaseTreatment: state.setCaseTreatment,
-        setSpaceTreatment: state.setSpaceTreatment,
-        setLeadingCharsCount: state.setLeadingCharsCount,
-        setTrailingCharsCount: state.setTrailingCharsCount,
-        setLeadingCharType: state.setLeadingCharType,
-        setTrailingCharType: state.setTrailingCharType,
-        incrementLeadingChars: state.incrementLeadingChars,
-        decrementLeadingChars: state.decrementLeadingChars,
-        incrementTrailingChars: state.incrementTrailingChars,
-        decrementTrailingChars: state.decrementTrailingChars,
-        toggleLeadingCharType: state.toggleLeadingCharType,
-        toggleTrailingCharType: state.toggleTrailingCharType,
-        resetToDefaults: state.resetTokenNamingToDefaults,
-    };
-};
-
-useTokenNameStore.setState = (partial: any) => useAppStore.setState(partial);
-useTokenNameStore.subscribe = (listener: any) => useAppStore.subscribe(listener);
+    // Reset to defaults
+    resetToDefaults: () => set({...initialState})
+}));
 
 export default useTokenNameStore;

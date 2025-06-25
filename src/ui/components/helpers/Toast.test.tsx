@@ -130,7 +130,7 @@ describe('Toast Component', () => {
     );
     
     // Spy on clearTimeout
-    jest.spyOn(global, 'clearTimeout');
+    // jest.spyOn(global, 'clearTimeout');
     
     // Unmount the component
     unmount();

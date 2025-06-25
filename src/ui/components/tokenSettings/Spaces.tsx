@@ -1,13 +1,12 @@
 import React from "react";
 import useTokenNameStore from "../../store/useTokenNameStore";
-import Section from "../helpers/Section";
 
 const Spaces = () => {
     const spaceTreatment = useTokenNameStore(state => state.spaceTreatment);
     const setSpaceTreatment = useTokenNameStore(state => state.setSpaceTreatment);
     return (
-        <Section id="settings-space">
-            <div>Spaces:</div>
+        <div id="settings-space">
+            <div className={"figma-mt-sm"}>Spaces:</div>
             <div data-testid="space-treatment-radio">
                 <div>
                     <label className="figma-radio figma-mr-md">
@@ -23,10 +22,10 @@ const Spaces = () => {
                         <input
                             type="radio"
                             name="space-treatment"
-                            value="dash"
-                            checked={spaceTreatment === 'dash'}
-                            onChange={() => setSpaceTreatment('dash')} />
-                        <span>Dash</span>
+                            value="remove"
+                            checked={spaceTreatment === 'remove'}
+                            onChange={() => setSpaceTreatment('remove')} />
+                        <span>Remove</span>
                     </label>
                 </div>
                 <div>
@@ -34,23 +33,23 @@ const Spaces = () => {
                         <input
                             type="radio"
                             name="space-treatment"
-                            value="underscore"
-                            checked={spaceTreatment === 'underscore'}
-                            onChange={() => setSpaceTreatment('underscore')} />
-                        <span>Underscore</span>
+                            value="dash"
+                            checked={spaceTreatment === 'dash'}
+                            onChange={() => setSpaceTreatment('dash')} />
+                        <span>Dash (-)</span>
                     </label>
                     <label className="figma-mr-md">
                         <input
                             type="radio"
                             name="space-treatment"
-                            value="remove"
-                            checked={spaceTreatment === 'remove'}
-                            onChange={() => setSpaceTreatment('remove')} />
-                        <span>Remove</span>
+                            value="underscore"
+                            checked={spaceTreatment === 'underscore'}
+                            onChange={() => setSpaceTreatment('underscore')} />
+                        <span>Under (_)</span>
                     </label>
                 </div>
             </div>
-        </Section>
+        </div>
     );
 };
 

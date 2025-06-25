@@ -1,0 +1,335 @@
+/* Figma Plugin Styles - Helper Classes */
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:color';
+
+
+// Colors
+$color-primary: #0d99ff;
+$color-primary-hover: #007be5;
+$color-secondary: #ffffff;
+$color-secondary-hover: #e1e1e1;
+$color-dark: #2c2c2c;
+$color-light: #ffffff;
+$color-danger: #f24822;
+$color-danger-hover: #dc3412;
+$color-success: #14ae5c;
+$color-success-hover: #009951;
+$color-warning: #fab815;
+$color-warning-hover: #ffc21a;
+$color-component: #9747ff;
+$color-component: #8638e5;
+$color-text-primary: #000000e5;
+$color-text-secondary: #0000004d;
+$color-border: #e5e5e5;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+
+// Border radius
+$border-radius-sm: 2px;
+$border-radius-md: 4px;
+$border-radius-lg: 6px;
+$border-radius-xl: 8px;
+
+// Typography
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-lg: 16px;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+// Transitions
+$transition-default: all 0.2s ease;
+$transition-tooltip: opacity 0.3s;
+
+// Shadows
+$shadow-card: 0 1px 2px rgba(0, 0, 0, 0.1);
+$shadow-focus: 0 0 0 2px rgba($color-primary, 0.2);
+
+$sides: (
+        ("short":"", "long":""),
+        ("short":"t", "long":"-top"),
+        ("short":"b", "long":"-bottom"),
+        ("short":"l", "long":"-left"),
+        ("short":"r", "long":"-right")
+);
+$sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
+
+@each $side in $sides {
+  $side-short: map.get($side, "short");
+  $side-long: map.get($side, "long");
+  @each $size, $value in $sizes {
+    .figma-p#{$side-short}-#{$size} {
+      padding#{$side-long}: #{$value};
+    }
+
+    .figma-m#{$side-short}-#{$size} {
+      margin#{$side-long}: #{$value};
+    }
+  }
+}
+
+/* Figma Colors */
+.figma-bg-primary {
+  background-color: $color-primary;
+}
+
+.figma-text-primary {
+  color: $color-primary;
+}
+
+.figma-bg-secondary {
+  background-color: $color-secondary;
+}
+
+.figma-text-secondary {
+  color: $color-text-primary;
+}
+
+.figma-bg-secondary-gray {
+  background-color: $color-text-primary;
+}
+
+.figma-bg-dark {
+  background-color: $color-dark;
+}
+
+.figma-text-dark {
+  color: $color-dark;
+}
+
+.figma-bg-light {
+  background-color: $color-light;
+}
+
+.figma-text-light {
+  color: $color-light;
+}
+
+.figma-bg-danger {
+  background-color: $color-danger;
+}
+
+.figma-text-danger {
+  color: $color-danger;
+}
+
+.figma-bg-success {
+  background-color: $color-success;
+}
+
+.figma-text-success {
+  color: $color-success;
+}
+
+.figma-bg-warning {
+  background-color: $color-warning;
+}
+
+.figma-text-warning {
+  color: $color-warning;
+}
+
+.figma-bg-component {
+  background-color: $color-component;
+}
+
+.figma-text-component {
+  color: $color-component;
+}
+
+.figma-text-mid {
+  color: color.mix($color-text-primary, $color-secondary, 40%);
+}
+
+/* Figma Buttons */
+.figma-btn {
+  border-radius: $border-radius-lg;
+  font-weight: $font-weight-medium;
+  padding: $spacing-sm $spacing-md;
+  transition: $transition-default;
+  border: none;
+}
+
+.figma-btn-primary {
+  background-color: $color-primary;
+  color: $color-light;
+}
+
+.figma-btn-primary:hover {
+  background-color: $color-primary-hover;
+}
+
+.figma-btn-secondary {
+  background-color: $color-secondary;
+  color: $color-text-primary;
+}
+
+.figma-btn-secondary:hover {
+  background-color: $color-secondary-hover;
+}
+
+.figma-btn-danger {
+  background-color: $color-danger;
+  color: $color-light;
+}
+
+.figma-btn-danger:hover {
+  background-color: $color-danger-hover;
+}
+
+.figma-btn-success {
+  background-color: $color-success;
+  color: $color-light;
+}
+
+.figma-btn-success:hover {
+  background-color: $color-success-hover;
+}
+
+/* Figma Inputs */
+.figma-input {
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  padding: calc($spacing-sm / 2) $spacing-sm;
+  font-size: $font-size-md;
+  //transition: $transition-default;
+}
+
+.figma-input:focus {
+  border-color: $color-primary;
+  outline: none;
+  box-shadow: $shadow-focus;
+}
+
+/* Figma Cards */
+.figma-card {
+  background-color: $color-light;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-card;
+  padding: $spacing-md;
+}
+
+/* Figma Typography */
+.figma-title, h1 {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-sm;
+}
+
+.figma-subtitle, h2 {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-xs;
+  color: $color-text-primary;
+}
+
+.figma-text, html {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.figma-text-small {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+
+/* Figma Dividers - Removed */
+.figma-divider {
+  height: 1px;
+  background-color: $color-border;
+  margin: $spacing-md 0;
+}
+
+/* Figma Icons */
+.figma-icon {
+  width: $spacing-md;
+  height: $spacing-md;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Figma Tooltips */
+.figma-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.figma-tooltip .figma-tooltip-text {
+  visibility: hidden;
+  background-color: $color-text-primary;
+  color: $color-light;
+  text-align: center;
+  border-radius: $border-radius-md;
+  padding: $spacing-sm;
+  position: absolute;
+  z-index: 100;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: $transition-tooltip;
+}
+
+.figma-tooltip:hover .figma-tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Figma Toast Notifications */
+.figma-toast-container {
+  position: fixed;
+  top: $spacing-md;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.figma-toast {
+  background-color: $color-text-primary;
+  color: $color-light;
+  text-align: center;
+  border-radius: $border-radius-md;
+  padding: $spacing-sm $spacing-md;
+  margin-bottom: $spacing-sm;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.figma-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.figma-toast-primary {
+  background-color: $color-primary;
+}
+
+.figma-toast-default {
+  background-color: $color-component;
+}
+
+.figma-toast-error {
+  background-color: $color-danger;
+}
+
+.figma-toast-success {
+  background-color: $color-success;
+}
+
+.figma-toast-warning {
+  background-color: $color-warning;
+  color: $color-text-primary;
+}
+
+.figma-border {
+  border: 1px solid $color-border;
+}

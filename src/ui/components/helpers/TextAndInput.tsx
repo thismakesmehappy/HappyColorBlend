@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
 import Toast from "../helpers/Toast";
-import {INVALID_HEX_COLOR_MESSAGE, TOAST_DURATION} from "../../../constants/uiConstants";
-import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
+import {TOAST_DURATION} from "../../../constants/uiConstants";
+import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 
 interface TextAndInputProps extends ClassAndStyle {
-    inputText: string;
-    setInputText: (value: string) => void;
+    inputText: string,
+    setInputText: (value: string) => void,
 }
 
 
@@ -53,34 +53,32 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
 
     return (
         <div className={className}
-             style={style}
-             data-testid="text-and-input">
+             style={style}>
 
             {isEditing ? (
-                <span data-testid="text-and-input-editing">
-                <input
-                    type="text"
-                    className="swatch-label figma-input w-100"
-                    value={tempText}
-                    onChange={(e) => setTempText(e.target.value)}
-                    data-testid="swatch-name-input"
-                />
-                  <>
-                    <span onClick={() => cancelEdit()} data-testid="cancel-button" className="figma-mr-sm">
+                <div>
+                    <input value={tempText}
+                           onChange={(e) => setTempText(e.currentTarget.value)}
+                           data-testid="swatch-name-input"
+                           className="w-75 figma-mr-xs"
+                    />
+
+                    <>
+                    <span onClick={() => cancelEdit()} data-testid="cancel-button" className="figma-mr-xs">
                         <FontAwesomeIcon icon={"circle-xmark"} className={"figma-icon figma-text-primary"} />
                     </span>
-                    <span onClick={() => updateText()} data-testid="save-button">
+                        <span onClick={() => updateText()} data-testid="save-button">
                         <FontAwesomeIcon
                             icon={"circle-check"}
                             className={`figma-icon ${isValidText(tempText) ? "figma-text-primary" : "figma-text-disabled"}`}
                         />
                     </span>
 
-            </>
-                  </span>
+                    </>
+                </div>
             ) : (
-                <span data-testid="text-and-input-field">
-                {inputText}
+                <span>
+                    <p className="fw-bold d-inline-block mb-0">{inputText}</p>
                     <span onClick={() => setIsEditing(true)} data-testid="edit-button" className="figma-ml-sm">
                 <FontAwesomeIcon icon={"pencil"} className={"figma-icon figma-text-primary"} />
             </span>

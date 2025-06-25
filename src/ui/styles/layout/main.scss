@@ -1,0 +1,34 @@
+@use '../figma/figma-styles' as figma;
+
+#main-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+#input-section {
+  width: 240px !important;
+  //height: 100%;
+  overflow: auto;
+  padding: figma.$spacing-md;
+  white-space: wrap;
+}
+
+#settings-section {
+  width: 250px !important;
+  //height: 100%;
+  overflow: auto;
+  padding: figma.$spacing-md figma.$spacing-md figma.$spacing-md 0;
+  white-space: wrap;
+
+}
+
+#output-section {
+  width: 500px !important;
+  //height: 100%;
+  overflow: auto;
+  padding: figma.$spacing-md figma.$spacing-md figma.$spacing-md 0;
+  white-space: wrap;
+}
