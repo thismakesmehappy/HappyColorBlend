@@ -118,7 +118,7 @@ describe('TextAndInput Component', () => {
     render(<TextAndInput inputText="Test Input" setInputText={mockSetInputText} className="custom-class" />);
     
     // Check that the container has the custom class
-    const container = screen.getByText('Test Input').parentElement;
+    const container = screen.getByText('Test Input').closest('div');
     expect(container).toHaveClass('custom-class');
   });
 });

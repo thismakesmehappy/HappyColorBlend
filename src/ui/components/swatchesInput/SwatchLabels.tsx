@@ -37,9 +37,9 @@ const SwatchLabels = ({
                        data-testid="swatch-name-input" />
             </div>
             <div>
-                <input className="container-fluid text-center" value={tempSwatchColor}
+                <input className={`container-fluid text-center ${!isValidColor ? 'border-danger' : ''}`} value={tempSwatchColor}
                        onChange={(e) => setTempSwatchColor(e.currentTarget.value)}
-                       data-testid="swatch-name-input" />
+                       data-testid="swatch-color-input" />
             </div>
             <div>{isValidColor}</div>
         </div>

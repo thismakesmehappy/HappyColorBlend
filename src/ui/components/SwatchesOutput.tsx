@@ -27,6 +27,7 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
             className={className}
             style={style}
             id="swatches-output"
+            data-testid="swatches-output"
         >
             <SwatchGroupSwatches
                 key="tint-shade"

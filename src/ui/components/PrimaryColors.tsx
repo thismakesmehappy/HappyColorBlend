@@ -29,7 +29,9 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
     return (
         <div
             className={className}
+            style={style}
             id="primary-colors"
+            data-testid="primary-colors"
         >
             <p className={"figma-subtitle"}>Primary Colors <span onClick={createRandomPrimaryColor}>
                 <FontAwesomeIcon icon={"circle-plus"} className={"figma-icon figma-text-primary fa-2x"} />

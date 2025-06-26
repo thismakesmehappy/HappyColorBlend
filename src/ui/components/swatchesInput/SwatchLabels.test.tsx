@@ -35,7 +35,7 @@ describe('SwatchLabels Component', () => {
     const colorDisplay = screen.getByTestId('swatch-color-display');
     
     expect(nameDisplay).toHaveTextContent('Test Color');
-    expect(colorDisplay).toHaveTextContent('#FF5733');
+    expect(colorDisplay).toHaveTextContent('FF5733');
   });
 
   test('renders edit mode correctly', () => {

@@ -120,6 +120,8 @@ describe('Toast Component', () => {
 
   test('clears timeout when component unmounts', () => {
     const handleClose = jest.fn();
+    const clearTimeoutSpy = jest.spyOn(global, 'clearTimeout');
+    
     const { unmount } = render(
       <Toast 
         message="Unmount Toast" 
@@ -129,14 +131,11 @@ describe('Toast Component', () => {
       />
     );
     
-    // Spy on clearTimeout
-    // jest.spyOn(global, 'clearTimeout');
-    
     // Unmount the component
     unmount();
     
     // Verify that clearTimeout was called
-    expect(clearTimeout).toHaveBeenCalled();
+    expect(clearTimeoutSpy).toHaveBeenCalled();
     
     // Fast-forward time by 3000ms
     act(() => {
@@ -145,6 +144,8 @@ describe('Toast Component', () => {
     
     // Verify that onClose wasn't called after unmounting
     expect(handleClose).not.toHaveBeenCalled();
+    
+    clearTimeoutSpy.mockRestore();
   });
 
   test('uses custom duration when provided', () => {

@@ -27,7 +27,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         }, [shade, tint]);
 
         return (
-            <div className={className}>
+            <div className={className} style={style} data-testid={"shade-tint"} ref={ref}>
                 {/* Shade-tint content */}
                 {/* <div className={"row"}> */}
                 <div className={"row"}>

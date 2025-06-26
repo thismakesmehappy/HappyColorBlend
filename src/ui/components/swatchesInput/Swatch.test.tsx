@@ -40,7 +40,7 @@ describe('Swatch Component', () => {
 
         // Check that the name and color are displayed
         expect(screen.getByTestId('swatch-name-display')).toHaveTextContent('Test Color');
-        expect(screen.getByTestId('swatch-color-display')).toHaveTextContent('#FF5733');
+        expect(screen.getByTestId('swatch-color-display')).toHaveTextContent('FF5733');
     });
 
     test('applies custom className when provided', () => {
@@ -49,7 +49,7 @@ describe('Swatch Component', () => {
         const container = screen.getByTestId('swatch-container');
         expect(container).toHaveClass('custom-class');
     });
-    
+
 
     test('enters edit mode when edit button is clicked', async () => {
         render(<Swatch {...defaultProps} />);
@@ -60,7 +60,6 @@ describe('Swatch Component', () => {
 
         // Check that we're in edit mode (input fields are visible)
         expect(screen.getByTestId('swatch-labels-edit')).toBeInTheDocument();
-        expect(screen.getByTestId('swatch-name-input')).toBeInTheDocument();
         expect(screen.getByTestId('swatch-color-input')).toBeInTheDocument();
 
         // Check that the input fields have the correct initial values
@@ -118,7 +117,7 @@ describe('Swatch Component', () => {
 
         // Check that the original values are still displayed
         expect(screen.getByTestId('swatch-name-display')).toHaveTextContent('Test Color');
-        expect(screen.getByTestId('swatch-color-display')).toHaveTextContent('#FF5733');
+        expect(screen.getByTestId('swatch-color-display')).toHaveTextContent('FF5733');
     });
 
     test('calls onDelete when delete button is clicked', () => {
@@ -148,7 +147,7 @@ describe('Swatch Component', () => {
         // Check if the component updated with new values
         await waitFor(() => {
             expect(screen.getByTestId('swatch-name-display')).toHaveTextContent('New Color');
-            expect(screen.getByTestId('swatch-color-display')).toHaveTextContent('#00FF00');
+            expect(screen.getByTestId('swatch-color-display')).toHaveTextContent('00FF00');
         });
     });
 

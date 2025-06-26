@@ -10,7 +10,12 @@ module.exports = {
   },
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapper: {
+    '^@ui/styles/main\\.scss$': 'identity-obj-proxy',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    'bootstrap/dist/css/bootstrap.min.css': 'identity-obj-proxy',
+    '^@ui/(.*)$': '<rootDir>/src/ui/$1',
+    '^@common/(.*)$': '<rootDir>/src/common/$1',
+    '^@plugin/(.*)$': '<rootDir>/src/plugin/$1',
   },
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
