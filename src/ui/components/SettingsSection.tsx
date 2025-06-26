@@ -10,6 +10,7 @@ import "@ui/styles/bootstrap/bootstrap.scss"
 import EqualStepsBadges from "@ui/components/steps/EqualStepsBadges";
 import CustomStepBadges from "@ui/components/steps/CustomStepBadges";
 import useSwatchStore from "@ui/store/useSwatchStore";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 interface LeftColumnProps extends ClassAndStyle {
@@ -19,6 +20,8 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
     const customSteps = useSwatchStore((state) => state.customSteps);
     return (
         <div id="settings-section" className={className}>
+            <p className={"title"}>Options <FontAwesomeIcon icon={"circle-question"}
+                                                            className='figma-text-component' /></p>
             <span className="figma-subtitle">Equal Steps: </span>
             <EqualSteps className="figma-mb-sm figma-ml-xs d-inline-block" />
             <hr />
