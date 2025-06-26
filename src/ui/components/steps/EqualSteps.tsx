@@ -27,7 +27,7 @@ export const EqualSteps = ({className = "", style = {}}: ClassAndStyle) => {
                 increaseFunction={handleIncrease}
                 value={numberOfSteps}
                 minValue={3}
-                className="figma-mb-sm d-block"
+                className="figma-mb-sm"
             />
         </div>
     );

@@ -8,9 +8,12 @@ import {
     INVALID_CUSTOM_STEP_OUT_OF_RANGE,
     INVALID_CUSTOM_STEP_RESERVED, INVALID_CUSTOM_STEP_DUPLICATED
 } from '../../../constants/uiConstants';
-import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
+import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 
-export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyle) => {
+interface CustomStepsProps extends ClassAndStyle {
+}
+
+export const CustomSteps = ({className = "", style = {}}: CustomStepsProps) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [showToast, setShowToast] = useState<boolean>(false);
     const [toastMessage, setToastMessage] = useState<string>('');
@@ -87,15 +90,15 @@ export const CustomSteps: React.FC = ({className = "", style = {}}: ClassAndStyl
     return (
         <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps">
             <span>
-                Add <input
-                type="text"
-                maxLength={4}
-                // className="figma-input"
-                value={inputValue}
-                onChange={handleInputChange}
-                style={{width: '8ch'}}
-                data-testid="custom-step-input"
-            />
+                 <input
+                     type="text"
+                     maxLength={4}
+                     // className="figma-input"
+                     value={inputValue}
+                     onChange={handleInputChange}
+                     style={{width: '8ch'}}
+                     data-testid="custom-step-input"
+                 />
                 <span
                     onClick={handleAddStep}
                     style={{marginLeft: '8px', cursor: 'pointer'}}
