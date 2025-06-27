@@ -2,7 +2,7 @@
 @forward "abstracts/variables";
 
 // 2. Vendors
-//@use "bootstrap/bootstrap";
+@use "bootstrap/bootstrap";
 //@forward "vendors/normalize";
 
 // 3. Base stuff
@@ -18,6 +18,6 @@
 //@forward "pages/home";
 
 // 7. Themes
-//@use "figma/figma-styles";
-//@forward "components/components";
-//@forward "layout/column-layout";
+@use "figma/figma-styles";
+@forward "components/components";
+@forward "layout/main";

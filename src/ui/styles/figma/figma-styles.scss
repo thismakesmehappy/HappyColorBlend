@@ -75,75 +75,149 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
 
 /* Figma Colors */
 .figma-bg-primary {
-  background-color: $color-primary;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    background-color: $color-primary;
+  }
 }
 
 .figma-text-primary {
-  color: $color-primary;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    color: $color-primary;
+  }
 }
 
 .figma-bg-secondary {
-  background-color: $color-secondary;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    background-color: $color-secondary;
+  }
 }
 
 .figma-text-secondary {
-  color: $color-text-primary;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    color: $color-text-primary;
+  }
 }
 
 .figma-bg-secondary-gray {
-  background-color: $color-text-primary;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    background-color: $color-text-primary;
+  }
 }
 
 .figma-bg-dark {
-  background-color: $color-dark;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    background-color: $color-dark;
+  }
 }
 
 .figma-text-dark {
-  color: $color-dark;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    color: $color-dark;
+  }
 }
 
 .figma-bg-light {
-  background-color: $color-light;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    background-color: $color-light;
+  }
 }
 
 .figma-text-light {
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+  }
+
   color: $color-light;
 }
 
+
 .figma-bg-danger {
-  background-color: $color-danger;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    background-color: $color-danger;
+  }
 }
 
 .figma-text-danger {
-  color: $color-danger;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    color: $color-danger;
+  }
 }
 
 .figma-bg-success {
-  background-color: $color-success;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    background-color: $color-success;
+  }
 }
 
 .figma-text-success {
-  color: $color-success;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    color: $color-success;
+  }
 }
 
 .figma-bg-warning {
-  background-color: $color-warning;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    background-color: $color-warning;
+  }
 }
 
 .figma-text-warning {
-  color: $color-warning;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    color: $color-warning;
+  }
 }
 
 .figma-bg-component {
-  background-color: $color-component;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    background-color: $color-component;
+  }
 }
 
 .figma-text-component {
-  color: $color-component;
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    color: $color-component;
+  }
 }
 
 .figma-text-mid {
-  color: color.mix($color-text-primary, $color-secondary, 40%);
+  &,
+  &.tooltip .arrow,
+  &.tooltip .tooltip-inner {
+    color: color.mix($color-text-primary, $color-secondary, 40%);
+  }
 }
 
 /* Figma Buttons */
