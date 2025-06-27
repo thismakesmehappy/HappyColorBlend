@@ -1,17 +1,18 @@
 import React from "react";
 import {hex} from "wcag-contrast";
+import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 
-interface SwatchColorChipProps {
+interface SwatchColorChipProps extends ClassAndStyle {
     color: string;
     step: number;
 }
 
-const SwatchColorChip = ({color, step}: SwatchColorChipProps) => {
+const SwatchColorChip = ({color, step, className, style}: SwatchColorChipProps) => {
     const ratioWhite = hex("#FFF", "#" + color);
     const textColor = ratioWhite > 3 ? "#FFFFFF" : "#000000";
 
     return (
-        <div className='color-chip-container' data-testid="swatch-color-chip-container">
+        <div className={`color-chip-container ${className}`} data-testid="swatch-color-chip-container">
             <div
                 style={{backgroundColor: "#" + color, color: textColor}}
                 className={`color-chip fw-bold`}

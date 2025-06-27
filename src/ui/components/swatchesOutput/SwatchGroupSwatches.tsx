@@ -48,10 +48,10 @@ const SwatchGroupSwatches = ({
             <br />
 
         </p>
-        <div className={"swatches-container"} data-testid="swatches-container">
+        <div className={"swatches-container row gx-0"} data-testid="swatches-container">
             {swatches.map((swatch, index) =>
                 <SwatchColorChip key={`${swatch.color}-${swatch.step}-${index}`} color={swatch.color}
-                                 step={swatch.step} />
+                                 step={swatch.step} className={'col col-3'} />
             )}
         </div>
     </div>);
