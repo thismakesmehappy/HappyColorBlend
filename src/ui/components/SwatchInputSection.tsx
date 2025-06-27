@@ -12,8 +12,17 @@ interface LeftColumnProps extends ClassAndStyle {
 const SwatchInputSection = ({className, style}: LeftColumnProps) => {
     return (
         <div id="input-section" className={className}>
-            <p className={"title"}>Primitives <FontAwesomeIcon icon={"circle-question"}
-                                                               className='figma-text-component' /></p>
+            <p className={"title"}>Primitives
+                {/*    <TooltipWrapper*/}
+                {/*    content="Configure your base colors and shades/tints to generate color swatches"*/}
+                {/*    type="component"*/}
+                {/*    id="primitives-tooltip"*/}
+                {/*    placement={"bottom-start"}*/}
+                {/*>*/}
+                {/*    <FontAwesomeIcon icon={"circle-question"}*/}
+                {/*                     className='figma-text-component' />*/}
+                {/*</TooltipWrapper>*/}
+            </p>
             <ShadeTint />
             <hr />
             <RampNameEditor />

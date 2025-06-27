@@ -3,6 +3,8 @@ import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import RampNameEditor from "@ui/components/shadeTint/RampNameEditor";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import TooltipWrapper from './helpers/TooltipWrapper';
 
 interface ShadeTintProps extends ClassAndStyle {
 }
@@ -33,7 +35,15 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                 <div className={"row"}>
                     {/* <div className={"col col-6"}> */}
                     <div className={"col col-6"}>
-                        <p className={"figma-subtitle"}>Shade</p>
+                        <p className={"figma-subtitle"}>Shade <TooltipWrapper
+                            content="The darker color that will be mixed with your primary colors to create darker tones"
+                            type="component"
+                            id="shade-tooltip"
+                            placement={"bottom-start"}
+                        >
+                            <FontAwesomeIcon icon={"circle-question"}
+                                             className='figma-text-component' />
+                        </TooltipWrapper></p>
                         <Swatch color={shadeColor} name={shadeName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setShade(color, name);
@@ -44,7 +54,15 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                     </div>
                     {/* <div className={"col col-6"}> */}
                     <div className={"col col-6"}>
-                        <p className={"figma-subtitle"}>Tint</p>
+                        <p className={"figma-subtitle"}>Tint <TooltipWrapper
+                            content="The lighter color that will be mixed with your primary colors to create lighter tones"
+                            type="component"
+                            id="tint-tooltip"
+                            placement={"bottom-start"}
+                        >
+                            <FontAwesomeIcon icon={"circle-question"}
+                                             className='figma-text-component' />
+                        </TooltipWrapper></p>
                         <Swatch color={tintColor} name={tintName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setTint(color, name);

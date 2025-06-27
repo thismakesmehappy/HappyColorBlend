@@ -11,6 +11,7 @@ import EqualStepsBadges from "@ui/components/steps/EqualStepsBadges";
 import CustomStepBadges from "@ui/components/steps/CustomStepBadges";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import TooltipWrapper from '@ui/components/helpers/TooltipWrapper';
 
 
 interface LeftColumnProps extends ClassAndStyle {
@@ -20,8 +21,17 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
     const customSteps = useSwatchStore((state) => state.customSteps);
     return (
         <div id="settings-section" className={className}>
-            <p className={"title"}>Options <FontAwesomeIcon icon={"circle-question"}
-                                                            className='figma-text-component' /></p>
+            <p className={"title"}>Options
+                {/*    <TooltipWrapper*/}
+                {/*    content="Configure how your color steps are generated and how design tokens are named"*/}
+                {/*    type="component"*/}
+                {/*    id="options-tooltip"*/}
+                {/*    placement={"bottom"}*/}
+                {/*>*/}
+                {/*    <FontAwesomeIcon icon={"circle-question"}*/}
+                {/*                     className='figma-text-component' />*/}
+                {/*</TooltipWrapper>*/}
+            </p>
             <span className="figma-subtitle">Equal Steps: </span>
             <EqualSteps className="figma-mb-sm figma-ml-xs d-inline-block" />
             <hr />
@@ -31,7 +41,15 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
                 <CustomStepBadges />
             )}
             <hr />
-            <div className="figma-subtitle">Token Name Settings</div>
+            <div className="figma-subtitle">Token Name Settings <TooltipWrapper
+                content="Customize how token names are formatted relative to the swatch name: how words are cased, how spaces are treated, and if you want to prefix or sufix with dashed or underscores"
+                type="component"
+                id="token-settings-tooltip"
+            >
+                <FontAwesomeIcon icon={"circle-question"}
+                                 className='figma-text-component' />
+            </TooltipWrapper>
+            </div>
             <Case />
             <Spaces />
             <Leading />

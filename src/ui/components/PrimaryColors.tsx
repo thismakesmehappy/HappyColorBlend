@@ -5,6 +5,7 @@ import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import {v4 as uuidv4} from 'uuid';
 import ColorNamer from 'color-namer';
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
+import TooltipWrapper from './helpers/TooltipWrapper';
 
 interface PrimaryColorsProps extends ClassAndStyle {
 }
@@ -35,6 +36,14 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
         >
             <p className={"figma-subtitle"}>Primary Colors <span onClick={createRandomPrimaryColor}>
                 <FontAwesomeIcon icon={"circle-plus"} className={"figma-icon figma-text-primary fa-2x"} />
+                {" "}<TooltipWrapper
+                content="These are the base colors that will be mixed"
+                type="component"
+                id="primary-colors-tooltip"
+            >
+                    <FontAwesomeIcon icon={"circle-question"}
+                                     className='figma-text-component' />
+                </TooltipWrapper>
             </span></p>
 
             <div className={"row"}>

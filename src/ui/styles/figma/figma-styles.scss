@@ -142,9 +142,9 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
   &,
   &.tooltip .arrow,
   &.tooltip .tooltip-inner {
+    color: $color-light;
   }
 
-  color: $color-light;
 }
 
 

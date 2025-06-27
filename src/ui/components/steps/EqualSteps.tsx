@@ -3,6 +3,8 @@ import useSwatchStore from "../../store/useSwatchStore";
 import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
 import NumberToggle from "../helpers/NumberToggle";
 import EqualStepsBadges from "@ui/components/steps/EqualStepsBadges";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import TooltipWrapper from '../helpers/TooltipWrapper';
 
 export const EqualSteps = ({className = "", style = {}}: ClassAndStyle) => {
     const numberOfSteps = useSwatchStore((state) => state.numberOfSteps);
@@ -29,6 +31,15 @@ export const EqualSteps = ({className = "", style = {}}: ClassAndStyle) => {
                 minValue={3}
                 className="figma-mb-sm"
             />
+            {" "} <TooltipWrapper
+            content="Adjust the number of evenly spaced swatches in your gradation for each primary color"
+            type="component"
+            id="equal-steps-tooltip"
+            placement={"bottom"}
+        >
+            <FontAwesomeIcon icon={"circle-question"}
+                             className='figma-text-component' />
+        </TooltipWrapper>
         </div>
     );
 };

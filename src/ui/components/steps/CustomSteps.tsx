@@ -9,6 +9,7 @@ import {
     INVALID_CUSTOM_STEP_RESERVED, INVALID_CUSTOM_STEP_DUPLICATED
 } from '../../../constants/uiConstants';
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
+import TooltipWrapper from '../helpers/TooltipWrapper';
 
 interface CustomStepsProps extends ClassAndStyle {
 }
@@ -109,6 +110,15 @@ export const CustomSteps = ({className = "", style = {}}: CustomStepsProps) => {
                         className={`figma-icon ${isValidInput() ? 'figma-text-primary' : 'figma-text-secondary'}`}
                     />
                 </span>
+                {" "}
+                <TooltipWrapper
+                    content="Add specific step values (1-999) to create specific color stops"
+                    type="component"
+                    id="custom-steps-tooltip"
+                >
+                    <FontAwesomeIcon icon={"circle-question"}
+                                     className='figma-text-component' />
+                </TooltipWrapper>
             </span>
             <Toast
                 message={toastMessage}

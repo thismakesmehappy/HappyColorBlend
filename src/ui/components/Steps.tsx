@@ -3,6 +3,8 @@ import EqualSteps from "./steps/EqualSteps";
 import useSwatchStore from "../store/useSwatchStore";
 import Badge from "./helpers/Badge";
 import CustomSteps from "./steps/CustomSteps";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import TooltipWrapper from './helpers/TooltipWrapper';
 
 interface StepsProps {
     className?: string;
@@ -37,7 +39,15 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                     <div id="step-labels" data-testid="step-labels-section">
                         {/* Step-labels content */}
                         <div data-testid="equal-steps-badges" className="p-0">
-                            <span className="figma-subtitle">Equal Steps: </span>
+                            <span className="figma-subtitle">Equal Steps: <TooltipWrapper
+                                content="These are the evenly spaced color step values that will be used to generate your color ramps"
+                                type="component"
+                                id="equal-steps-badges-tooltip"
+                                placement={"bottom-end"}
+                            >
+                                <FontAwesomeIcon icon={"circle-question"}
+                                                 className='figma-text-component' />
+                            </TooltipWrapper></span>
                             {steps.map(step => {
                                 return <Badge key={`step-${step}`} className={"figma-mr-sm"}
                                               data-testid={`equal-step-badge-${step}`}>{String(step)}</Badge>
@@ -45,7 +55,14 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                         </div>
                         {customSteps.size > 0 && (
                             <div className="figma-mt-sm p-0" data-testid="custom-steps-badges">
-                                <span className="figma-subtitle">Custom Steps: </span>
+                                <span className="figma-subtitle">Custom Steps: <TooltipWrapper
+                                    content="These are your custom color step values that can be removed by clicking the minus icon"
+                                    type="component"
+                                    id="custom-steps-badges-tooltip"
+                                >
+                                    <FontAwesomeIcon icon={"circle-question"}
+                                                     className='figma-text-component' />
+                                </TooltipWrapper> </span>
                                 {Array.from(customSteps).map(step => {
                                     return <Badge key={`custom-${step}`} className={"figma-mr-sm"}
                                                   type="primary" iconRight={"minus"} onClick={() => {
@@ -63,5 +80,6 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
         );
     }
 );
+
 
 export default Steps;
