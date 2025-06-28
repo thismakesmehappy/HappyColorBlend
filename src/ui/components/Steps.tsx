@@ -3,7 +3,7 @@ import EqualSteps from "./steps/EqualSteps";
 import useSwatchStore from "../store/useSwatchStore";
 import Badge from "./helpers/Badge";
 import CustomSteps from "./steps/CustomSteps";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import TooltipWrapper from './helpers/TooltipWrapper';
 
 interface StepsProps {

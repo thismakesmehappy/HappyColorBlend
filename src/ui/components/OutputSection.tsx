@@ -2,7 +2,7 @@ import SwatchesOutput from "@ui/components/SwatchesOutput";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import React from "react";
 import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import TooltipWrapper from './helpers/TooltipWrapper';
 
 interface SwatchesOutputProps extends ClassAndStyle {

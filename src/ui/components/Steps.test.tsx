@@ -33,6 +33,20 @@ jest.mock('./helpers/Badge', () => {
     };
 });
 
+// Mock the FontAwesome component
+jest.mock('./helpers/FontAwesomeIcon', () => {
+    return function MockFontAwesomeIcon({ icon, className }: { icon: string, className?: string }) {
+        return <span data-testid="mock-fa-icon" data-icon={icon} className={className} />;
+    };
+});
+
+// Mock the TooltipWrapper component
+jest.mock('./helpers/TooltipWrapper', () => {
+    return function MockTooltipWrapper({ children }: { children: React.ReactNode }) {
+        return <>{children}</>;
+    };
+});
+
 // Mock the child components
 jest.mock('./steps/EqualSteps', () => {
     return function MockEqualSteps({className}: { className?: string }) {

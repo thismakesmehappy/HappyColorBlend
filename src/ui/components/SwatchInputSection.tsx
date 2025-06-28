@@ -3,7 +3,7 @@ import PrimaryColors from "@ui/components/PrimaryColors";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import RampNameEditor from "@ui/components/shadeTint/RampNameEditor";
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import TooltipWrapper from './helpers/TooltipWrapper';
 
 interface LeftColumnProps extends ClassAndStyle {

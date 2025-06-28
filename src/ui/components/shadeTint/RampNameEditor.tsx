@@ -1,7 +1,7 @@
 import TextAndInput from "@ui/components/helpers/TextAndInput";
 import React from "react";
 import useSwatchStore from "@ui/store/useSwatchStore";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
 import TooltipWrapper from '@ui/components/helpers/TooltipWrapper';
 
 const RampNameEditor = () => {

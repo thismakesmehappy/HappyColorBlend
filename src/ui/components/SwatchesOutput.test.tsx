@@ -37,6 +37,29 @@ jest.mock('./swatchesOutput/OutputButtons', () => {
     };
 });
 
+// Mock the SwatchPrimitives component
+jest.mock('./swatchesOutput/SwatchPrimitives', () => {
+    return function MockSwatchPrimitives() {
+        return <div data-testid="mock-swatch-primitives">Swatch Primitives</div>;
+    };
+});
+
+// Mock the useTokenNameStore hook
+jest.mock('../store/useTokenNameStore', () => ({
+    __esModule: true,
+    default: jest.fn().mockImplementation((selector) => {
+        const state = {
+            caseTreatment: 'lowercase',
+            spaceTreatment: 'dash',
+            leadingCharsCount: 0,
+            trailingCharsCount: 0,
+            leadingCharType: 'none',
+            trailingCharType: 'none'
+        };
+        return selector(state);
+    })
+}));
+
 // Mock the colorMethods helper
 jest.mock('../helpers/colorMethods', () => ({
     blendColor: jest.fn((shade, tint, step) => {
@@ -70,6 +93,17 @@ jest.mock('../store/useSwatchStore', () => ({
                     ]
                 }
             ],
+            tint: {
+                id: 'tint',
+                name: 'White',
+                color: 'FFFFFF'
+            },
+            shade: {
+                id: 'shade',
+                name: 'Black',
+                color: '000000'
+            },
+            primaryColors: [],
             getTint: () => ({
                 id: 'tint',
                 name: 'White',

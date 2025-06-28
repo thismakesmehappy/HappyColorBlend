@@ -1,5 +1,5 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
 import TooltipWrapper from '../helpers/TooltipWrapper';
 
 const OutputButtons = () => {
