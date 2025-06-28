@@ -36,8 +36,8 @@ const SwatchPrimitives = () => {
     );
 
     return (<div className={"row gx-0 figma-mb-lg"}>
-        <Swatch color={tint.color} name={tintColorToken} displayOnly={true} className={'col col-4'} />
         <Swatch color={shade.color} name={shadeColorToken} displayOnly={true} className={'col col-4'} />
+        <Swatch color={tint.color} name={tintColorToken} displayOnly={true} className={'col col-4'} />
         {primary.map((color) => {
             const colorTokenName = computeTokenName(
                 color.name,
