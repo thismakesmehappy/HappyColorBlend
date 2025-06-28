@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import TooltipWrapper from '../helpers/TooltipWrapper';
 
 const OutputButtons = () => {
-    return (<div className={"sticky-bottom figma-p-md bg-white"}>
+    return (<div className={"sticky-bottom figma-p-md bg-white d-flex justify-content-around"}>
         <button className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}>Add Variables
         </button>
         <button className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}>Add Styles</button>

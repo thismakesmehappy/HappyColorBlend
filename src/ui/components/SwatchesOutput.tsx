@@ -3,6 +3,7 @@ import useSwatchStore, {SwatchStoreSwatch} from "../store/useSwatchStore";
 import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
 import {blendColor} from "../helpers/colorMethods";
 import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
+import SwatchPrimitives from "@ui/components/swatchesOutput/SwatchPrimitives";
 
 
 interface SwatchesProps {
@@ -29,6 +30,7 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
             id="swatches-output"
             data-testid="swatches-output"
         >
+            <SwatchPrimitives />
             <SwatchGroupSwatches
                 key="tint-shade"
                 colorName={shadeTintRampName}

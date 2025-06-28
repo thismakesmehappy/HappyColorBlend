@@ -4,7 +4,7 @@ import SwatchProps from "../../interfaces/SwatchProps";
 import SwatchControls from "./SwatchControls";
 import SwatchLabels from "./SwatchLabels";
 
-const Swatch = ({color, name, canDelete, className, updateSwatch, id, onDelete}: SwatchProps) => {
+const Swatch = ({color, name, canDelete, className, updateSwatch, id, onDelete, displayOnly = false}: SwatchProps) => {
     const [isEditing, setIsEditing] = useState(false);
     const [swatchColor, setSwatchColor] = useState(color);
     const [tempSwatchColor, setTempSwatchColor] = useState(color);
@@ -13,7 +13,7 @@ const Swatch = ({color, name, canDelete, className, updateSwatch, id, onDelete}:
     const [hasUpdated, updateHasUpdated] = useState(false);
 
     useEffect(() => {
-        if (hasUpdated) {
+        if (updateSwatch && hasUpdated) {
             updateSwatch(swatchColor, swatchName, id);
         } else {
             updateHasUpdated(true);
@@ -32,7 +32,7 @@ const Swatch = ({color, name, canDelete, className, updateSwatch, id, onDelete}:
             <div className='d-inline-block' data-testid="swatch-chip-container">
                 <Chip color={isEditing ? tempSwatchColor : swatchColor} className={"figma-border"} width={75}
                       height={75} data-testid="swatch-chip" />
-                <SwatchControls
+                {!displayOnly && <SwatchControls
                     isEditing={isEditing}
                     setIsEditing={setIsEditing}
                     canDelete={canDelete}
@@ -45,7 +45,7 @@ const Swatch = ({color, name, canDelete, className, updateSwatch, id, onDelete}:
                     tempSwatchName={tempSwatchName}
                     setTempSwatchName={setTempSwatchName}
                     onDelete={id && onDelete ? () => onDelete(id) : undefined}
-                />
+                />}
             </div>
             <div className={"separator-md"}></div>
             <div data-testid="swatch-labels-container">

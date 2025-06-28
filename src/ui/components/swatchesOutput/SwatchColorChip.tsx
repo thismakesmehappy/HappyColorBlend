@@ -4,10 +4,11 @@ import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 
 interface SwatchColorChipProps extends ClassAndStyle {
     color: string;
-    step: number;
+    step?: number;
+    name?: string
 }
 
-const SwatchColorChip = ({color, step, className, style}: SwatchColorChipProps) => {
+const SwatchColorChip = ({color, step, name, className, style}: SwatchColorChipProps) => {
     const ratioWhite = hex("#FFF", "#" + color);
     const textColor = ratioWhite > 3 ? "#FFFFFF" : "#000000";
 
@@ -19,7 +20,10 @@ const SwatchColorChip = ({color, step, className, style}: SwatchColorChipProps) 
                 data-testid="swatch-color-chip"
                 data-color={color}
                 data-step={step}>
-                {step.toString().padStart(3, '0')}<br />
+                {name &&
+                    <>{name}<br /></>}
+                {step &&
+                    <>{step.toString().padStart(3, '0')}<br /></>}
                 #{color}
             </div>
         </div>
