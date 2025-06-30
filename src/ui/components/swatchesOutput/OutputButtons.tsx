@@ -4,11 +4,13 @@ import Toast from "@ui/components/helpers/Toast";
 import { UI_CHANNEL } from "@ui/app.network";
 import { PLUGIN } from "@common/networkSides";
 import { prepareSwatchVariableData } from "@ui/helpers/variableDataPrep";
+import { prepareSwatchStyleData } from "@ui/helpers/styleDataPrep";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 
 const OutputButtons = () => {
     const [isCreatingVariables, setIsCreatingVariables] = useState(false);
+    const [isCreatingStyles, setIsCreatingStyles] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
     const [toastType, setToastType] = useState<"success" | "error" | "primary">("success");
     const [showToast, setShowToast] = useState(false);
@@ -46,6 +48,35 @@ const OutputButtons = () => {
         }
     };
 
+    const handleCreateStyles = async () => {
+        setIsCreatingStyles(true);
+        setToastMessage("Creating styles...");
+        setToastType("primary");
+        setShowToast(true);
+
+        try {
+            // Prepare the data
+            const styleData = prepareSwatchStyleData(swatchStore, tokenStore);
+
+            // Call the plugin
+            const result = await UI_CHANNEL.request(PLUGIN, "createStyles", [styleData]);
+
+            if (result.success) {
+                setToastMessage(result.message);
+                setToastType("success");
+            } else {
+                setToastMessage(result.error || result.message);
+                setToastType("error");
+            }
+        } catch (error) {
+            setToastMessage(`Failed to create styles: ${error instanceof Error ? error.message : String(error)}`);
+            setToastType("error");
+        } finally {
+            setIsCreatingStyles(false);
+            setShowToast(true);
+        }
+    };
+
     const handleCloseToast = () => {
         setShowToast(false);
     };
@@ -56,11 +87,17 @@ const OutputButtons = () => {
                 <button 
                     className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
                     onClick={handleCreateVariables}
-                    disabled={isCreatingVariables}
+                    disabled={isCreatingVariables || isCreatingStyles}
                 >
                     {isCreatingVariables ? "Creating..." : "Add Variables"}
                 </button>
-                <button className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}>Add Styles</button>
+                <button 
+                    className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                    onClick={handleCreateStyles}
+                    disabled={isCreatingVariables || isCreatingStyles}
+                >
+                    {isCreatingStyles ? "Creating..." : "Add Styles"}
+                </button>
                 <button className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}>Create Swatches</button>
                 <Help
                     content={"These buttons will create Figma variables, color styles, or swatch components from your generated color palette"}

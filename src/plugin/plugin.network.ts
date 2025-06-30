@@ -1,5 +1,6 @@
 import { PLUGIN, UI } from "@common/networkSides";
 import { createAllSwatchVariables } from "./services/variableService";
+import { createAllSwatchStyles } from "./services/styleService";
 
 export const PLUGIN_CHANNEL = PLUGIN.channelBuilder()
   .emitsTo(UI, (message) => {
@@ -67,6 +68,18 @@ PLUGIN_CHANNEL.registerMessageHandler("createVariables", async (data) => {
     return {
       success: false,
       message: "Failed to create variables",
+      error: error instanceof Error ? error.message : String(error)
+    };
+  }
+});
+
+PLUGIN_CHANNEL.registerMessageHandler("createStyles", async (data) => {
+  try {
+    return await createAllSwatchStyles(data);
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to create styles",
       error: error instanceof Error ? error.message : String(error)
     };
   }

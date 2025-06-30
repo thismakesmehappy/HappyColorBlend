@@ -7,6 +7,7 @@ import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import OutputButtons from './OutputButtons';
 import { UI_CHANNEL } from '@ui/app.network';
 import { prepareSwatchVariableData } from '@ui/helpers/variableDataPrep';
+import { prepareSwatchStyleData } from '@ui/helpers/styleDataPrep';
 import useSwatchStore from '@ui/store/useSwatchStore';
 import useTokenNameStore from '@ui/store/useTokenNameStore';
 
@@ -23,10 +24,12 @@ jest.mock('@ui/app.network', () => ({
 
 // Mock the data preparation
 jest.mock('@ui/helpers/variableDataPrep');
+jest.mock('@ui/helpers/styleDataPrep');
 
 const mockUseSwatchStore = useSwatchStore as jest.MockedFunction<typeof useSwatchStore>;
 const mockUseTokenNameStore = useTokenNameStore as jest.MockedFunction<typeof useTokenNameStore>;
 const mockPrepareSwatchVariableData = prepareSwatchVariableData as jest.MockedFunction<typeof prepareSwatchVariableData>;
+const mockPrepareSwatchStyleData = prepareSwatchStyleData as jest.MockedFunction<typeof prepareSwatchStyleData>;
 const mockUIChannel = UI_CHANNEL as { request: jest.MockedFunction<any> };
 
 describe('OutputButtons Variable Creation', () => {
@@ -61,6 +64,25 @@ describe('OutputButtons Variable Creation', () => {
 
     // Mock data preparation
     mockPrepareSwatchVariableData.mockReturnValue({
+      shade: { name: '--black', color: '000000' },
+      tint: { name: '--white', color: 'FFFFFF' },
+      primaryColors: [{ name: '--blue', color: '3B82F6' }],
+      shadeTintRampName: '--gray',
+      shadeTintSwatches: [{ color: '333333', step: 100 }],
+      primarySwatches: [
+        {
+          name: '--blue',
+          swatches: [{ color: '2563EB', step: 100 }]
+        }
+      ],
+      tokenSettings: {
+        separatorCharsCount: 1,
+        separatorCharType: 'underscore'
+      }
+    });
+
+    // Mock style data preparation (same structure)
+    mockPrepareSwatchStyleData.mockReturnValue({
       shade: { name: '--black', color: '000000' },
       tint: { name: '--white', color: 'FFFFFF' },
       primaryColors: [{ name: '--blue', color: '3B82F6' }],
@@ -302,6 +324,144 @@ describe('OutputButtons Variable Creation', () => {
     // Wait for completion
     await waitFor(() => {
       expect(button).not.toBeDisabled();
+    });
+  });
+
+  describe('Style Creation', () => {
+    it('should render Add Styles button', () => {
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Add Styles' });
+      expect(button).toBeInTheDocument();
+      expect(button).not.toBeDisabled();
+    });
+
+    it('should show loading state when creating styles', async () => {
+      // Mock a slow network request
+      mockUIChannel.request.mockImplementation(() => new Promise(resolve => 
+        setTimeout(() => resolve({ success: true, message: 'Success!' }), 100)
+      ));
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Add Styles' });
+      fireEvent.click(button);
+
+      // Should show loading state
+      expect(button).toBeDisabled();
+      expect(button).toHaveTextContent('Creating...');
+
+      // Wait for completion
+      await waitFor(() => {
+        expect(button).not.toBeDisabled();
+        expect(button).toHaveTextContent('Add Styles');
+      });
+    });
+
+    it('should call style data preparation with correct stores', async () => {
+      mockUIChannel.request.mockResolvedValue({ success: true, message: 'Success!' });
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Add Styles' });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(mockPrepareSwatchStyleData).toHaveBeenCalledWith(mockSwatchStore, mockTokenStore);
+      });
+    });
+
+    it('should send network request with prepared style data', async () => {
+      const mockResult = { success: true, message: 'Created 5 paint styles' };
+      mockUIChannel.request.mockResolvedValue(mockResult);
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Add Styles' });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(mockUIChannel.request).toHaveBeenCalledWith(
+          expect.any(Object), // PLUGIN object
+          'createStyles',
+          [expect.objectContaining({
+            shade: { name: '--black', color: '000000' },
+            tint: { name: '--white', color: 'FFFFFF' },
+            tokenSettings: {
+              separatorCharsCount: 1,
+              separatorCharType: 'underscore'
+            }
+          })]
+        );
+      });
+    });
+
+    it('should show success toast on successful style creation', async () => {
+      const mockResult = { success: true, message: 'Created 5 paint styles successfully' };
+      mockUIChannel.request.mockResolvedValue(mockResult);
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Add Styles' });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByText('Created 5 paint styles successfully')).toBeInTheDocument();
+      });
+    });
+
+    it('should show error toast on style creation failure', async () => {
+      const mockResult = { 
+        success: false, 
+        message: 'Failed to create styles', 
+        error: 'Style creation failed' 
+      };
+      mockUIChannel.request.mockResolvedValue(mockResult);
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Add Styles' });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByText('Style creation failed')).toBeInTheDocument();
+      });
+    });
+
+    it('should handle network errors gracefully during style creation', async () => {
+      mockUIChannel.request.mockRejectedValue(new Error('Network error'));
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Add Styles' });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByText('Failed to create styles: Network error')).toBeInTheDocument();
+      });
+    });
+
+    it('should disable both buttons when creating styles', async () => {
+      mockUIChannel.request.mockImplementation(() => 
+        new Promise(resolve => setTimeout(() => resolve({ success: true, message: 'Success!' }), 100))
+      );
+
+      render(<OutputButtons />);
+      
+      const variablesButton = screen.getByRole('button', { name: 'Add Variables' });
+      const stylesButton = screen.getByRole('button', { name: 'Add Styles' });
+      
+      fireEvent.click(stylesButton);
+
+      // Both buttons should be disabled during creation
+      expect(variablesButton).toBeDisabled();
+      expect(stylesButton).toBeDisabled();
+
+      // Wait for completion
+      await waitFor(() => {
+        expect(variablesButton).not.toBeDisabled();
+        expect(stylesButton).not.toBeDisabled();
+      });
     });
   });
 });
