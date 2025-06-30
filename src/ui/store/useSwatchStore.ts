@@ -64,7 +64,7 @@ export interface SwatchStoreSwatches {
 }
 
 // Define the store state interface
-interface SwatchStoreState {
+export interface SwatchStoreState {
     // State properties
     shade: SwatchStoreInputSwatch;
     tint: SwatchStoreInputSwatch;

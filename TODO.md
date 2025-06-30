@@ -394,3 +394,43 @@
 
 *Last Updated: June 19, 2025*
 *Next Review: July 19, 2025*
+
+## Create variables
+
+- Create an interface that will add variables to Figma with the folliowing guidelines
+- Create a method that creates a collection of variables; parameterize the collections's name and if we delete an
+  existing collection with the same name or if we create a new one if there is collision
+    - If there is collision and we don't delete the existing one, add the date and time to the old one
+    - If there is collision and we delete, then delete the old collection before creating the new one
+- Create a method that creates a new variable group. Parameterize the name of the group, what collection it goes under,
+  and whether we allow name or not
+    - If we accept name collision and there is collision, rename the old one with the date and time before creating the
+      new one
+    - If we don't accept name collision and there is collision, delete the old one before creating the new one
+    - If the collection doesn't exist, error
+    - Allow slash notation to nest groups
+        - "mix/hot-pink" will crete a group "hot-pink" as a subgroup of "mix"
+        - if "mix" doesn't exist, create "mix" first, then add "hot-pink" under it
+        - if "mix" exists but "hot-pink" doesn't exist, then create "hot-punk" under it
+        - if both "mix" and "hot-pink" exist, consider "hot-pink" to collide; only consider collission with the last
+          group in the slash notation, any intermediary group is a path
+- Create a method that creates a new color variable. Parameterize the name of the color variable, what collection it
+  goes into, optional group name
+    - Do not allow collision; if the variable exists, override it with the new one
+    - If the collection doesn't exist, error
+    - If the group doesn't exist, create it
+    - If there is no group name, add it directly to the collection
+- Create a method that will create the variables for all the swatches
+    - create a new collection called "Color Blending"
+    - create a new group within "Color Blending" called "primitives"
+        - under primitive, add the tint, shade, and primary colors
+        - the variable names should be the tint.name, shade.name and color.name after implementing the
+          computeTokenName() method; remember to only add the separator if it's in the options
+        - the variable values would be the corresponding color
+    - create a new group within "Color Blending" called "mixed"
+    - for the shade tint ramp and for each primary color, create a new sub group under mixed with the name of the
+      primary color after implementing computeTokenName(); remember to only add the separator if it's in the options
+    - in each subgroup, create variables for each of the steps for that subgroup; append the step number to the variable
+      name and use the mixed color for the variable value
+- If there is an error, display it in an error toast
+- Once all variables are created, give a status update in a success toast

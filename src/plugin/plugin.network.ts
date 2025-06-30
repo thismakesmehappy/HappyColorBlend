@@ -1,4 +1,5 @@
 import { PLUGIN, UI } from "@common/networkSides";
+import { createAllSwatchVariables } from "./services/variableService";
 
 export const PLUGIN_CHANNEL = PLUGIN.channelBuilder()
   .emitsTo(UI, (message) => {
@@ -57,4 +58,16 @@ PLUGIN_CHANNEL.registerMessageHandler("exportSelection", async () => {
   });
 
   return "data:image/png;base64," + figma.base64Encode(bytes);
+});
+
+PLUGIN_CHANNEL.registerMessageHandler("createVariables", async (data) => {
+  try {
+    return await createAllSwatchVariables(data);
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to create variables",
+      error: error instanceof Error ? error.message : String(error)
+    };
+  }
 });

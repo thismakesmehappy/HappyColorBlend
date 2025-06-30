@@ -17,7 +17,7 @@ export const initialState = {
 };
 
 // Define the store state interface
-interface TokenNameStoreState {
+export interface TokenNameStoreState {
     // State properties
     caseTreatment: CaseTreatment;
     spaceTreatment: SpaceTreatment;

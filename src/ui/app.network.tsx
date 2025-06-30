@@ -14,13 +14,3 @@ export const UI_CHANNEL = UI.channelBuilder()
     return () => window.removeEventListener("message", listener);
   })
   .startListening();
-
-// ---------- Message handlers
-
-UI_CHANNEL.registerMessageHandler("ping", () => {
-  return "pong";
-});
-
-UI_CHANNEL.registerMessageHandler("hello", (text) => {
-  console.log("Plugin side said", text);
-});
