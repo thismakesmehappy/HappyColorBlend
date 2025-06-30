@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Alerttype} from "../../interfaces/AlertLevel";
+import {AlertType} from "../../interfaces/AlertLevel";
 
 interface ToastProps {
     message: string;
-    type?: Alerttype;
+    type?: AlertType;
     duration?: number;
     isVisible: boolean;
     onClose: () => void;

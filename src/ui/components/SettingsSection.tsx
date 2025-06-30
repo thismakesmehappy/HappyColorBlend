@@ -12,6 +12,7 @@ import CustomStepBadges from "@ui/components/steps/CustomStepBadges";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import TooltipWrapper from '@ui/components/helpers/TooltipWrapper';
+import Help from "@ui/components/helpers/Help";
 
 
 interface LeftColumnProps extends ClassAndStyle {
@@ -41,14 +42,9 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
                 <CustomStepBadges />
             )}
             <hr />
-            <div className="figma-subtitle">Token Name Settings <TooltipWrapper
+            <div className="figma-subtitle">Token Name Settings <Help
                 content="Customize how token names are formatted relative to the swatch name: how words are cased, how spaces are treated, and if you want to prefix or sufix with dashed or underscores"
-                type="component"
-                id="token-settings-tooltip"
-            >
-                <FontAwesomeIcon icon={"circle-question"}
-                                 className='figma-text-component' />
-            </TooltipWrapper>
+                id="token-settings-tooltip" />
             </div>
             <Case />
             <Spaces />

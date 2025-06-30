@@ -41,7 +41,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                         <div data-testid="equal-steps-badges" className="p-0">
                             <span className="figma-subtitle">Equal Steps: <TooltipWrapper
                                 content="These are the evenly spaced color step values that will be used to generate your color ramps"
-                                type="component"
+                                // type="component"
                                 id="equal-steps-badges-tooltip"
                                 placement={"bottom-end"}
                             >
@@ -57,7 +57,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                             <div className="figma-mt-sm p-0" data-testid="custom-steps-badges">
                                 <span className="figma-subtitle">Custom Steps: <TooltipWrapper
                                     content="These are your custom color step values that can be removed by clicking the minus icon"
-                                    type="component"
+                                    // type="component"
                                     id="custom-steps-badges-tooltip"
                                 >
                                     <FontAwesomeIcon icon={"circle-question"}

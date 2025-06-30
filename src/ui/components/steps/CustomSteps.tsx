@@ -10,6 +10,7 @@ import {
 } from '../../../constants/uiConstants';
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import TooltipWrapper from '../helpers/TooltipWrapper';
+import Help from "@ui/components/helpers/Help";
 
 interface CustomStepsProps extends ClassAndStyle {
 }
@@ -111,14 +112,8 @@ export const CustomSteps = ({className = "", style = {}}: CustomStepsProps) => {
                     />
                 </span>
                 {" "}
-                <TooltipWrapper
-                    content="Add specific step values (1-999) to create specific color stops"
-                    type="component"
-                    id="custom-steps-tooltip"
-                >
-                    <FontAwesomeIcon icon={"circle-question"}
-                                     className='figma-text-component' />
-                </TooltipWrapper>
+                <Help content="Add specific step values (1-999) to create specific color stops"
+                      id="custom-steps-tooltip" />
             </span>
             <Toast
                 message={toastMessage}

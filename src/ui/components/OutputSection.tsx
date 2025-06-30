@@ -4,21 +4,17 @@ import React from "react";
 import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import TooltipWrapper from './helpers/TooltipWrapper';
+import Help from "@ui/components/helpers/Help";
 
 interface SwatchesOutputProps extends ClassAndStyle {
 }
 
 const OutputSection = ({className, style}: SwatchesOutputProps) => {
     return (<div id="output-section" className={className}>
-        <p className={"title"}>Results <TooltipWrapper
-            content="Preview your generated color swatches"
-            type="component"
-            id="results-tooltip"
-            placement={"bottom"}
-        >
-            <FontAwesomeIcon icon={"circle-question"}
-                             className='figma-text-component' />
-        </TooltipWrapper></p>
+        <p className={"title"}>Results <Help content={"Preview your generated color swatches"}
+                                             id="results-tooltip"
+                                             placement={"bottom"} />
+        </p>
         <SwatchesOutput />
         <OutputButtons />
 

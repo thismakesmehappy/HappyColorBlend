@@ -1,13 +1,13 @@
 import React from 'react';
 import {OverlayTrigger, Tooltip, OverlayTriggerProps} from 'react-bootstrap';
-import {Alerttype} from '../../interfaces/AlertLevel';
+import {AlertType} from '../../interfaces/AlertLevel';
 
-interface TooltipWrapperProps {
+export interface TooltipWrapperProps {
     children: React.ReactNode;
     content: string;
     placement?: OverlayTriggerProps['placement'];
     maxWidth?: string;
-    type?: Alerttype;
+    type?: AlertType;
     id?: string;
 }
 
@@ -40,9 +40,11 @@ const TooltipWrapper: React.FC<TooltipWrapperProps> = ({
             case "primary":
                 // Default toast has no additional class
                 return "figma-bg-primary figma-text-light";
-            default:
+            case "component":
                 // Default toast has no additional class
                 return "figma-bg-component figma-text-light";
+            default:
+                return "figma-bg-secondary figma-text-dark"
         }
     };
 

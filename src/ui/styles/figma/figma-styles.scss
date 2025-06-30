@@ -73,6 +73,22 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
   }
 }
 
+$placements: (
+        "top": "top",
+        "bottom": "bottom",
+        "end": "right",
+        "start": "left"
+);
+
+@mixin arrow-colors($color) {
+  @each $name, $property in $placements {
+    &.bs-tooltip-#{$name} .tooltip-arrow::before,
+    &.bs-tooltip-auto[data-popper-placement^=#{$name}] .tooltip-arrow::before {
+      border-#{$property}-color: $color;
+    }
+  }
+}
+
 /* Figma Colors */
 .figma-bg-primary {
   &,
@@ -80,6 +96,11 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
   &.tooltip .tooltip-inner {
     background-color: $color-primary;
   }
+}
+
+// Apply arrow colors to tooltip containers
+.tooltip.figma-bg-primary {
+  @include arrow-colors($color-primary);
 }
 
 .figma-text-primary {
@@ -98,9 +119,12 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
   }
 }
 
+.tooltip.figma-bg-secondary {
+  @include arrow-colors($color-secondary);
+}
+
 .figma-text-secondary {
   &,
-  &.tooltip .arrow,
   &.tooltip .tooltip-inner {
     color: $color-text-primary;
   }
@@ -114,6 +138,10 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
   }
 }
 
+.tooltip.figma-bg-secondary-gray {
+  @include arrow-colors($color-text-secondary);
+}
+
 .figma-bg-dark {
   &,
   &.tooltip .arrow,
@@ -124,7 +152,6 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
 
 .figma-text-dark {
   &,
-  &.tooltip .arrow,
   &.tooltip .tooltip-inner {
     color: $color-dark;
   }
@@ -138,9 +165,12 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
   }
 }
 
+.tooltip.figma-bg-light {
+  @include arrow-colors($color-light);
+}
+
 .figma-text-light {
   &,
-  &.tooltip .arrow,
   &.tooltip .tooltip-inner {
     color: $color-light;
   }
@@ -156,9 +186,12 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
   }
 }
 
+.tooltip.figma-bg-danger {
+  @include arrow-colors($color-danger);
+}
+
 .figma-text-danger {
   &,
-  &.tooltip .arrow,
   &.tooltip .tooltip-inner {
     color: $color-danger;
   }
@@ -172,9 +205,12 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
   }
 }
 
+.tooltip.figma-bg-success {
+  @include arrow-colors($color-success);
+}
+
 .figma-text-success {
   &,
-  &.tooltip .arrow,
   &.tooltip .tooltip-inner {
     color: $color-success;
   }
@@ -188,9 +224,12 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
   }
 }
 
+.tooltip.figma-bg-warning {
+  @include arrow-colors($color-warning);
+}
+
 .figma-text-warning {
   &,
-  &.tooltip .arrow,
   &.tooltip .tooltip-inner {
     color: $color-warning;
   }
@@ -204,9 +243,12 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
   }
 }
 
+.tooltip.figma-bg-component {
+  @include arrow-colors($color-component);
+}
+
 .figma-text-component {
   &,
-  &.tooltip .arrow,
   &.tooltip .tooltip-inner {
     color: $color-component;
   }
@@ -214,7 +256,6 @@ $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg
 
 .figma-text-mid {
   &,
-  &.tooltip .arrow,
   &.tooltip .tooltip-inner {
     color: color.mix($color-text-primary, $color-secondary, 40%);
   }
