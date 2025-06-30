@@ -21,17 +21,18 @@ const SwatchGroupSwatches = ({
     const caseTreatment = useTokenNameStore(state => state.caseTreatment)
     const spaceTreatment = useTokenNameStore(state => state.spaceTreatment)
     const leadingCharsCount = useTokenNameStore(state => state.leadingCharsCount)
-    const trailingCharsCount = useTokenNameStore(state => state.trailingCharsCount)
+    const separatorCharsCount = useTokenNameStore(state => state.separatorCharsCount)
     const leadingCharType = useTokenNameStore(state => state.leadingCharType)
-    const trailingCharType = useTokenNameStore(state => state.trailingCharType)
+    const separatorCharType = useTokenNameStore(state => state.separatorCharType)
     const colorTokenName = computeTokenName(
         colorName,
         caseTreatment,
         spaceTreatment,
         leadingCharsCount,
-        trailingCharsCount,
+        separatorCharsCount,
         leadingCharType,
-        trailingCharType
+        separatorCharType,
+        true // Always use separator in SwatchGroupSwatches
     );
     return (<div className={"swatch-group figma-mb-lg figma-pb-sm"} data-testid="swatch-group">
         <p className={"figma-subtitle"} data-testid="swatch-group-title">

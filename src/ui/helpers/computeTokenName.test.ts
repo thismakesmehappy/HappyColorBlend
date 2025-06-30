@@ -53,22 +53,29 @@ describe('tokenName', () => {
         });
     });
 
-    // Test trailing characters
-    describe('trailing characters', () => {
-        test('adds the specified number of trailing dashes by default', () => {
+    // Test separator characters
+    describe('separator characters', () => {
+        test('adds the specified number of separator dashes by default', () => {
             expect(computeTokenName('Color', 'keep', 'keep', 0, 1)).toBe('Color-');
             expect(computeTokenName('Color', 'keep', 'keep', 0, 3)).toBe('Color---');
             expect(computeTokenName('Color', 'keep', 'dash', 0, 2)).toBe('Color--');
         });
 
-        test('adds the specified number of trailing underscores when trailingCharType is "underscore"', () => {
+        test('adds the specified number of separator underscores when separatorCharType is "underscore"', () => {
             expect(computeTokenName('Color', 'keep', 'keep', 0, 1, 'dash', 'underscore')).toBe('Color_');
             expect(computeTokenName('Color', 'keep', 'keep', 0, 3, 'dash', 'underscore')).toBe('Color___');
             expect(computeTokenName('Color', 'keep', 'dash', 0, 2, 'dash', 'underscore')).toBe('Color__');
         });
 
-        test('handles zero trailing characters', () => {
+        test('handles zero separator characters', () => {
             expect(computeTokenName('Color', 'keep', 'keep', 0, 0)).toBe('Color');
+        });
+
+        test('respects appendSeparator parameter', () => {
+            expect(computeTokenName('Color', 'keep', 'keep', 0, 1, 'dash', 'dash', false)).toBe('Color');
+            expect(computeTokenName('Color', 'keep', 'keep', 0, 1, 'dash', 'dash', true)).toBe('Color-');
+            expect(computeTokenName('Color', 'keep', 'keep', 0, 2, 'dash', 'dash', false)).toBe('Color');
+            expect(computeTokenName('Color', 'keep', 'keep', 0, 2, 'dash', 'dash', true)).toBe('Color--');
         });
     });
 
@@ -103,7 +110,7 @@ describe('tokenName', () => {
 
     // Test combinations of parameters
     describe('combined parameters', () => {
-        test('applies space treatment and adds leading and trailing characters', () => {
+        test('applies space treatment and adds leading and separator characters', () => {
             expect(computeTokenName('Primary Color', 'keep', 'dash', 2, 3)).toBe('--Primary-Color---');
             expect(computeTokenName('Primary Color', 'keep', 'remove', 1, 2)).toBe('-PrimaryColor--');
             expect(computeTokenName('Multiple   Spaces', 'keep', 'dash', 3, 1)).toBe('---Multiple---Spaces-');
@@ -115,7 +122,7 @@ describe('tokenName', () => {
             expect(computeTokenName('all lowercase', 'title', 'dash', 0, 2)).toBe('All-Lowercase--');
         });
 
-        test('applies different character types for leading and trailing', () => {
+        test('applies different character types for leading and separator', () => {
             expect(computeTokenName('Primary Color', 'upper', 'underscore', 2, 2, 'dash', 'underscore')).toBe('--PRIMARY_COLOR__');
             expect(computeTokenName('mixed case', 'title', 'dash', 1, 1, 'underscore', 'dash')).toBe('_Mixed-Case-');
         });
@@ -144,7 +151,7 @@ describe('tokenName', () => {
             expect(computeTokenName('Color 123', 'keep', 'remove')).toBe('Color123');
         });
 
-        test('handles strings with leading/trailing spaces', () => {
+        test('handles strings with leading/separator spaces', () => {
             expect(computeTokenName(' Color ', 'keep', 'keep')).toBe(' Color ');
             expect(computeTokenName(' Color ', 'keep', 'dash')).toBe('-Color-');
             expect(computeTokenName(' Color ', 'keep', 'underscore')).toBe('_Color_');
@@ -169,13 +176,13 @@ describe('tokenName', () => {
     // Test order of operations
     describe('order of operations', () => {
         test('applies operations in the correct order: case first, then space treatment, then characters', () => {
-            // First case (upper), then space treatment (dash), then leading/trailing characters
+            // First case (upper), then space treatment (dash), then leading/separator characters
             expect(computeTokenName('test example', 'upper', 'dash', 1, 2)).toBe('-TEST-EXAMPLE--');
 
-            // First case (lower), then space treatment (remove), then leading/trailing characters
+            // First case (lower), then space treatment (remove), then leading/separator characters
             expect(computeTokenName('TEST EXAMPLE', 'lower', 'remove', 2, 1)).toBe('--testexample-');
 
-            // First case (title), then space treatment (dash), then leading/trailing characters
+            // First case (title), then space treatment (dash), then leading/separator characters
             expect(computeTokenName('test example here', 'title', 'dash', 0, 3)).toBe('Test-Example-Here---');
 
             // With different character types

@@ -15,9 +15,9 @@ describe('useTokenNameStore', () => {
         expect(result.current.caseTreatment).toBe(initialState.caseTreatment);
         expect(result.current.spaceTreatment).toBe(initialState.spaceTreatment);
         expect(result.current.leadingCharsCount).toBe(initialState.leadingCharsCount);
-        expect(result.current.trailingCharsCount).toBe(initialState.trailingCharsCount);
+        expect(result.current.separatorCharsCount).toBe(initialState.separatorCharsCount);
         expect(result.current.leadingCharType).toBe(initialState.leadingCharType);
-        expect(result.current.trailingCharType).toBe(initialState.trailingCharType);
+        expect(result.current.separatorCharType).toBe(initialState.separatorCharType);
     });
 
     test('should update caseTreatment', () => {
@@ -60,24 +60,24 @@ describe('useTokenNameStore', () => {
         expect(result.current.leadingCharsCount).toBe(0);
     });
 
-    test('should update trailingCharsCount', () => {
+    test('should update separatorCharsCount', () => {
         const {result} = renderHook(() => useTokenNameStore());
 
         act(() => {
-            result.current.setTrailingCharsCount(5);
+            result.current.setSeparatorCharsCount(5);
         });
 
-        expect(result.current.trailingCharsCount).toBe(5);
+        expect(result.current.separatorCharsCount).toBe(5);
     });
 
-    test('should not allow negative trailingCharsCount', () => {
+    test('should not allow negative separatorCharsCount', () => {
         const {result} = renderHook(() => useTokenNameStore());
 
         act(() => {
-            result.current.setTrailingCharsCount(-3);
+            result.current.setSeparatorCharsCount(-3);
         });
 
-        expect(result.current.trailingCharsCount).toBe(0);
+        expect(result.current.separatorCharsCount).toBe(0);
     });
 
     test('should update leadingCharType', () => {
@@ -90,14 +90,14 @@ describe('useTokenNameStore', () => {
         expect(result.current.leadingCharType).toBe('underscore');
     });
 
-    test('should update trailingCharType', () => {
+    test('should update separatorCharType', () => {
         const {result} = renderHook(() => useTokenNameStore());
 
         act(() => {
-            result.current.setTrailingCharType('underscore');
+            result.current.setSeparatorCharType('underscore');
         });
 
-        expect(result.current.trailingCharType).toBe('underscore');
+        expect(result.current.separatorCharType).toBe('underscore');
     });
 
     test('should increment leadingCharsCount', () => {
@@ -145,49 +145,49 @@ describe('useTokenNameStore', () => {
         expect(result.current.leadingCharsCount).toBe(0);
     });
 
-    test('should increment trailingCharsCount', () => {
+    test('should increment separatorCharsCount', () => {
         const {result} = renderHook(() => useTokenNameStore());
-        const initialValue = result.current.trailingCharsCount;
+        const initialValue = result.current.separatorCharsCount;
 
         act(() => {
-            result.current.incrementTrailingChars();
+            result.current.incrementSeparatorChars();
         });
 
-        expect(result.current.trailingCharsCount).toBe(initialValue + 1);
+        expect(result.current.separatorCharsCount).toBe(initialValue + 1);
 
         act(() => {
-            result.current.incrementTrailingChars();
+            result.current.incrementSeparatorChars();
         });
 
-        expect(result.current.trailingCharsCount).toBe(initialValue + 2);
+        expect(result.current.separatorCharsCount).toBe(initialValue + 2);
     });
 
-    test('should decrement trailingCharsCount', () => {
+    test('should decrement separatorCharsCount', () => {
         const {result} = renderHook(() => useTokenNameStore());
         const initialValue = 3;
 
         // Set to 3 first
         act(() => {
-            result.current.setTrailingCharsCount(initialValue);
+            result.current.setSeparatorCharsCount(initialValue);
         });
 
         act(() => {
-            result.current.decrementTrailingChars();
+            result.current.decrementSeparatorChars();
         });
 
-        expect(result.current.trailingCharsCount).toBe(initialValue - 1);
+        expect(result.current.separatorCharsCount).toBe(initialValue - 1);
     });
 
-    test('should not decrement trailingCharsCount below 0', () => {
+    test('should not decrement separatorCharsCount below 0', () => {
         const {result} = renderHook(() => useTokenNameStore());
 
         // Already at 0
         act(() => {
-            result.current.decrementTrailingChars();
-            result.current.decrementTrailingChars();
+            result.current.decrementSeparatorChars();
+            result.current.decrementSeparatorChars();
         });
 
-        expect(result.current.trailingCharsCount).toBe(0);
+        expect(result.current.separatorCharsCount).toBe(0);
     });
 
     test('should toggle leadingCharType', () => {
@@ -207,21 +207,21 @@ describe('useTokenNameStore', () => {
         expect(result.current.leadingCharType).toBe('dash');
     });
 
-    test('should toggle trailingCharType', () => {
+    test('should toggle separatorCharType', () => {
         const {result} = renderHook(() => useTokenNameStore());
 
         // Default is 'dash'
         act(() => {
-            result.current.toggleTrailingCharType();
+            result.current.toggleSeparatorCharType();
         });
 
-        expect(result.current.trailingCharType).toBe('underscore');
+        expect(result.current.separatorCharType).toBe('underscore');
 
         act(() => {
-            result.current.toggleTrailingCharType();
+            result.current.toggleSeparatorCharType();
         });
 
-        expect(result.current.trailingCharType).toBe('dash');
+        expect(result.current.separatorCharType).toBe('dash');
     });
 
     test('should reset to defaults', () => {
@@ -232,9 +232,9 @@ describe('useTokenNameStore', () => {
             result.current.setCaseTreatment('upper');
             result.current.setSpaceTreatment('underscore');
             result.current.setLeadingCharsCount(3);
-            result.current.setTrailingCharsCount(2);
+            result.current.setSeparatorCharsCount(2);
             result.current.setLeadingCharType('underscore');
-            result.current.setTrailingCharType('underscore');
+            result.current.setSeparatorCharType('underscore');
         });
 
         // Reset
@@ -246,8 +246,8 @@ describe('useTokenNameStore', () => {
         expect(result.current.caseTreatment).toBe(initialState.caseTreatment);
         expect(result.current.spaceTreatment).toBe(initialState.spaceTreatment);
         expect(result.current.leadingCharsCount).toBe(initialState.leadingCharsCount);
-        expect(result.current.trailingCharsCount).toBe(initialState.trailingCharsCount);
+        expect(result.current.separatorCharsCount).toBe(initialState.separatorCharsCount);
         expect(result.current.leadingCharType).toBe(initialState.leadingCharType);
-        expect(result.current.trailingCharType).toBe(initialState.trailingCharType);
+        expect(result.current.separatorCharType).toBe(initialState.separatorCharType);
     });
 });

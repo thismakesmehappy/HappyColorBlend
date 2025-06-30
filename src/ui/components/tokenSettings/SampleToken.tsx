@@ -7,15 +7,15 @@ const SampleToken = () => {
     const spaceTreatment = useTokenNameStore(state => state.spaceTreatment);
     const leadingCharsCount = useTokenNameStore(state => state.leadingCharsCount);
     const leadingCharType = useTokenNameStore(state => state.leadingCharType);
-    const trailingCharsCount = useTokenNameStore(state => state.trailingCharsCount);
-    const trailingCharType = useTokenNameStore(state => state.trailingCharType);
+    const separatorCharsCount = useTokenNameStore(state => state.separatorCharsCount);
+    const separatorCharType = useTokenNameStore(state => state.separatorCharType);
 
     const sampleName = "This is AN eXAmple";
-    const [sampleToken, setSampleToken] = useState(computeTokenName(sampleName, caseTreatment, spaceTreatment, leadingCharsCount, trailingCharsCount, leadingCharType, trailingCharType));
+    const [sampleToken, setSampleToken] = useState(computeTokenName(sampleName, caseTreatment, spaceTreatment, leadingCharsCount, separatorCharsCount, leadingCharType, separatorCharType, true));
 
     useEffect(() => {
-        setSampleToken(computeTokenName(sampleName, caseTreatment, spaceTreatment, leadingCharsCount, trailingCharsCount, leadingCharType, trailingCharType));
-    }, [caseTreatment, spaceTreatment, leadingCharsCount, trailingCharsCount, leadingCharType, trailingCharType]);
+        setSampleToken(computeTokenName(sampleName, caseTreatment, spaceTreatment, leadingCharsCount, separatorCharsCount, leadingCharType, separatorCharType, true));
+    }, [caseTreatment, spaceTreatment, leadingCharsCount, separatorCharsCount, leadingCharType, separatorCharType]);
     return (<div>{sampleToken}</div>);
 };
 

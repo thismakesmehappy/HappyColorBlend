@@ -5,7 +5,7 @@ import React from "react";
 import Case from "@ui/components/tokenSettings/Case";
 import Spaces from "@ui/components/tokenSettings/Spaces";
 import Leading from "@ui/components/tokenSettings/Leading";
-import Trailing from "@ui/components/tokenSettings/Trailing";
+import Separator from "@ui/components/tokenSettings/Separator";
 import "@ui/styles/bootstrap/bootstrap.scss"
 import EqualStepsBadges from "@ui/components/steps/EqualStepsBadges";
 import CustomStepBadges from "@ui/components/steps/CustomStepBadges";
@@ -49,7 +49,7 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
             <Case />
             <Spaces />
             <Leading />
-            <Trailing />
+            <Separator />
             {/*<Settings />*/}
 
         </div>);

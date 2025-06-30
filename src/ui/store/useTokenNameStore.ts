@@ -10,9 +10,10 @@ export const initialState = {
     caseTreatment: 'lower' as CaseTreatment,
     spaceTreatment: 'dash' as SpaceTreatment,
     leadingCharsCount: 2,
-    trailingCharsCount: 1,
+    separatorCharsCount: 1,
     leadingCharType: 'dash' as CharType,
-    trailingCharType: 'dash' as CharType,
+    separatorCharType: 'dash' as CharType,
+    appendSeparatorToPrimitive: false,
 };
 
 // Define the store state interface
@@ -21,25 +22,28 @@ interface TokenNameStoreState {
     caseTreatment: CaseTreatment;
     spaceTreatment: SpaceTreatment;
     leadingCharsCount: number;
-    trailingCharsCount: number;
+    separatorCharsCount: number;
     leadingCharType: CharType;
-    trailingCharType: CharType;
+    separatorCharType: CharType;
+    appendSeparatorToPrimitive: boolean;
 
     // Setters
     setCaseTreatment: (treatment: CaseTreatment) => void;
     setSpaceTreatment: (treatment: SpaceTreatment) => void;
     setLeadingCharsCount: (count: number) => void;
-    setTrailingCharsCount: (count: number) => void;
+    setSeparatorCharsCount: (count: number) => void;
     setLeadingCharType: (type: CharType) => void;
-    setTrailingCharType: (type: CharType) => void;
+    setSeparatorCharType: (type: CharType) => void;
+    setAppendSeparatorToPrimitive: (useAsSeparator: boolean) => void;
 
     // Actions
     incrementLeadingChars: () => void;
     decrementLeadingChars: () => void;
-    incrementTrailingChars: () => void;
-    decrementTrailingChars: () => void;
+    incrementSeparatorChars: () => void;
+    decrementSeparatorChars: () => void;
     toggleLeadingCharType: () => void;
-    toggleTrailingCharType: () => void;
+    toggleSeparatorCharType: () => void;
+    toggleAppendSeparatorToPrimitive: () => void;
 
     // Reset to defaults
     resetToDefaults: () => void;
@@ -54,20 +58,24 @@ const useTokenNameStore = create<TokenNameStoreState>()((set) => ({
     setCaseTreatment: (caseTreatment: CaseTreatment) => set({caseTreatment}),
     setSpaceTreatment: (spaceTreatment: SpaceTreatment) => set({spaceTreatment}),
     setLeadingCharsCount: (leadingCharsCount: number) => set({leadingCharsCount: Math.max(0, leadingCharsCount)}),
-    setTrailingCharsCount: (trailingCharsCount: number) => set({trailingCharsCount: Math.max(0, trailingCharsCount)}),
+    setSeparatorCharsCount: (separatorCharsCount: number) => set({separatorCharsCount: Math.max(0, separatorCharsCount)}),
     setLeadingCharType: (leadingCharType: CharType) => set({leadingCharType}),
-    setTrailingCharType: (trailingCharType: CharType) => set({trailingCharType}),
+    setSeparatorCharType: (separatorCharType: CharType) => set({separatorCharType: separatorCharType}),
+    setAppendSeparatorToPrimitive: (appendSeparatorToPrimitive: boolean) => set({appendSeparatorToPrimitive}),
 
     // Actions
     incrementLeadingChars: () => set((state) => ({leadingCharsCount: state.leadingCharsCount + 1})),
     decrementLeadingChars: () => set((state) => ({leadingCharsCount: Math.max(0, state.leadingCharsCount - 1)})),
-    incrementTrailingChars: () => set((state) => ({trailingCharsCount: state.trailingCharsCount + 1})),
-    decrementTrailingChars: () => set((state) => ({trailingCharsCount: Math.max(0, state.trailingCharsCount - 1)})),
+    incrementSeparatorChars: () => set((state) => ({separatorCharsCount: state.separatorCharsCount + 1})),
+    decrementSeparatorChars: () => set((state) => ({separatorCharsCount: Math.max(0, state.separatorCharsCount - 1)})),
     toggleLeadingCharType: () => set((state) => ({
         leadingCharType: state.leadingCharType === 'dash' ? 'underscore' : 'dash'
     })),
-    toggleTrailingCharType: () => set((state) => ({
-        trailingCharType: state.trailingCharType === 'dash' ? 'underscore' : 'dash'
+    toggleSeparatorCharType: () => set((state) => ({
+        separatorCharType: state.separatorCharType === 'dash' ? 'underscore' : 'dash'
+    })),
+    toggleAppendSeparatorToPrimitive: () => set((state) => ({
+        appendSeparatorToPrimitive: !state.appendSeparatorToPrimitive
     })),
 
     // Reset to defaults

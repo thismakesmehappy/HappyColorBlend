@@ -3,7 +3,7 @@ import {ClassAndStyle} from '../interfaces/ClassAndStyle';
 import Case from "./tokenSettings/Case";
 import Spaces from "./tokenSettings/Spaces";
 import Leading from "./tokenSettings/Leading";
-import Trailing from "./tokenSettings/Trailing";
+import Separator from "./tokenSettings/Separator";
 
 /**
  * Component for extra settings including token name configuration
@@ -21,7 +21,7 @@ export const Settings: React.FC<ClassAndStyle> = ({className = '', style = {}}) 
                 <Case />
                 <Spaces />
                 <Leading />
-                <Trailing />
+                <Separator />
             </div>
         </>
     );

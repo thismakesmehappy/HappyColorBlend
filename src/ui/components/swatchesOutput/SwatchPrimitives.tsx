@@ -12,17 +12,19 @@ const SwatchPrimitives = () => {
     const caseTreatment = useTokenNameStore(state => state.caseTreatment)
     const spaceTreatment = useTokenNameStore(state => state.spaceTreatment)
     const leadingCharsCount = useTokenNameStore(state => state.leadingCharsCount)
-    const trailingCharsCount = useTokenNameStore(state => state.trailingCharsCount)
+    const separatorCharsCount = useTokenNameStore(state => state.separatorCharsCount)
     const leadingCharType = useTokenNameStore(state => state.leadingCharType)
-    const trailingCharType = useTokenNameStore(state => state.trailingCharType)
+    const separatorCharType = useTokenNameStore(state => state.separatorCharType)
+    const appendSeparatorToPrimitives = useTokenNameStore(state => state.appendSeparatorToPrimitive)
     const tintColorToken = computeTokenName(
         tint.name,
         caseTreatment,
         spaceTreatment,
         leadingCharsCount,
-        trailingCharsCount,
+        separatorCharsCount,
         leadingCharType,
-        trailingCharType
+        separatorCharType,
+        appendSeparatorToPrimitives
     );
 
     const shadeColorToken = computeTokenName(
@@ -30,9 +32,10 @@ const SwatchPrimitives = () => {
         caseTreatment,
         spaceTreatment,
         leadingCharsCount,
-        trailingCharsCount,
+        separatorCharsCount,
         leadingCharType,
-        trailingCharType
+        separatorCharType,
+        appendSeparatorToPrimitives
     );
 
     return (<div className={"row gx-0 figma-mb-lg"}>
@@ -44,9 +47,10 @@ const SwatchPrimitives = () => {
                 caseTreatment,
                 spaceTreatment,
                 leadingCharsCount,
-                trailingCharsCount,
+                separatorCharsCount,
                 leadingCharType,
-                trailingCharType
+                separatorCharType,
+                appendSeparatorToPrimitives
             );
             return <Swatch color={color.color} name={colorTokenName} displayOnly={true}
                            key={`${color.color}-${color.name}`}

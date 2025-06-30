@@ -52,9 +52,9 @@ jest.mock('../store/useTokenNameStore', () => ({
             caseTreatment: 'lowercase',
             spaceTreatment: 'dash',
             leadingCharsCount: 0,
-            trailingCharsCount: 0,
+            separatorCharsCount: 0,
             leadingCharType: 'none',
-            trailingCharType: 'none'
+            separatorCharType: 'none'
         };
         return selector(state);
     })

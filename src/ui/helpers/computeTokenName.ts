@@ -38,7 +38,7 @@ const addLeadingChars = (input: string, count: number, charType: CharType = 'das
     return chars + input;
 }
 
-const addTrailingChars = (input: string, count: number, charType: CharType = 'dash') => {
+const addSeparatorChars = (input: string, count: number, charType: CharType = 'dash') => {
     const char = charType === 'dash' ? '-' : '_';
     const chars = char.repeat(count);
     return input + chars;
@@ -49,16 +49,18 @@ export const computeTokenName = (
     caseTreatment: CaseTreatment = 'keep',
     spaceTreatment: SpaceTreatment = 'keep',
     leadingCharsCount: number = 0,
-    trailingCharsCount: number = 0,
+    separatorCharsCount: number = 0,
     leadingCharType: CharType = 'dash',
-    trailingCharType: CharType = 'dash'
+    separatorCharType: CharType = 'dash',
+    appendSeparator: boolean = true
 ) => {
     // First change the casing
-    const casing = treatCase(input, caseTreatment);
+    const withTreatCase = treatCase(input, caseTreatment);
     // Then treat spaces
-    const treatedInput = treatSpace(casing, spaceTreatment);
-    // Then add leading and trailing characters
-    const leading = addLeadingChars(treatedInput, leadingCharsCount, leadingCharType);
-    const trailing = addTrailingChars(leading, trailingCharsCount, trailingCharType);
-    return trailing;
+    const withTreatSpace = treatSpace(withTreatCase, spaceTreatment);
+    // Then add leading characters
+    const withLeadingCharacters = addLeadingChars(withTreatSpace, leadingCharsCount, leadingCharType);
+    // Add separator characters only if appendSeparator is true
+    const withSeparator = appendSeparator ? addSeparatorChars(withLeadingCharacters, separatorCharsCount, separatorCharType) : withLeadingCharacters;
+    return withSeparator;
 }
