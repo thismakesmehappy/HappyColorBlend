@@ -434,3 +434,19 @@
       name and use the mixed color for the variable value
 - If there is an error, display it in an error toast
 - Once all variables are created, give a status update in a success toast
+
+
+- follow the naming convention as for creating variables and styles
+- create swatches for the primitives, with a circular swatch of the color and the token name and color value under it (
+  follow the results section of the UI)
+- a group of satches for the tint shade ramp, with the name of the ramp above it
+- a group of swatches for each of the primitives, including all the steps; each group should have the name of the
+  primitive and below it have a rectangle for each swatch, colored as the swatch, with the step and the color value
+  writen on top of it; use accessibility to determine if the text should be white or black
+- Parameterize the width of the display, the size of each swatch, and the font size of the labels; default to the same
+  measurements as the UI, but the width of the display should be 1200 px
+- The swatches should be grouped as follows:
+    - Group all the primitives together
+    - Group the ramp
+    - Group each swatch section for each primitive
+    - Group all these groups together.

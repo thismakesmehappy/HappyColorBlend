@@ -8,6 +8,7 @@ import OutputButtons from './OutputButtons';
 import { UI_CHANNEL } from '@ui/app.network';
 import { prepareSwatchVariableData } from '@ui/helpers/variableDataPrep';
 import { prepareSwatchStyleData } from '@ui/helpers/styleDataPrep';
+import { prepareSwatchCreationData } from '@ui/helpers/swatchDataPrep';
 import useSwatchStore from '@ui/store/useSwatchStore';
 import useTokenNameStore from '@ui/store/useTokenNameStore';
 
@@ -25,11 +26,13 @@ jest.mock('@ui/app.network', () => ({
 // Mock the data preparation
 jest.mock('@ui/helpers/variableDataPrep');
 jest.mock('@ui/helpers/styleDataPrep');
+jest.mock('@ui/helpers/swatchDataPrep');
 
 const mockUseSwatchStore = useSwatchStore as jest.MockedFunction<typeof useSwatchStore>;
 const mockUseTokenNameStore = useTokenNameStore as jest.MockedFunction<typeof useTokenNameStore>;
 const mockPrepareSwatchVariableData = prepareSwatchVariableData as jest.MockedFunction<typeof prepareSwatchVariableData>;
 const mockPrepareSwatchStyleData = prepareSwatchStyleData as jest.MockedFunction<typeof prepareSwatchStyleData>;
+const mockPrepareSwatchCreationData = prepareSwatchCreationData as jest.MockedFunction<typeof prepareSwatchCreationData>;
 const mockUIChannel = UI_CHANNEL as { request: jest.MockedFunction<any> };
 
 describe('OutputButtons Variable Creation', () => {
@@ -98,6 +101,28 @@ describe('OutputButtons Variable Creation', () => {
         separatorCharsCount: 1,
         separatorCharType: 'underscore'
       }
+    });
+
+    // Mock swatch creation data preparation (with display settings)
+    mockPrepareSwatchCreationData.mockReturnValue({
+      shade: { name: '--black', color: '000000' },
+      tint: { name: '--white', color: 'FFFFFF' },
+      primaryColors: [{ name: '--blue', color: '3B82F6' }],
+      shadeTintRampName: '--gray',
+      shadeTintSwatches: [{ color: '333333', step: 100 }],
+      primarySwatches: [
+        {
+          name: '--blue',
+          swatches: [{ color: '2563EB', step: 100 }]
+        }
+      ],
+      tokenSettings: {
+        separatorCharsCount: 1,
+        separatorCharType: 'underscore'
+      },
+      displayWidth: 1200,
+      swatchSize: 64,
+      fontSize: 12
     });
   });
 
@@ -461,6 +486,158 @@ describe('OutputButtons Variable Creation', () => {
       await waitFor(() => {
         expect(variablesButton).not.toBeDisabled();
         expect(stylesButton).not.toBeDisabled();
+      });
+    });
+  });
+
+  describe('Swatch Creation', () => {
+    it('should render Create Swatches button', () => {
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Create Swatches' });
+      expect(button).toBeInTheDocument();
+      expect(button).not.toBeDisabled();
+    });
+
+    it('should show loading state when creating swatches', async () => {
+      // Mock a slow network request
+      mockUIChannel.request.mockImplementation(() => new Promise(resolve => 
+        setTimeout(() => resolve({ success: true, message: 'Success!' }), 100)
+      ));
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Create Swatches' });
+      fireEvent.click(button);
+
+      // Should show loading state
+      expect(button).toBeDisabled();
+      expect(button).toHaveTextContent('Creating...');
+
+      // Wait for completion
+      await waitFor(() => {
+        expect(button).not.toBeDisabled();
+        expect(button).toHaveTextContent('Create Swatches');
+      });
+    });
+
+    it('should call swatch data preparation with correct stores and display settings', async () => {
+      mockUIChannel.request.mockResolvedValue({ success: true, message: 'Success!' });
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Create Swatches' });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(mockPrepareSwatchCreationData).toHaveBeenCalledWith(
+          mockSwatchStore, 
+          mockTokenStore,
+          {
+            displayWidth: 1200,
+            swatchSize: 64,
+            fontSize: 12
+          }
+        );
+      });
+    });
+
+    it('should send network request with prepared swatch data', async () => {
+      const mockResult = { success: true, message: 'Created 5 swatches on the pasteboard' };
+      mockUIChannel.request.mockResolvedValue(mockResult);
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Create Swatches' });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(mockUIChannel.request).toHaveBeenCalledWith(
+          expect.any(Object), // PLUGIN object
+          'createSwatches',
+          [expect.objectContaining({
+            shade: { name: '--black', color: '000000' },
+            tint: { name: '--white', color: 'FFFFFF' },
+            tokenSettings: {
+              separatorCharsCount: 1,
+              separatorCharType: 'underscore'
+            },
+            displayWidth: 1200,
+            swatchSize: 64,
+            fontSize: 12
+          })]
+        );
+      });
+    });
+
+    it('should show success toast on successful swatch creation', async () => {
+      const mockResult = { success: true, message: 'Created 5 swatches on the pasteboard' };
+      mockUIChannel.request.mockResolvedValue(mockResult);
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Create Swatches' });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByText('Created 5 swatches on the pasteboard')).toBeInTheDocument();
+      });
+    });
+
+    it('should show error toast on swatch creation failure', async () => {
+      const mockResult = { 
+        success: false, 
+        message: 'Failed to create swatches', 
+        error: 'Font loading failed' 
+      };
+      mockUIChannel.request.mockResolvedValue(mockResult);
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Create Swatches' });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByText('Font loading failed')).toBeInTheDocument();
+      });
+    });
+
+    it('should handle network errors gracefully during swatch creation', async () => {
+      mockUIChannel.request.mockRejectedValue(new Error('Network error'));
+
+      render(<OutputButtons />);
+      
+      const button = screen.getByRole('button', { name: 'Create Swatches' });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByText('Failed to create swatches: Network error')).toBeInTheDocument();
+      });
+    });
+
+    it('should disable all buttons when creating swatches', async () => {
+      mockUIChannel.request.mockImplementation(() => 
+        new Promise(resolve => setTimeout(() => resolve({ success: true, message: 'Success!' }), 100))
+      );
+
+      render(<OutputButtons />);
+      
+      const variablesButton = screen.getByRole('button', { name: 'Add Variables' });
+      const stylesButton = screen.getByRole('button', { name: 'Add Styles' });
+      const swatchesButton = screen.getByRole('button', { name: 'Create Swatches' });
+      
+      fireEvent.click(swatchesButton);
+
+      // All buttons should be disabled during creation
+      expect(variablesButton).toBeDisabled();
+      expect(stylesButton).toBeDisabled();
+      expect(swatchesButton).toBeDisabled();
+
+      // Wait for completion
+      await waitFor(() => {
+        expect(variablesButton).not.toBeDisabled();
+        expect(stylesButton).not.toBeDisabled();
+        expect(swatchesButton).not.toBeDisabled();
       });
     });
   });

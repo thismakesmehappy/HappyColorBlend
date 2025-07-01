@@ -1,0 +1,356 @@
+/**
+ * Service for creating visual color swatches on the Figma pasteboard
+ */
+
+import { SwatchCreationData, SwatchCreationResult } from "@common/networkSides";
+
+// Default display settings
+const DEFAULT_DISPLAY_WIDTH = 1200;
+const DEFAULT_SWATCH_SIZE = 64;
+const DEFAULT_FONT_SIZE = 12;
+const SPACING = 16;
+const GROUP_SPACING = 48;
+
+/**
+ * Convert hex color to RGB object with values 0-1 for Figma API
+ */
+function hexToRgb(hex: string): { r: number; g: number; b: number } {
+  const cleanHex = hex.replace('#', '');
+  const r = parseInt(cleanHex.substring(0, 2), 16) / 255;
+  const g = parseInt(cleanHex.substring(2, 4), 16) / 255;
+  const b = parseInt(cleanHex.substring(4, 6), 16) / 255;
+  return { r, g, b };
+}
+
+/**
+ * Calculate text color (black or white) for optimal contrast on given background
+ */
+function getContrastColor(hexColor: string): RGB {
+  const rgb = hexToRgb(hexColor);
+  // Calculate relative luminance using WCAG formula
+  const luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+  // Use white text on dark backgrounds, black text on light backgrounds
+  return luminance > 0.5 ? { r: 0, g: 0, b: 0 } : { r: 1, g: 1, b: 1 };
+}
+
+/**
+ * Create a solid fill from hex color
+ */
+function createSolidFill(hexColor: string): SolidPaint {
+  const rgb = hexToRgb(hexColor);
+  return {
+    type: "SOLID",
+    color: rgb
+  };
+}
+
+/**
+ * Create a text node with given content and styling
+ */
+function createTextNode(
+  content: string, 
+  fontSize: number, 
+  color: RGB = { r: 0, g: 0, b: 0 }
+): TextNode {
+  const textNode = figma.createText();
+  textNode.characters = content;
+  textNode.fontSize = fontSize;
+  textNode.fills = [{ type: "SOLID", color }];
+  textNode.fontName = { family: "Inter", style: "Regular" };
+  return textNode;
+}
+
+/**
+ * Create a circular swatch for primitives
+ */
+function createCircularSwatch(
+  color: string, 
+  name: string, 
+  size: number, 
+  fontSize: number
+): GroupNode {
+  // Create circular color swatch
+  const circle = figma.createEllipse();
+  circle.name = "Color";
+  circle.resize(size, size);
+  circle.fills = [createSolidFill(color)];
+
+  // Create name label - handle wrapping for long names
+  const nameText = createTextNode(name, fontSize);
+  nameText.name = "Name";
+  nameText.textAutoResize = "WIDTH_AND_HEIGHT";
+  nameText.resize(size + 20, nameText.height); // Allow some extra width
+  nameText.textAlignHorizontal = "CENTER";
+
+  // Create color value label
+  const colorText = createTextNode(`#${color.toUpperCase()}`, fontSize * 0.8, { r: 0.6, g: 0.6, b: 0.6 });
+  colorText.name = "Color Value";
+  colorText.textAutoResize = "WIDTH_AND_HEIGHT";
+  colorText.textAlignHorizontal = "CENTER";
+
+  // Position elements manually for better control
+  circle.x = 0;
+  circle.y = 0;
+  
+  nameText.x = circle.x + (size - nameText.width) / 2;
+  nameText.y = circle.y + size + SPACING / 2;
+  
+  colorText.x = circle.x + (size - colorText.width) / 2;
+  colorText.y = nameText.y + nameText.height + SPACING / 4;
+
+  // Create group
+  const group = figma.group([circle, nameText, colorText], figma.currentPage);
+  group.name = `Primitive: ${name}`;
+
+  return group;
+}
+
+/**
+ * Create a rectangular swatch for mixed colors
+ */
+function createRectangularSwatch(
+  color: string, 
+  step: number, 
+  size: number, 
+  fontSize: number
+): GroupNode {
+  const swatchWidth = size * 1.2;
+  const swatchHeight = size * 0.8;
+  const contrastColor = getContrastColor(color);
+
+  // Create background rectangle with padding
+  const rect = figma.createRectangle();
+  rect.name = "Background";
+  rect.resize(swatchWidth, swatchHeight);
+  rect.fills = [createSolidFill(color)];
+  rect.cornerRadius = 4; // Small corner radius for better appearance
+
+  // Create step label
+  const stepText = createTextNode(step.toString().padStart(3, '0'), fontSize, contrastColor);
+  stepText.name = "Step";
+  stepText.textAutoResize = "WIDTH_AND_HEIGHT";
+  stepText.textAlignHorizontal = "CENTER";
+
+  // Create color value label
+  const colorText = createTextNode(`#${color.toUpperCase()}`, fontSize * 0.7, contrastColor);
+  colorText.name = "Color Value";
+  colorText.textAutoResize = "WIDTH_AND_HEIGHT";
+  colorText.textAlignHorizontal = "CENTER";
+
+  // Position elements manually with proper padding
+  rect.x = 0;
+  rect.y = 0;
+  
+  stepText.x = rect.x + (swatchWidth - stepText.width) / 2;
+  stepText.y = rect.y + (swatchHeight - stepText.height - colorText.height - 4) / 2; // Center both texts
+  
+  colorText.x = rect.x + (swatchWidth - colorText.width) / 2;
+  colorText.y = stepText.y + stepText.height + 4;
+
+  // Create group
+  const group = figma.group([rect, stepText, colorText], figma.currentPage);
+  group.name = `Step ${step}`;
+
+  return group;
+}
+
+/**
+ * Create separator characters based on token settings
+ */
+function createSeparator(count: number, charType: 'dash' | 'underscore'): string {
+  const char = charType === 'dash' ? '-' : '_';
+  return char.repeat(count);
+}
+
+/**
+ * Format step number with padding
+ */
+function formatStepNumber(step: number): string {
+  return step.toString().padStart(3, '0');
+}
+
+/**
+ * Create a group of swatches for a primitive color
+ */
+function createPrimarySwatchGroup(
+  data: {
+    name: string;
+    swatches: Array<{ color: string; step: number }>;
+  },
+  separator: string,
+  swatchSize: number,
+  fontSize: number
+): GroupNode {
+  const elements: SceneNode[] = [];
+  const swatchWidth = swatchSize * 1.2;
+  let currentX = 0;
+  let currentY = 0;
+
+  // Create title
+  const titleText = createTextNode(data.name, fontSize * 1.2);
+  titleText.name = "Title";
+  titleText.x = currentX;
+  titleText.y = currentY;
+  elements.push(titleText);
+
+  // Position swatches below title with padding
+  currentY = titleText.y + titleText.height + SPACING;
+  currentX = 0;
+
+  // Create individual swatches with horizontal layout and padding
+  data.swatches.forEach((swatch, index) => {
+    const swatchNode = createRectangularSwatch(
+      swatch.color,
+      swatch.step,
+      swatchSize,
+      fontSize
+    );
+    
+    // Position with proper spacing and padding
+    swatchNode.x = currentX;
+    swatchNode.y = currentY;
+    elements.push(swatchNode);
+    
+    // Move to next position with padding
+    currentX += swatchWidth + SPACING;
+  });
+
+  // Create group with all elements
+  const group = figma.group(elements, figma.currentPage);
+  group.name = `Primary Group: ${data.name}`;
+  return group;
+}
+
+/**
+ * Create the main swatch display
+ */
+function createSwatchDisplay(data: SwatchCreationData): GroupNode {
+  const displayWidth = data.displayWidth || DEFAULT_DISPLAY_WIDTH;
+  const swatchSize = data.swatchSize || DEFAULT_SWATCH_SIZE;
+  const fontSize = data.fontSize || DEFAULT_FONT_SIZE;
+  const separator = createSeparator(data.tokenSettings.separatorCharsCount, data.tokenSettings.separatorCharType);
+
+  const allElements: SceneNode[] = [];
+  let currentY = 0;
+
+  // 1. Create primitives section
+  const primitivesTitle = createTextNode("Primitives", fontSize * 1.5);
+  primitivesTitle.name = "Primitives Title";
+  primitivesTitle.x = 0;
+  primitivesTitle.y = currentY;
+  allElements.push(primitivesTitle);
+
+  // Position primitives below title
+  currentY = primitivesTitle.y + primitivesTitle.height + SPACING;
+  let currentX = 0;
+
+  // Add shade and tint swatches
+  const shadeSwatch = createCircularSwatch(data.shade.color, data.shade.name, swatchSize, fontSize);
+  shadeSwatch.x = currentX;
+  shadeSwatch.y = currentY;
+  allElements.push(shadeSwatch);
+  currentX += swatchSize + SPACING * 2;
+
+  const tintSwatch = createCircularSwatch(data.tint.color, data.tint.name, swatchSize, fontSize);
+  tintSwatch.x = currentX;
+  tintSwatch.y = currentY;
+  allElements.push(tintSwatch);
+  currentX += swatchSize + SPACING * 2;
+
+  // Add primary color swatches
+  data.primaryColors.forEach(color => {
+    const colorSwatch = createCircularSwatch(color.color, color.name, swatchSize, fontSize);
+    colorSwatch.x = currentX;
+    colorSwatch.y = currentY;
+    allElements.push(colorSwatch);
+    currentX += swatchSize + SPACING * 2;
+  });
+
+  // Move to next section
+  currentY += swatchSize + (fontSize * 2) + SPACING + GROUP_SPACING;
+
+  // 2. Create shade-tint ramp section
+  if (data.shadeTintSwatches.length > 0) {
+    const rampGroup = createPrimarySwatchGroup(
+      {
+        name: data.shadeTintRampName,
+        swatches: data.shadeTintSwatches
+      },
+      separator,
+      swatchSize,
+      fontSize
+    );
+    rampGroup.x = 0;
+    rampGroup.y = currentY;
+    allElements.push(rampGroup);
+    
+    // Calculate height of ramp group for next positioning
+    const rampHeight = fontSize * 1.2 + SPACING + (swatchSize * 0.8) + (fontSize * 2);
+    currentY += rampHeight + GROUP_SPACING;
+  }
+
+  // 3. Create primary color groups
+  data.primarySwatches.forEach(primarySwatch => {
+    const swatchGroup = createPrimarySwatchGroup(
+      primarySwatch,
+      separator,
+      swatchSize,
+      fontSize
+    );
+    swatchGroup.x = 0;
+    swatchGroup.y = currentY;
+    allElements.push(swatchGroup);
+    
+    // Calculate height for next positioning
+    const groupHeight = fontSize * 1.2 + SPACING + (swatchSize * 0.8) + (fontSize * 2);
+    currentY += groupHeight + GROUP_SPACING;
+  });
+
+  // Create main group
+  const mainGroup = figma.group(allElements, figma.currentPage);
+  mainGroup.name = "Color Swatches";
+  return mainGroup;
+}
+
+/**
+ * Main function to create all swatches on the pasteboard
+ */
+export async function createAllSwatches(data: SwatchCreationData): Promise<SwatchCreationResult> {
+  try {
+    // Load fonts before creating text
+    await figma.loadFontAsync({ family: "Inter", style: "Regular" });
+
+    // Create the swatch display
+    const swatchDisplay = createSwatchDisplay(data);
+
+    // Position the display in the center of the viewport
+    const viewportCenter = figma.viewport.center;
+    swatchDisplay.x = viewportCenter.x - (swatchDisplay.width / 2);
+    swatchDisplay.y = viewportCenter.y - (swatchDisplay.height / 2);
+
+    // Select the created swatches
+    figma.currentPage.selection = [swatchDisplay];
+
+    // Zoom to fit the swatches
+    figma.viewport.scrollAndZoomIntoView([swatchDisplay]);
+
+    // Count total swatches created
+    const totalSwatches = 
+      2 + // shade + tint
+      data.primaryColors.length + // primary colors
+      data.shadeTintSwatches.length + // shade-tint swatches
+      data.primarySwatches.reduce((sum, ramp) => sum + ramp.swatches.length, 0); // primary swatches
+
+    return {
+      success: true,
+      message: `Created ${totalSwatches} swatches on the pasteboard`,
+      count: totalSwatches
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to create swatches",
+      error: error instanceof Error ? error.message : String(error)
+    };
+  }
+}

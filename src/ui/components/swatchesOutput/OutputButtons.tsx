@@ -5,12 +5,14 @@ import { UI_CHANNEL } from "@ui/app.network";
 import { PLUGIN } from "@common/networkSides";
 import { prepareSwatchVariableData } from "@ui/helpers/variableDataPrep";
 import { prepareSwatchStyleData } from "@ui/helpers/styleDataPrep";
+import { prepareSwatchCreationData } from "@ui/helpers/swatchDataPrep";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 
 const OutputButtons = () => {
     const [isCreatingVariables, setIsCreatingVariables] = useState(false);
     const [isCreatingStyles, setIsCreatingStyles] = useState(false);
+    const [isCreatingSwatches, setIsCreatingSwatches] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
     const [toastType, setToastType] = useState<"success" | "error" | "primary">("success");
     const [showToast, setShowToast] = useState(false);
@@ -77,6 +79,39 @@ const OutputButtons = () => {
         }
     };
 
+    const handleCreateSwatches = async () => {
+        setIsCreatingSwatches(true);
+        setToastMessage("Creating swatches...");
+        setToastType("primary");
+        setShowToast(true);
+
+        try {
+            // Prepare the data with default display settings
+            const swatchData = prepareSwatchCreationData(swatchStore, tokenStore, {
+                displayWidth: 1200,
+                swatchSize: 64,
+                fontSize: 12
+            });
+
+            // Call the plugin
+            const result = await UI_CHANNEL.request(PLUGIN, "createSwatches", [swatchData]);
+
+            if (result.success) {
+                setToastMessage(result.message);
+                setToastType("success");
+            } else {
+                setToastMessage(result.error || result.message);
+                setToastType("error");
+            }
+        } catch (error) {
+            setToastMessage(`Failed to create swatches: ${error instanceof Error ? error.message : String(error)}`);
+            setToastType("error");
+        } finally {
+            setIsCreatingSwatches(false);
+            setShowToast(true);
+        }
+    };
+
     const handleCloseToast = () => {
         setShowToast(false);
     };
@@ -87,18 +122,24 @@ const OutputButtons = () => {
                 <button 
                     className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
                     onClick={handleCreateVariables}
-                    disabled={isCreatingVariables || isCreatingStyles}
+                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                 >
                     {isCreatingVariables ? "Creating..." : "Add Variables"}
                 </button>
                 <button 
                     className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
                     onClick={handleCreateStyles}
-                    disabled={isCreatingVariables || isCreatingStyles}
+                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                 >
                     {isCreatingStyles ? "Creating..." : "Add Styles"}
                 </button>
-                <button className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}>Create Swatches</button>
+                <button 
+                    className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                    onClick={handleCreateSwatches}
+                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                >
+                    {isCreatingSwatches ? "Creating..." : "Create Swatches"}
+                </button>
                 <Help
                     content={"These buttons will create Figma variables, color styles, or swatch components from your generated color palette"}
                     id="output-buttons-tooltip"
