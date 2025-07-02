@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react';
+import {render, screen, fireEvent, waitFor, act} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PrimaryColors from './PrimaryColors';
 
@@ -69,6 +69,13 @@ jest.mock('./helpers/FontAwesomeIcon', () => {
         className?: string
     }) {
         return <span data-testid={`icon-${icon}`} className={className}></span>;
+    };
+});
+
+// Mock the Toast component
+jest.mock('./helpers/Toast', () => {
+    return function MockToast({message, isVisible}: { message: string, isVisible: boolean }) {
+        return isVisible ? <div data-testid="warning-toast">{message}</div> : null;
     };
 });
 
@@ -360,13 +367,13 @@ describe('PrimaryColors Component', () => {
             // Check that no colors were added since array is empty
             expect(mockAddPrimaryColor).not.toHaveBeenCalled();
 
-            // Check that swatches were still built (for consistency)
-            expect(mockBuildSwatches).toHaveBeenCalled();
+            // Check that buildSwatches was not called since no new colors were added
+            expect(mockBuildSwatches).not.toHaveBeenCalled();
         });
 
         test('correctly uses ColorNamer for extracted colors', async () => {
             const mockExtractedColors = [
-                { color: 'FF0000', name: 'FF0000' }
+                { color: 'ABCDEF', name: 'ABCDEF' } // Use a color that doesn't exist in store
             ];
 
             mockUIChannelRequest.mockResolvedValue(mockExtractedColors);
@@ -378,15 +385,140 @@ describe('PrimaryColors Component', () => {
             
             await fireEvent.click(eyeDropperButton!);
 
-            // Check that ColorNamer was used with the correct format (with #)
-            const ColorNamer = require('color-namer');
-            expect(ColorNamer).toHaveBeenCalledWith('#FF0000');
+            await waitFor(() => {
+                // Check that ColorNamer was used with the correct format (with #)
+                const ColorNamer = require('color-namer');
+                expect(ColorNamer).toHaveBeenCalledWith('#ABCDEF');
 
-            // Check that the mocked name was used
-            expect(mockAddPrimaryColor).toHaveBeenCalledWith({
-                color: 'FF0000',
-                name: 'Mock Color Name',
-                id: 'mock-uuid',
+                // Check that the mocked name was used
+                expect(mockAddPrimaryColor).toHaveBeenCalledWith({
+                    color: 'ABCDEF',
+                    name: 'Mock Color Name',
+                    id: 'mock-uuid',
+                });
+            });
+        });
+
+        test('prevents duplicate colors and shows warning toast for single duplicate', async () => {
+            const mockExtractedColors = [
+                { color: 'FF0000', name: 'FF0000' }, // This matches existing color1
+                { color: '00FF00', name: '00FF00' }  // This is new
+            ];
+
+            mockUIChannelRequest.mockResolvedValue(mockExtractedColors);
+
+            render(<PrimaryColors />);
+
+            const eyeDropperIcon = screen.getByTestId('icon-eye-dropper');
+            const eyeDropperButton = eyeDropperIcon.parentElement;
+            
+            await act(async () => {
+                fireEvent.click(eyeDropperButton!);
+            });
+
+            await waitFor(() => {
+                // Check that only the new color was added
+                expect(mockAddPrimaryColor).toHaveBeenCalledTimes(1);
+                expect(mockAddPrimaryColor).toHaveBeenCalledWith({
+                    color: '00FF00',
+                    name: 'Mock Color Name',
+                    id: 'mock-uuid',
+                });
+
+                // Check that warning toast is shown for duplicate
+                expect(screen.getByText('Color already exists: #FF0000')).toBeInTheDocument();
+            });
+        });
+
+        test('prevents duplicate colors and shows warning toast for multiple duplicates', async () => {
+            const mockExtractedColors = [
+                { color: 'FF0000', name: 'FF0000' }, // This matches existing color1
+                { color: '0000FF', name: '0000FF' }, // This matches existing color2
+                { color: '00FF00', name: '00FF00' }  // This is new
+            ];
+
+            mockUIChannelRequest.mockResolvedValue(mockExtractedColors);
+
+            render(<PrimaryColors />);
+
+            const eyeDropperIcon = screen.getByTestId('icon-eye-dropper');
+            const eyeDropperButton = eyeDropperIcon.parentElement;
+            
+            await act(async () => {
+                fireEvent.click(eyeDropperButton!);
+            });
+
+            await waitFor(() => {
+                // Check that only the new color was added
+                expect(mockAddPrimaryColor).toHaveBeenCalledTimes(1);
+                expect(mockAddPrimaryColor).toHaveBeenCalledWith({
+                    color: '00FF00',
+                    name: 'Mock Color Name',
+                    id: 'mock-uuid',
+                });
+
+                // Check that warning toast is shown for duplicates
+                expect(screen.getByText('Colors already exist: #FF0000, #0000FF')).toBeInTheDocument();
+            });
+        });
+
+        test('handles all duplicate colors with no new colors added', async () => {
+            const mockExtractedColors = [
+                { color: 'FF0000', name: 'FF0000' }, // This matches existing color1
+                { color: '0000FF', name: '0000FF' }  // This matches existing color2
+            ];
+
+            mockUIChannelRequest.mockResolvedValue(mockExtractedColors);
+
+            render(<PrimaryColors />);
+
+            const eyeDropperIcon = screen.getByTestId('icon-eye-dropper');
+            const eyeDropperButton = eyeDropperIcon.parentElement;
+            
+            await act(async () => {
+                fireEvent.click(eyeDropperButton!);
+            });
+
+            await waitFor(() => {
+                // Check that no colors were added
+                expect(mockAddPrimaryColor).not.toHaveBeenCalled();
+
+                // Check that buildSwatches was not called since no new colors were added
+                expect(mockBuildSwatches).not.toHaveBeenCalled();
+
+                // Check that warning toast is shown for duplicates
+                expect(screen.getByText('Colors already exist: #FF0000, #0000FF')).toBeInTheDocument();
+            });
+        });
+
+        test('handles case-insensitive duplicate detection', async () => {
+            const mockExtractedColors = [
+                { color: 'ff0000', name: 'ff0000' }, // lowercase version of existing color1
+                { color: '00FF00', name: '00FF00' }  // This is new
+            ];
+
+            mockUIChannelRequest.mockResolvedValue(mockExtractedColors);
+
+            render(<PrimaryColors />);
+
+            const eyeDropperIcon = screen.getByTestId('icon-eye-dropper');
+            const eyeDropperButton = eyeDropperIcon.parentElement;
+            
+            await act(async () => {
+                fireEvent.click(eyeDropperButton!);
+            });
+
+            await waitFor(() => {
+                // Check that only the new color was added
+                expect(mockAddPrimaryColor).toHaveBeenCalledTimes(1);
+                expect(mockAddPrimaryColor).toHaveBeenCalledWith({
+                    color: '00FF00',
+                    name: 'Mock Color Name',
+                    id: 'mock-uuid',
+                });
+
+                // Check that warning toast shows the normalized (uppercase) color
+                expect(screen.getByText('Color already exists: #FF0000')).toBeInTheDocument();
             });
         });
     });

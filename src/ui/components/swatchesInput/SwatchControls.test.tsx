@@ -26,7 +26,7 @@ jest.mock('@ui/app.network', () => ({
 jest.mock('color-namer', () => ({
     __esModule: true,
     default: (color: string) => ({
-        ntc: [{ name: `Mocked Name for ${color}` }]
+        ntc: [{name: `Mocked Name for ${color}`}]
     })
 }));
 
@@ -233,6 +233,9 @@ describe('SwatchControls Component', () => {
         const mockRequest = require('@ui/app.network').UI_CHANNEL.request;
         mockRequest.mockRejectedValueOnce(new Error('Multiple surface colors found (2 colors). Please select objects with only one surface color.'));
 
+        // Mock console.error to suppress error output in test
+        const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
         render(<SwatchControls {...defaultProps} canPick={true} />);
 
         // Find and click the eye-dropper button
@@ -245,11 +248,17 @@ describe('SwatchControls Component', () => {
             expect(toast).toBeInTheDocument();
             expect(toast).toHaveTextContent('Multiple surface colors found (2 colors). Please select objects with only one surface color.');
         });
+
+        // Restore console.error
+        mockConsoleError.mockRestore();
     });
 
     test('shows generic error message when eye-dropper extraction fails with non-Error', async () => {
         const mockRequest = require('@ui/app.network').UI_CHANNEL.request;
         mockRequest.mockRejectedValueOnce('Unknown error');
+
+        // Mock console.error to suppress error output in test
+        const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
         render(<SwatchControls {...defaultProps} canPick={true} />);
 
@@ -263,5 +272,8 @@ describe('SwatchControls Component', () => {
             expect(toast).toBeInTheDocument();
             expect(toast).toHaveTextContent('Failed to extract color from selection.');
         });
+
+        // Restore console.error
+        mockConsoleError.mockRestore();
     });
 });
