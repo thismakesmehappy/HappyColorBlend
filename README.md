@@ -1,140 +1,163 @@
-<!-- Logo -->
-<p align="center">
-  <img src="https://raw.githubusercontent.com/CoconutGoodie/figma-plugin-react-vite/master/.github/assets/logo.png" height="100px" alt="Logo"/>
-</p>
-<h1 align="center">Figma Plugin Boilerplate: React + Vite</h1>
+# 🎨 Happy Color Blend Vibe
 
-<!-- Slogan -->
-<p align="center">
-   Create scalable Figma plugins with ease, using the power of React + Vite!
-</p>
+A powerful Figma plugin for creating beautiful color palettes and swatches with intelligent blending and color extraction capabilities.
 
-<!-- Badges -->
-<p align="center">
+## ✨ Features
 
-  <!-- Github Badges -->
-  <img src="https://raw.githubusercontent.com/TheSpawnProject/TheSpawnLanguage/master/.github/assets/github-badge.png" height="20px"/>
-  <a href="https://github.com/CoconutGoodie/figma-plugin-react-vite/commits/master">
-    <img src="https://img.shields.io/github/last-commit/CoconutGoodie/figma-plugin-react-vite"/>
-  </a>
-  <a href="https://github.com/CoconutGoodie/figma-plugin-react-vite/issues">
-    <img src="https://img.shields.io/github/issues/CoconutGoodie/figma-plugin-react-vite"/>
-  </a>
+### 🎯 **Primary Color Management**
+- **Eye-Dropper Color Extraction**: Extract colors directly from selected Figma objects
+- **Duplicate Prevention**: Automatically detects and prevents duplicate colors (case-insensitive)
+- **Smart Color Naming**: Uses intelligent color naming with the color-namer library
+- **Random Color Generation**: Generate random colors for inspiration
+- **Interactive Swatches**: Edit, rename, and delete primary colors with ease
 
-  <br/>
+### 🌈 **Advanced Color Blending**
+- **Shade & Tint Generation**: Create darker shades and lighter tints from your primary colors
+- **Custom Step Control**: Define custom step values for precise color gradations
+- **Equal Steps Mode**: Generate evenly distributed color steps
+- **Real-time Preview**: See your color palette update in real-time
 
-  <!-- Support Badges -->
-  <img src="https://raw.githubusercontent.com/TheSpawnProject/TheSpawnLanguage/master/.github/assets/support-badge.png" height="20px"/>
-  <a href="https://www.patreon.com/iGoodie">
-    <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DiGoodie%26type%3Dpatrons"/>
-  </a>
-</p>
+### 🎨 **Design Token Export**
+- **Multiple Formats**: Export as CSS variables, JSON, or other design token formats
+- **Configurable Naming**: Customize naming conventions for your design tokens
+- **Professional Output**: Generate production-ready color systems
 
-# 🗝 Key Features
+### 🔧 **Developer-Friendly**
+- **Type-Safe**: Built with TypeScript for reliability
+- **Comprehensive Testing**: 30+ test cases ensuring robust functionality
+- **Modern Architecture**: React + Vite + Zustand for optimal performance
+- **Toast Notifications**: User-friendly feedback for all actions
 
-1. **_Logical Sides in Mind:_** Figma plugins that render a UI work on two different processes (split into code.js and index.html in Figma docs). This boilerplate keeps the sides separated by allowing them to share code (under ./src/common/).
+## 🚀 How to Use
 
-2. **_Intercommunitive:_** Logical sides should be able to communicate with each other without creating huge and unscalable nested if statements. This boilerplate solves it by declaring isolated events and handlers (under `./src/common/networkSides.ts`)! (Using the [Monorepo Networker](https://github.com/CoconutGoodie/monorepo-networker) library)
+### 1. Installing the Plugin
+1. In Figma, go to **Plugins > Development > Import plugin from manifest...**
+2. Select the `dist/manifest.json` file from this project
+3. The plugin will appear in your **Plugins > Development** menu
 
-3. **_Easy to Build:_** Configure the `figma.manifest.ts` config with your plugin credentials once, then just build with your everyday `npm run build` command! The `/dist` folder will be ready to publish already!
+### 2. Creating Primary Colors
 
-4. **_Bundled into One File:_** Figma plugins only accept a single file for `main` (js) and `ui` (html), which makes deployment of multiple files linked to each other impossible. This boilerplate is configured to bundle/inline most of the things you need like rasterize/vector image asset imports, CSS URL statements, and of course, source code imports.
+#### **Manual Color Addition**
+- Click the **➕ plus icon** to add a random color
+- Click any swatch to edit its color and name
+- Use the **🗑️ delete button** to remove unwanted colors
 
-5. **_SVG as Component:_** Yes, you can import SVGs as inlined sources with `*.svg?url`, but what about actually importing them as React components? Easy! You can import an SVG file as a React component with `*.svg?component` (See `/src/ui/app.tsx` for examples) (Using the [vite-plugin-react-rich-svg](https://github.com/iGoodie/vite-plugin-react-rich-svg) plugin)
+#### **Eye-Dropper Extraction**
+1. Select objects in your Figma design
+2. Click the **👁️ eye-dropper icon** in the Primary Colors section
+3. The plugin will extract all unique colors from your selection
+4. Duplicate colors are automatically filtered out with a helpful warning
 
-6. **_Sassy:_** A classic, this boilerplate supports Sass/Scss/Less and modules! Check out `/src/ui/styles/` for 7-1 Sass Template and `/src/ui/components/Button.module.scss` for module examples.
+### 3. Generating Color Palettes
+1. **Choose your blend mode**: 
+   - **Shade & Tint**: Create darker and lighter variations
+   - **Custom Steps**: Define specific step values for precise control
+2. **Set step count**: Choose how many color variations you want
+3. **Preview in real-time**: Your palette updates automatically
 
-# 💻 How to start coding?
+### 4. Exporting Design Tokens
+1. Configure your naming conventions in the settings
+2. Choose your export format (CSS, JSON, etc.)
+3. Copy the generated tokens to use in your design system
 
-1. First thing after you clone should be to install the dependencies by executing:
+## 🛠️ Development
 
-```
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+- Figma Desktop App
+
+### Setup
+```bash
+# Clone and install dependencies
 npm install
-```
 
-2. Create a figma plugin. In Figma, right click while you're in a design file. Follow `Plugins > Development > New Plugin...`. You can also type `"New Plugin...` to the global search (Windows: <kbd>CTRL</kbd> + <kbd>P</kbd>, Mac: <kbd>⌘ Command</kbd> + <kbd>P</kbd>)
-3. Follow the steps on opened window. I recommend using `Default` or `Run once` layout, because you'll only need to save the manifest (for the plugin id it generates). Click "Save as", and save it to a temporary place. Then click "Open folder" to navigate to the folder it generated
-4. Note down the `id` field from the `manifest.json` it generated.
-5. Go to `figma.manifest.ts`, and replace the `id` with the id you noted down. Then configure the manifest there as you like. (See [Official Figma Plugin Manifest doc](https://www.figma.com/plugin-docs/manifest/))
-
-## 🖱 Developing
-
-Development is very straight forward. Just run the dev command, and it will start compiling your files as you code.
-
-```
+# Start development mode
 npm run dev
-```
 
-Once dev is ran, `dist/` folder will be created, which includes your `manifest.json`. You can load it in Figma, by `Right Click > Plugins > Development > Import plugin from manifest...`
+# Run tests
+npm test
 
-> [!TIP]
-> You can turn on the `Hot reload plugin` option in Figma, to automatically reload when files in `dist/` changes.
-
-### 🦴 Developing without Figma Context
-
-If you like developing your UI first, then integrating with Figma context; you can run your UI code in browser just like your every other Vite project by running:
-
-```
-npm run dev:ui-only
-```
-
-> [!NOTE]
-> Since Figma context is not available in "ui-only" mode, any attempt to Figma API/SDK calls will look like a crash on your inspector/console.
-
-## 🔨 Building
-
-Building with the following command line will yield with a `dist` folder, which is ready to be used by Figma:
-
-```
+# Build for production
 npm run build
 ```
 
-Then, `dist/manifest.json` can be used to load the plugin. In Figma, right click while you're in a design file. Follow `Plugins > Development > Import plugin from manifest...`. You can also type `"Import plugin from manifest...` to the global search (Windows: <kbd>CTRL</kbd> + <kbd>P</kbd>, Mac: <kbd>⌘ Command</kbd> + <kbd>P</kbd>). Then select `dist/manifest.json`
+### Development Commands
+- `npm run dev` - Start development with hot reload
+- `npm run dev:ui-only` - Develop UI in browser without Figma context
+- `npm run test` - Run the test suite
+- `npm run test -- --watch` - Run tests in watch mode
+- `npm run build` - Build for production
+- `npm run types` - Type check the codebase
 
-## 📦 Publishing
-
-After building, built `dist` folder is going to contain every artifact you need in order to publish your plugin. Just build, and follow [Figma's Official Post on Publishing Plugins](https://help.figma.com/hc/en-us/articles/360042293394-Publish-plugins-to-the-Figma-Community#Publish_your_plugin).
-
-## 🕸 File Structure
-
-- `src`
-  - `src/common/` : Sources that are intended to be used both by plugin and ui logical sides.
-    - `src/common/networkSides.ts` : Definitions of logical sides and the events each one accepts. Whenever a new event type is needed, declare and update here.
-  - `src/plugin/` : Sources of the plugin logical side. Place everything that interracts with figma here.
-  - `src/ui/` : Sources of the ui logical side, a classical Vite + React source base.
-- `scripts`
-  - `scripts/vite/` : Potential custom vite plugins written for your project
-  - `scripts/windows/` : Potential custom Windows OS scripts
-  - `scripts/macos/` : Potential custom Mac OS scripts
-- `figma.manifest.ts` - A module that exports [Figma Plugin Manifest](https://www.figma.com/plugin-docs/manifest/) for the build scripts
-
-# 🛑 Caveats
-
-### 1. Make sure to import SVGS as either component, url or raw!
-
-Importing image assets other than `.svg` is easy. However, when you are importing `.svg`, by default it will load as a base64 data-uri, to import as a React component, you must add the query string `?component`.
-
-```tsx
-import MyImage from "@ui/assets/my_image.svg?component"; // <MyImage />
-import myImage from "@ui/assets/my_image.svg?url"; // "data:svg+xml,..."
-import myImageRaw from "@ui/assets/my_image.svg?raw"; // "<svg>...</svg>"
-...
-
-<MyImage className="something" />
-<img src={myImage} />
-<div dangerouslySetInnerHTML={{ __html: myImageRaw }} />
+### File Structure
 ```
+src/
+├── common/          # Shared code between plugin and UI
+├── plugin/          # Figma plugin-side code
+├── ui/              # React UI components
+│   ├── components/  # React components
+│   ├── store/       # Zustand state management
+│   ├── styles/      # Sass/SCSS styles
+│   └── helpers/     # Utility functions
+└── constants/       # Shared constants
+```
+
+## 🧪 Testing
+
+The plugin includes comprehensive testing with:
+- **Unit Tests**: 30+ test cases covering all functionality
+- **Integration Tests**: Complete user workflow testing
+- **Error Handling**: Robust error scenarios and edge cases
+- **React Testing Library**: Modern testing practices
+
+Run tests with:
+```bash
+npm test                    # Run all tests
+npm test -- --watch        # Watch mode
+npm test -- ComponentName  # Run specific tests
+```
+
+## 🎨 Key Technologies
+
+- **React 18**: Modern React with hooks and concurrent features
+- **TypeScript**: Type-safe development
+- **Vite**: Fast build tool and development server
+- **Zustand**: Lightweight state management
+- **Sass/SCSS**: Advanced styling with 7-1 architecture
+- **Bootstrap**: Responsive UI components
+- **Jest + RTL**: Comprehensive testing framework
+- **Figma Plugin API**: Deep Figma integration
+
+## 📝 License & Attribution
+
+This project is built on top of the excellent [Figma Plugin Boilerplate: React + Vite](https://github.com/CoconutGoodie/figma-plugin-react-vite) by Taha Anılcan Metinyurt (iGoodie).
+
+### Parent Project License
+The original boilerplate is licensed under the [Attribution-ShareAlike 4.0 International](http://creativecommons.org/licenses/by-sa/4.0/) license.
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+
+### Acknowledgments
+Special thanks to:
+- **Taha Anılcan Metinyurt (iGoodie)** for the amazing Figma plugin boilerplate
+- **The Figma Plugin Community** for inspiration and best practices
+- **Contributors** to the open-source libraries that make this plugin possible
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes and add tests
+4. Ensure all tests pass: `npm test`
+5. Commit your changes: `git commit -m 'Add amazing feature'`
+6. Push to the branch: `git push origin feature/amazing-feature`
+7. Open a Pull Request
+
+## 🐛 Issues & Support
+
+If you encounter any issues or have suggestions for improvements, please open an issue on the repository.
 
 ---
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/CoconutGoodie/figma-plugin-react-vite/master/.github/assets/preview.png" alt="Preview" />
-</p>
-
-# 📜 License of the Template
-
-&copy; 2024 Taha Anılcan Metinyurt (iGoodie)
-
-For any part of this work for which the license is applicable, this work is licensed under the [Attribution-ShareAlike 4.0 International](http://creativecommons.org/licenses/by-sa/4.0/) license. (See LICENSE).
-
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+**Happy Color Blending!** 🎨✨
