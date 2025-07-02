@@ -4,7 +4,17 @@ import SwatchProps from "../../interfaces/SwatchProps";
 import SwatchControls from "./SwatchControls";
 import SwatchLabels from "./SwatchLabels";
 
-const Swatch = ({color, name, canDelete, className, updateSwatch, id, onDelete, displayOnly = false}: SwatchProps) => {
+const Swatch = ({
+                    color,
+                    name,
+                    canDelete,
+                    canPick,
+                    className,
+                    updateSwatch,
+                    id,
+                    onDelete,
+                    displayOnly = false
+                }: SwatchProps) => {
     const [isEditing, setIsEditing] = useState(false);
     const [swatchColor, setSwatchColor] = useState(color);
     const [tempSwatchColor, setTempSwatchColor] = useState(color);
@@ -36,6 +46,7 @@ const Swatch = ({color, name, canDelete, className, updateSwatch, id, onDelete, 
                     isEditing={isEditing}
                     setIsEditing={setIsEditing}
                     canDelete={canDelete}
+                    canPick={canPick}
                     swatchColor={swatchColor}
                     setSwatchColor={setSwatchColor}
                     swatchName={swatchName}

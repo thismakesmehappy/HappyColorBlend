@@ -100,6 +100,7 @@ export const PLUGIN = Networker.createSide("Plugin-side").listens<{
   createRect(width: number, height: number): void;
   exportSelection(): Promise<string>;
   extractColorsFromSelection(): Promise<Array<{ color: string; name: string }>>;
+  extractSingleColorFromSelection(): Promise<{ color: string; name: string }>;
   createVariables(data: SwatchVariableData): Promise<VariableCreationResult>;
   createStyles(data: SwatchStyleData): Promise<StyleCreationResult>;
   createSwatches(data: SwatchCreationData): Promise<SwatchCreationResult>;

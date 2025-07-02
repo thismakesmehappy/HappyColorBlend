@@ -36,26 +36,27 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                 <div className={"row"}>
                     {/* <div className={"col col-6"}> */}
                     <div className={"col col-6"}>
-                        <p className={"figma-subtitle"}>Shade{" "}
+                        <div className={"figma-subtitle"}>Shade{" "}
                             <Help
                                 content="The darker color that will be mixed with your primary colors to create darker tones"
                                 id="shade-tooltip"
-                                placement={"bottom-start"} /></p>
+                                placement={"bottom-start"} /></div>
                         <Swatch color={shadeColor} name={shadeName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setShade(color, name);
                                     buildSwatches();
                                 }}
                                 id={shade.id}
+                                canPick={true}
                         />
                     </div>
                     {/* <div className={"col col-6"}> */}
                     <div className={"col col-6"}>
-                        <p className={"figma-subtitle"}>Tint
+                        <div className={"figma-subtitle"}>Tint
                             <Help
                                 content="The lighter color that will be mixed with your primary colors to create lighter tones"
                                 placement={"bottom-start"} />
-                        </p>
+                        </div>
 
                         <Swatch color={tintColor} name={tintName}
                                 updateSwatch={function (color: string, name: string): void {
@@ -63,6 +64,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                                     buildSwatches();
                                 }}
                                 id={tint.id}
+                                canPick={true}
                         />
                     </div>
                 </div>

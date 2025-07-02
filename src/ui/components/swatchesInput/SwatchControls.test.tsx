@@ -15,6 +15,21 @@ jest.mock('../helpers/Toast', () => {
     };
 });
 
+// Mock the UI_CHANNEL
+jest.mock('@ui/app.network', () => ({
+    UI_CHANNEL: {
+        request: jest.fn()
+    }
+}));
+
+// Mock ColorNamer
+jest.mock('color-namer', () => ({
+    __esModule: true,
+    default: (color: string) => ({
+        ntc: [{ name: `Mocked Name for ${color}` }]
+    })
+}));
+
 describe('SwatchControls Component', () => {
     const defaultProps = {
         isEditing: false,
@@ -176,5 +191,77 @@ describe('SwatchControls Component', () => {
         const saveButton = screen.getByTestId('save-button').firstChild;
         expect(saveButton).toHaveClass('figma-text-primary');
         expect(saveButton).not.toHaveClass('figma-text-disabled');
+    });
+
+    test('renders eye-dropper button when canPick is true', () => {
+        render(<SwatchControls {...defaultProps} canPick={true} />);
+
+        // Check that the eye-dropper button is displayed
+        const eyeDropperButton = screen.getByTestId('eyedropped-button');
+        expect(eyeDropperButton).toBeInTheDocument();
+    });
+
+    test('does not render eye-dropper button when canPick is false', () => {
+        render(<SwatchControls {...defaultProps} canPick={false} />);
+
+        // Check that the eye-dropper button is not displayed
+        expect(screen.queryByTestId('eyedropped-button')).not.toBeInTheDocument();
+    });
+
+    test('successfully extracts single color when eye-dropper is clicked', async () => {
+        const mockRequest = require('@ui/app.network').UI_CHANNEL.request;
+        mockRequest.mockResolvedValueOnce({
+            color: 'FF0000',
+            name: 'Red'
+        });
+
+        render(<SwatchControls {...defaultProps} canPick={true} />);
+
+        // Find and click the eye-dropper button
+        const eyeDropperButton = screen.getByTestId('eyedropped-button');
+        fireEvent.click(eyeDropperButton);
+
+        // Wait for the async operation
+        await waitFor(() => {
+            expect(mockRequest).toHaveBeenCalledWith(expect.anything(), 'extractSingleColorFromSelection', []);
+            expect(defaultProps.setSwatchColor).toHaveBeenCalledWith('FF0000');
+            expect(defaultProps.setSwatchName).toHaveBeenCalledWith('Mocked Name for #FF0000');
+        });
+    });
+
+    test('shows toast error when eye-dropper extraction fails', async () => {
+        const mockRequest = require('@ui/app.network').UI_CHANNEL.request;
+        mockRequest.mockRejectedValueOnce(new Error('Multiple surface colors found (2 colors). Please select objects with only one surface color.'));
+
+        render(<SwatchControls {...defaultProps} canPick={true} />);
+
+        // Find and click the eye-dropper button
+        const eyeDropperButton = screen.getByTestId('eyedropped-button');
+        fireEvent.click(eyeDropperButton);
+
+        // Wait for the error toast to appear
+        await waitFor(() => {
+            const toast = screen.getByTestId('toast');
+            expect(toast).toBeInTheDocument();
+            expect(toast).toHaveTextContent('Multiple surface colors found (2 colors). Please select objects with only one surface color.');
+        });
+    });
+
+    test('shows generic error message when eye-dropper extraction fails with non-Error', async () => {
+        const mockRequest = require('@ui/app.network').UI_CHANNEL.request;
+        mockRequest.mockRejectedValueOnce('Unknown error');
+
+        render(<SwatchControls {...defaultProps} canPick={true} />);
+
+        // Find and click the eye-dropper button
+        const eyeDropperButton = screen.getByTestId('eyedropped-button');
+        fireEvent.click(eyeDropperButton);
+
+        // Wait for the error toast to appear
+        await waitFor(() => {
+            const toast = screen.getByTestId('toast');
+            expect(toast).toBeInTheDocument();
+            expect(toast).toHaveTextContent('Failed to extract color from selection.');
+        });
     });
 });

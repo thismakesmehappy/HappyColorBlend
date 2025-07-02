@@ -3,6 +3,7 @@ interface SwatchProps {
     name: string;
     displayOnly?: boolean;
     canDelete?: boolean;
+    canPick?: boolean;
     className?: string;
     id?: string;
     updateSwatch?: (color: string, name: string, id?: string) => void;

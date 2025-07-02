@@ -121,7 +121,7 @@ describe('PrimaryColors Component', () => {
         render(<PrimaryColors />);
 
         // Check that the main div is rendered with correct props
-        const primaryColorsDiv = screen.getByText('Primary Colors').closest('div');
+        const primaryColorsDiv = screen.getByTestId('primary-colors');
         expect(primaryColorsDiv).toBeInTheDocument();
         expect(primaryColorsDiv).toHaveAttribute('id', 'primary-colors');
 
@@ -211,7 +211,7 @@ describe('PrimaryColors Component', () => {
     test('passes className to main div', () => {
         render(<PrimaryColors className="test-class" />);
 
-        const primaryColorsDiv = screen.getByText('Primary Colors').closest('div');
+        const primaryColorsDiv = screen.getByTestId('primary-colors');
         expect(primaryColorsDiv).toHaveAttribute('class', 'test-class');
     });
 

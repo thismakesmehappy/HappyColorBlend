@@ -58,7 +58,7 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
             id="primary-colors"
             data-testid="primary-colors"
         >
-            <p className={"figma-subtitle"}>Primary Colors <span onClick={createRandomPrimaryColor}>
+            <div className={"figma-subtitle"}>Primary Colors <span onClick={createRandomPrimaryColor}>
                 <FontAwesomeIcon icon={"circle-plus"} className={"figma-icon figma-text-primary fa-2x"} /></span>
                 {" "}
                 <span onClick={extractColorsFromSelection}>
@@ -69,7 +69,7 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
                     content="These are the base colors that will be mixed"
                     id="primary-colors-tooltip"
                 />
-            </p>
+            </div>
 
             <div className={"row"}>
                 {/* Primary Colors content */}
