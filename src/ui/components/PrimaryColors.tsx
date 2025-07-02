@@ -7,6 +7,8 @@ import ColorNamer from 'color-namer';
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import TooltipWrapper from './helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
+import {UI_CHANNEL} from "@ui/app.network";
+import {PLUGIN} from "@common/networkSides";
 
 interface PrimaryColorsProps extends ClassAndStyle {
 }
@@ -28,6 +30,27 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
         addPrimaryColor(newPrimaryColor);
         buildSwatches();
     };
+
+    const extractColorsFromSelection = async () => {
+        try {
+            const extractedColors = await UI_CHANNEL.request(PLUGIN, "extractColorsFromSelection", []);
+
+            extractedColors.forEach((colorData: { color: string; name: string }) => {
+                const colorName = ColorNamer(`#${colorData.color}`).ntc[0].name;
+                const newPrimaryColor: SwatchStoreInputSwatch = {
+                    color: colorData.color,
+                    name: colorName,
+                    id: uuidv4(),
+                };
+                addPrimaryColor(newPrimaryColor);
+            });
+
+            buildSwatches();
+        } catch (error) {
+            console.error('Failed to extract colors from selection:', error);
+            alert(error instanceof Error ? error.message : 'Failed to extract colors from selection.');
+        }
+    };
     return (
         <div
             className={className}
@@ -36,13 +59,17 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
             data-testid="primary-colors"
         >
             <p className={"figma-subtitle"}>Primary Colors <span onClick={createRandomPrimaryColor}>
-                <FontAwesomeIcon icon={"circle-plus"} className={"figma-icon figma-text-primary fa-2x"} />
+                <FontAwesomeIcon icon={"circle-plus"} className={"figma-icon figma-text-primary fa-2x"} /></span>
+                {" "}
+                <span onClick={extractColorsFromSelection}>
+                    <FontAwesomeIcon icon={"eye-dropper"} className={"figma-icon figma-text-primary fa-2x"} />
+                </span>
                 {" "}
                 <Help
                     content="These are the base colors that will be mixed"
                     id="primary-colors-tooltip"
                 />
-            </span></p>
+            </p>
 
             <div className={"row"}>
                 {/* Primary Colors content */}

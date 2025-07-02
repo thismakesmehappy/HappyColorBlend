@@ -72,6 +72,18 @@ jest.mock('./helpers/FontAwesomeIcon', () => {
     };
 });
 
+// Mock the UI_CHANNEL and PLUGIN
+const mockUIChannelRequest = jest.fn();
+jest.mock('@ui/app.network', () => ({
+    UI_CHANNEL: {
+        request: jest.fn()
+    }
+}));
+
+jest.mock('@common/networkSides', () => ({
+    PLUGIN: 'mock-plugin-side'
+}));
+
 // Mock the useSwatchStore hook
 const mockUpdatePrimaryColor = jest.fn();
 const mockAddPrimaryColor = jest.fn();
@@ -96,8 +108,13 @@ jest.mock('../store/useSwatchStore', () => ({
 }));
 
 describe('PrimaryColors Component', () => {
+    let mockUIChannelRequest: jest.Mock;
+
     beforeEach(() => {
         jest.clearAllMocks();
+        // Get the mocked UI_CHANNEL.request function
+        const { UI_CHANNEL } = require('@ui/app.network');
+        mockUIChannelRequest = UI_CHANNEL.request as jest.Mock;
     });
 
     test('renders with correct structure', () => {
@@ -113,6 +130,9 @@ describe('PrimaryColors Component', () => {
 
         // Check that the add button is rendered
         expect(screen.getByTestId('icon-circle-plus')).toBeInTheDocument();
+
+        // Check that the eye-dropper button is rendered
+        expect(screen.getByTestId('icon-eye-dropper')).toBeInTheDocument();
 
         // Check that both swatches are rendered
         const redSwatch = screen.getByTestId('mock-swatch-color1');
@@ -201,5 +221,173 @@ describe('PrimaryColors Component', () => {
 
         const primaryColorsDiv = screen.getByTestId('primary-colors');
         expect(primaryColorsDiv).toHaveStyle('width: 300px');
+    });
+
+    describe('Eye-dropper functionality', () => {
+        test('extracts colors from selection when eye-dropper is clicked', async () => {
+            const mockExtractedColors = [
+                { color: 'FF5500', name: 'FF5500' },
+                { color: '00AAFF', name: '00AAFF' }
+            ];
+
+            mockUIChannelRequest.mockResolvedValue(mockExtractedColors);
+
+            render(<PrimaryColors />);
+
+            // Click the eye-dropper button
+            const eyeDropperIcon = screen.getByTestId('icon-eye-dropper');
+            const eyeDropperButton = eyeDropperIcon.parentElement;
+            
+            await fireEvent.click(eyeDropperButton!);
+
+            // Check that the plugin was called to extract colors
+            expect(mockUIChannelRequest).toHaveBeenCalledWith('mock-plugin-side', 'extractColorsFromSelection', []);
+
+            // Check that primary colors were added with proper naming
+            expect(mockAddPrimaryColor).toHaveBeenCalledTimes(2);
+            expect(mockAddPrimaryColor).toHaveBeenNthCalledWith(1, {
+                color: 'FF5500',
+                name: 'Mock Color Name',
+                id: 'mock-uuid',
+            });
+            expect(mockAddPrimaryColor).toHaveBeenNthCalledWith(2, {
+                color: '00AAFF',
+                name: 'Mock Color Name',
+                id: 'mock-uuid',
+            });
+
+            // Check that swatches were built
+            expect(mockBuildSwatches).toHaveBeenCalled();
+        });
+
+        test('handles no selection error gracefully', async () => {
+            const mockError = new Error('No objects selected. Please select some objects to extract colors from.');
+            mockUIChannelRequest.mockRejectedValue(mockError);
+
+            // Mock window.alert
+            const mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => {});
+            const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+            render(<PrimaryColors />);
+
+            const eyeDropperIcon = screen.getByTestId('icon-eye-dropper');
+            const eyeDropperButton = eyeDropperIcon.parentElement;
+            
+            await fireEvent.click(eyeDropperButton!);
+
+            // Check that error was handled
+            expect(mockConsoleError).toHaveBeenCalledWith('Failed to extract colors from selection:', mockError);
+            expect(mockAlert).toHaveBeenCalledWith('No objects selected. Please select some objects to extract colors from.');
+
+            // Check that no colors were added
+            expect(mockAddPrimaryColor).not.toHaveBeenCalled();
+            expect(mockBuildSwatches).not.toHaveBeenCalled();
+
+            // Restore mocks
+            mockAlert.mockRestore();
+            mockConsoleError.mockRestore();
+        });
+
+        test('handles no colors found error gracefully', async () => {
+            const mockError = new Error('No solid colors found in selected objects.');
+            mockUIChannelRequest.mockRejectedValue(mockError);
+
+            // Mock window.alert
+            const mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => {});
+            const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+            render(<PrimaryColors />);
+
+            const eyeDropperIcon = screen.getByTestId('icon-eye-dropper');
+            const eyeDropperButton = eyeDropperIcon.parentElement;
+            
+            await fireEvent.click(eyeDropperButton!);
+
+            // Check that error was handled
+            expect(mockConsoleError).toHaveBeenCalledWith('Failed to extract colors from selection:', mockError);
+            expect(mockAlert).toHaveBeenCalledWith('No solid colors found in selected objects.');
+
+            // Check that no colors were added
+            expect(mockAddPrimaryColor).not.toHaveBeenCalled();
+            expect(mockBuildSwatches).not.toHaveBeenCalled();
+
+            // Restore mocks
+            mockAlert.mockRestore();
+            mockConsoleError.mockRestore();
+        });
+
+        test('handles generic extraction errors gracefully', async () => {
+            const mockError = new Error('Plugin communication failed');
+            mockUIChannelRequest.mockRejectedValue(mockError);
+
+            // Mock window.alert
+            const mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => {});
+            const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+            render(<PrimaryColors />);
+
+            const eyeDropperIcon = screen.getByTestId('icon-eye-dropper');
+            const eyeDropperButton = eyeDropperIcon.parentElement;
+            
+            await fireEvent.click(eyeDropperButton!);
+
+            // Check that error was handled
+            expect(mockConsoleError).toHaveBeenCalledWith('Failed to extract colors from selection:', mockError);
+            expect(mockAlert).toHaveBeenCalledWith('Plugin communication failed');
+
+            // Check that no colors were added
+            expect(mockAddPrimaryColor).not.toHaveBeenCalled();
+            expect(mockBuildSwatches).not.toHaveBeenCalled();
+
+            // Restore mocks
+            mockAlert.mockRestore();
+            mockConsoleError.mockRestore();
+        });
+
+        test('handles empty color array gracefully', async () => {
+            mockUIChannelRequest.mockResolvedValue([]);
+
+            render(<PrimaryColors />);
+
+            const eyeDropperIcon = screen.getByTestId('icon-eye-dropper');
+            const eyeDropperButton = eyeDropperIcon.parentElement;
+            
+            await fireEvent.click(eyeDropperButton!);
+
+            // Check that the plugin was called
+            expect(mockUIChannelRequest).toHaveBeenCalled();
+
+            // Check that no colors were added since array is empty
+            expect(mockAddPrimaryColor).not.toHaveBeenCalled();
+
+            // Check that swatches were still built (for consistency)
+            expect(mockBuildSwatches).toHaveBeenCalled();
+        });
+
+        test('correctly uses ColorNamer for extracted colors', async () => {
+            const mockExtractedColors = [
+                { color: 'FF0000', name: 'FF0000' }
+            ];
+
+            mockUIChannelRequest.mockResolvedValue(mockExtractedColors);
+
+            render(<PrimaryColors />);
+
+            const eyeDropperIcon = screen.getByTestId('icon-eye-dropper');
+            const eyeDropperButton = eyeDropperIcon.parentElement;
+            
+            await fireEvent.click(eyeDropperButton!);
+
+            // Check that ColorNamer was used with the correct format (with #)
+            const ColorNamer = require('color-namer');
+            expect(ColorNamer).toHaveBeenCalledWith('#FF0000');
+
+            // Check that the mocked name was used
+            expect(mockAddPrimaryColor).toHaveBeenCalledWith({
+                color: 'FF0000',
+                name: 'Mock Color Name',
+                id: 'mock-uuid',
+            });
+        });
     });
 });

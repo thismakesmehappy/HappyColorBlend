@@ -62,6 +62,69 @@ PLUGIN_CHANNEL.registerMessageHandler("exportSelection", async () => {
   return "data:image/png;base64," + figma.base64Encode(bytes);
 });
 
+PLUGIN_CHANNEL.registerMessageHandler("extractColorsFromSelection", async () => {
+  const selectedNodes = figma.currentPage.selection;
+  if (selectedNodes.length === 0) {
+    throw new Error("No objects selected. Please select some objects to extract colors from.");
+  }
+
+  const extractedColors: Array<{ color: string; name: string }> = [];
+  const colorSet = new Set<string>();
+
+  function rgbToHex(r: number, g: number, b: number): string {
+    const toHex = (n: number) => Math.round(n * 255).toString(16).padStart(2, '0');
+    return toHex(r) + toHex(g) + toHex(b);
+  }
+
+  function extractColorsFromNode(node: SceneNode) {
+    if ('fills' in node && node.fills && Array.isArray(node.fills)) {
+      for (const fill of node.fills) {
+        if (fill.type === 'SOLID' && fill.visible !== false) {
+          const hexColor = rgbToHex(fill.color.r, fill.color.g, fill.color.b).toUpperCase();
+          if (!colorSet.has(hexColor)) {
+            colorSet.add(hexColor);
+            extractedColors.push({
+              color: hexColor,
+              name: hexColor // Will be named properly in UI using ColorNamer
+            });
+          }
+        }
+      }
+    }
+
+    if ('strokes' in node && node.strokes && Array.isArray(node.strokes)) {
+      for (const stroke of node.strokes) {
+        if (stroke.type === 'SOLID' && stroke.visible !== false) {
+          const hexColor = rgbToHex(stroke.color.r, stroke.color.g, stroke.color.b).toUpperCase();
+          if (!colorSet.has(hexColor)) {
+            colorSet.add(hexColor);
+            extractedColors.push({
+              color: hexColor,
+              name: hexColor // Will be named properly in UI using ColorNamer
+            });
+          }
+        }
+      }
+    }
+
+    if ('children' in node) {
+      for (const child of node.children) {
+        extractColorsFromNode(child);
+      }
+    }
+  }
+
+  for (const node of selectedNodes) {
+    extractColorsFromNode(node);
+  }
+
+  if (extractedColors.length === 0) {
+    throw new Error("No solid colors found in selected objects.");
+  }
+
+  return extractedColors;
+});
+
 PLUGIN_CHANNEL.registerMessageHandler("createVariables", async (data) => {
   try {
     return await createAllSwatchVariables(data);

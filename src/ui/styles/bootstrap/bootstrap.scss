@@ -1,9 +1,15 @@
+@use '../figma/figma-styles' as figma;
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "../../../../node_modules/bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here
 //$grid-columns: 10 !default;
 $grid-gutter-width: 2em;
+$blue: figma.$color-primary;
+$red: figma.$color-danger;
+$green: figma.$color-success;
+$yellow: figma.$color-warning;
+$purple: figma.$color-component;
 
 // 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
 @import "../../../../node_modules/bootstrap/scss/variables";
