@@ -6,6 +6,7 @@ import { PLUGIN } from "@common/networkSides";
 import { prepareSwatchVariableData } from "@ui/helpers/variableDataPrep";
 import { prepareSwatchStyleData } from "@ui/helpers/styleDataPrep";
 import { prepareSwatchCreationData } from "@ui/helpers/swatchDataPrep";
+import { generateCSSVariables, generateSCSSVariables, copyToClipboard } from "@ui/helpers/variableExport";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 
@@ -18,7 +19,10 @@ const OutputButtons = () => {
     const [showToast, setShowToast] = useState(false);
 
     // Get store data
-    const swatchStore = useSwatchStore();
+    const shade = useSwatchStore((state) => state.getShade());
+    const tint = useSwatchStore((state) => state.getTint());
+    const swatches = useSwatchStore((state) => state.getSwatches());
+    const shadeTintRampName = useSwatchStore((state) => state.getShadeTintRampName());
     const tokenStore = useTokenNameStore();
 
     const handleCreateVariables = async () => {
@@ -28,8 +32,9 @@ const OutputButtons = () => {
         setShowToast(true);
 
         try {
-            // Prepare the data
-            const variableData = prepareSwatchVariableData(swatchStore, tokenStore);
+            // Prepare the data - need to reconstruct store object for existing functions
+            const swatchStoreData = { shade, tint, swatches, shadeTintRampName };
+            const variableData = prepareSwatchVariableData(swatchStoreData as any, tokenStore);
 
             // Call the plugin
             const result = await UI_CHANNEL.request(PLUGIN, "createVariables", [variableData]);
@@ -57,8 +62,9 @@ const OutputButtons = () => {
         setShowToast(true);
 
         try {
-            // Prepare the data
-            const styleData = prepareSwatchStyleData(swatchStore, tokenStore);
+            // Prepare the data - need to reconstruct store object for existing functions
+            const swatchStoreData = { shade, tint, swatches, shadeTintRampName };
+            const styleData = prepareSwatchStyleData(swatchStoreData as any, tokenStore);
 
             // Call the plugin
             const result = await UI_CHANNEL.request(PLUGIN, "createStyles", [styleData]);
@@ -86,8 +92,9 @@ const OutputButtons = () => {
         setShowToast(true);
 
         try {
-            // Prepare the data with default display settings
-            const swatchData = prepareSwatchCreationData(swatchStore, tokenStore, {
+            // Prepare the data with default display settings - need to reconstruct store object for existing functions
+            const swatchStoreData = { shade, tint, swatches, shadeTintRampName };
+            const swatchData = prepareSwatchCreationData(swatchStoreData as any, tokenStore, {
                 displayWidth: 1200,
                 swatchSize: 64,
                 fontSize: 12
@@ -112,38 +119,121 @@ const OutputButtons = () => {
         }
     };
 
+    const handleExportCSS = async () => {
+        try {
+            const swatchStoreData = { shade, tint, swatches, shadeTintRampName };
+            const cssVariables = generateCSSVariables(swatchStoreData as any, tokenStore);
+            
+            // Check if we have any variables to copy
+            if (!cssVariables || cssVariables.length < 10) {
+                setToastMessage("No color data available to export. Please add some primary colors first.");
+                setToastType("error");
+                setShowToast(true);
+                return;
+            }
+            
+            const success = await copyToClipboard(cssVariables);
+            
+            if (success) {
+                setToastMessage("CSS variables copied to clipboard!");
+                setToastType("success");
+            } else {
+                // Show the generated content in the error message as a fallback
+                setToastMessage("Clipboard access failed. Check browser console for generated CSS variables.");
+                console.log("Generated CSS Variables:\n", cssVariables);
+                setToastType("error");
+            }
+            setShowToast(true);
+        } catch (error) {
+            setToastMessage(`Failed to export CSS variables: ${error instanceof Error ? error.message : String(error)}`);
+            setToastType("error");
+            setShowToast(true);
+        }
+    };
+
+    const handleExportSCSS = async () => {
+        try {
+            const swatchStoreData = { shade, tint, swatches, shadeTintRampName };
+            const scssVariables = generateSCSSVariables(swatchStoreData as any, tokenStore);
+            
+            // Check if we have any variables to copy
+            if (!scssVariables || scssVariables.length < 10) {
+                setToastMessage("No color data available to export. Please add some primary colors first.");
+                setToastType("error");
+                setShowToast(true);
+                return;
+            }
+            
+            const success = await copyToClipboard(scssVariables);
+            
+            if (success) {
+                setToastMessage("SCSS variables copied to clipboard!");
+                setToastType("success");
+            } else {
+                // Show the generated content in the error message as a fallback
+                setToastMessage("Clipboard access failed. Check browser console for generated SCSS variables.");
+                console.log("Generated SCSS Variables:\n", scssVariables);
+                setToastType("error");
+            }
+            setShowToast(true);
+        } catch (error) {
+            setToastMessage(`Failed to export SCSS variables: ${error instanceof Error ? error.message : String(error)}`);
+            setToastType("error");
+            setShowToast(true);
+        }
+    };
+
     const handleCloseToast = () => {
         setShowToast(false);
     };
 
     return (
         <>
-            <div className={"sticky-bottom figma-p-md bg-white d-flex justify-content-around"}>
-                <button 
-                    className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                    onClick={handleCreateVariables}
-                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                >
-                    {isCreatingVariables ? "Creating..." : "Add Variables"}
-                </button>
-                <button 
-                    className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                    onClick={handleCreateStyles}
-                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                >
-                    {isCreatingStyles ? "Creating..." : "Add Styles"}
-                </button>
-                <button 
-                    className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                    onClick={handleCreateSwatches}
-                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                >
-                    {isCreatingSwatches ? "Creating..." : "Create Swatches"}
-                </button>
-                <Help
-                    content={"These buttons will create Figma variables, color styles, or swatch components from your generated color palette"}
-                    id="output-buttons-tooltip"
-                    placement={"top"} />
+            <div className={"sticky-bottom figma-p-md bg-white"}>
+                <div className={"d-flex justify-content-around mb-2"}>
+                    <button 
+                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                        onClick={handleCreateVariables}
+                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                    >
+                        {isCreatingVariables ? "Creating..." : "Add Variables"}
+                    </button>
+                    <button 
+                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                        onClick={handleCreateStyles}
+                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                    >
+                        {isCreatingStyles ? "Creating..." : "Add Styles"}
+                    </button>
+                    <button 
+                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                        onClick={handleCreateSwatches}
+                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                    >
+                        {isCreatingSwatches ? "Creating..." : "Create Swatches"}
+                    </button>
+                    <Help
+                        content={"These buttons will create Figma variables, color styles, or swatch components from your generated color palette"}
+                        id="output-buttons-tooltip"
+                        placement={"top"} />
+                </div>
+                
+                <div className={"d-flex justify-content-center"}>
+                    <button 
+                        className={"btn btn-secondary figma-bg-secondary figma-text-dark figma-mr-sm"}
+                        onClick={handleExportCSS}
+                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                    >
+                        Copy CSS Variables
+                    </button>
+                    <button 
+                        className={"btn btn-secondary figma-bg-secondary figma-text-dark"}
+                        onClick={handleExportSCSS}
+                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                    >
+                        Copy SCSS Variables
+                    </button>
+                </div>
             </div>
 
             <Toast 

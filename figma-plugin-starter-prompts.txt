@@ -1,0 +1,468 @@
+# Figma Plugin Starter Project Prompts
+
+## Option 1: React + Vite Figma Plugin
+
+Create a new Figma plugin project with React and Vite using the following structure:
+
+### Project Setup
+```
+npm init -y
+npm install --save-dev typescript @types/node vite @vitejs/plugin-react
+npm install --save-dev @figma/plugin-typings
+npm install --save-dev vite-plugin-singlefile vite-plugin-generate-file
+npm install --save-dev vite-plugin-react-rich-svg postcss postcss-url
+npm install --save-dev rimraf npm-run-all
+npm install --save-dev jest ts-jest @types/jest jest-environment-jsdom
+npm install --save-dev @testing-library/react @testing-library/jest-dom
+npm install --save-dev sass autoprefixer
+npm install react react-dom
+npm install monorepo-networker
+```
+
+### File Structure
+Create the following directory structure:
+```
+src/
+├── common/
+│   └── networkSides.ts
+├── plugin/
+│   ├── plugin.ts
+│   └── plugin.network.ts
+├── ui/
+│   ├── index.html
+│   ├── main.tsx
+│   ├── app.tsx
+│   ├── components/
+│   ├── styles/
+│   │   └── main.scss
+│   └── store/
+└── setupTests.ts
+```
+
+### Configuration Files
+
+**package.json scripts:**
+```json
+{
+  "scripts": {
+    "dev": "run-s watch",
+    "dev:ui-only": "vite -c ./vite.config.ui.ts",
+    "watch": "run-p watch:*",
+    "watch:ui": "npm run build:ui -- --watch --mode=development",
+    "watch:plugin": "npm run build:plugin -- --watch --mode=development",
+    "clean": "rimraf dist/*",
+    "types": "run-s types:*",
+    "types:src": "tsc",
+    "types:node": "tsc -P tsconfig.node.json",
+    "build": "run-s build:*",
+    "prebuild": "run-s types clean",
+    "build:ui": "vite build -c ./vite.config.ui.ts",
+    "build:plugin": "vite build -c ./vite.config.plugin.ts",
+    "test": "jest"
+  }
+}
+```
+
+**figma.manifest.ts:**
+```typescript
+export default {
+  name: "Your Plugin Name",
+  id: "YOUR_PLUGIN_ID", // Replace with your actual plugin ID
+  api: "1.0.0",
+  main: "plugin.js",
+  ui: "index.html",
+  capabilities: [],
+  enableProposedApi: false,
+  editorType: ["figma", "figjam"],
+};
+```
+
+**vite.config.plugin.ts:**
+```typescript
+import path from "node:path";
+import { defineConfig } from "vite";
+import generateFile from "vite-plugin-generate-file";
+import { viteSingleFile } from "vite-plugin-singlefile";
+import figmaManifest from "./figma.manifest";
+
+export default defineConfig(({ mode }) => ({
+  plugins: [
+    viteSingleFile(),
+    generateFile({
+      type: "json",
+      output: "./manifest.json",
+      data: figmaManifest,
+    }),
+  ],
+  build: {
+    minify: mode === 'production',
+    sourcemap: mode !== 'production' ? 'inline' : false,
+    target: 'es2017',
+    emptyOutDir: false,
+    outDir: path.resolve("dist"),
+    rollupOptions: {
+      input: path.resolve('src/plugin/plugin.ts'),
+      output: {
+        entryFileNames: 'plugin.js',
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      "@common": path.resolve("src/common"),
+      "@plugin": path.resolve("src/plugin"),
+    },
+  },
+}));
+```
+
+**vite.config.ui.ts:**
+```typescript
+import { defineConfig } from "vite";
+import path from "node:path";
+import { viteSingleFile } from "vite-plugin-singlefile";
+import react from "@vitejs/plugin-react";
+import richSvg from "vite-plugin-react-rich-svg";
+import postcssUrl from "postcss-url";
+
+export default defineConfig(({ mode }) => ({
+  plugins: [react(), richSvg(), viteSingleFile()],
+  root: path.resolve("src/ui"),
+  build: {
+    minify: mode === "production",
+    cssMinify: mode === "production",
+    sourcemap: mode !== "production" ? "inline" : false,
+    emptyOutDir: false,
+    outDir: path.resolve("dist"),
+    rollupOptions: {
+      input: path.resolve("src/ui/index.html"),
+    },
+  },
+  css: {
+    postcss: {
+      plugins: [postcssUrl({ url: "inline" })],
+    },
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler",
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      "@common": path.resolve("src/common"),
+      "@ui": path.resolve("src/ui"),
+    },
+  },
+}));
+```
+
+**tsconfig.json:**
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "Node",
+    "useDefineForClassFields": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "typeRoots": ["./node_modules/@figma"],
+    "paths": {
+      "@common/*": ["./src/common/*"],
+      "@ui/*": ["./src/ui/*"],
+      "@plugin/*": ["./src/plugin/*"]
+    }
+  },
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ]
+}
+```
+
+**jest.config.cjs:**
+```javascript
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
+  testMatch: ['**/*.test.ts', '**/*.test.tsx'],
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  moduleNameMapper: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '^@ui/(.*)$': '<rootDir>/src/ui/$1',
+    '^@common/(.*)$': '<rootDir>/src/common/$1',
+    '^@plugin/(.*)$': '<rootDir>/src/plugin/$1',
+  },
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/*.test.{ts,tsx}',
+    '!src/setupTests.ts',
+  ],
+};
+```
+
+### Key Features
+- Two-side architecture (plugin + UI)
+- Type-safe communication via monorepo-networker
+- React 18 with TypeScript
+- Vite for fast development and building
+- Jest testing setup
+- SCSS support with modern compiler
+- Path aliases for clean imports
+- SVG support with rich-svg plugin
+- Single file output for Figma
+
+---
+
+## Option 2: Preact + Vite Figma Plugin
+
+Create a new Figma plugin project with Preact and Vite using the following structure:
+
+### Project Setup
+```
+npm init -y
+npm install --save-dev typescript @types/node vite @preact/preset-vite
+npm install --save-dev @figma/plugin-typings
+npm install --save-dev vite-plugin-singlefile vite-plugin-generate-file
+npm install --save-dev postcss postcss-url
+npm install --save-dev rimraf npm-run-all
+npm install --save-dev jest ts-jest @types/jest jest-environment-jsdom
+npm install --save-dev @testing-library/preact @testing-library/jest-dom
+npm install --save-dev sass autoprefixer
+npm install preact
+npm install monorepo-networker
+```
+
+### File Structure
+Same as React version, but replace React-specific files with Preact equivalents.
+
+### Configuration Files
+
+**package.json scripts:** (Same as React version)
+
+**figma.manifest.ts:** (Same as React version)
+
+**vite.config.plugin.ts:** (Same as React version)
+
+**vite.config.ui.ts:**
+```typescript
+import { defineConfig } from "vite";
+import path from "node:path";
+import { viteSingleFile } from "vite-plugin-singlefile";
+import preact from "@preact/preset-vite";
+import postcssUrl from "postcss-url";
+
+export default defineConfig(({ mode }) => ({
+  plugins: [preact(), viteSingleFile()],
+  root: path.resolve("src/ui"),
+  build: {
+    minify: mode === "production",
+    cssMinify: mode === "production",
+    sourcemap: mode !== "production" ? "inline" : false,
+    emptyOutDir: false,
+    outDir: path.resolve("dist"),
+    rollupOptions: {
+      input: path.resolve("src/ui/index.html"),
+    },
+  },
+  css: {
+    postcss: {
+      plugins: [postcssUrl({ url: "inline" })],
+    },
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler",
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      "@common": path.resolve("src/common"),
+      "@ui": path.resolve("src/ui"),
+    },
+  },
+}));
+```
+
+**tsconfig.json:**
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "Node",
+    "useDefineForClassFields": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "typeRoots": ["./node_modules/@figma"],
+    "paths": {
+      "@common/*": ["./src/common/*"],
+      "@ui/*": ["./src/ui/*"],
+      "@plugin/*": ["./src/plugin/*"]
+    }
+  },
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ]
+}
+```
+
+**jest.config.cjs:**
+```javascript
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
+  testMatch: ['**/*.test.ts', '**/*.test.tsx'],
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  moduleNameMapping: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '^@ui/(.*)$': '<rootDir>/src/ui/$1',
+    '^@common/(.*)$': '<rootDir>/src/common/$1',
+    '^@plugin/(.*)$': '<rootDir>/src/plugin/$1',
+  },
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/*.test.{ts,tsx}',
+    '!src/setupTests.ts',
+  ],
+};
+```
+
+### Key Differences from React
+- Uses @preact/preset-vite instead of @vitejs/plugin-react
+- Uses @testing-library/preact instead of @testing-library/react
+- JSX import source set to "preact" in tsconfig
+- Smaller bundle size and faster performance
+- Same API as React for easy migration
+
+### Basic Starter Files
+
+**src/common/networkSides.ts:**
+```typescript
+export const networkSides = {
+  PLUGIN: 'PLUGIN',
+  UI: 'UI',
+} as const;
+
+export type NetworkSide = typeof networkSides[keyof typeof networkSides];
+```
+
+**src/plugin/plugin.ts:**
+```typescript
+import { NetworkSide, networkSides } from '@common/networkSides';
+
+figma.showUI(__html__, { width: 320, height: 480 });
+
+figma.ui.onmessage = (message) => {
+  console.log('Plugin received:', message);
+  
+  if (message.type === 'close') {
+    figma.closePlugin();
+  }
+};
+```
+
+**src/ui/main.tsx (React version):**
+```typescript
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './app';
+import './styles/main.scss';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+
+**src/ui/main.tsx (Preact version):**
+```typescript
+import { render } from 'preact';
+import App from './app';
+import './styles/main.scss';
+
+render(<App />, document.getElementById('root')!);
+```
+
+**src/ui/app.tsx:**
+```typescript
+import { useState } from 'react'; // or 'preact/hooks' for Preact
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <h1>Figma Plugin</h1>
+      <button onClick={() => setCount(count + 1)}>
+        Count: {count}
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+**src/ui/index.html:**
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Figma Plugin</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/main.tsx"></script>
+  </body>
+</html>
+```
+
+**src/setupTests.ts:**
+```typescript
+import '@testing-library/jest-dom';
+```
+
+### Development Workflow
+1. Run `npm run dev` to start development with hot reloading
+2. Run `npm run build` to create production build
+3. Run `npm test` to run Jest tests
+4. Run `npm run types` to check TypeScript types
+5. Load the plugin in Figma by pointing to the `dist` folder
+
+### Notes
+- Replace "YOUR_PLUGIN_ID" with your actual Figma plugin ID
+- Both versions support the same development workflow
+- Preact version has smaller bundle size (~3KB vs ~42KB for React)
+- Choose React if you need wider ecosystem support
+- Choose Preact if you prioritize performance and smaller bundle size
