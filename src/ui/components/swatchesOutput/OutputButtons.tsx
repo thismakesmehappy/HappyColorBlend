@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Help from "@ui/components/helpers/Help";
 import Toast from "@ui/components/helpers/Toast";
-import { UI_CHANNEL } from "@ui/app.network";
-import { PLUGIN } from "@common/networkSides";
-import { prepareSwatchVariableData } from "@ui/helpers/variableDataPrep";
-import { prepareSwatchStyleData } from "@ui/helpers/styleDataPrep";
-import { prepareSwatchCreationData } from "@ui/helpers/swatchDataPrep";
-import { generateCSSVariables, generateSCSSVariables, copyToClipboard } from "@ui/helpers/variableExport";
+import {UI_CHANNEL} from "@ui/app.network";
+import {PLUGIN} from "@common/networkSides";
+import {prepareSwatchVariableData} from "@ui/helpers/variableDataPrep";
+import {prepareSwatchStyleData} from "@ui/helpers/styleDataPrep";
+import {prepareSwatchCreationData} from "@ui/helpers/swatchDataPrep";
+import {generateCSSVariables, generateSCSSVariables, copyToClipboard} from "@ui/helpers/variableExport";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 
@@ -19,10 +19,7 @@ const OutputButtons = () => {
     const [showToast, setShowToast] = useState(false);
 
     // Get store data
-    const shade = useSwatchStore((state) => state.getShade());
-    const tint = useSwatchStore((state) => state.getTint());
-    const swatches = useSwatchStore((state) => state.getSwatches());
-    const shadeTintRampName = useSwatchStore((state) => state.getShadeTintRampName());
+    const swatchStore = useSwatchStore();
     const tokenStore = useTokenNameStore();
 
     const handleCreateVariables = async () => {
@@ -32,9 +29,8 @@ const OutputButtons = () => {
         setShowToast(true);
 
         try {
-            // Prepare the data - need to reconstruct store object for existing functions
-            const swatchStoreData = { shade, tint, swatches, shadeTintRampName };
-            const variableData = prepareSwatchVariableData(swatchStoreData as any, tokenStore);
+            // Prepare the data using the full store object
+            const variableData = prepareSwatchVariableData(swatchStore, tokenStore);
 
             // Call the plugin
             const result = await UI_CHANNEL.request(PLUGIN, "createVariables", [variableData]);
@@ -62,9 +58,8 @@ const OutputButtons = () => {
         setShowToast(true);
 
         try {
-            // Prepare the data - need to reconstruct store object for existing functions
-            const swatchStoreData = { shade, tint, swatches, shadeTintRampName };
-            const styleData = prepareSwatchStyleData(swatchStoreData as any, tokenStore);
+            // Prepare the data using the full store object
+            const styleData = prepareSwatchStyleData(swatchStore, tokenStore);
 
             // Call the plugin
             const result = await UI_CHANNEL.request(PLUGIN, "createStyles", [styleData]);
@@ -92,9 +87,8 @@ const OutputButtons = () => {
         setShowToast(true);
 
         try {
-            // Prepare the data with default display settings - need to reconstruct store object for existing functions
-            const swatchStoreData = { shade, tint, swatches, shadeTintRampName };
-            const swatchData = prepareSwatchCreationData(swatchStoreData as any, tokenStore, {
+            // Prepare the data with default display settings using the full store object
+            const swatchData = prepareSwatchCreationData(swatchStore, tokenStore, {
                 displayWidth: 1200,
                 swatchSize: 64,
                 fontSize: 12
@@ -121,9 +115,8 @@ const OutputButtons = () => {
 
     const handleExportCSS = async () => {
         try {
-            const swatchStoreData = { shade, tint, swatches, shadeTintRampName };
-            const cssVariables = generateCSSVariables(swatchStoreData as any, tokenStore);
-            
+            const cssVariables = generateCSSVariables(swatchStore, tokenStore);
+
             // Check if we have any variables to copy
             if (!cssVariables || cssVariables.length < 10) {
                 setToastMessage("No color data available to export. Please add some primary colors first.");
@@ -131,9 +124,9 @@ const OutputButtons = () => {
                 setShowToast(true);
                 return;
             }
-            
+
             const success = await copyToClipboard(cssVariables);
-            
+
             if (success) {
                 setToastMessage("CSS variables copied to clipboard!");
                 setToastType("success");
@@ -153,9 +146,8 @@ const OutputButtons = () => {
 
     const handleExportSCSS = async () => {
         try {
-            const swatchStoreData = { shade, tint, swatches, shadeTintRampName };
-            const scssVariables = generateSCSSVariables(swatchStoreData as any, tokenStore);
-            
+            const scssVariables = generateSCSSVariables(swatchStore, tokenStore);
+
             // Check if we have any variables to copy
             if (!scssVariables || scssVariables.length < 10) {
                 setToastMessage("No color data available to export. Please add some primary colors first.");
@@ -163,9 +155,9 @@ const OutputButtons = () => {
                 setShowToast(true);
                 return;
             }
-            
+
             const success = await copyToClipboard(scssVariables);
-            
+
             if (success) {
                 setToastMessage("SCSS variables copied to clipboard!");
                 setToastType("success");
@@ -191,21 +183,21 @@ const OutputButtons = () => {
         <>
             <div className={"sticky-bottom figma-p-md bg-white"}>
                 <div className={"d-flex justify-content-around mb-2"}>
-                    <button 
+                    <button
                         className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
                         onClick={handleCreateVariables}
                         disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                     >
                         {isCreatingVariables ? "Creating..." : "Add Variables"}
                     </button>
-                    <button 
+                    <button
                         className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
                         onClick={handleCreateStyles}
                         disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                     >
                         {isCreatingStyles ? "Creating..." : "Add Styles"}
                     </button>
-                    <button 
+                    <button
                         className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
                         onClick={handleCreateSwatches}
                         disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
@@ -217,16 +209,16 @@ const OutputButtons = () => {
                         id="output-buttons-tooltip"
                         placement={"top"} />
                 </div>
-                
+
                 <div className={"d-flex justify-content-center"}>
-                    <button 
+                    <button
                         className={"btn btn-secondary figma-bg-secondary figma-text-dark figma-mr-sm"}
                         onClick={handleExportCSS}
                         disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                     >
                         Copy CSS Variables
                     </button>
-                    <button 
+                    <button
                         className={"btn btn-secondary figma-bg-secondary figma-text-dark"}
                         onClick={handleExportSCSS}
                         disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
@@ -236,7 +228,7 @@ const OutputButtons = () => {
                 </div>
             </div>
 
-            <Toast 
+            <Toast
                 message={toastMessage}
                 type={toastType}
                 isVisible={showToast}
