@@ -36,11 +36,13 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                 <div className={"row"}>
                     {/* <div className={"col col-6"}> */}
                     <div className={"col col-6"}>
-                        <div className={"figma-subtitle"}>Shade{" "}
+                        <div className={"figma-subtitle"}>Shade
                             <Help
                                 content="The darker color that will be mixed with your primary colors to create darker tones"
                                 id="shade-tooltip"
-                                placement={"bottom-start"} /></div>
+                                placement={"bottom-start"}
+                                className={"figma-ml-xs"}
+                            /></div>
                         <Swatch color={shadeColor} name={shadeName}
                                 updateSwatch={function (color: string, name: string): void {
                                     setShade(color, name);
@@ -55,7 +57,9 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
                         <div className={"figma-subtitle"}>Tint
                             <Help
                                 content="The lighter color that will be mixed with your primary colors to create lighter tones"
-                                placement={"bottom-start"} />
+                                placement={"bottom-start"}
+                                className={"figma-ml-xs"}
+                            />
                         </div>
 
                         <Swatch color={tintColor} name={tintName}

@@ -32,11 +32,11 @@ export const EqualSteps = ({className = "", style = {}}: ClassAndStyle) => {
                 minValue={3}
                 className="figma-mb-sm"
             />
-            {" "}
             <Help
                 content="Adjust the number of evenly spaced swatches in your gradation for each primary color"
                 id="equal-steps-tooltip"
                 placement={"bottom"}
+                className={"figma-ml-xs"}
             />
         </div>
     );

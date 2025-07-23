@@ -207,7 +207,9 @@ const OutputButtons = () => {
                     <Help
                         content={"These buttons will create Figma variables, color styles, or swatch components from your generated color palette"}
                         id="output-buttons-tooltip"
-                        placement={"top"} />
+                        placement={"top"}
+                        className={"figma-ml-xs"}
+                    />
                 </div>
 
                 <div className={"d-flex justify-content-center"}>

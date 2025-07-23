@@ -8,25 +8,28 @@ export interface HelpProps {
     placement?: OverlayTriggerProps['placement'];
     maxWidth?: string;
     id?: string;
+    className?: string;
 }
 
 const Help = ({
                   content,
                   placement = 'top',
                   maxWidth = '150',
-                  id = 'tooltip'
+                  id = 'tooltip',
+                  className = '',
               }: HelpProps) => {
-    return (<div className={"d-inline-block"} style={{ verticalAlign: 'middle' }}>
+    return (<div className={"d-inline-block"} style={{verticalAlign: 'middle'}}>
         <TooltipWrapper
             content={content}
             id={id}
+            className={className}
             placement={placement}
             maxWidth={maxWidth}
             type={"component"}
         >
             <FontAwesomeIcon icon={"circle-question"}
-                             className='figma-text-component'
-                             style={{ verticalAlign: 'middle' }} />
+                             className={`figma-text-component ${className}`}
+                             style={{verticalAlign: 'middle'}} />
         </TooltipWrapper>
     </div>);
 };

@@ -122,9 +122,10 @@ export const CustomSteps = ({className = "", style = {}}: CustomStepsProps) => {
                         className={`figma-icon ${isValidInput() ? 'figma-text-primary' : 'figma-text-secondary'}`}
                     />
                 </span>
-                {" "}
                 <Help content="Add specific step values (1-999) to create specific color stops"
-                      id="custom-steps-tooltip" />
+                      id="custom-steps-tooltip"
+                      className={"figma-ml-xs"}
+                />
             </span>
             <Toast
                 message={toastMessage}

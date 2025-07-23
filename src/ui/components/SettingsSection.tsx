@@ -42,9 +42,11 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
                 <CustomStepBadges />
             )}
             <hr />
-            <div className="figma-subtitle">Token Name Settings <Help
+            <div className="figma-subtitle">Token Name Settings<Help
                 content="Customize how token names are formatted relative to the swatch name: how words are cased, how spaces are treated, and if you want to prefix or sufix with dashed or underscores"
-                id="token-settings-tooltip" />
+                id="token-settings-tooltip"
+                className={"figma-ml-xs"}
+            />
             </div>
             <Case />
             <Spaces />

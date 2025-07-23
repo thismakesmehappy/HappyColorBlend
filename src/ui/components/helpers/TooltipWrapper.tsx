@@ -9,6 +9,7 @@ export interface TooltipWrapperProps {
     maxWidth?: string;
     type?: AlertType;
     id?: string;
+    className?: string;
 }
 
 /**
@@ -27,24 +28,25 @@ const TooltipWrapper: React.FC<TooltipWrapperProps> = ({
                                                            placement = 'top',
                                                            maxWidth = '200',
                                                            type,
-                                                           id = 'tooltip'
+                                                           id = 'tooltip',
+                                                           className = ''
                                                        }) => {
-    const getStatusStyles = () => {
+    const getStatusStyles = (className?: string) => {
         switch (type) {
             case "error":
-                return "figma-bg-danger figma-text-light";
+                return `figma-bg-danger figma-text-light ${className}`;
             case "success":
-                return "figma-bg-success figma-text-light";
+                return `figma-bg-success figma-text-light ${className}`;
             case "warning":
-                return "figma-bg-warning figma-text-dark";
+                return `figma-bg-warning figma-text-dark ${className}`;
             case "primary":
                 // Default toast has no additional class
-                return "figma-bg-primary figma-text-light";
+                return `figma-bg-primary figma-text-light ${className}`;
             case "component":
                 // Default toast has no additional class
-                return "figma-bg-component figma-text-light";
+                return `figma-bg-component figma-text-light ${className}`;
             default:
-                return "figma-bg-secondary figma-text-dark"
+                return `figma-bg-secondary figma-text-dark ${className}`;
         }
     };
 

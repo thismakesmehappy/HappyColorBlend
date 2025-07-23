@@ -14,7 +14,9 @@ const RampNameEditor = () => {
             What do we call the mix?
             <Help
                 content="Name for the gradation created by blending your shade and tint colors; if mixing black and white, this would be your gray"
-                id="ramp-name-tooltip" />
+                id="ramp-name-tooltip"
+                className={"figma-ml-xs"}
+            />
         </p>
         <div>
             <TextAndInput inputText={shadeTintRampName}
