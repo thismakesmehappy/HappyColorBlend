@@ -9,7 +9,7 @@ async function bootstrap() {
         figma.showUI(__html__, {
             width: 1000,
             height: 616,
-            title: "Color Blender by This Makes Me Happy / Bernardo Margulis",
+            title: "Color Scales by This Makes Me Happy",
         });
     } else if (figma.editorType === "figjam") {
         figma.showUI(__html__, {
