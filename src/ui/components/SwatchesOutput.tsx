@@ -17,6 +17,7 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
     const shadeColor = useSwatchStore((state) => state.getShade());
     const combinedSteps: number[] = Array.from(useSwatchStore((state) => state.getCombinedSteps()));
     const shadeTintRampName = useSwatchStore(state => state.getShadeTintRampName());
+    // # TODO: Move logic to useSwatchStore
     const toneRamp: SwatchStoreSwatch[] = combinedSteps.map((step) => {
         return {
             color: blendColor(shadeColor.color, tintColor.color, step),

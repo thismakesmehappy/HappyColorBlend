@@ -208,6 +208,7 @@ const OutputButtons = () => {
                             </button>
                         </div>
                         <div className={"hstack mx-auto"}>
+                            {/*TODO: make buttons primary*/}
                             <button
                                 className={"btn btn-secondary figma-bg-secondary figma-text-dark figma-mr-sm"}
                                 onClick={handleExportCSS}

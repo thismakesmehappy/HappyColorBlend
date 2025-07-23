@@ -21,17 +21,17 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
     const addPrimaryColor = useSwatchStore((state) => state.addPrimaryColor);
     const removePrimaryColor = useSwatchStore((state) => state.removePrimaryColor);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
-    
+
     const [showWarningToast, setShowWarningToast] = useState(false);
     const [warningMessage, setWarningMessage] = useState("");
-    
+
     const hideWarningToast = () => {
         setShowWarningToast(false);
     };
-    
+
     const createRandomPrimaryColor = () => {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
-        const randomName = ColorNamer(`#${randomColor}`).ntc[0].name;
+        const randomName = ColorNamer(`#${randomColor}`).ntc[0].name; // modify to only include alpha characters
         const newPrimaryColor: SwatchStoreInputSwatch = {
             color: randomColor,
             name: randomName,
