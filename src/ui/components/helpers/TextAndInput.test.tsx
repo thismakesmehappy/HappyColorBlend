@@ -121,4 +121,59 @@ describe('TextAndInput Component', () => {
     const container = screen.getByText('Test Input').closest('div');
     expect(container).toHaveClass('custom-class');
   });
+
+  test('saves input when Enter key is pressed', () => {
+    render(<TextAndInput inputText="Test Input" setInputText={mockSetInputText} />);
+    
+    // Click the edit button to enter edit mode
+    fireEvent.click(screen.getByTestId('edit-button'));
+    
+    // Type in the input field
+    fireEvent.change(screen.getByTestId('swatch-name-input'), { target: { value: 'New Value' } });
+    
+    // Press Enter key
+    fireEvent.keyDown(screen.getByTestId('swatch-name-input'), { key: 'Enter', code: 'Enter' });
+    
+    // Check that setInputText was called with the new value
+    expect(mockSetInputText).toHaveBeenCalledWith('New Value');
+  });
+
+  test('cancels edit when Escape key is pressed', () => {
+    render(<TextAndInput inputText="Test Input" setInputText={mockSetInputText} />);
+    
+    // Click the edit button to enter edit mode
+    fireEvent.click(screen.getByTestId('edit-button'));
+    
+    // Type in the input field
+    fireEvent.change(screen.getByTestId('swatch-name-input'), { target: { value: 'New Value' } });
+    
+    // Press Escape key
+    fireEvent.keyDown(screen.getByTestId('swatch-name-input'), { key: 'Escape', code: 'Escape' });
+    
+    // Check that we're back in display mode with the original text
+    expect(screen.getByText('Test Input')).toBeInTheDocument();
+    expect(screen.queryByTestId('swatch-name-input')).not.toBeInTheDocument();
+    
+    // Check that setInputText was not called
+    expect(mockSetInputText).not.toHaveBeenCalled();
+  });
+
+  test('shows error toast when Enter is pressed on empty value', () => {
+    render(<TextAndInput inputText="Test Input" setInputText={mockSetInputText} />);
+    
+    // Click the edit button to enter edit mode
+    fireEvent.click(screen.getByTestId('edit-button'));
+    
+    // Clear the input field
+    fireEvent.change(screen.getByTestId('swatch-name-input'), { target: { value: '' } });
+    
+    // Press Enter key
+    fireEvent.keyDown(screen.getByTestId('swatch-name-input'), { key: 'Enter', code: 'Enter' });
+    
+    // Check that the toast is shown with the error message
+    expect(screen.getByTestId('mock-toast')).toBeInTheDocument();
+    
+    // Check that setInputText was not called
+    expect(mockSetInputText).not.toHaveBeenCalled();
+  });
 });

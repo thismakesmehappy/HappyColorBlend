@@ -208,4 +208,62 @@ describe('CustomSteps Component', () => {
     // Check that the toast is hidden
     expect(screen.queryByTestId('toast')).not.toBeInTheDocument();
   });
+
+  test('adds custom step when Enter key is pressed', () => {
+    render(<CustomSteps />);
+    
+    // Find the input and type a valid value
+    const input = screen.getByTestId('custom-step-input');
+    fireEvent.change(input, { target: { value: '123' } });
+    
+    // Press Enter key
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+    
+    // Check that the functions were called with the correct value
+    expect(mockAddCustomStep).toHaveBeenCalledWith(123);
+    expect(mockBuildSwatches).toHaveBeenCalledTimes(1);
+    
+    // Check that the input is cleared
+    expect(input).toHaveValue('');
+  });
+
+  test('clears input when Escape key is pressed', () => {
+    render(<CustomSteps />);
+    
+    // Find the input and type a value
+    const input = screen.getByTestId('custom-step-input');
+    fireEvent.change(input, { target: { value: '123' } });
+    
+    // Press Escape key
+    fireEvent.keyDown(input, { key: 'Escape', code: 'Escape' });
+    
+    // Check that the input is cleared
+    expect(input).toHaveValue('');
+    
+    // Check that the functions were not called
+    expect(mockAddCustomStep).not.toHaveBeenCalled();
+    expect(mockBuildSwatches).not.toHaveBeenCalled();
+  });
+
+  test('shows error toast when Enter is pressed on invalid value', async () => {
+    render(<CustomSteps />);
+    
+    // Find the input and type an invalid value
+    const input = screen.getByTestId('custom-step-input');
+    fireEvent.change(input, { target: { value: 'abc' } });
+    
+    // Press Enter key
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+    
+    // Check that the toast is displayed with the correct message
+    await waitFor(() => {
+      const toast = screen.getByTestId('toast');
+      expect(toast).toBeInTheDocument();
+      expect(toast).toHaveTextContent(INVALID_CUSTOM_STEP_NON_NUMERIC);
+    });
+    
+    // Check that the functions were not called
+    expect(mockAddCustomStep).not.toHaveBeenCalled();
+    expect(mockBuildSwatches).not.toHaveBeenCalled();
+  });
 });

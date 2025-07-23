@@ -9,6 +9,8 @@ interface SwatchLabelsProps {
     setTempSwatchColor: (newState: any) => void;
     tempSwatchName: string;
     setTempSwatchName: (newState: any) => void;
+    onSave?: () => void;
+    onCancel?: () => void;
 }
 
 const SwatchLabels = ({
@@ -19,6 +21,8 @@ const SwatchLabels = ({
                           setTempSwatchColor,
                           tempSwatchName,
                           setTempSwatchName,
+                          onSave,
+                          onCancel,
                       }: SwatchLabelsProps) => {
 
     const [isValidColor, setIsValidColor] = useState(isValidHexColor(tempSwatchColor))
@@ -28,18 +32,29 @@ const SwatchLabels = ({
         setIsValidColor(isValidHexColor(tempSwatchColor));
     }, [tempSwatchColor]);
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            onSave?.();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            onCancel?.();
+        }
+    };
 
     if (isEditing) return (
         <div className={"vstack"} data-testid="swatch-labels-edit">
             <div>
                 <input className="container-fluid text-center fw-bold" value={tempSwatchName}
                        onChange={(e) => setTempSwatchName(e.currentTarget.value)}
+                       onKeyDown={handleKeyDown}
                        data-testid="swatch-name-input" />
             </div>
             <div>
                 <input className={`container-fluid text-center ${!isValidColor ? 'border-danger' : ''}`}
                        value={tempSwatchColor}
                        onChange={(e) => setTempSwatchColor(e.currentTarget.value)}
+                       onKeyDown={handleKeyDown}
                        data-testid="swatch-color-input" />
             </div>
             <div>{isValidColor}</div>

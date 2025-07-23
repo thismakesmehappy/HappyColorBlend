@@ -51,6 +51,16 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
         return (text.trim() !== '');
     }
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            updateText();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            cancelEdit();
+        }
+    };
+
     return (
         <div className={className}
              style={style}>
@@ -59,6 +69,7 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
                 <div>
                     <input value={tempText}
                            onChange={(e) => setTempText(e.currentTarget.value)}
+                           onKeyDown={handleKeyDown}
                            data-testid="swatch-name-input"
                            className="w-75 figma-mr-xs"
                     />

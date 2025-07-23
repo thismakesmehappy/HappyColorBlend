@@ -89,6 +89,16 @@ export const CustomSteps = ({className = "", style = {}}: CustomStepsProps) => {
         }
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAddStep();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            setInputValue('');
+        }
+    };
+
     return (
         <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps">
             <span>
@@ -98,6 +108,7 @@ export const CustomSteps = ({className = "", style = {}}: CustomStepsProps) => {
                      // className="figma-input"
                      value={inputValue}
                      onChange={handleInputChange}
+                     onKeyDown={handleKeyDown}
                      style={{width: '8ch'}}
                      data-testid="custom-step-input"
                  />

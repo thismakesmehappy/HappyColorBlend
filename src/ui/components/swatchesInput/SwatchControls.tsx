@@ -1,11 +1,16 @@
 import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useImperativeHandle, forwardRef} from "react";
 import {isValidHexColor} from "../../helpers/colorMethods";
 import Toast from "../helpers/Toast";
 import {INVALID_HEX_COLOR_MESSAGE, TOAST_DURATION} from "../../../constants/uiConstants";
 import {UI_CHANNEL} from "@ui/app.network";
 import {PLUGIN} from "@common/networkSides";
 import ColorNamer from 'color-namer';
+
+export interface SwatchControlsRef {
+    update: () => void;
+    reset: () => void;
+}
 
 interface SwatchControlsProps {
     isEditing: boolean;
@@ -23,7 +28,7 @@ interface SwatchControlsProps {
     onDelete?: () => void;
 }
 
-const SwatchControls = ({
+const SwatchControls = forwardRef<SwatchControlsRef, SwatchControlsProps>(({
                             isEditing,
                             canDelete,
                             canPick,
@@ -37,7 +42,7 @@ const SwatchControls = ({
                             tempSwatchName,
                             setTempSwatchName,
                             onDelete,
-                        }: SwatchControlsProps) => {
+                        }, ref) => {
 
     const [isValidColor, setIsValidColor] = useState(isValidHexColor(tempSwatchColor));
     const [showToast, setShowToast] = useState(false);
@@ -95,6 +100,11 @@ const SwatchControls = ({
         setIsEditing(false)
     }
 
+    useImperativeHandle(ref, () => ({
+        update,
+        reset
+    }));
+
     if (isEditing) {
         return (
             <>
@@ -146,6 +156,8 @@ const SwatchControls = ({
             />
         </>
     );
-};
+});
+
+SwatchControls.displayName = 'SwatchControls';
 
 export default SwatchControls

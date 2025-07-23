@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Chip from "./Chip";
 import SwatchProps from "../../interfaces/SwatchProps";
-import SwatchControls from "./SwatchControls";
+import SwatchControls, {SwatchControlsRef} from "./SwatchControls";
 import SwatchLabels from "./SwatchLabels";
 
 const Swatch = ({
@@ -21,6 +21,7 @@ const Swatch = ({
     const [swatchName, setSwatchName] = useState(name);
     const [tempSwatchName, setTempSwatchName] = useState(name);
     const [hasUpdated, updateHasUpdated] = useState(false);
+    const swatchControlsRef = useRef<SwatchControlsRef>(null);
 
     useEffect(() => {
         if (updateSwatch && hasUpdated) {
@@ -43,6 +44,7 @@ const Swatch = ({
                 <Chip color={isEditing ? tempSwatchColor : swatchColor} className={"figma-border"} width={75}
                       height={75} data-testid="swatch-chip" />
                 {!displayOnly && <SwatchControls
+                    ref={swatchControlsRef}
                     isEditing={isEditing}
                     setIsEditing={setIsEditing}
                     canDelete={canDelete}
@@ -67,6 +69,8 @@ const Swatch = ({
                               setTempSwatchColor={setTempSwatchColor}
                               tempSwatchName={tempSwatchName}
                               setTempSwatchName={setTempSwatchName}
+                              onSave={() => swatchControlsRef.current?.update()}
+                              onCancel={() => swatchControlsRef.current?.reset()}
                 />
             </div>
         </div>
