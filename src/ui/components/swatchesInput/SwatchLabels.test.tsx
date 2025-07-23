@@ -145,4 +145,55 @@ describe('SwatchLabels Component', () => {
     // Now the input should have the error class
     expect(colorInput).toHaveClass('border-danger');
   });
+
+  test('focuses color input when entering edit mode', () => {
+    const { rerender } = render(<SwatchLabels {...defaultProps} isEditing={false} />);
+    
+    // Switch to edit mode
+    rerender(<SwatchLabels {...defaultProps} isEditing={true} />);
+    
+    // Check that the color input is focused
+    const colorInput = screen.getByTestId('swatch-color-input');
+    expect(colorInput).toHaveFocus();
+  });
+
+  test('calls onSave when Enter key is pressed on name input', () => {
+    const mockOnSave = jest.fn();
+    render(<SwatchLabels {...defaultProps} isEditing={true} onSave={mockOnSave} />);
+    
+    const nameInput = screen.getByTestId('swatch-name-input');
+    fireEvent.keyDown(nameInput, { key: 'Enter', code: 'Enter' });
+    
+    expect(mockOnSave).toHaveBeenCalledTimes(1);
+  });
+
+  test('calls onSave when Enter key is pressed on color input', () => {
+    const mockOnSave = jest.fn();
+    render(<SwatchLabels {...defaultProps} isEditing={true} onSave={mockOnSave} />);
+    
+    const colorInput = screen.getByTestId('swatch-color-input');
+    fireEvent.keyDown(colorInput, { key: 'Enter', code: 'Enter' });
+    
+    expect(mockOnSave).toHaveBeenCalledTimes(1);
+  });
+
+  test('calls onCancel when Escape key is pressed on name input', () => {
+    const mockOnCancel = jest.fn();
+    render(<SwatchLabels {...defaultProps} isEditing={true} onCancel={mockOnCancel} />);
+    
+    const nameInput = screen.getByTestId('swatch-name-input');
+    fireEvent.keyDown(nameInput, { key: 'Escape', code: 'Escape' });
+    
+    expect(mockOnCancel).toHaveBeenCalledTimes(1);
+  });
+
+  test('calls onCancel when Escape key is pressed on color input', () => {
+    const mockOnCancel = jest.fn();
+    render(<SwatchLabels {...defaultProps} isEditing={true} onCancel={mockOnCancel} />);
+    
+    const colorInput = screen.getByTestId('swatch-color-input');
+    fireEvent.keyDown(colorInput, { key: 'Escape', code: 'Escape' });
+    
+    expect(mockOnCancel).toHaveBeenCalledTimes(1);
+  });
 });

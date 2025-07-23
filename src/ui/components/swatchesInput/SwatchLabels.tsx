@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import {isValidHexColor} from "../../helpers/colorMethods";
 
 interface SwatchLabelsProps {
@@ -26,11 +26,17 @@ const SwatchLabels = ({
                       }: SwatchLabelsProps) => {
 
     const [isValidColor, setIsValidColor] = useState(isValidHexColor(tempSwatchColor))
-
+    const colorInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         setIsValidColor(isValidHexColor(tempSwatchColor));
     }, [tempSwatchColor]);
+
+    useEffect(() => {
+        if (isEditing && colorInputRef.current) {
+            colorInputRef.current.focus();
+        }
+    }, [isEditing]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
@@ -55,6 +61,7 @@ const SwatchLabels = ({
                        value={tempSwatchColor}
                        onChange={(e) => setTempSwatchColor(e.currentTarget.value)}
                        onKeyDown={handleKeyDown}
+                       ref={colorInputRef}
                        data-testid="swatch-color-input" />
             </div>
             <div>{isValidColor}</div>

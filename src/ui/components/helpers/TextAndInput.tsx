@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
 import Toast from "../helpers/Toast";
 import {TOAST_DURATION} from "../../../constants/uiConstants";
@@ -17,7 +17,13 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
     const [tempText, setTempText] = useState(inputText);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
-    ;
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (isEditing && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [isEditing]);
 
     // Function to show toast
     const showToastMessage = (message: string) => {
@@ -70,6 +76,7 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
                     <input value={tempText}
                            onChange={(e) => setTempText(e.currentTarget.value)}
                            onKeyDown={handleKeyDown}
+                           ref={inputRef}
                            data-testid="swatch-name-input"
                            className="w-75 figma-mr-xs"
                     />

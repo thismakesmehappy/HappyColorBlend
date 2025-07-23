@@ -176,4 +176,15 @@ describe('TextAndInput Component', () => {
     // Check that setInputText was not called
     expect(mockSetInputText).not.toHaveBeenCalled();
   });
+
+  test('focuses input when entering edit mode', () => {
+    render(<TextAndInput inputText="Test Input" setInputText={mockSetInputText} />);
+    
+    // Click the edit button to enter edit mode
+    fireEvent.click(screen.getByTestId('edit-button'));
+    
+    // Check that the input is focused
+    const input = screen.getByTestId('swatch-name-input');
+    expect(input).toHaveFocus();
+  });
 });
