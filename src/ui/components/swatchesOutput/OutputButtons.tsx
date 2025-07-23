@@ -182,51 +182,57 @@ const OutputButtons = () => {
     return (
         <>
             <div className={"sticky-bottom figma-p-md bg-white"}>
-                <div className={"d-flex justify-content-around mb-2"}>
-                    <button
-                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                        onClick={handleCreateVariables}
-                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                    >
-                        {isCreatingVariables ? "Creating..." : "Add Variables"}
-                    </button>
-                    <button
-                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                        onClick={handleCreateStyles}
-                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                    >
-                        {isCreatingStyles ? "Creating..." : "Add Styles"}
-                    </button>
-                    <button
-                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                        onClick={handleCreateSwatches}
-                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                    >
-                        {isCreatingSwatches ? "Creating..." : "Create Swatches"}
-                    </button>
-                    <Help
-                        content={"These buttons will create Figma variables, color styles, or swatch components from your generated color palette"}
-                        id="output-buttons-tooltip"
-                        placement={"top"}
-                        className={"figma-ml-xs"}
-                    />
-                </div>
+                <div className={"hstack gap-0"}>
+                    <div className={"vstack gap-2"}>
+                        <div className={"hstack mx-auto"}>
+                            <button
+                                className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                                onClick={handleCreateVariables}
+                                disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                            >
+                                {isCreatingVariables ? "Creating..." : "Add Variables"}
+                            </button>
+                            <button
+                                className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                                onClick={handleCreateStyles}
+                                disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                            >
+                                {isCreatingStyles ? "Creating..." : "Add Styles"}
+                            </button>
+                            <button
+                                className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                                onClick={handleCreateSwatches}
+                                disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                            >
+                                {isCreatingSwatches ? "Creating..." : "Create Swatches"}
+                            </button>
+                        </div>
+                        <div className={"hstack mx-auto"}>
+                            <button
+                                className={"btn btn-secondary figma-bg-secondary figma-text-dark figma-mr-sm"}
+                                onClick={handleExportCSS}
+                                disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                            >
+                                Copy CSS Variables
+                            </button>
+                            <button
+                                className={"btn btn-secondary figma-bg-secondary figma-text-dark"}
+                                onClick={handleExportSCSS}
+                                disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                            >
+                                Copy SCSS Variables
+                            </button>
+                        </div>
+                    </div>
+                    <div className={"d-inline-block figma-ml-xs"}>
+                        <Help
+                            content={"These buttons will create Figma variables, color styles, or swatch components from your generated color palette"}
+                            id="output-buttons-tooltip"
+                            placement={"top"}
+                            className={"figma-ml-xs"}
+                        />
+                    </div>
 
-                <div className={"d-flex justify-content-center"}>
-                    <button
-                        className={"btn btn-secondary figma-bg-secondary figma-text-dark figma-mr-sm"}
-                        onClick={handleExportCSS}
-                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                    >
-                        Copy CSS Variables
-                    </button>
-                    <button
-                        className={"btn btn-secondary figma-bg-secondary figma-text-dark"}
-                        onClick={handleExportSCSS}
-                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                    >
-                        Copy SCSS Variables
-                    </button>
                 </div>
             </div>
 
