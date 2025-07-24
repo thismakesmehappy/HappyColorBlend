@@ -189,4 +189,53 @@ describe('tokenName', () => {
             expect(computeTokenName('test example', 'upper', 'underscore', 1, 2, 'underscore', 'dash')).toBe('_TEST_EXAMPLE--');
         });
     });
+
+    // Test appendPrefix parameter
+    describe('appendPrefix parameter', () => {
+        test('adds leading characters when appendPrefix is true (default)', () => {
+            expect(computeTokenName('Color', 'keep', 'keep', 2, 0, 'dash', 'dash', true, true)).toBe('--Color');
+            expect(computeTokenName('Color', 'keep', 'keep', 1, 0, 'underscore', 'dash', true, true)).toBe('_Color');
+            expect(computeTokenName('Color', 'keep', 'keep', 3, 0, 'dash', 'dash', true, true)).toBe('---Color');
+        });
+
+        test('does not add leading characters when appendPrefix is false', () => {
+            expect(computeTokenName('Color', 'keep', 'keep', 2, 0, 'dash', 'dash', true, false)).toBe('Color');
+            expect(computeTokenName('Color', 'keep', 'keep', 1, 0, 'underscore', 'dash', true, false)).toBe('Color');
+            expect(computeTokenName('Color', 'keep', 'keep', 3, 0, 'dash', 'dash', true, false)).toBe('Color');
+        });
+
+        test('still applies case treatment and space treatment when appendPrefix is false', () => {
+            expect(computeTokenName('Primary Color', 'lower', 'dash', 2, 0, 'dash', 'dash', true, false)).toBe('primary-color');
+            expect(computeTokenName('Mixed Case', 'upper', 'underscore', 1, 0, 'dash', 'dash', true, false)).toBe('MIXED_CASE');
+            expect(computeTokenName('test example', 'title', 'remove', 3, 0, 'dash', 'dash', true, false)).toBe('TestExample');
+        });
+
+        test('still applies separator characters when appendPrefix is false and appendSeparator is true', () => {
+            expect(computeTokenName('Color', 'keep', 'keep', 2, 1, 'dash', 'dash', true, false)).toBe('Color-');
+            expect(computeTokenName('Color', 'keep', 'keep', 1, 2, 'dash', 'underscore', true, false)).toBe('Color__');
+            expect(computeTokenName('Color', 'keep', 'keep', 3, 3, 'underscore', 'dash', true, false)).toBe('Color---');
+        });
+
+        test('combines appendPrefix false with appendSeparator false', () => {
+            expect(computeTokenName('Primary Color', 'lower', 'dash', 2, 1, 'dash', 'dash', false, false)).toBe('primary-color');
+            expect(computeTokenName('Test Example', 'upper', 'underscore', 1, 2, 'underscore', 'dash', false, false)).toBe('TEST_EXAMPLE');
+            expect(computeTokenName('Mixed Case', 'title', 'remove', 3, 3, 'dash', 'underscore', false, false)).toBe('MixedCase');
+        });
+
+        test('appendPrefix false with zero leading characters has same result as appendPrefix true', () => {
+            const input = 'Primary Color';
+            const result1 = computeTokenName(input, 'lower', 'dash', 0, 1, 'dash', 'dash', true, false);
+            const result2 = computeTokenName(input, 'lower', 'dash', 0, 1, 'dash', 'dash', true, true);
+            expect(result1).toBe(result2);
+            expect(result1).toBe('primary-color-');
+        });
+
+        test('appendPrefix parameter works with complex combinations', () => {
+            // With appendPrefix true
+            expect(computeTokenName('test example', 'upper', 'dash', 2, 2, 'underscore', 'dash', true, true)).toBe('__TEST-EXAMPLE--');
+            
+            // With appendPrefix false - same input but no leading characters
+            expect(computeTokenName('test example', 'upper', 'dash', 2, 2, 'underscore', 'dash', true, false)).toBe('TEST-EXAMPLE--');
+        });
+    });
 });

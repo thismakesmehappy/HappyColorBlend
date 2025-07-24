@@ -26,6 +26,30 @@ jest.mock('../helpers/NumberToggle', () => {
   };
 });
 
+// Mock the Toggle component
+jest.mock('../helpers/Toggle', () => {
+  return function MockToggle({ 
+    value, 
+    onChange, 
+    className 
+  }: { 
+    value: boolean, 
+    onChange: () => void, 
+    className?: string 
+  }) {
+    return (
+      <div data-testid="mock-toggle" className={className}>
+        <button 
+          data-testid="toggle-button" 
+          onClick={() => onChange()}
+        >
+          {value ? 'ON' : 'OFF'}
+        </button>
+      </div>
+    );
+  };
+});
+
 // Mock the useTokenNameStore hook
 jest.mock('../../store/useTokenNameStore', () => ({
   __esModule: true,
@@ -45,20 +69,26 @@ describe('Leading Component', () => {
   let mockIncrementLeadingChars: jest.Mock;
   let mockDecrementLeadingChars: jest.Mock;
   let mockSetLeadingCharType: jest.Mock;
+  let mockToggleKeepCSSClean: jest.Mock;
+  let mockKeepCSSClean: boolean;
   
   beforeEach(() => {
     // Reset the mock functions before each test
     mockIncrementLeadingChars = jest.fn();
     mockDecrementLeadingChars = jest.fn();
     mockSetLeadingCharType = jest.fn();
+    mockToggleKeepCSSClean = jest.fn();
+    mockKeepCSSClean = true;
     
     require('../../store/useTokenNameStore').default.mockImplementation((selector: any) => {
       const state = {
         leadingCharsCount: 0,
         leadingCharType: 'dash',
+        keepCSSClean: mockKeepCSSClean,
         incrementLeadingChars: mockIncrementLeadingChars,
         decrementLeadingChars: mockDecrementLeadingChars,
-        setLeadingCharType: mockSetLeadingCharType
+        setLeadingCharType: mockSetLeadingCharType,
+        toggleKeepCSSClean: mockToggleKeepCSSClean
       };
       return selector(state);
     });
@@ -106,5 +136,75 @@ describe('Leading Component', () => {
     
     // Check that setLeadingCharType was called with 'underscore'
     expect(mockSetLeadingCharType).toHaveBeenCalledWith('underscore');
+  });
+
+  test('renders the CSS variables append toggle', () => {
+    render(<Leading />);
+    
+    // Check that the toggle component is rendered
+    expect(screen.getByTestId('mock-toggle')).toBeInTheDocument();
+    
+    // Check that the label is rendered
+    expect(screen.getByText('Append to CSS vars')).toBeInTheDocument();
+  });
+
+  test('toggle shows OFF when keepCSSClean is true', () => {
+    mockKeepCSSClean = true;
+    
+    require('../../store/useTokenNameStore').default.mockImplementation((selector: any) => {
+      const state = {
+        leadingCharsCount: 0,
+        leadingCharType: 'dash',
+        keepCSSClean: mockKeepCSSClean,
+        incrementLeadingChars: mockIncrementLeadingChars,
+        decrementLeadingChars: mockDecrementLeadingChars,
+        setLeadingCharType: mockSetLeadingCharType,
+        toggleKeepCSSClean: mockToggleKeepCSSClean
+      };
+      return selector(state);
+    });
+    
+    render(<Leading />);
+    
+    const toggleButton = screen.getByTestId('toggle-button');
+    expect(toggleButton).toHaveTextContent('OFF');
+  });
+
+  test('toggle shows ON when keepCSSClean is false', () => {
+    mockKeepCSSClean = false;
+    
+    require('../../store/useTokenNameStore').default.mockImplementation((selector: any) => {
+      const state = {
+        leadingCharsCount: 0,
+        leadingCharType: 'dash',
+        keepCSSClean: mockKeepCSSClean,
+        incrementLeadingChars: mockIncrementLeadingChars,
+        decrementLeadingChars: mockDecrementLeadingChars,
+        setLeadingCharType: mockSetLeadingCharType,
+        toggleKeepCSSClean: mockToggleKeepCSSClean
+      };
+      return selector(state);
+    });
+    
+    render(<Leading />);
+    
+    const toggleButton = screen.getByTestId('toggle-button');
+    expect(toggleButton).toHaveTextContent('ON');
+  });
+
+  test('calls toggleKeepCSSClean when CSS append toggle is clicked', () => {
+    render(<Leading />);
+    
+    const toggleButton = screen.getByTestId('toggle-button');
+    fireEvent.click(toggleButton);
+    
+    expect(mockToggleKeepCSSClean).toHaveBeenCalledTimes(1);
+  });
+
+  test('applies correct CSS classes to CSS append toggle', () => {
+    render(<Leading />);
+    
+    const toggle = screen.getByTestId('mock-toggle');
+    expect(toggle).toHaveClass('d-inline-block figma-mr-sm');
   });
 });

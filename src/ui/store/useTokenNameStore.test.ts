@@ -18,6 +18,7 @@ describe('useTokenNameStore', () => {
         expect(result.current.separatorCharsCount).toBe(initialState.separatorCharsCount);
         expect(result.current.leadingCharType).toBe(initialState.leadingCharType);
         expect(result.current.separatorCharType).toBe(initialState.separatorCharType);
+        expect(result.current.keepCSSClean).toBe(initialState.keepCSSClean);
     });
 
     test('should update caseTreatment', () => {
@@ -224,6 +225,41 @@ describe('useTokenNameStore', () => {
         expect(result.current.separatorCharType).toBe('dash');
     });
 
+    test('should update keepCSSClean', () => {
+        const {result} = renderHook(() => useTokenNameStore());
+
+        act(() => {
+            result.current.setKeepCSSClean(false);
+        });
+
+        expect(result.current.keepCSSClean).toBe(false);
+
+        act(() => {
+            result.current.setKeepCSSClean(true);
+        });
+
+        expect(result.current.keepCSSClean).toBe(true);
+    });
+
+    test('should toggle keepCSSClean', () => {
+        const {result} = renderHook(() => useTokenNameStore());
+
+        // Default is true
+        expect(result.current.keepCSSClean).toBe(true);
+
+        act(() => {
+            result.current.toggleKeepCSSClean();
+        });
+
+        expect(result.current.keepCSSClean).toBe(false);
+
+        act(() => {
+            result.current.toggleKeepCSSClean();
+        });
+
+        expect(result.current.keepCSSClean).toBe(true);
+    });
+
     test('should reset to defaults', () => {
         const {result} = renderHook(() => useTokenNameStore());
 
@@ -235,6 +271,7 @@ describe('useTokenNameStore', () => {
             result.current.setSeparatorCharsCount(2);
             result.current.setLeadingCharType('underscore');
             result.current.setSeparatorCharType('underscore');
+            result.current.setKeepCSSClean(false);
         });
 
         // Reset
@@ -249,5 +286,6 @@ describe('useTokenNameStore', () => {
         expect(result.current.separatorCharsCount).toBe(initialState.separatorCharsCount);
         expect(result.current.leadingCharType).toBe(initialState.leadingCharType);
         expect(result.current.separatorCharType).toBe(initialState.separatorCharType);
+        expect(result.current.keepCSSClean).toBe(initialState.keepCSSClean);
     });
 });
