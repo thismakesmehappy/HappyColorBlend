@@ -99,6 +99,7 @@ describe('Style Creation Integration (Simplified)', () => {
       leadingCharType: 'dash',
       separatorCharType: 'underscore',
       appendSeparatorToPrimitive: false,
+      keepCSSClean: true,
       setCaseTreatment: jest.fn(),
       setSpaceTreatment: jest.fn(),
       setLeadingCharsCount: jest.fn(),
@@ -106,13 +107,15 @@ describe('Style Creation Integration (Simplified)', () => {
       setLeadingCharType: jest.fn(),
       setSeparatorCharType: jest.fn(),
       setAppendSeparatorToPrimitive: jest.fn(),
+      setKeepCSSClean: jest.fn(),
       incrementLeadingChars: jest.fn(),
       decrementLeadingChars: jest.fn(),
       incrementSeparatorChars: jest.fn(),
       decrementSeparatorChars: jest.fn(),
       toggleLeadingCharType: jest.fn(),
       toggleSeparatorCharType: jest.fn(),
-      toggleAppendSeparatorToPrimitive: jest.fn()
+      toggleAppendSeparatorToPrimitive: jest.fn(),
+      toggleKeepCSSClean: jest.fn()
     };
   });
 

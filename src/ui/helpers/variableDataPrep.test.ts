@@ -92,6 +92,7 @@ describe('prepareSwatchVariableData', () => {
       leadingCharType: 'dash',
       separatorCharType: 'underscore',
       appendSeparatorToPrimitive: false,
+      keepCSSClean: true,
       // Mock setter functions (not used in this test)
       setCaseTreatment: jest.fn(),
       setSpaceTreatment: jest.fn(),
@@ -100,6 +101,7 @@ describe('prepareSwatchVariableData', () => {
       setLeadingCharType: jest.fn(),
       setSeparatorCharType: jest.fn(),
       setAppendSeparatorToPrimitive: jest.fn(),
+      setKeepCSSClean: jest.fn(),
       // Mock action functions (not used in this test)
       incrementLeadingChars: jest.fn(),
       decrementLeadingChars: jest.fn(),
@@ -107,7 +109,8 @@ describe('prepareSwatchVariableData', () => {
       decrementSeparatorChars: jest.fn(),
       toggleLeadingCharType: jest.fn(),
       toggleSeparatorCharType: jest.fn(),
-      toggleAppendSeparatorToPrimitive: jest.fn()
+      toggleAppendSeparatorToPrimitive: jest.fn(),
+      toggleKeepCSSClean: jest.fn()
     };
   });
 

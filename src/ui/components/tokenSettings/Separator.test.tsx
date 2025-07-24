@@ -106,7 +106,8 @@ describe('Separator Component', () => {
 
         // Check that the labels are rendered
         expect(screen.getByText('Separator Character:')).toBeInTheDocument();
-        expect(screen.getByText('Append to primitives')).toBeInTheDocument();
+        expect(screen.getByText('Append' +
+            ' to primitives')).toBeInTheDocument();
 
         // Check that the toggle component is rendered
         expect(screen.getByTestId('mock-toggle')).toBeInTheDocument();

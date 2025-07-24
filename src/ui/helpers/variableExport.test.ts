@@ -7,6 +7,10 @@ const mockSwatchStore: Partial<SwatchStoreState> = {
     shade: { color: '000000', name: 'Black', id: 'shade' },
     tint: { color: 'FFFFFF', name: 'White', id: 'tint' },
     shadeTintRampName: 'Gray',
+    primaryColors: [
+        { color: '3B82F6', name: 'Blue', id: 'blue' }
+    ],
+    combinedSteps: new Set([400, 500, 600]),
     swatches: [
         {
             base: { color: '3B82F6', name: 'Blue', id: 'blue' },
@@ -27,7 +31,8 @@ const mockTokenStore: Partial<TokenNameStoreState> = {
     separatorCharsCount: 0,
     leadingCharType: 'dash',
     separatorCharType: 'dash',
-    appendSeparatorToPrimitive: false
+    appendSeparatorToPrimitive: false,
+    keepCSSClean: true
 };
 
 describe('variableExport', () => {
@@ -38,14 +43,14 @@ describe('variableExport', () => {
                 mockTokenStore as TokenNameStoreState
             );
 
-            expect(result).toContain(':root {');
-            expect(result).toContain('/* Gray Shade/Tint */');
+            expect(result).toContain(':root');
+            expect(result).toContain('/* Shade/Tint */');
             expect(result).toContain('--black: #000000;');
             expect(result).toContain('--white: #FFFFFF;');
-            expect(result).toContain('/* Blue Colors */');
-            expect(result).toContain('--blue-400: #60A5FA;');
-            expect(result).toContain('--blue-500: #3B82F6;');
-            expect(result).toContain('--blue-600: #2563EB;');
+            expect(result).toContain('/* Primary Colors */');
+            expect(result).toContain('--blue: #3B82F6;');
+            expect(result).toContain('/* Gray */');
+            expect(result).toContain('/* Blue */');
             expect(result).toContain('}');
         });
     });
@@ -57,13 +62,13 @@ describe('variableExport', () => {
                 mockTokenStore as TokenNameStoreState
             );
 
-            expect(result).toContain('// Gray Shade/Tint');
+            expect(result).toContain('/* Shade/Tint */');
             expect(result).toContain('$black: #000000;');
             expect(result).toContain('$white: #FFFFFF;');
-            expect(result).toContain('// Blue Colors');
-            expect(result).toContain('$blue-400: #60A5FA;');
-            expect(result).toContain('$blue-500: #3B82F6;');
-            expect(result).toContain('$blue-600: #2563EB;');
+            expect(result).toContain('/* Primary Colors */');
+            expect(result).toContain('$blue: #3B82F6;');
+            expect(result).toContain('/* Gray */');
+            expect(result).toContain('/* Blue */');
         });
     });
 });
