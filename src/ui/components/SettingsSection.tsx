@@ -13,6 +13,7 @@ import useSwatchStore from "@ui/store/useSwatchStore";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import TooltipWrapper from '@ui/components/helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
+import CleanVariables from "@ui/components/tokenSettings/CleanVariables";
 
 
 interface LeftColumnProps extends ClassAndStyle {
@@ -52,6 +53,7 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
             <Spaces />
             <Leading />
             <Separator />
+            {/*<CleanVariables />*/}
             {/*<Settings />*/}
 
         </div>);

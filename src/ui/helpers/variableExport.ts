@@ -16,10 +16,11 @@ const formatVariableName = (name: string, tokenStore: TokenNameStoreState, appen
         tokenStore.caseTreatment,
         tokenStore.spaceTreatment,
         tokenStore.leadingCharsCount,
-        tokenStore.separatorCharsCount, // No separator chars (trailing)
+        tokenStore.separatorCharsCount,
         tokenStore.leadingCharType,
         tokenStore.separatorCharType,
-        appendSeparator // Don't append separator
+        appendSeparator,
+        !tokenStore.keepCSSClean
     );
 };
 

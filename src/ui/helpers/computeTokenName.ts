@@ -52,14 +52,15 @@ export const computeTokenName = (
     separatorCharsCount: number = 0,
     leadingCharType: CharType = 'dash',
     separatorCharType: CharType = 'dash',
-    appendSeparator: boolean = true
+    appendSeparator: boolean = true,
+    appendPrefix: boolean = true
 ) => {
     // First change the casing
     const withTreatCase = treatCase(input, caseTreatment);
     // Then treat spaces
     const withTreatSpace = treatSpace(withTreatCase, spaceTreatment);
     // Then add leading characters
-    const withLeadingCharacters = addLeadingChars(withTreatSpace, leadingCharsCount, leadingCharType);
+    const withLeadingCharacters = appendPrefix ? addLeadingChars(withTreatSpace, leadingCharsCount, leadingCharType) : withTreatSpace;
     // Add separator characters only if appendSeparator is true
     const withSeparator = appendSeparator ? addSeparatorChars(withLeadingCharacters, separatorCharsCount, separatorCharType) : withLeadingCharacters;
     return withSeparator;

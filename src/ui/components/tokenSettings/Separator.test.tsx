@@ -39,8 +39,8 @@ jest.mock('../helpers/Toggle', () => {
     }) {
         return (
             <div data-testid="mock-toggle" className={className}>
-                <button 
-                    data-testid="toggle-button" 
+                <button
+                    data-testid="toggle-button"
                     onClick={() => onChange(!value)}
                 >
                     {value ? 'ON' : 'OFF'}
@@ -106,7 +106,7 @@ describe('Separator Component', () => {
 
         // Check that the labels are rendered
         expect(screen.getByText('Separator Character:')).toBeInTheDocument();
-        expect(screen.getByText('Append separator to primitives')).toBeInTheDocument();
+        expect(screen.getByText('Append to primitives')).toBeInTheDocument();
 
         // Check that the toggle component is rendered
         expect(screen.getByTestId('mock-toggle')).toBeInTheDocument();

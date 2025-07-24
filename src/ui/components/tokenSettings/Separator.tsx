@@ -45,7 +45,7 @@ const Separator = () => {
                     onChange={toggleAppendSeparatorToPrimitive}
                     className={"d-inline-block figma-mr-sm"}
                 />
-                    <div className={"d-inline-block"}>Append separator to primitives</div>
+                    <div className={"d-inline-block"}>Append to primitives</div>
                 </div>
 
             </div>

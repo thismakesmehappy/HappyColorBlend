@@ -14,6 +14,7 @@ export const initialState = {
     leadingCharType: 'dash' as CharType,
     separatorCharType: 'dash' as CharType,
     appendSeparatorToPrimitive: false,
+    keepCSSClean: true,
 };
 
 // Define the store state interface
@@ -26,6 +27,7 @@ export interface TokenNameStoreState {
     leadingCharType: CharType;
     separatorCharType: CharType;
     appendSeparatorToPrimitive: boolean;
+    keepCSSClean: boolean;
 
     // Setters
     setCaseTreatment: (treatment: CaseTreatment) => void;
@@ -35,6 +37,7 @@ export interface TokenNameStoreState {
     setLeadingCharType: (type: CharType) => void;
     setSeparatorCharType: (type: CharType) => void;
     setAppendSeparatorToPrimitive: (useAsSeparator: boolean) => void;
+    setKeepCSSClean: (keepCSSClean: boolean) => void;
 
     // Actions
     incrementLeadingChars: () => void;
@@ -44,6 +47,7 @@ export interface TokenNameStoreState {
     toggleLeadingCharType: () => void;
     toggleSeparatorCharType: () => void;
     toggleAppendSeparatorToPrimitive: () => void;
+    toggleKeepCSSClean: () => void;
 
     // Reset to defaults
     resetToDefaults: () => void;
@@ -62,6 +66,7 @@ const useTokenNameStore = create<TokenNameStoreState>()((set) => ({
     setLeadingCharType: (leadingCharType: CharType) => set({leadingCharType}),
     setSeparatorCharType: (separatorCharType: CharType) => set({separatorCharType: separatorCharType}),
     setAppendSeparatorToPrimitive: (appendSeparatorToPrimitive: boolean) => set({appendSeparatorToPrimitive}),
+    setKeepCSSClean: (keepCSSClean: boolean) => set({keepCSSClean}),
 
     // Actions
     incrementLeadingChars: () => set((state) => ({leadingCharsCount: state.leadingCharsCount + 1})),
@@ -76,6 +81,9 @@ const useTokenNameStore = create<TokenNameStoreState>()((set) => ({
     })),
     toggleAppendSeparatorToPrimitive: () => set((state) => ({
         appendSeparatorToPrimitive: !state.appendSeparatorToPrimitive
+    })),
+    toggleKeepCSSClean: () => set((state) => ({
+        keepCSSClean: !state.keepCSSClean
     })),
 
     // Reset to defaults
