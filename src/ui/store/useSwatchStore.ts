@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
-import {blendPrimaryColor} from "../helpers/colorMethods";
+import {blendPrimaryColor, blendColor} from "../helpers/colorMethods";
 import steps from "../components/Steps";
 
 export const initialState = {
@@ -103,6 +103,7 @@ export interface SwatchStoreState {
     addCustomStep: (step: number) => void;
     removeCustomStep: (step: number) => void;
     buildSwatches: () => SwatchStoreSwatches[];
+    buildToneRamp: () => SwatchStoreSwatch[];
     setShadeTintRampName: (name: string) => void;
 }
 
@@ -223,6 +224,23 @@ const useSwatchStore = create<SwatchStoreState>()(
             set({swatches: newSwatches});
 
             return newSwatches;
+        },
+
+        buildToneRamp: () => {
+            const state = get();
+            state.setCombinedSteps();
+            const combinedSteps = Array.from(state.getCombinedSteps());
+            const shadeColor = state.getShade();
+            const tintColor = state.getTint();
+
+            const toneRamp: SwatchStoreSwatch[] = combinedSteps.map((step) => {
+                return {
+                    color: blendColor(shadeColor.color, tintColor.color, step),
+                    step: step,
+                }
+            });
+
+            return toneRamp;
         }
     })
 );

@@ -80,6 +80,7 @@ describe('prepareSwatchVariableData', () => {
       addCustomStep: jest.fn(),
       removeCustomStep: jest.fn(),
       buildSwatches: jest.fn(),
+      buildToneRamp: jest.fn(),
       setShadeTintRampName: jest.fn()
     };
 

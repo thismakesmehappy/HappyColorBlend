@@ -1,7 +1,6 @@
 import {SwatchStoreState, SwatchStoreSwatch, SwatchStoreSwatches} from "@ui/store/useSwatchStore";
 import {TokenNameStoreState} from "@ui/store/useTokenNameStore";
 import {computeTokenName} from "./computeTokenName";
-import {blendColor} from "@ui/helpers/colorMethods";
 
 export interface VariableExportData {
     shade: { color: string; name: string };
@@ -30,16 +29,10 @@ export const generateVariables = (
     indent: string = '',
     prepend: string = ''
 ): string => {
-    const {shade, tint, swatches, shadeTintRampName, primaryColors, combinedSteps} = swatchStore;
+    const {shade, tint, swatches, shadeTintRampName, primaryColors} = swatchStore;
     const lines: string[] = [];
 
-    // TODO: Move logic to useSwatchStore
-    const toneRamp: SwatchStoreSwatch[] = Array.from(combinedSteps).map((step) => {
-        return {
-            color: blendColor(shade.color, tint.color, step),
-            step: step,
-        }
-    });
+    const toneRamp: SwatchStoreSwatch[] = swatchStore.buildToneRamp();
 
 
     // Add shade/tint variables

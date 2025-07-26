@@ -1,7 +1,6 @@
 import React from 'react';
-import useSwatchStore, {SwatchStoreSwatch} from "../store/useSwatchStore";
+import useSwatchStore from "../store/useSwatchStore";
 import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
-import {blendColor} from "../helpers/colorMethods";
 import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
 import SwatchPrimitives from "@ui/components/swatchesOutput/SwatchPrimitives";
 
@@ -15,15 +14,9 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
     const swatches = useSwatchStore((state) => state.getSwatches());
     const tintColor = useSwatchStore((state) => state.getTint());
     const shadeColor = useSwatchStore((state) => state.getShade());
-    const combinedSteps: number[] = Array.from(useSwatchStore((state) => state.getCombinedSteps()));
     const shadeTintRampName = useSwatchStore(state => state.getShadeTintRampName());
-    // # TODO: Move logic to useSwatchStore
-    const toneRamp: SwatchStoreSwatch[] = combinedSteps.map((step) => {
-        return {
-            color: blendColor(shadeColor.color, tintColor.color, step),
-            step: step,
-        }
-    });
+    const buildToneRamp = useSwatchStore(state => state.buildToneRamp);
+    const toneRamp = buildToneRamp();
     return (
         <div
             className={className}

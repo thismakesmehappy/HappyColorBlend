@@ -20,6 +20,11 @@ const mockSwatchStore: Partial<SwatchStoreState> = {
                 { color: '2563EB', step: 600 }
             ]
         }
+    ],
+    buildToneRamp: () => [
+        { color: '666666', step: 400 },
+        { color: '808080', step: 500 },
+        { color: '999999', step: 600 }
     ]
 };
 
