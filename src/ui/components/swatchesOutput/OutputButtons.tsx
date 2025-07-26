@@ -208,16 +208,15 @@ const OutputButtons = () => {
                             </button>
                         </div>
                         <div className={"hstack mx-auto"}>
-                            {/*TODO: make buttons primary*/}
                             <button
-                                className={"btn btn-secondary figma-bg-secondary figma-text-dark figma-mr-sm"}
+                                className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
                                 onClick={handleExportCSS}
                                 disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                             >
                                 Copy CSS Variables
                             </button>
                             <button
-                                className={"btn btn-secondary figma-bg-secondary figma-text-dark"}
+                                className={"btn btn-primary figma-bg-primary figma-text-light"}
                                 onClick={handleExportSCSS}
                                 disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                             >
