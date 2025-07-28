@@ -17,6 +17,8 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         const setShade = useSwatchStore(state => state.setShade);
         const setTint = useSwatchStore(state => state.setTint);
         const buildSwatches = useSwatchStore((state) => state.buildSwatches);
+        const gradientDirection = useSwatchStore(state => state.getGradientDirection());
+        const toggleGradientDirection = useSwatchStore(state => state.toggleGradientDirection);
         const [shadeName, setShadeName] = useState(shade.name);
         const [shadeColor, setShadeColor] = useState(shade.color);
         const [tintName, setTintName] = useState(tint.name);
@@ -29,51 +31,106 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
             setTintColor(tint.color);
         }, [shade, tint]);
 
+        // Determine display order and labels based on gradient direction
+        const isShadeFirst = gradientDirection === 'shade-to-tint';
+        const leftSide = isShadeFirst
+            ? {
+                color: shade,
+                displayColor: shadeColor,
+                displayName: shadeName,
+                label: "Shade",
+                updateFn: setShade,
+                helpContent: "The darker color that will be mixed with your primary colors to create darker tones"
+            }
+            : {
+                color: tint,
+                displayColor: tintColor,
+                displayName: tintName,
+                label: "Tint",
+                updateFn: setTint,
+                helpContent: "The lighter color that will be mixed with your primary colors to create lighter tones"
+            };
+
+        const rightSide = isShadeFirst
+            ? {
+                color: tint,
+                displayColor: tintColor,
+                displayName: tintName,
+                label: "Tint",
+                updateFn: setTint,
+                helpContent: "The lighter color that will be mixed with your primary colors to create lighter tones"
+            }
+            : {
+                color: shade,
+                displayColor: shadeColor,
+                displayName: shadeName,
+                label: "Shade",
+                updateFn: setShade,
+                helpContent: "The darker color that will be mixed with your primary colors to create darker tones"
+            };
+
         return (
             <div className={className} style={style} data-testid={"shade-tint"} ref={ref}>
-                {/* Shade-tint content */}
-                {/* <div className={"row"}> */}
                 <div className={"row"}>
-                    {/* <div className={"col col-6"}> */}
                     <div className={"col col-6"}>
-                        <div className={"figma-subtitle"}>Shade
-                            <Help
-                                content="The darker color that will be mixed with your primary colors to create darker tones"
-                                id="shade-tooltip"
-                                placement={"bottom-start"}
-                                className={"figma-ml-xs"}
-                            /></div>
-                        <Swatch color={shadeColor} name={shadeName}
-                                updateSwatch={function (color: string, name: string): void {
-                                    setShade(color, name);
-                                    buildSwatches();
-                                }}
-                                id={shade.id}
-                                canPick={true}
+                        <div className={"figma-subtitle text-center"}>
+                            {leftSide.label} <Help
+                            content={leftSide.helpContent}
+                            id={`${leftSide.color.id}-tooltip`}
+                            placement={"bottom-start"}
+                            className={"figma-ml-xs"}
+                        /><br />
+                            0
+
+                        </div>
+                        <Swatch
+                            color={leftSide.displayColor}
+                            name={leftSide.displayName}
+                            updateSwatch={function (color: string, name: string): void {
+                                leftSide.updateFn(color, name);
+                                buildSwatches();
+                            }}
+                            id={leftSide.color.id}
+                            canPick={true}
                         />
                     </div>
-                    {/* <div className={"col col-6"}> */}
-                    <div className={"col col-6"}>
-                        <div className={"figma-subtitle"}>Tint
-                            <Help
-                                content="The lighter color that will be mixed with your primary colors to create lighter tones"
-                                placement={"bottom-start"}
-                                className={"figma-ml-xs"}
-                            />
-                        </div>
 
-                        <Swatch color={tintColor} name={tintName}
-                                updateSwatch={function (color: string, name: string): void {
-                                    setTint(color, name);
-                                    buildSwatches();
-                                }}
-                                id={tint.id}
-                                canPick={true}
+                    <div className={"col col-6"}>
+                        <div className={"figma-subtitle text-center"}>
+                            {rightSide.label} <Help
+                            content={rightSide.helpContent}
+                            id={`${rightSide.color.id}-tooltip`}
+                            placement={"bottom-start"}
+                            className={"figma-ml-xs"}
+                        /><br />
+                            1000
+
+                        </div>
+                        <Swatch
+                            color={rightSide.displayColor}
+                            name={rightSide.displayName}
+                            updateSwatch={function (color: string, name: string): void {
+                                rightSide.updateFn(color, name);
+                                buildSwatches();
+                            }}
+                            id={rightSide.color.id}
+                            canPick={true}
                         />
                     </div>
                 </div>
+                <div className={"row"}>
+                    <div className={"col text-center"}>
 
-
+                        <span
+                            className={"figma-text-primary"}
+                            onClick={toggleGradientDirection}
+                            data-testid="flip-gradient-button"
+                            style={{padding: '4px 8px'}}
+                        >
+                            <FontAwesomeIcon icon="arrows-rotate" />
+                        </span>
+                    </div>
+                </div>
             </div>
         );
     }

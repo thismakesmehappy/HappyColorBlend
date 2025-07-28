@@ -88,8 +88,19 @@ describe('Style Creation Integration (Simplified)', () => {
       addCustomStep: jest.fn(),
       removeCustomStep: jest.fn(),
       buildSwatches: jest.fn(),
-      buildToneRamp: jest.fn(),
-      setShadeTintRampName: jest.fn()
+      buildToneRamp: jest.fn().mockReturnValue([
+        { color: '323232', step: 50 },
+        { color: '646464', step: 100 },
+        { color: 'C8C8C8', step: 200 },
+        { color: 'F0F0F0', step: 300 },
+        { color: 'F8F8F8', step: 400 },
+        { color: 'FCFCFC', step: 500 },
+        { color: 'FEFEFE', step: 950 }
+      ]),
+      setShadeTintRampName: jest.fn(),
+      gradientDirection: 'shade-to-tint' as const,
+      getGradientDirection: () => 'shade-to-tint' as const,
+      toggleGradientDirection: jest.fn()
     };
 
     mockTokenStore = {
@@ -152,16 +163,12 @@ describe('Style Creation Integration (Simplified)', () => {
     it('should generate shade-tint swatches for style creation', () => {
       const result = prepareSwatchStyleData(mockSwatchStore, mockTokenStore);
 
-      // Should call blendColor for each step
-      const expectedSteps = [50, 100, 200, 300, 400, 500, 950];
-      expect(mockedBlendColor).toHaveBeenCalledTimes(expectedSteps.length);
-
-      expectedSteps.forEach(step => {
-        expect(mockedBlendColor).toHaveBeenCalledWith('000000', 'FFFFFF', step);
-      });
+      // Should call buildToneRamp instead of blendColor directly
+      expect(mockSwatchStore.buildToneRamp).toHaveBeenCalledTimes(1);
+      expect(mockedBlendColor).not.toHaveBeenCalled();
 
       // Should return correct structure for style creation
-      expect(result.shadeTintSwatches).toHaveLength(expectedSteps.length);
+      expect(result.shadeTintSwatches).toHaveLength(7);
       expect(result.shadeTintSwatches[0]).toEqual({
         color: '323232', // mocked result for step 50
         step: 50
@@ -257,12 +264,14 @@ describe('Style Creation Integration (Simplified)', () => {
       mockSwatchStore.primaryColors = [];
       mockSwatchStore.swatches = [];
       mockSwatchStore.combinedSteps = new Set();
+      (mockSwatchStore.buildToneRamp as jest.Mock).mockReturnValue([]);
 
       const result = prepareSwatchStyleData(mockSwatchStore, mockTokenStore);
 
       expect(result.primaryColors).toEqual([]);
       expect(result.primarySwatches).toEqual([]);
       expect(result.shadeTintSwatches).toEqual([]);
+      expect(mockSwatchStore.buildToneRamp).toHaveBeenCalledTimes(1);
       expect(mockedBlendColor).not.toHaveBeenCalled();
     });
   });

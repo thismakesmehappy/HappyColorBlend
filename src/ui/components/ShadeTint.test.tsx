@@ -44,6 +44,7 @@ jest.mock('./shadeTint/RampNameEditor', () => {
 const mockSetShade = jest.fn();
 const mockSetTint = jest.fn();
 const mockBuildSwatches = jest.fn();
+const mockToggleGradientDirection = jest.fn();
 
 jest.mock('../store/useSwatchStore', () => ({
     __esModule: true,
@@ -61,9 +62,11 @@ jest.mock('../store/useSwatchStore', () => ({
                 color: 'FFFFFF',
                 customToken: false
             }),
+            getGradientDirection: () => 'shade-to-tint',
             setShade: mockSetShade,
             setTint: mockSetTint,
-            buildSwatches: mockBuildSwatches
+            buildSwatches: mockBuildSwatches,
+            toggleGradientDirection: mockToggleGradientDirection
         };
         return selector(state);
     })
@@ -78,8 +81,8 @@ describe('ShadeTint Component', () => {
         render(<ShadeTint />);
 
         // Check that the shade section is rendered
-        expect(screen.getByText('Shade')).toBeInTheDocument();
-        expect(screen.getByText('Tint')).toBeInTheDocument();
+        expect(screen.getByText('Shade (0)')).toBeInTheDocument();
+        expect(screen.getByText('Tint (1000)')).toBeInTheDocument();
 
         // Check that both swatches are rendered
         const shadeSwatchInput = screen.getByTestId('mock-swatch-shade');
@@ -159,7 +162,7 @@ describe('ShadeTint Component', () => {
         render(<ShadeTint ref={testRef} />);
 
         // Check that the component renders without errors
-        expect(screen.getByText('Shade')).toBeInTheDocument();
-        expect(screen.getByText('Tint')).toBeInTheDocument();
+        expect(screen.getByText('Shade (0)')).toBeInTheDocument();
+        expect(screen.getByText('Tint (1000)')).toBeInTheDocument();
     });
 });

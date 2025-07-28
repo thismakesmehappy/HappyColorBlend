@@ -13,6 +13,7 @@ A powerful Figma plugin for creating beautiful color palettes and swatches with 
 
 ### 🌈 **Advanced Color Blending**
 - **Shade & Tint Generation**: Create darker shades and lighter tints from your primary colors
+- **Gradient Direction Control**: Flip between shade-to-tint (shade at 0, tint at 1000) and tint-to-shade (tint at 0, shade at 1000) directions
 - **Custom Step Control**: Define custom step values for precise color gradations
 - **Equal Steps Mode**: Generate evenly distributed color steps
 - **Real-time Preview**: See your color palette update in real-time
@@ -24,7 +25,7 @@ A powerful Figma plugin for creating beautiful color palettes and swatches with 
 
 ### 🔧 **Developer-Friendly**
 - **Type-Safe**: Built with TypeScript for reliability
-- **Comprehensive Testing**: 30+ test cases ensuring robust functionality
+- **Comprehensive Testing**: 390+ test cases ensuring robust functionality
 - **Modern Architecture**: React + Vite + Zustand for optimal performance
 - **Toast Notifications**: User-friendly feedback for all actions
 
@@ -52,8 +53,12 @@ A powerful Figma plugin for creating beautiful color palettes and swatches with 
 1. **Choose your blend mode**: 
    - **Shade & Tint**: Create darker and lighter variations
    - **Custom Steps**: Define specific step values for precise control
-2. **Set step count**: Choose how many color variations you want
-3. **Preview in real-time**: Your palette updates automatically
+2. **Set gradient direction**: 
+   - **Shade to Tint** (default): Shade at step 0, tint at step 1000
+   - **Tint to Shade**: Tint at step 0, shade at step 1000
+   - Use the **🔄 flip button** to toggle between directions
+3. **Set step count**: Choose how many color variations you want
+4. **Preview in real-time**: Your palette updates automatically
 
 ### 4. Exporting Design Tokens
 1. Configure your naming conventions in the settings
@@ -106,7 +111,7 @@ src/
 ## 🧪 Testing
 
 The plugin includes comprehensive testing with:
-- **Unit Tests**: 30+ test cases covering all functionality
+- **Unit Tests**: 390+ test cases covering all functionality
 - **Integration Tests**: Complete user workflow testing
 - **Error Handling**: Robust error scenarios and edge cases
 - **React Testing Library**: Modern testing practices

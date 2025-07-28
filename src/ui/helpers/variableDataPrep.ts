@@ -2,7 +2,6 @@ import { SwatchVariableData } from "@common/networkSides";
 import { computeTokenName } from "./computeTokenName";
 import { SwatchStoreState } from "../store/useSwatchStore";
 import { TokenNameStoreState } from "../store/useTokenNameStore";
-import { blendColor } from "./colorMethods";
 
 /**
  * Prepare swatch data for variable creation with token naming applied
@@ -56,12 +55,8 @@ export function prepareSwatchVariableData(
   // Prepare shade-tint ramp name (no separator for subgroup names unless user wants them)
   const shadeTintRampName = applyTokenName(swatchStore.getShadeTintRampName(), false);
 
-  // Prepare shade-tint ramp swatches (generate dynamically like in SwatchesOutput)
-  const combinedSteps = Array.from(swatchStore.getCombinedSteps());
-  const shadeTintSwatches = combinedSteps.map((step) => ({
-    color: blendColor(swatchStore.getShade().color, swatchStore.getTint().color, step),
-    step: step
-  }));
+  // Prepare shade-tint ramp swatches using buildToneRamp() to respect gradient direction
+  const shadeTintSwatches = swatchStore.buildToneRamp();
 
   // Prepare primary swatches
   const primarySwatches = swatchStore.getSwatches().map(primarySwatch => {
