@@ -199,7 +199,6 @@ const useSwatchStore = create<SwatchStoreState>()(
                 }
             });
         },
-,
         addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => set((state) => ({primaryColors: [...state.primaryColors, primaryColor]})),
         updatePrimaryColor: (id: string, color: string, name: string) => set((state) => ({
             primaryColors: state.primaryColors.map((p) => {
