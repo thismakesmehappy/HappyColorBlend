@@ -16,27 +16,27 @@ describe('useSwatchStore', () => {
     test('initial state is set correctly', () => {
         const state = useSwatchStore.getState();
 
-        expect(state.getShade().color).toBe('000000');
-        expect(state.getTint().color).toBe('FFFFFF');
+        expect(state.getScaleStart().color).toBe('000000');
+        expect(state.getScaleEnd().color).toBe('FFFFFF');
         expect(state.getPrimaryColors()).toEqual([]);
         expect(state.getNumberOfSteps()).toBe(9);
         expect(Array.from(state.getCombinedSteps())).toEqual([]);
     });
 
-    test('setShade updates shade color and name', () => {
+    test('setScaleStart updates scale start color and name', () => {
         const store = useSwatchStore.getState();
-        store.setShade('FF0000', 'Red');
+        store.setScaleStart('FF0000', 'Red');
 
-        expect(store.getShade().color).toBe('FF0000');
-        expect(store.getShade().name).toBe('Red');
+        expect(store.getScaleStart().color).toBe('FF0000');
+        expect(store.getScaleStart().name).toBe('Red');
     });
 
-    test('setTint updates tint color and name', () => {
+    test('setScaleEnd updates scale end color and name', () => {
         const store = useSwatchStore.getState();
-        store.setTint('00ff00', 'Green');
+        store.setScaleEnd('00ff00', 'Green');
 
-        expect(store.getTint().color).toBe('00FF00');
-        expect(store.getTint().name).toBe('Green');
+        expect(store.getScaleEnd().color).toBe('00FF00');
+        expect(store.getScaleEnd().name).toBe('Green');
     });
 
     test('addPrimaryColor adds a new primary color', () => {
@@ -146,12 +146,12 @@ describe('buildNewSwatches', () => {
     test('builds swatches correctly', () => {
         const store = useSwatchStore.getState();
 
-        const shade: SwatchStoreInputSwatch = {
+        const scaleStart: SwatchStoreInputSwatch = {
             color: '000000',
             name: 'Black',
         };
 
-        const tint: SwatchStoreInputSwatch = {
+        const scaleEnd: SwatchStoreInputSwatch = {
             color: 'FFFFFF',
             name: 'White',
         };
@@ -164,7 +164,7 @@ describe('buildNewSwatches', () => {
             }
         ];
 
-        const swatches = buildNewSwatches(shade, tint, primaryColors, store);
+        const swatches = buildNewSwatches(scaleStart, scaleEnd, primaryColors, store);
 
         expect(swatches.length).toBe(1);
         expect(swatches[0].base).toEqual(primaryColors[0]);

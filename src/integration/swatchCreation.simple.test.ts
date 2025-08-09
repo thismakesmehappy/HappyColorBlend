@@ -35,8 +35,10 @@ describe('Swatch Creation Integration (Simplified)', () => {
 
     // Create realistic test data
     mockSwatchStore = {
-      shade: { color: '000000', name: 'Black', id: 'shade' },
-      tint: { color: 'FFFFFF', name: 'White', id: 'tint' },
+      // Scale properties
+      scaleStart: { color: '000000', name: 'Black', id: 'scaleStart' },
+      scaleEnd: { color: 'FFFFFF', name: 'White', id: 'scaleEnd' },
+      neutralScaleName: 'Neutral',
       primaryColors: [
         { color: '3B82F6', name: 'Blue', id: 'blue' },
         { color: '10B981', name: 'Emerald Green', id: 'emerald' }
@@ -61,10 +63,11 @@ describe('Swatch Creation Integration (Simplified)', () => {
       steps: [100, 200, 300, 400, 500],
       customSteps: new Set([50, 950]),
       combinedSteps: new Set([50, 100, 200, 300, 400, 500, 950]),
-      shadeTintRampName: 'Neutral',
-      // Mock getters
-      getShade: () => mockSwatchStore.shade,
-      getTint: () => mockSwatchStore.tint,
+      // Scale getters
+      getScaleStart: () => mockSwatchStore.scaleStart,
+      getScaleEnd: () => mockSwatchStore.scaleEnd,
+      getNeutralScaleName: () => mockSwatchStore.neutralScaleName,
+      // Common getters
       getPrimaryColors: () => mockSwatchStore.primaryColors,
       getSwatches: () => mockSwatchStore.swatches,
       getNumberOfSteps: () => mockSwatchStore.numberOfSteps,
@@ -72,10 +75,12 @@ describe('Swatch Creation Integration (Simplified)', () => {
       getTotalUniqueSteps: () => mockSwatchStore.combinedSteps.size,
       getCombinedSteps: () => mockSwatchStore.combinedSteps,
       getSteps: () => mockSwatchStore.steps,
-      getShadeTintRampName: () => mockSwatchStore.shadeTintRampName,
-      // Mock setters (not used in tests)
-      setShade: jest.fn(),
-      setTint: jest.fn(),
+      // Scale setters
+      setScaleStart: jest.fn(),
+      setScaleEnd: jest.fn(),
+      setNeutralScaleName: jest.fn(),
+      swapScaleEndpoints: jest.fn(),
+      // Common setters
       increaseSteps: jest.fn(),
       decreaseSteps: jest.fn(),
       setSteps: jest.fn(),
@@ -97,10 +102,15 @@ describe('Swatch Creation Integration (Simplified)', () => {
         { color: 'FCFCFC', step: 500 },
         { color: 'FEFEFE', step: 950 }
       ]),
-      setShadeTintRampName: jest.fn(),
-      gradientDirection: 'shade-to-tint' as const,
-      getGradientDirection: () => 'shade-to-tint' as const,
-      toggleGradientDirection: jest.fn()
+      buildColorScale: jest.fn().mockReturnValue([
+        { color: '323232', step: 50 },
+        { color: '646464', step: 100 },
+        { color: 'C8C8C8', step: 200 },
+        { color: 'F0F0F0', step: 300 },
+        { color: 'F8F8F8', step: 400 },
+        { color: 'FCFCFC', step: 500 },
+        { color: 'FEFEFE', step: 950 }
+      ])
     };
 
     mockTokenStore = {
@@ -168,13 +178,13 @@ describe('Swatch Creation Integration (Simplified)', () => {
       const result = prepareSwatchCreationData(mockSwatchStore, mockTokenStore);
 
       // Visual naming follows same pattern as variables/styles
-      expect(result.shade.name).toBe('--black');
-      expect(result.tint.name).toBe('--white');
+      expect(result.scaleStart.name).toBe('--black');
+      expect(result.scaleEnd.name).toBe('--white');
       expect(result.primaryColors[0].name).toBe('--blue');
       expect(result.primaryColors[1].name).toBe('--emerald-green'); // space to dash
 
       // Subgroups for visual organization
-      expect(result.shadeTintRampName).toBe('--neutral');
+      expect(result.neutralScaleName).toBe('--neutral');
       expect(result.primarySwatches[0].name).toBe('--blue');
       expect(result.primarySwatches[1].name).toBe('--emerald-green');
     });
@@ -187,8 +197,8 @@ describe('Swatch Creation Integration (Simplified)', () => {
       expect(mockedBlendColor).not.toHaveBeenCalled();
 
       // Should return correct structure for visual creation
-      expect(result.shadeTintSwatches).toHaveLength(7);
-      expect(result.shadeTintSwatches[0]).toEqual({
+      expect(result.neutralScaleSwatches).toHaveLength(7);
+      expect(result.neutralScaleSwatches[0]).toEqual({
         color: '323232', // mocked result for step 50
         step: 50
       });
@@ -209,8 +219,8 @@ describe('Swatch Creation Integration (Simplified)', () => {
       const result = prepareSwatchCreationData(mockSwatchStore, mockTokenStore);
 
       // Original data should be preserved correctly
-      expect(result.shade.color).toBe(mockSwatchStore.shade.color);
-      expect(result.tint.color).toBe(mockSwatchStore.tint.color);
+      expect(result.scaleStart.color).toBe(mockSwatchStore.scaleStart.color);
+      expect(result.scaleEnd.color).toBe(mockSwatchStore.scaleEnd.color);
       expect(result.primaryColors).toHaveLength(mockSwatchStore.primaryColors.length);
       expect(result.primarySwatches).toHaveLength(mockSwatchStore.swatches.length);
     });
@@ -219,8 +229,8 @@ describe('Swatch Creation Integration (Simplified)', () => {
       const result = prepareSwatchCreationData(mockSwatchStore, mockTokenStore);
 
       // All colors should be valid hex for visual rendering
-      expect(result.shade.color).toMatch(/^[0-9A-Fa-f]{6}$/);
-      expect(result.tint.color).toMatch(/^[0-9A-Fa-f]{6}$/);
+      expect(result.scaleStart.color).toMatch(/^[0-9A-Fa-f]{6}$/);
+      expect(result.scaleEnd.color).toMatch(/^[0-9A-Fa-f]{6}$/);
       
       result.primaryColors.forEach(color => {
         expect(color.color).toMatch(/^[0-9A-Fa-f]{6}$/);
@@ -272,7 +282,7 @@ describe('Swatch Creation Integration (Simplified)', () => {
 
       const result = prepareSwatchCreationData(mockSwatchStore, mockTokenStore);
 
-      expect(result.shade.name).toBe('--BLACK');
+      expect(result.scaleStart.name).toBe('--BLACK');
       expect(result.primaryColors[1].name).toBe('--EMERALD_GREEN');
       expect(result.tokenSettings.separatorCharType).toBe('dash');
       expect(result.tokenSettings.separatorCharsCount).toBe(3);
@@ -284,12 +294,12 @@ describe('Swatch Creation Integration (Simplified)', () => {
       const result = prepareSwatchCreationData(mockSwatchStore, mockTokenStore);
 
       // Primitives should have separators for visual naming
-      expect(result.shade.name).toBe('--black_');
-      expect(result.tint.name).toBe('--white_');
+      expect(result.scaleStart.name).toBe('--black_');
+      expect(result.scaleEnd.name).toBe('--white_');
       expect(result.primaryColors[0].name).toBe('--blue_');
 
       // Subgroups should still not have separators
-      expect(result.shadeTintRampName).toBe('--neutral');
+      expect(result.neutralScaleName).toBe('--neutral');
       expect(result.primarySwatches[0].name).toBe('--blue');
     });
 
@@ -297,14 +307,14 @@ describe('Swatch Creation Integration (Simplified)', () => {
       mockSwatchStore.primaryColors = [];
       mockSwatchStore.swatches = [];
       mockSwatchStore.combinedSteps = new Set();
-      (mockSwatchStore.buildToneRamp as jest.Mock).mockReturnValue([]);
+      (mockSwatchStore.buildColorScale as jest.Mock).mockReturnValue([]);
 
       const result = prepareSwatchCreationData(mockSwatchStore, mockTokenStore);
 
       expect(result.primaryColors).toEqual([]);
       expect(result.primarySwatches).toEqual([]);
-      expect(result.shadeTintSwatches).toEqual([]);
-      expect(mockSwatchStore.buildToneRamp).toHaveBeenCalledTimes(1);
+      expect(result.neutralScaleSwatches).toEqual([]);
+      expect(mockSwatchStore.buildColorScale).toHaveBeenCalledTimes(1);
       expect(mockedBlendColor).not.toHaveBeenCalled();
     });
 

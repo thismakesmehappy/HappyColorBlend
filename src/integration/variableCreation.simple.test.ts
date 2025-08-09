@@ -35,8 +35,15 @@ describe('Variable Creation Integration (Simplified)', () => {
 
     // Create realistic test data
     mockSwatchStore = {
+      // Old properties
       shade: { color: '000000', name: 'Black', id: 'shade' },
       tint: { color: 'FFFFFF', name: 'White', id: 'tint' },
+      shadeTintRampName: 'Neutral',
+      gradientDirection: 'shade-to-tint' as const,
+      // New properties
+      scaleStart: { color: '000000', name: 'Black', id: 'scaleStart' },
+      scaleEnd: { color: 'FFFFFF', name: 'White', id: 'scaleEnd' },
+      neutralScaleName: 'Neutral',
       primaryColors: [
         { color: '3B82F6', name: 'Blue', id: 'blue' },
         { color: '10B981', name: 'Emerald Green', id: 'emerald' }
@@ -61,10 +68,16 @@ describe('Variable Creation Integration (Simplified)', () => {
       steps: [100, 200, 300, 400, 500],
       customSteps: new Set([50, 950]),
       combinedSteps: new Set([50, 100, 200, 300, 400, 500, 950]),
-      shadeTintRampName: 'Neutral',
-      // Mock getters
+      // Mock getters - old
       getShade: () => mockSwatchStore.shade,
       getTint: () => mockSwatchStore.tint,
+      getShadeTintRampName: () => mockSwatchStore.shadeTintRampName,
+      getGradientDirection: () => 'shade-to-tint' as const,
+      // Mock getters - new
+      getScaleStart: () => mockSwatchStore.scaleStart,
+      getScaleEnd: () => mockSwatchStore.scaleEnd,
+      getNeutralScaleName: () => mockSwatchStore.neutralScaleName,
+      // Common getters
       getPrimaryColors: () => mockSwatchStore.primaryColors,
       getSwatches: () => mockSwatchStore.swatches,
       getNumberOfSteps: () => mockSwatchStore.numberOfSteps,
@@ -72,10 +85,17 @@ describe('Variable Creation Integration (Simplified)', () => {
       getTotalUniqueSteps: () => mockSwatchStore.combinedSteps.size,
       getCombinedSteps: () => mockSwatchStore.combinedSteps,
       getSteps: () => mockSwatchStore.steps,
-      getShadeTintRampName: () => mockSwatchStore.shadeTintRampName,
-      // Mock setters (not used in tests)
+      // Mock setters - old
       setShade: jest.fn(),
       setTint: jest.fn(),
+      setShadeTintRampName: jest.fn(),
+      toggleGradientDirection: jest.fn(),
+      // Mock setters - new
+      setScaleStart: jest.fn(),
+      setScaleEnd: jest.fn(),
+      setNeutralScaleName: jest.fn(),
+      swapScaleEndpoints: jest.fn(),
+      // Common setters
       increaseSteps: jest.fn(),
       decreaseSteps: jest.fn(),
       setSteps: jest.fn(),
@@ -97,10 +117,15 @@ describe('Variable Creation Integration (Simplified)', () => {
         { color: 'F4F4F4', step: 500 },
         { color: '3B63B6', step: 950 }
       ]),
-      setShadeTintRampName: jest.fn(),
-      gradientDirection: 'shade-to-tint' as const,
-      getGradientDirection: () => 'shade-to-tint' as const,
-      toggleGradientDirection: jest.fn()
+      buildColorScale: jest.fn().mockReturnValue([
+        { color: '323232', step: 50 },
+        { color: '646464', step: 100 },
+        { color: 'C8C8C8', step: 200 },
+        { color: '2BC2BC', step: 300 },
+        { color: '909090', step: 400 },
+        { color: 'F4F4F4', step: 500 },
+        { color: '3B63B6', step: 950 }
+      ])
     };
 
     mockTokenStore = {

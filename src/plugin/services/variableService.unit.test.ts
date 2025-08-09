@@ -20,17 +20,19 @@ describe('variableService (Unit Tests)', () => {
     jest.clearAllMocks();
     
     mockData = {
-      shade: { name: '--black', color: '000000' },
-      tint: { name: '--white', color: 'FFFFFF' },
-      primaryColors: [
-        { name: '--green', color: '00FF00' },
-        { name: '--red-color', color: 'FF0000' }
-      ],
-      shadeTintRampName: '--gray-scale',
-      shadeTintSwatches: [
+      // Scale properties
+      scaleStart: { name: '--black', color: '000000' },
+      scaleEnd: { name: '--white', color: 'FFFFFF' },
+      neutralScaleName: '--neutral-scale',
+      neutralScaleSwatches: [
         { color: '333333', step: 100 },
         { color: '666666', step: 200 },
         { color: '999999', step: 300 }
+      ],
+      // Common properties
+      primaryColors: [
+        { name: '--green', color: '00FF00' },
+        { name: '--red-color', color: 'FF0000' }
       ],
       primarySwatches: [
         {
@@ -111,9 +113,9 @@ describe('variableService (Unit Tests)', () => {
     it('should count variables correctly based on input data', async () => {
       // Calculate expected count
       const expectedCount = 
-        2 + // shade + tint
+        2 + // scaleStart + scaleEnd
         mockData.primaryColors.length + // primary colors
-        mockData.shadeTintSwatches.length + // shade-tint swatches
+        mockData.neutralScaleSwatches.length + // neutral scale swatches
         mockData.primarySwatches.reduce((sum, ramp) => sum + ramp.swatches.length, 0); // primary swatches
 
       const expectedResult: VariableCreationResult = {
@@ -132,7 +134,7 @@ describe('variableService (Unit Tests)', () => {
     it('should handle empty swatches gracefully', async () => {
       const emptyData: SwatchVariableData = {
         ...mockData,
-        shadeTintSwatches: [],
+        neutralScaleSwatches: [],
         primarySwatches: []
       };
 
@@ -146,25 +148,25 @@ describe('variableService (Unit Tests)', () => {
 
       const result = await createAllSwatchVariables(emptyData);
 
-      expect(result.count).toBe(4); // shade + tint + 2 primary colors
+      expect(result.count).toBe(4); // scaleStart + scaleEnd + 2 primary colors
     });
 
     it('should validate data structure requirements', async () => {
       // Test that all required fields are present
-      expect(mockData.shade).toBeDefined();
-      expect(mockData.tint).toBeDefined();
+      expect(mockData.scaleStart).toBeDefined();
+      expect(mockData.scaleEnd).toBeDefined();
       expect(mockData.primaryColors).toBeDefined();
-      expect(mockData.shadeTintRampName).toBeDefined();
-      expect(mockData.shadeTintSwatches).toBeDefined();
+      expect(mockData.neutralScaleName).toBeDefined();
+      expect(mockData.neutralScaleSwatches).toBeDefined();
       expect(mockData.primarySwatches).toBeDefined();
       expect(mockData.tokenSettings).toBeDefined();
 
       // Test that color values are valid hex
-      expect(mockData.shade.color).toMatch(/^[0-9A-Fa-f]{6}$/);
-      expect(mockData.tint.color).toMatch(/^[0-9A-Fa-f]{6}$/);
+      expect(mockData.scaleStart.color).toMatch(/^[0-9A-Fa-f]{6}$/);
+      expect(mockData.scaleEnd.color).toMatch(/^[0-9A-Fa-f]{6}$/);
 
       // Test that step values are valid
-      mockData.shadeTintSwatches.forEach(swatch => {
+      mockData.neutralScaleSwatches.forEach(swatch => {
         expect(typeof swatch.step).toBe('number');
         expect(swatch.step).toBeGreaterThanOrEqual(0);
         expect(swatch.step).toBeLessThanOrEqual(1000);
@@ -203,9 +205,9 @@ describe('variableService (Unit Tests)', () => {
 
     it('should validate naming conventions', () => {
       // Names should be tokenized (based on our implementation)
-      expect(mockData.shade.name).toMatch(/^--/); // Leading characters
-      expect(mockData.tint.name).toMatch(/^--/);
-      expect(mockData.shadeTintRampName).toMatch(/^--/);
+      expect(mockData.scaleStart.name).toMatch(/^--/); // Leading characters
+      expect(mockData.scaleEnd.name).toMatch(/^--/);
+      expect(mockData.neutralScaleName).toMatch(/^--/);
       
       mockData.primaryColors.forEach(color => {
         expect(color.name).toMatch(/^--/);

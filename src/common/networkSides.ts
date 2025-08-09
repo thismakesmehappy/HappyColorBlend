@@ -1,14 +1,16 @@
 import { Networker } from "monorepo-networker";
 
 export interface SwatchVariableData {
-  // Primitives
-  shade: { name: string; color: string };
-  tint: { name: string; color: string };
+  // Scale primitives
+  scaleStart: { name: string; color: string };
+  scaleEnd: { name: string; color: string };
+  
   primaryColors: Array<{ name: string; color: string }>;
   
-  // Mixed ramps
-  shadeTintRampName: string;
-  shadeTintSwatches: Array<{ color: string; step: number }>;
+  // Neutral scale ramp
+  neutralScaleName: string;
+  neutralScaleSwatches: Array<{ color: string; step: number }>;
+  
   primarySwatches: Array<{
     name: string;
     swatches: Array<{ color: string; step: number }>;
@@ -29,14 +31,16 @@ export interface VariableCreationResult {
 }
 
 export interface SwatchStyleData {
-  // Primitives
-  shade: { name: string; color: string };
-  tint: { name: string; color: string };
+  // Scale primitives
+  scaleStart: { name: string; color: string };
+  scaleEnd: { name: string; color: string };
+  
   primaryColors: Array<{ name: string; color: string }>;
   
-  // Mixed ramps
-  shadeTintRampName: string;
-  shadeTintSwatches: Array<{ color: string; step: number }>;
+  // Neutral scale ramp
+  neutralScaleName: string;
+  neutralScaleSwatches: Array<{ color: string; step: number }>;
+  
   primarySwatches: Array<{
     name: string;
     swatches: Array<{ color: string; step: number }>;
@@ -57,14 +61,14 @@ export interface StyleCreationResult {
 }
 
 export interface SwatchCreationData {
-  // Primitives
-  shade: { name: string; color: string };
-  tint: { name: string; color: string };
+  // Scale primitives
+  scaleStart: { name: string; color: string };
+  scaleEnd: { name: string; color: string };
   primaryColors: Array<{ name: string; color: string }>;
   
-  // Mixed ramps
-  shadeTintRampName: string;
-  shadeTintSwatches: Array<{ color: string; step: number }>;
+  // Neutral scale ramp
+  neutralScaleName: string;
+  neutralScaleSwatches: Array<{ color: string; step: number }>;
   primarySwatches: Array<{
     name: string;
     swatches: Array<{ color: string; step: number }>;
