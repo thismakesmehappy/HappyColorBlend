@@ -4,9 +4,9 @@ import { TokenNameStoreState } from '@ui/store/useTokenNameStore';
 
 // Mock swatch store data
 const mockSwatchStore: Partial<SwatchStoreState> = {
-    shade: { color: '000000', name: 'Black', id: 'shade' },
-    tint: { color: 'FFFFFF', name: 'White', id: 'tint' },
-    shadeTintRampName: 'Gray',
+    scaleStart: { color: '000000', name: 'Black', id: 'scaleStart' },
+    scaleEnd: { color: 'FFFFFF', name: 'White', id: 'scaleEnd' },
+    neutralScaleName: 'Neutral',
     primaryColors: [
         { color: '3B82F6', name: 'Blue', id: 'blue' }
     ],
@@ -21,7 +21,7 @@ const mockSwatchStore: Partial<SwatchStoreState> = {
             ]
         }
     ],
-    buildToneRamp: () => [
+    buildColorScale: () => [
         { color: '666666', step: 400 },
         { color: '808080', step: 500 },
         { color: '999999', step: 600 }
@@ -49,12 +49,12 @@ describe('variableExport', () => {
             );
 
             expect(result).toContain(':root');
-            expect(result).toContain('/* Shade/Tint */');
+            expect(result).toContain('/* Primitives */');
             expect(result).toContain('--black: #000000;');
             expect(result).toContain('--white: #FFFFFF;');
-            expect(result).toContain('/* Primary Colors */');
             expect(result).toContain('--blue: #3B82F6;');
-            expect(result).toContain('/* Gray */');
+            expect(result).toContain('--blue: #3B82F6;');
+            expect(result).toContain('/* Neutral */');
             expect(result).toContain('/* Blue */');
             expect(result).toContain('}');
         });
@@ -67,12 +67,12 @@ describe('variableExport', () => {
                 mockTokenStore as TokenNameStoreState
             );
 
-            expect(result).toContain('/* Shade/Tint */');
+            expect(result).toContain('/* Primitives */');
             expect(result).toContain('$black: #000000;');
             expect(result).toContain('$white: #FFFFFF;');
-            expect(result).toContain('/* Primary Colors */');
             expect(result).toContain('$blue: #3B82F6;');
-            expect(result).toContain('/* Gray */');
+            expect(result).toContain('$blue: #3B82F6;');
+            expect(result).toContain('/* Neutral */');
             expect(result).toContain('/* Blue */');
         });
     });

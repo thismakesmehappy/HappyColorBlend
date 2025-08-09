@@ -2,15 +2,15 @@ import React, {forwardRef, useEffect, useState} from 'react';
 import Swatch from "./swatchesInput/Swatch";
 import useSwatchStore from "../store/useSwatchStore";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
-import RampNameEditor from "@ui/components/shadeTint/RampNameEditor";
+import RampNameEditor from "@ui/components/scaleEndpoints/RampNameEditor";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import TooltipWrapper from './helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
 
-interface ShadeTintProps extends ClassAndStyle {
+interface ScaleEndpointsProps extends ClassAndStyle {
 }
 
-const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
+const ScaleEndpoints = forwardRef<HTMLDivElement, ScaleEndpointsProps>(
     ({className, style}, ref) => {
         const scaleStart = useSwatchStore(state => state.getScaleStart());
         const scaleEnd = useSwatchStore(state => state.getScaleEnd());
@@ -50,7 +50,7 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
         };
 
         return (
-            <div className={className} style={style} data-testid={"shade-tint"} ref={ref}>
+            <div className={className} style={style} data-testid={"scale-endpoints"} ref={ref}>
                 <div className={"row"}>
                     <div className={"col col-6"}>
                         <div className={"figma-subtitle text-center"}>
@@ -116,4 +116,4 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
     }
 );
 
-export default ShadeTint;
+export default ScaleEndpoints;

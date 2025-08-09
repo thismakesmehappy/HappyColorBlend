@@ -27,12 +27,7 @@ describe('prepareSwatchVariableData', () => {
 
     // Create mock swatch store
     mockSwatchStore = {
-      // Old properties
-      shade: { color: '000000', name: 'Black', id: 'shade' },
-      tint: { color: 'FFFFFF', name: 'White', id: 'tint' },
-      shadeTintRampName: 'Gray Scale',
-      gradientDirection: 'shade-to-tint' as const,
-      // New properties
+      // Scale properties
       scaleStart: { color: '000000', name: 'Black', id: 'scaleStart' },
       scaleEnd: { color: 'FFFFFF', name: 'White', id: 'scaleEnd' },
       neutralScaleName: 'Neutral',
@@ -60,12 +55,7 @@ describe('prepareSwatchVariableData', () => {
       steps: [100, 200, 300, 400, 500],
       customSteps: new Set([50, 950]),
       combinedSteps: new Set([50, 100, 200, 300, 400, 500, 950]),
-      // Mock getter functions - old
-      getShade: () => mockSwatchStore.shade,
-      getTint: () => mockSwatchStore.tint,
-      getShadeTintRampName: () => mockSwatchStore.shadeTintRampName,
-      getGradientDirection: () => 'shade-to-tint' as const,
-      // Mock getter functions - new
+      // Scale getters
       getScaleStart: () => mockSwatchStore.scaleStart,
       getScaleEnd: () => mockSwatchStore.scaleEnd,
       getNeutralScaleName: () => mockSwatchStore.neutralScaleName,
@@ -77,12 +67,7 @@ describe('prepareSwatchVariableData', () => {
       getTotalUniqueSteps: () => mockSwatchStore.combinedSteps.size,
       getCombinedSteps: () => mockSwatchStore.combinedSteps,
       getSteps: () => mockSwatchStore.steps,
-      // Mock setter functions - old
-      setShade: jest.fn(),
-      setTint: jest.fn(),
-      setShadeTintRampName: jest.fn(),
-      toggleGradientDirection: jest.fn(),
-      // Mock setter functions - new  
+      // Scale setters
       setScaleStart: jest.fn(),
       setScaleEnd: jest.fn(),
       setNeutralScaleName: jest.fn(),
@@ -100,15 +85,6 @@ describe('prepareSwatchVariableData', () => {
       addCustomStep: jest.fn(),
       removeCustomStep: jest.fn(),
       buildSwatches: jest.fn(),
-      buildToneRamp: jest.fn().mockReturnValue([
-        { color: '323232', step: 50 },
-        { color: '646464', step: 100 },
-        { color: 'C8C8C8', step: 200 },
-        { color: '2BC2BC', step: 300 },
-        { color: '909090', step: 400 },
-        { color: 'F4F4F4', step: 500 },
-        { color: '3B63B6', step: 950 }
-      ]),
       buildColorScale: jest.fn().mockReturnValue([
         { color: '323232', step: 50 },
         { color: '646464', step: 100 },
@@ -152,15 +128,15 @@ describe('prepareSwatchVariableData', () => {
   });
 
   describe('basic data preparation', () => {
-    it('should prepare shade and tint data correctly', () => {
+    it('should prepare scale endpoints data correctly', () => {
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 
-      expect(result.shade).toEqual({
+      expect(result.scaleStart).toEqual({
         name: '--black', // computeTokenName applied: lower case, leading chars, no separator
         color: '000000'
       });
 
-      expect(result.tint).toEqual({
+      expect(result.scaleEnd).toEqual({
         name: '--white',
         color: 'FFFFFF'
       });
@@ -184,13 +160,13 @@ describe('prepareSwatchVariableData', () => {
     it('should prepare shade-tint ramp name without separator', () => {
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 
-      expect(result.shadeTintRampName).toBe('--gray-scale'); // no separator for subgroup names
+      expect(result.neutralScaleName).toBe('--neutral'); // no separator for subgroup names
     });
   });
 
   describe('shade-tint swatches generation', () => {
-    it('should generate shade-tint swatches using buildToneRamp', () => {
-      // Mock buildToneRamp to return expected data
+    it('should generate shade-tint swatches using buildColorScale', () => {
+      // Mock buildColorScale to return expected data
       const expectedSwatches = [
         { color: '323232', step: 50 },
         { color: '646464', step: 100 },
@@ -201,25 +177,25 @@ describe('prepareSwatchVariableData', () => {
         { color: '3B63B6', step: 950 }
       ];
       
-      (mockSwatchStore.buildToneRamp as jest.Mock).mockReturnValue(expectedSwatches);
+      (mockSwatchStore.buildColorScale as jest.Mock).mockReturnValue(expectedSwatches);
 
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 
-      // Should call buildToneRamp instead of blendColor directly
-      expect(mockSwatchStore.buildToneRamp).toHaveBeenCalledTimes(1);
+      // Should call buildColorScale instead of blendColor directly
+      expect(mockSwatchStore.buildColorScale).toHaveBeenCalledTimes(1);
       expect(mockedBlendColor).not.toHaveBeenCalled();
 
-      // Should return the swatches from buildToneRamp
-      expect(result.shadeTintSwatches).toEqual(expectedSwatches);
+      // Should return the swatches from buildColorScale
+      expect(result.neutralScaleSwatches).toEqual(expectedSwatches);
     });
 
-    it('should handle empty buildToneRamp result', () => {
-      (mockSwatchStore.buildToneRamp as jest.Mock).mockReturnValue([]);
+    it('should handle empty buildColorScale result', () => {
+      (mockSwatchStore.buildColorScale as jest.Mock).mockReturnValue([]);
 
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 
-      expect(result.shadeTintSwatches).toEqual([]);
-      expect(mockSwatchStore.buildToneRamp).toHaveBeenCalledTimes(1);
+      expect(result.neutralScaleSwatches).toEqual([]);
+      expect(mockSwatchStore.buildColorScale).toHaveBeenCalledTimes(1);
       expect(mockedBlendColor).not.toHaveBeenCalled();
     });
   });
@@ -284,8 +260,8 @@ describe('prepareSwatchVariableData', () => {
 
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 
-      expect(result.shade.name).toBe('--black_'); // with separator
-      expect(result.tint.name).toBe('--white_');
+      expect(result.scaleStart.name).toBe('--black_'); // with separator
+      expect(result.scaleEnd.name).toBe('--white_');
       expect(result.primaryColors[0].name).toBe('--green_');
       expect(result.primaryColors[1].name).toBe('--red-color_');
     });
@@ -295,8 +271,8 @@ describe('prepareSwatchVariableData', () => {
 
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 
-      expect(result.shade.name).toBe('--black'); // no separator
-      expect(result.tint.name).toBe('--white');
+      expect(result.scaleStart.name).toBe('--black'); // no separator
+      expect(result.scaleEnd.name).toBe('--white');
       expect(result.primaryColors[0].name).toBe('--green');
       expect(result.primaryColors[1].name).toBe('--red-color');
     });
@@ -308,7 +284,7 @@ describe('prepareSwatchVariableData', () => {
 
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 
-      expect(result.shade.name).toBe('--BLACK');
+      expect(result.scaleStart.name).toBe('--BLACK');
       expect(result.primaryColors[1].name).toBe('--RED-COLOR');
     });
 
@@ -318,7 +294,7 @@ describe('prepareSwatchVariableData', () => {
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 
       expect(result.primaryColors[1].name).toBe('--red_color');
-      expect(result.shadeTintRampName).toBe('--gray_scale');
+      expect(result.neutralScaleName).toBe('--neutral');
     });
 
     it('should handle different leading char counts and types', () => {
@@ -327,8 +303,8 @@ describe('prepareSwatchVariableData', () => {
 
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 
-      expect(result.shade.name).toBe('___black');
-      expect(result.tint.name).toBe('___white');
+      expect(result.scaleStart.name).toBe('___black');
+      expect(result.scaleEnd.name).toBe('___white');
     });
   });
 });

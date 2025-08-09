@@ -3,10 +3,10 @@ import {TokenNameStoreState} from "@ui/store/useTokenNameStore";
 import {computeTokenName} from "./computeTokenName";
 
 export interface VariableExportData {
-    shade: { color: string; name: string };
-    tint: { color: string; name: string };
+    scaleStart: { color: string; name: string };
+    scaleEnd: { color: string; name: string };
     swatches: SwatchStoreSwatches[];
-    shadeTintRampName: string;
+    neutralScaleName: string;
 }
 
 const formatVariableName = (name: string, tokenStore: TokenNameStoreState, appendSeparator = tokenStore.appendSeparatorToPrimitive): string => {
@@ -29,35 +29,34 @@ export const generateVariables = (
     indent: string = '',
     prepend: string = ''
 ): string => {
-    const {shade, tint, swatches, shadeTintRampName, primaryColors} = swatchStore;
+    const {scaleStart, scaleEnd, swatches, neutralScaleName, primaryColors} = swatchStore;
     const lines: string[] = [];
 
-    const toneRamp: SwatchStoreSwatch[] = swatchStore.buildToneRamp();
+    const colorScale: SwatchStoreSwatch[] = swatchStore.buildColorScale();
 
 
-    // Add shade/tint variables
-    lines.push(`${indent}/* Shade/Tint */`);
-    if (shade?.color && shade?.name) {
-        lines.push(`${indent}${prepend}${formatVariableName(shade.name.toLowerCase(), tokenStore)}: #${shade.color};`);
+    // Add scale endpoint variables (primitives group)
+    lines.push(`${indent}/* Primitives */`);
+    if (scaleStart?.color && scaleStart?.name) {
+        lines.push(`${indent}${prepend}${formatVariableName(scaleStart.name.toLowerCase(), tokenStore)}: #${scaleStart.color};`);
     }
-    if (tint?.color && tint?.name) {
-        lines.push(`${indent}${prepend}${formatVariableName(tint.name.toLowerCase(), tokenStore)}: #${tint.color};`);
+    if (scaleEnd?.color && scaleEnd?.name) {
+        lines.push(`${indent}${prepend}${formatVariableName(scaleEnd.name.toLowerCase(), tokenStore)}: #${scaleEnd.color};`);
     }
-    lines.push('');
 
     if (primaryColors && primaryColors.length) {
-        lines.push(`${indent}/* Primary Colors */`);
         for (const swatch of primaryColors) {
             lines.push(`${indent}${prepend}${formatVariableName(swatch.name.toLowerCase(), tokenStore)}: #${swatch.color};`);
         }
         lines.push('');
     }
 
-    lines.push(`${indent}/* ${shadeTintRampName} */`);
+    lines.push('');
+    lines.push(`${indent}/* ${neutralScaleName} */`);
 
-    for (const colorSwatch of toneRamp) {
+    for (const colorSwatch of colorScale) {
         if (colorSwatch?.color && colorSwatch?.step) {
-            const tokenName = formatVariableName(shadeTintRampName, tokenStore, true) + colorSwatch.step;
+            const tokenName = formatVariableName(neutralScaleName, tokenStore, true) + colorSwatch.step;
             lines.push(`${indent}${prepend}${tokenName}: #${colorSwatch.color};`);
         }
     }
