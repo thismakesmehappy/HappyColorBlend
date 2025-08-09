@@ -101,12 +101,12 @@ export async function createAllSwatchVariables(data: SwatchVariableData): Promis
     const collection = createOrUpdateCollection("Color Blending");
     
     // 2. Create primitive variables (using naming convention for organization)
-    // Create shade variable
-    createColorVariable(collection, `primitives/${data.shade.name}`, data.shade.color);
+    // Create scale start variable
+    createColorVariable(collection, `primitives/${data.scaleStart.name}`, data.scaleStart.color);
     variableCount++;
     
-    // Create tint variable  
-    createColorVariable(collection, `primitives/${data.tint.name}`, data.tint.color);
+    // Create scale end variable  
+    createColorVariable(collection, `primitives/${data.scaleEnd.name}`, data.scaleEnd.color);
     variableCount++;
     
     // Create primary color variables
@@ -117,8 +117,8 @@ export async function createAllSwatchVariables(data: SwatchVariableData): Promis
     
     // 3. Create shade-tint ramp variables
     const separator = createSeparator(data.tokenSettings.separatorCharsCount, data.tokenSettings.separatorCharType);
-    for (const swatch of data.shadeTintSwatches) {
-      const variableName = `mixed/${data.shadeTintRampName}/${data.shadeTintRampName}${separator}${formatStepNumber(swatch.step)}`;
+    for (const swatch of data.neutralScaleSwatches) {
+      const variableName = `mixed/${data.neutralScaleName}/${data.neutralScaleName}${separator}${formatStepNumber(swatch.step)}`;
       createColorVariable(collection, variableName, swatch.color);
       variableCount++;
     }

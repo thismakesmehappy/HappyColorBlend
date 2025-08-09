@@ -6,8 +6,8 @@ import useTokenNameStore from "@ui/store/useTokenNameStore";
 import {computeTokenName} from "@ui/helpers/computeTokenName";
 
 const SwatchPrimitives = () => {
-    const tint = useSwatchStore(state => state.tint);
-    const shade = useSwatchStore(state => state.shade);
+    const scaleEnd = useSwatchStore(state => state.scaleEnd);
+    const scaleStart = useSwatchStore(state => state.scaleStart);
     const primary = useSwatchStore(state => state.primaryColors);
     const caseTreatment = useTokenNameStore(state => state.caseTreatment)
     const spaceTreatment = useTokenNameStore(state => state.spaceTreatment)
@@ -16,8 +16,8 @@ const SwatchPrimitives = () => {
     const leadingCharType = useTokenNameStore(state => state.leadingCharType)
     const separatorCharType = useTokenNameStore(state => state.separatorCharType)
     const appendSeparatorToPrimitives = useTokenNameStore(state => state.appendSeparatorToPrimitive)
-    const tintColorToken = computeTokenName(
-        tint.name,
+    const scaleEndColorToken = computeTokenName(
+        scaleEnd.name,
         caseTreatment,
         spaceTreatment,
         leadingCharsCount,
@@ -27,8 +27,8 @@ const SwatchPrimitives = () => {
         appendSeparatorToPrimitives
     );
 
-    const shadeColorToken = computeTokenName(
-        shade.name,
+    const scaleStartColorToken = computeTokenName(
+        scaleStart.name,
         caseTreatment,
         spaceTreatment,
         leadingCharsCount,
@@ -39,8 +39,8 @@ const SwatchPrimitives = () => {
     );
 
     return (<div className={"row gx-0 figma-mb-lg"}>
-        <Swatch color={shade.color} name={shadeColorToken} displayOnly={true} className={'col col-4'} />
-        <Swatch color={tint.color} name={tintColorToken} displayOnly={true} className={'col col-4'} />
+        <Swatch color={scaleStart.color} name={scaleStartColorToken} displayOnly={true} className={'col col-4'} />
+        <Swatch color={scaleEnd.color} name={scaleEndColorToken} displayOnly={true} className={'col col-4'} />
         {primary.map((color) => {
             const colorTokenName = computeTokenName(
                 color.name,

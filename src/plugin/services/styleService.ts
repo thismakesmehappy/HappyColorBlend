@@ -88,10 +88,10 @@ export async function createAllSwatchStyles(data: SwatchStyleData): Promise<Styl
     const separator = createSeparator(data.tokenSettings.separatorCharsCount, data.tokenSettings.separatorCharType);
 
     // Create primitive styles
-    createColorStyle(`primitives/${data.shade.name}`, data.shade.color);
+    createColorStyle(`primitives/${data.scaleStart.name}`, data.scaleStart.color);
     styleCount++;
 
-    createColorStyle(`primitives/${data.tint.name}`, data.tint.color);
+    createColorStyle(`primitives/${data.scaleEnd.name}`, data.scaleEnd.color);
     styleCount++;
 
     // Create primary color primitive styles
@@ -101,9 +101,9 @@ export async function createAllSwatchStyles(data: SwatchStyleData): Promise<Styl
     });
 
     // Create shade-tint mixed styles
-    data.shadeTintSwatches.forEach(swatch => {
+    data.neutralScaleSwatches.forEach(swatch => {
       const stepString = formatStepNumber(swatch.step);
-      const styleName = `mixed/${data.shadeTintRampName}/${data.shadeTintRampName}${separator}${stepString}`;
+      const styleName = `mixed/${data.neutralScaleName}/${data.neutralScaleName}${separator}${stepString}`;
       createColorStyle(styleName, swatch.color);
       styleCount++;
     });

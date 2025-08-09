@@ -244,17 +244,17 @@ function createSwatchDisplay(data: SwatchCreationData): GroupNode {
   currentY = primitivesTitle.y + primitivesTitle.height + SPACING;
   let currentX = 0;
 
-  // Add shade and tint swatches
-  const shadeSwatch = createCircularSwatch(data.shade.color, data.shade.name, swatchSize, fontSize);
-  shadeSwatch.x = currentX;
-  shadeSwatch.y = currentY;
-  allElements.push(shadeSwatch);
+  // Add scale start and end swatches
+  const scaleStartSwatch = createCircularSwatch(data.scaleStart.color, data.scaleStart.name, swatchSize, fontSize);
+  scaleStartSwatch.x = currentX;
+  scaleStartSwatch.y = currentY;
+  allElements.push(scaleStartSwatch);
   currentX += swatchSize + SPACING * 2;
 
-  const tintSwatch = createCircularSwatch(data.tint.color, data.tint.name, swatchSize, fontSize);
-  tintSwatch.x = currentX;
-  tintSwatch.y = currentY;
-  allElements.push(tintSwatch);
+  const scaleEndSwatch = createCircularSwatch(data.scaleEnd.color, data.scaleEnd.name, swatchSize, fontSize);
+  scaleEndSwatch.x = currentX;
+  scaleEndSwatch.y = currentY;
+  allElements.push(scaleEndSwatch);
   currentX += swatchSize + SPACING * 2;
 
   // Add primary color swatches
@@ -269,12 +269,12 @@ function createSwatchDisplay(data: SwatchCreationData): GroupNode {
   // Move to next section
   currentY += swatchSize + (fontSize * 2) + SPACING + GROUP_SPACING;
 
-  // 2. Create shade-tint ramp section
-  if (data.shadeTintSwatches.length > 0) {
+  // 2. Create neutral scale ramp section
+  if (data.neutralScaleSwatches.length > 0) {
     const rampGroup = createPrimarySwatchGroup(
       {
-        name: data.shadeTintRampName,
-        swatches: data.shadeTintSwatches
+        name: data.neutralScaleName,
+        swatches: data.neutralScaleSwatches
       },
       separator,
       swatchSize,
@@ -338,7 +338,7 @@ export async function createAllSwatches(data: SwatchCreationData): Promise<Swatc
     const totalSwatches = 
       2 + // shade + tint
       data.primaryColors.length + // primary colors
-      data.shadeTintSwatches.length + // shade-tint swatches
+      data.neutralScaleSwatches.length + // neutral scale swatches
       data.primarySwatches.reduce((sum, ramp) => sum + ramp.swatches.length, 0); // primary swatches
 
     return {
