@@ -4,36 +4,30 @@ import {blendPrimaryColor, blendColor} from "../helpers/colorMethods";
 import steps from "../components/Steps";
 
 export const initialState = {
-    shade: {color: "000000", name: "Black", id: "shade"},
-    tint: {color: "FFFFFF", name: "White", id: "tint"},
+    // Scale properties
+    scaleStart: {color: "000000", name: "Black", id: "scaleStart"},
+    scaleEnd: {color: "FFFFFF", name: "White", id: "scaleEnd"},
+    neutralScaleName: "Neutral",
+    // Common properties
     primaryColors: [],
     swatches: [],
     numberOfSteps: 9,
     steps: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     customSteps: new Set<number>([50, 950]),
     combinedSteps: new Set<number>(),
-    shadeTintRampName: "Gray",
-    gradientDirection: "shade-to-tint" as const,
 }
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
-    shade: SwatchStoreInputSwatch,
-    tint: SwatchStoreInputSwatch,
+    scaleStart: SwatchStoreInputSwatch,
+    scaleEnd: SwatchStoreInputSwatch,
     primaryColors: SwatchStoreInputSwatch[],
     state: SwatchStoreState,
 ) => {
     state.setCombinedSteps();
     const combinedSteps = state.getCombinedSteps();
-    const { gradientDirection } = state;
     const swatches: SwatchStoreSwatches[] = [];
 
-    // Determine which color appears at step 0 vs step 1000 for primary color blending
-    // Normal: Shade(0) → Tint(1000)  
-    // Flipped: Tint(0) → Shade(1000)
-    const isShadeFirst = gradientDirection === 'shade-to-tint';
-    const startColor = isShadeFirst ? shade : tint;
-    const endColor = isShadeFirst ? tint : shade;
-
+    // Always calculate from scaleStart(0) to scaleEnd(1000), no gradient direction logic
     for (let primary in primaryColors) {
         const swatch: SwatchStoreSwatches = {
             base: primaryColors[primary],
@@ -42,7 +36,7 @@ export const buildNewSwatches = (
 
         for (let step of combinedSteps) {
             swatch.swatches.push({
-                color: blendPrimaryColor(startColor.color, endColor.color, primaryColors[primary].color, step),
+                color: blendPrimaryColor(scaleStart.color, scaleEnd.color, primaryColors[primary].color, step),
                 step: step
             });
         }
@@ -70,26 +64,27 @@ export interface SwatchStoreSwatches {
     swatches: SwatchStoreSwatch[];
 }
 
-// Define gradient direction type
-export type GradientDirection = 'shade-to-tint' | 'tint-to-shade';
-
 // Define the store state interface
 export interface SwatchStoreState {
-    // State properties
-    shade: SwatchStoreInputSwatch;
-    tint: SwatchStoreInputSwatch;
+    // Scale properties
+    scaleStart: SwatchStoreInputSwatch;
+    scaleEnd: SwatchStoreInputSwatch;
+    neutralScaleName: string;
+    
+    // Common state properties
     primaryColors: SwatchStoreInputSwatch[];
     swatches: SwatchStoreSwatches[];
     numberOfSteps: number;
     steps: number[];
     customSteps: Set<number>;
     combinedSteps: Set<number>;
-    shadeTintRampName: string;
-    gradientDirection: GradientDirection;
 
-    // Getters
-    getShade: () => SwatchStoreInputSwatch;
-    getTint: () => SwatchStoreInputSwatch;
+    // Scale getters
+    getScaleStart: () => SwatchStoreInputSwatch;
+    getScaleEnd: () => SwatchStoreInputSwatch;
+    getNeutralScaleName: () => string;
+    
+    // Common getters
     getPrimaryColors: () => SwatchStoreInputSwatch[];
     getSwatches: () => SwatchStoreSwatches[];
     getNumberOfSteps: () => number;
@@ -97,12 +92,14 @@ export interface SwatchStoreState {
     getTotalUniqueSteps: () => number;
     getCombinedSteps: () => Set<number>;
     getSteps: () => number[];
-    getShadeTintRampName: () => string;
-    getGradientDirection: () => GradientDirection;
 
-    // Setters
-    setShade: (color: string, name: string) => void;
-    setTint: (color: string, name: string) => void;
+    // Scale setters
+    setScaleStart: (color: string, name: string) => void;
+    setScaleEnd: (color: string, name: string) => void;
+    setNeutralScaleName: (name: string) => void;
+    swapScaleEndpoints: () => void;
+    
+    // Common methods
     increaseSteps: () => void;
     decreaseSteps: () => void;
     setSteps: (steps: number) => void;
@@ -115,9 +112,7 @@ export interface SwatchStoreState {
     addCustomStep: (step: number) => void;
     removeCustomStep: (step: number) => void;
     buildSwatches: () => SwatchStoreSwatches[];
-    buildToneRamp: () => SwatchStoreSwatch[];
-    setShadeTintRampName: (name: string) => void;
-    toggleGradientDirection: () => void;
+    buildColorScale: () => SwatchStoreSwatch[];
 }
 
 
@@ -128,9 +123,12 @@ const useSwatchStore = create<SwatchStoreState>()(
         // Initial state
         ...initialState,
 
-        // Getters
-        getShade: () => get().shade,
-        getTint: () => get().tint,
+        // Scale getters
+        getScaleStart: () => get().scaleStart,
+        getScaleEnd: () => get().scaleEnd,
+        getNeutralScaleName: () => get().neutralScaleName,
+        
+        // Common getters
         getPrimaryColors: () => get().primaryColors,
         getSwatches: () => get().swatches,
         getNumberOfSteps: () => get().numberOfSteps,
@@ -138,32 +136,12 @@ const useSwatchStore = create<SwatchStoreState>()(
         getTotalUniqueSteps: () => get().combinedSteps.size,
         getCombinedSteps: () => get().combinedSteps,
         getSteps: () => get().steps,
-        getShadeTintRampName: () => get().shadeTintRampName,
-        getGradientDirection: () => get().gradientDirection,
         setCombinedSteps: () => {
             const {steps, customSteps} = get();
             set({combinedSteps: new Set([...steps, ...customSteps].sort((a, b) => a - b))});
         },
 
-        // Setters
-        setShade: (color: string, name: string) => {
-            const colorUpper = color.toUpperCase();
-            set({
-                shade: {
-                    color: colorUpper,
-                    name: name,
-                }
-            })
-        },
-        setTint: (color: string, name: string) => {
-            const colorUpper = color.toUpperCase()
-            set({
-                tint: {
-                    color: colorUpper,
-                    name: name,
-                }
-            })
-        },
+        // Common setters
         setNumberOfSteps: (steps) => {
             set({numberOfSteps: steps});
             get().createSteps();
@@ -182,20 +160,46 @@ const useSwatchStore = create<SwatchStoreState>()(
             set({numberOfSteps: steps});
             get().createSteps();
         },
-        setShadeTintRampName: (name: string) => {
-            set({shadeTintRampName: name});
+        // Scale setters
+        setScaleStart: (color: string, name: string) => {
+            const colorUpper = color.toUpperCase();
+            set({
+                scaleStart: {
+                    color: colorUpper,
+                    name: name,
+                    id: "scaleStart"
+                }
+            });
         },
-        
-        toggleGradientDirection: () => {
-            const currentDirection = get().gradientDirection;
-            const newDirection = currentDirection === 'shade-to-tint' 
-                ? 'tint-to-shade' 
-                : 'shade-to-tint';
-            set({ gradientDirection: newDirection });
-            
-            // Rebuild swatches and tone ramp with new direction
-            get().buildSwatches();
+        setScaleEnd: (color: string, name: string) => {
+            const colorUpper = color.toUpperCase();
+            set({
+                scaleEnd: {
+                    color: colorUpper,
+                    name: name,
+                    id: "scaleEnd"
+                }
+            });
         },
+        setNeutralScaleName: (name: string) => {
+            set({neutralScaleName: name});
+        },
+        swapScaleEndpoints: () => {
+            const { scaleStart, scaleEnd } = get();
+            set({
+                scaleStart: {
+                    color: scaleEnd.color,
+                    name: scaleEnd.name,
+                    id: "scaleStart"
+                },
+                scaleEnd: {
+                    color: scaleStart.color,
+                    name: scaleStart.name,
+                    id: "scaleEnd"
+                }
+            });
+        },
+,
         addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => set((state) => ({primaryColors: [...state.primaryColors, primaryColor]})),
         updatePrimaryColor: (id: string, color: string, name: string) => set((state) => ({
             primaryColors: state.primaryColors.map((p) => {
@@ -243,7 +247,7 @@ const useSwatchStore = create<SwatchStoreState>()(
 
         buildSwatches: () => {
             const state = get();
-            const newSwatches = buildNewSwatches(state.shade, state.tint, state.primaryColors, state);
+            const newSwatches = buildNewSwatches(state.scaleStart, state.scaleEnd, state.primaryColors, state);
 
             // Update the swatches in the store
             set({swatches: newSwatches});
@@ -251,27 +255,21 @@ const useSwatchStore = create<SwatchStoreState>()(
             return newSwatches;
         },
 
-        buildToneRamp: () => {
+        buildColorScale: () => {
             const state = get();
             state.setCombinedSteps();
             const combinedSteps = Array.from(state.getCombinedSteps());
-            const { gradientDirection, shade, tint } = state;
-            
-            // Determine which color appears at step 0 vs step 1000
-            // Normal: Shade(0) → Tint(1000)  
-            // Flipped: Tint(0) → Shade(1000)
-            const isShadeFirst = gradientDirection === 'shade-to-tint';
-            const startColor = isShadeFirst ? shade : tint;
-            const endColor = isShadeFirst ? tint : shade;
+            const { scaleStart, scaleEnd } = state;
 
-            const toneRamp: SwatchStoreSwatch[] = combinedSteps.map((step) => {
+            // Always calculate from scaleStart(0) to scaleEnd(1000), no gradient direction logic
+            const colorScale: SwatchStoreSwatch[] = combinedSteps.map((step) => {
                 return {
-                    color: blendColor(startColor.color, endColor.color, step),
+                    color: blendColor(scaleStart.color, scaleEnd.color, step),
                     step: step,
                 }
             });
 
-            return toneRamp;
+            return colorScale;
         }
     })
 );
