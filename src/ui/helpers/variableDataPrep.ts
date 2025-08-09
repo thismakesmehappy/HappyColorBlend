@@ -34,16 +34,16 @@ export function prepareSwatchVariableData(
     );
   };
 
-  // Prepare shade data
-  const shade = {
-    name: applyTokenName(swatchStore.shade.name, appendSeparatorToPrimitive),
-    color: swatchStore.shade.color
+  // Prepare scale start data
+  const scaleStart = {
+    name: applyTokenName(swatchStore.scaleStart.name, appendSeparatorToPrimitive),
+    color: swatchStore.scaleStart.color
   };
 
-  // Prepare tint data
-  const tint = {
-    name: applyTokenName(swatchStore.tint.name, appendSeparatorToPrimitive),
-    color: swatchStore.tint.color
+  // Prepare scale end data
+  const scaleEnd = {
+    name: applyTokenName(swatchStore.scaleEnd.name, appendSeparatorToPrimitive),
+    color: swatchStore.scaleEnd.color
   };
 
   // Prepare primary colors data
@@ -52,11 +52,11 @@ export function prepareSwatchVariableData(
     color: color.color
   }));
 
-  // Prepare shade-tint ramp name (no separator for subgroup names unless user wants them)
-  const shadeTintRampName = applyTokenName(swatchStore.getShadeTintRampName(), false);
+  // Prepare neutral scale name (no separator for subgroup names unless user wants them)
+  const neutralScaleName = applyTokenName(swatchStore.getNeutralScaleName(), false);
 
-  // Prepare shade-tint ramp swatches using buildToneRamp() to respect gradient direction
-  const shadeTintSwatches = swatchStore.buildToneRamp();
+  // Prepare neutral scale swatches using buildColorScale() for simplified logic
+  const neutralScaleSwatches = swatchStore.buildColorScale();
 
   // Prepare primary swatches
   const primarySwatches = swatchStore.getSwatches().map(primarySwatch => {
@@ -69,11 +69,13 @@ export function prepareSwatchVariableData(
   });
 
   return {
-    shade,
-    tint,
+    // Scale properties
+    scaleStart,
+    scaleEnd,
+    neutralScaleName,
+    neutralScaleSwatches,
+    // Common properties
     primaryColors,
-    shadeTintRampName,
-    shadeTintSwatches,
     primarySwatches,
     tokenSettings: {
       separatorCharsCount,

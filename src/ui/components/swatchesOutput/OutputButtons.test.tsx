@@ -67,11 +67,18 @@ describe('OutputButtons Variable Creation', () => {
 
     // Mock data preparation
     mockPrepareSwatchVariableData.mockReturnValue({
+      // New scale properties
+      scaleStart: { name: '--black', color: '000000' },
+      scaleEnd: { name: '--white', color: 'FFFFFF' },
+      neutralScaleName: '--neutral',
+      neutralScaleSwatches: [{ color: '333333', step: 100 }],
+      // Old properties for backward compatibility
       shade: { name: '--black', color: '000000' },
       tint: { name: '--white', color: 'FFFFFF' },
-      primaryColors: [{ name: '--blue', color: '3B82F6' }],
       shadeTintRampName: '--gray',
       shadeTintSwatches: [{ color: '333333', step: 100 }],
+      // Common properties
+      primaryColors: [{ name: '--blue', color: '3B82F6' }],
       primarySwatches: [
         {
           name: '--blue',
@@ -86,11 +93,18 @@ describe('OutputButtons Variable Creation', () => {
 
     // Mock style data preparation (same structure)
     mockPrepareSwatchStyleData.mockReturnValue({
+      // New scale properties
+      scaleStart: { name: '--black', color: '000000' },
+      scaleEnd: { name: '--white', color: 'FFFFFF' },
+      neutralScaleName: '--neutral',
+      neutralScaleSwatches: [{ color: '333333', step: 100 }],
+      // Old properties for backward compatibility
       shade: { name: '--black', color: '000000' },
       tint: { name: '--white', color: 'FFFFFF' },
-      primaryColors: [{ name: '--blue', color: '3B82F6' }],
       shadeTintRampName: '--gray',
       shadeTintSwatches: [{ color: '333333', step: 100 }],
+      // Common properties
+      primaryColors: [{ name: '--blue', color: '3B82F6' }],
       primarySwatches: [
         {
           name: '--blue',

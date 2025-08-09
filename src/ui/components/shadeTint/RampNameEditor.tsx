@@ -6,21 +6,21 @@ import TooltipWrapper from '@ui/components/helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
 
 const RampNameEditor = () => {
-    const shadeTintRampName = useSwatchStore(state => state.getShadeTintRampName());
-    const setShadeTintRampName = useSwatchStore(state => state.setShadeTintRampName);
+    const neutralScaleName = useSwatchStore(state => state.getNeutralScaleName());
+    const setNeutralScaleName = useSwatchStore(state => state.setNeutralScaleName);
 
     return (<div id="shade-tint-ramp-name">
         <p className={"figma-subtitle"}>
-            What do we call the mix?
+            What do we call the neutral scale?
             <Help
-                content="Name for the gradation created by blending your shade and tint colors; if mixing black and white, this would be your gray"
+                content="Name for the gradation created by blending your start and end colors; if mixing black and white, this would be your gray scale"
                 id="ramp-name-tooltip"
                 className={"figma-ml-xs"}
             />
         </p>
         <div>
-            <TextAndInput inputText={shadeTintRampName}
-                          setInputText={setShadeTintRampName}
+            <TextAndInput inputText={neutralScaleName}
+                          setInputText={setNeutralScaleName}
             />
         </div>
     </div>);

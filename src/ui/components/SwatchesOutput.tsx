@@ -12,11 +12,11 @@ interface SwatchesProps {
 
 const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
     const swatches = useSwatchStore((state) => state.getSwatches());
-    const tintColor = useSwatchStore((state) => state.getTint());
-    const shadeColor = useSwatchStore((state) => state.getShade());
-    const shadeTintRampName = useSwatchStore(state => state.getShadeTintRampName());
-    const buildToneRamp = useSwatchStore(state => state.buildToneRamp);
-    const toneRamp = buildToneRamp();
+    const scaleEndColor = useSwatchStore((state) => state.getScaleEnd());
+    const scaleStartColor = useSwatchStore((state) => state.getScaleStart());
+    const neutralScaleName = useSwatchStore(state => state.getNeutralScaleName());
+    const buildColorScale = useSwatchStore(state => state.buildColorScale);
+    const colorScale = buildColorScale();
     return (
         <div
             className={className}
@@ -26,11 +26,11 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
         >
             <SwatchPrimitives />
             <SwatchGroupSwatches
-                key="tint-shade"
-                colorName={shadeTintRampName}
-                color={tintColor.color}
-                secondColor={shadeColor.color}
-                swatches={toneRamp}
+                key="neutral-scale"
+                colorName={neutralScaleName}
+                color={scaleEndColor.color}
+                secondColor={scaleStartColor.color}
+                swatches={colorScale}
             />
 
             {swatches.map((primaryColor) =>

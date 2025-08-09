@@ -12,62 +12,42 @@ interface ShadeTintProps extends ClassAndStyle {
 
 const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
     ({className, style}, ref) => {
-        const shade = useSwatchStore(state => state.getShade());
-        const tint = useSwatchStore(state => state.getTint());
-        const setShade = useSwatchStore(state => state.setShade);
-        const setTint = useSwatchStore(state => state.setTint);
+        const scaleStart = useSwatchStore(state => state.getScaleStart());
+        const scaleEnd = useSwatchStore(state => state.getScaleEnd());
+        const setScaleStart = useSwatchStore(state => state.setScaleStart);
+        const setScaleEnd = useSwatchStore(state => state.setScaleEnd);
         const buildSwatches = useSwatchStore((state) => state.buildSwatches);
-        const gradientDirection = useSwatchStore(state => state.getGradientDirection());
-        const toggleGradientDirection = useSwatchStore(state => state.toggleGradientDirection);
-        const [shadeName, setShadeName] = useState(shade.name);
-        const [shadeColor, setShadeColor] = useState(shade.color);
-        const [tintName, setTintName] = useState(tint.name);
-        const [tintColor, setTintColor] = useState(tint.color);
+        const swapScaleEndpoints = useSwatchStore(state => state.swapScaleEndpoints);
+        const [startName, setStartName] = useState(scaleStart.name);
+        const [startColor, setStartColor] = useState(scaleStart.color);
+        const [endName, setEndName] = useState(scaleEnd.name);
+        const [endColor, setEndColor] = useState(scaleEnd.color);
 
         useEffect(() => {
-            setShadeName(shade.name);
-            setShadeColor(shade.color);
-            setTintName(tint.name);
-            setTintColor(tint.color);
-        }, [shade, tint]);
+            setStartName(scaleStart.name);
+            setStartColor(scaleStart.color);
+            setEndName(scaleEnd.name);
+            setEndColor(scaleEnd.color);
+        }, [scaleStart, scaleEnd]);
 
-        // Determine display order and labels based on gradient direction
-        const isShadeFirst = gradientDirection === 'shade-to-tint';
-        const leftSide = isShadeFirst
-            ? {
-                color: shade,
-                displayColor: shadeColor,
-                displayName: shadeName,
-                label: "Shade",
-                updateFn: setShade,
-                helpContent: "The darker color that will be mixed with your primary colors to create darker tones"
-            }
-            : {
-                color: tint,
-                displayColor: tintColor,
-                displayName: tintName,
-                label: "Tint",
-                updateFn: setTint,
-                helpContent: "The lighter color that will be mixed with your primary colors to create lighter tones"
-            };
+        // Simplified display - always show start on left, end on right
+        const leftSide = {
+            color: scaleStart,
+            displayColor: startColor,
+            displayName: startName,
+            label: "Start",
+            updateFn: setScaleStart,
+            helpContent: "The starting color of your scale that will be mixed with your primary colors"
+        };
 
-        const rightSide = isShadeFirst
-            ? {
-                color: tint,
-                displayColor: tintColor,
-                displayName: tintName,
-                label: "Tint",
-                updateFn: setTint,
-                helpContent: "The lighter color that will be mixed with your primary colors to create lighter tones"
-            }
-            : {
-                color: shade,
-                displayColor: shadeColor,
-                displayName: shadeName,
-                label: "Shade",
-                updateFn: setShade,
-                helpContent: "The darker color that will be mixed with your primary colors to create darker tones"
-            };
+        const rightSide = {
+            color: scaleEnd,
+            displayColor: endColor,
+            displayName: endName,
+            label: "End",
+            updateFn: setScaleEnd,
+            helpContent: "The ending color of your scale that will be mixed with your primary colors"
+        };
 
         return (
             <div className={className} style={style} data-testid={"shade-tint"} ref={ref}>
@@ -123,8 +103,8 @@ const ShadeTint = forwardRef<HTMLDivElement, ShadeTintProps>(
 
                         <span
                             className={"figma-text-primary"}
-                            onClick={toggleGradientDirection}
-                            data-testid="flip-gradient-button"
+                            onClick={swapScaleEndpoints}
+                            data-testid="swap-scale-button"
                             style={{padding: '4px 8px'}}
                         >
                             <FontAwesomeIcon icon="arrows-rotate" />

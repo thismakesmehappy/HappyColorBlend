@@ -50,6 +50,7 @@ jest.mock('../store/useSwatchStore', () => ({
     __esModule: true,
     default: jest.fn().mockImplementation((selector) => {
         const state = {
+            // Old methods
             getShade: () => ({
                 id: 'shade',
                 name: 'Black',
@@ -65,8 +66,24 @@ jest.mock('../store/useSwatchStore', () => ({
             getGradientDirection: () => 'shade-to-tint',
             setShade: mockSetShade,
             setTint: mockSetTint,
-            buildSwatches: mockBuildSwatches,
-            toggleGradientDirection: mockToggleGradientDirection
+            toggleGradientDirection: mockToggleGradientDirection,
+            // New methods
+            getScaleStart: () => ({
+                id: 'scaleStart',
+                name: 'Black',
+                color: '000000',
+                customToken: false
+            }),
+            getScaleEnd: () => ({
+                id: 'scaleEnd', 
+                name: 'White',
+                color: 'FFFFFF',
+                customToken: false
+            }),
+            setScaleStart: mockSetShade, // Reuse same mock for now
+            setScaleEnd: mockSetTint, // Reuse same mock for now
+            swapScaleEndpoints: mockToggleGradientDirection, // Reuse same mock for now
+            buildSwatches: mockBuildSwatches
         };
         return selector(state);
     })
@@ -80,67 +97,67 @@ describe('ShadeTint Component', () => {
     test('renders with correct structure', () => {
         render(<ShadeTint />);
 
-        // Check that the shade section is rendered
-        expect(screen.getByText('Shade (0)')).toBeInTheDocument();
-        expect(screen.getByText('Tint (1000)')).toBeInTheDocument();
+        // Check that essential elements are rendered
+        expect(screen.getByText(/Start/)).toBeInTheDocument();
+        expect(screen.getByText(/End/)).toBeInTheDocument();
 
         // Check that both swatches are rendered
-        const shadeSwatchInput = screen.getByTestId('mock-swatch-shade');
-        const tintSwatchInput = screen.getByTestId('mock-swatch-tint');
-        expect(shadeSwatchInput).toBeInTheDocument();
-        expect(tintSwatchInput).toBeInTheDocument();
+        const startSwatchInput = screen.getByTestId('mock-swatch-scaleStart');
+        const endSwatchInput = screen.getByTestId('mock-swatch-scaleEnd');
+        expect(startSwatchInput).toBeInTheDocument();
+        expect(endSwatchInput).toBeInTheDocument();
 
         // Check that the swatches have the correct initial values
-        expect(screen.getByTestId('mock-swatch-color-shade')).toHaveValue('000000');
-        expect(screen.getByTestId('mock-swatch-name-shade')).toHaveValue('Black');
-        expect(screen.getByTestId('mock-swatch-color-tint')).toHaveValue('FFFFFF');
-        expect(screen.getByTestId('mock-swatch-name-tint')).toHaveValue('White');
+        expect(screen.getByTestId('mock-swatch-color-scaleStart')).toHaveValue('000000');
+        expect(screen.getByTestId('mock-swatch-name-scaleStart')).toHaveValue('Black');
+        expect(screen.getByTestId('mock-swatch-color-scaleEnd')).toHaveValue('FFFFFF');
+        expect(screen.getByTestId('mock-swatch-name-scaleEnd')).toHaveValue('White');
     });
 
-    test('updates shade when swatch is changed', () => {
+    test('updates start when swatch is changed', () => {
         render(<ShadeTint />);
 
-        // Change the shade color
-        const shadeColorInput = screen.getByTestId('mock-swatch-color-shade');
-        fireEvent.change(shadeColorInput, {target: {value: '111111'}});
+        // Change the start color
+        const startColorInput = screen.getByTestId('mock-swatch-color-scaleStart');
+        fireEvent.change(startColorInput, {target: {value: '111111'}});
 
-        // Check that setShade was called with the correct values
+        // Check that setScaleStart was called with the correct values
         expect(mockSetShade).toHaveBeenCalledWith('111111', 'Black');
         expect(mockBuildSwatches).toHaveBeenCalled();
     });
 
-    test('updates shade name when swatch name is changed', () => {
+    test('updates start name when swatch name is changed', () => {
         render(<ShadeTint />);
 
-        // Change the shade name
-        const shadeNameInput = screen.getByTestId('mock-swatch-name-shade');
-        fireEvent.change(shadeNameInput, {target: {value: 'Dark Black'}});
+        // Change the start name
+        const startNameInput = screen.getByTestId('mock-swatch-name-scaleStart');
+        fireEvent.change(startNameInput, {target: {value: 'Dark Black'}});
 
-        // Check that setShade was called with the correct values
+        // Check that setScaleStart was called with the correct values
         expect(mockSetShade).toHaveBeenCalledWith('000000', 'Dark Black');
         expect(mockBuildSwatches).toHaveBeenCalled();
     });
 
-    test('updates tint when swatch is changed', () => {
+    test('updates end when swatch is changed', () => {
         render(<ShadeTint />);
 
-        // Change the tint color
-        const tintColorInput = screen.getByTestId('mock-swatch-color-tint');
-        fireEvent.change(tintColorInput, {target: {value: 'EEEEEE'}});
+        // Change the end color
+        const endColorInput = screen.getByTestId('mock-swatch-color-scaleEnd');
+        fireEvent.change(endColorInput, {target: {value: 'EEEEEE'}});
 
-        // Check that setTint was called with the correct values
+        // Check that setScaleEnd was called with the correct values
         expect(mockSetTint).toHaveBeenCalledWith('EEEEEE', 'White');
         expect(mockBuildSwatches).toHaveBeenCalled();
     });
 
-    test('updates tint name when swatch name is changed', () => {
+    test('updates end name when swatch name is changed', () => {
         render(<ShadeTint />);
 
-        // Change the tint name
-        const tintNameInput = screen.getByTestId('mock-swatch-name-tint');
-        fireEvent.change(tintNameInput, {target: {value: 'Pure White'}});
+        // Change the end name
+        const endNameInput = screen.getByTestId('mock-swatch-name-scaleEnd');
+        fireEvent.change(endNameInput, {target: {value: 'Pure White'}});
 
-        // Check that setTint was called with the correct values
+        // Check that setScaleEnd was called with the correct values
         expect(mockSetTint).toHaveBeenCalledWith('FFFFFF', 'Pure White');
         expect(mockBuildSwatches).toHaveBeenCalled();
     });
@@ -162,7 +179,7 @@ describe('ShadeTint Component', () => {
         render(<ShadeTint ref={testRef} />);
 
         // Check that the component renders without errors
-        expect(screen.getByText('Shade (0)')).toBeInTheDocument();
-        expect(screen.getByText('Tint (1000)')).toBeInTheDocument();
+        expect(screen.getByText(/Start/)).toBeInTheDocument();
+        expect(screen.getByText(/End/)).toBeInTheDocument();
     });
 });
