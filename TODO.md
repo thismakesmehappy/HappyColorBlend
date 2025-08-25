@@ -6,23 +6,23 @@
 
 - ~~[ ] Add title bar~~
 - [x] Increase padding
-- [ ] Update formulas to calculate section sizes
-- [ ] Refactor
+- [x] Update formulas to calculate section sizes
+- [x] Refactor
 - [x] Hex to uppercase
 - [x] Add # to hex (when displayed)
-- [ ] Accept on enter
+- [x] Accept on enter
 - [ ] cancel on escape
 - [x] update toggle to go gray on off
 
 ## Swatches
 
 - [x] Vertical spacing between swatches of same base
-- [ ] Add option for token name prefix
+- [x] Add option for token name prefix
 - [x] Add space between each group of swatches for each base
-- [ ] Create a footer to generate output
-    - [ ] Generate swatches in document
-    - [ ] Generate Styles
-    - [ ] Generate variables
+- [x] Create a footer to generate output
+    - [x] Generate swatches in document
+    - [x] Generate Styles
+    - [x] Generate variables
 - [x] Update swatches with different activities
     - [x] Update swatches when updating dark
     - [x] Update swatches when updating light
@@ -41,7 +41,7 @@
 ## Test
 
 - [x] Test Swatch component
-- [ ] Test Swatches component
+- [x] Test Swatches component
 - [x] Test Interactions with swatches
 - [x] Test equal steps
 - [x] Test custom steps
@@ -59,7 +59,7 @@
 
 ## Steps
 
-- [ ] Update height to tallest of two sides
+- [x] Update height to tallest of two sides
 - [x] Disable decrease steps if steps === 3
 
 ## Testing Plan
@@ -111,19 +111,12 @@
 - [ ] Test rendering performance with many swatches
 - [ ] Test color calculation performance with complex blends
 
-### Browser Compatibility
-
-- [ ] Test in Chrome
-- [ ] Test in Firefox
-- [ ] Test in Safari
-- [ ] Test in Edge
-
 ### Figma Plugin Integration
 
-- [ ] Test plugin initialization
-- [ ] Test communication between UI and plugin code
-- [ ] Test color generation in Figma environment
-- [ ] Test style and variable creation in Figma
+- [x] Test plugin initialization
+- [x] Test communication between UI and plugin code
+- [x] Test color generation in Figma environment
+- [x] Test style and variable creation in Figma
 
 # HappyColorBlendVibe - Refactoring & Optimization TODO
 
@@ -154,7 +147,7 @@
 
 ### Medium Priority
 
-- [ ] **Custom Hooks Extraction**
+- [x] **Custom Hooks Extraction**
     - Extract `useResizeObserver` hook from Steps component
     - Create `useColorCalculation` hook for color-related operations
     - Implement `useLocalStorage` hook for persisting user preferences

@@ -225,7 +225,7 @@ describe('SwatchControls Component', () => {
         await waitFor(() => {
             expect(mockRequest).toHaveBeenCalledWith(expect.anything(), 'extractSingleColorFromSelection', []);
             expect(defaultProps.setSwatchColor).toHaveBeenCalledWith('FF0000');
-            expect(defaultProps.setSwatchName).toHaveBeenCalledWith('Mocked Name for #FF0000');
+            expect(defaultProps.setSwatchName).toHaveBeenCalledWith('Mocked Name for FF');
         });
     });
 

@@ -7,6 +7,12 @@ import {UI_CHANNEL} from "@ui/app.network";
 import {PLUGIN} from "@common/networkSides";
 import ColorNamer from 'color-namer';
 
+// Helper function to filter color names to allow only alphabetic characters and spaces
+function getAlphabeticColorName(hexColor: string): string {
+    const originalName = ColorNamer(hexColor).ntc[0].name;
+    return originalName.replace(/[^a-zA-Z\s]/g, '').trim();
+}
+
 export interface SwatchControlsRef {
     update: () => void;
     reset: () => void;
@@ -72,7 +78,7 @@ const SwatchControls = forwardRef<SwatchControlsRef, SwatchControlsProps>(({
     const extractSingleColorFromSelection = async () => {
         try {
             const extractedColor = await UI_CHANNEL.request(PLUGIN, "extractSingleColorFromSelection", []);
-            const colorName = ColorNamer(`#${extractedColor.color}`).ntc[0].name;
+            const colorName = getAlphabeticColorName(`#${extractedColor.color}`);
             setSwatchColor(extractedColor.color);
             setSwatchName(colorName);
         } catch (error) {

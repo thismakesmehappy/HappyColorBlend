@@ -12,6 +12,12 @@ import {PLUGIN} from "@common/networkSides";
 import Toast from "./helpers/Toast";
 import {TOAST_DURATION} from "../../constants/uiConstants";
 
+// Helper function to filter color names to allow only alphabetic characters and spaces
+function getAlphabeticColorName(hexColor: string): string {
+    const originalName = ColorNamer(hexColor).ntc[0].name;
+    return originalName.replace(/[^a-zA-Z\s]/g, '').trim();
+}
+
 interface PrimaryColorsProps extends ClassAndStyle {
 }
 
@@ -31,7 +37,7 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
 
     const createRandomPrimaryColor = () => {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
-        const randomName = ColorNamer(`#${randomColor}`).ntc[0].name; // modify to only include alpha characters
+        const randomName = getAlphabeticColorName(`#${randomColor}`);
         const newPrimaryColor: SwatchStoreInputSwatch = {
             color: randomColor,
             name: randomName,
@@ -60,7 +66,7 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
 
             // Add only new colors
             newColors.forEach((colorData: { color: string; name: string }) => {
-                const colorName = ColorNamer(`#${colorData.color}`).ntc[0].name;
+                const colorName = getAlphabeticColorName(`#${colorData.color}`);
                 const newPrimaryColor: SwatchStoreInputSwatch = {
                     color: colorData.color,
                     name: colorName,
