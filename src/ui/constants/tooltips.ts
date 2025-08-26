@@ -93,9 +93,16 @@ export const TOOLTIPS = {
     TOKEN_SETTINGS: {
         content: "Customize how token names are formatted relative to the swatch name: how words are cased, how spaces are treated, and if you want to prefix or suffix with dashed or underscores",
         id: "token-settings-tooltip",
-        placement: PLACEMENTS.TOP,
+        placement: PLACEMENTS.BOTTOM,
         type: TOOLTIP_TYPES.COMPONENT,
         maxWidth: TOOLTIP_WIDTHS.WIDE
+    },
+    NAMING_MODAL: {
+        content: "Configure token naming conventions and format settings",
+        id: "naming-modal-tooltip",
+        placement: PLACEMENTS.TOP,
+        type: TOOLTIP_TYPES.COMPONENT,
+        maxWidth: TOOLTIP_WIDTHS.MEDIUM
     },
     OUTPUT_BUTTONS: {
         content: "Generate assets from your scales: swatches appear on your pasteboard, variables and styles int he corresponding panels, and CSS and SCSS are copied to your clipboard to be pasted",

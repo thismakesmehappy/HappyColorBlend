@@ -16,10 +16,11 @@ function App() {
     }
 
     return (
-        <div id="main-box">
-            <SwatchInputSection />
-            {/*<SettingsSection />*/}
-            <OutputSection />
+        <div>
+            <div id="main-box">
+                <SwatchInputSection />
+                <OutputSection />
+            </div>
         </div>
     );
 }

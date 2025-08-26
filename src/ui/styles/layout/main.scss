@@ -1,7 +1,7 @@
 @use '../figma/figma-styles' as figma;
 
 $window-width: 1000px;
-$window-height: 616px;
+$window-height: 700px;
 $separator-space: figma.$spacing-md;
 $padding: figma.$spacing-md;
 $separator-line: 1px;
@@ -15,7 +15,7 @@ $steps-section-width: $output-section-width - $padding;
 $steps-section-inner-width: $steps-section-width - $padding - $padding;
 
 $equal-steps-section-width: 120px;
-$custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-width - $separator-width - $padding - $padding;
+$custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-width - $separator-width - $padding;
 
 .separator {
   padding-left: $separator-space;
@@ -37,7 +37,6 @@ $custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-w
   display: flex;
   margin: 0;
   padding: $padding;
-  border: 1px solid red;
 }
 
 #input-section {
@@ -75,6 +74,7 @@ $custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-w
 #equal-steps-section {
   width: $equal-steps-section-width;
   display: inline-block;
+  margin-top: 0;
 }
 
 #custom-steps-section {
@@ -86,4 +86,12 @@ $custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-w
 
 #nav-bottom {
   @extend .float;
+  display: flex;
+  justify-content: center;
+}
+
+// Navigation area styling
+.app-navigation {
+  background-color: figma.$color-light;
+  border-bottom: 1px solid figma.$color-border;
 }

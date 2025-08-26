@@ -11,6 +11,7 @@ import useSwatchStore from "@ui/store/useSwatchStore";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 import {getTooltipProps} from "@ui/constants/tooltips";
 import "@ui/styles/bootstrap/bootstrap.scss";
+import NamingOptionsButton from "../NamingOptionsButton";
 
 const OutputButtons = () => {
     const [isCreatingVariables, setIsCreatingVariables] = useState(false);
@@ -19,6 +20,7 @@ const OutputButtons = () => {
     const [toastMessage, setToastMessage] = useState("");
     const [toastType, setToastType] = useState<"success" | "error" | "primary">("success");
     const [showToast, setShowToast] = useState(false);
+    const [showNamingModal, setShowNamingModal] = useState(false);
 
     // Get store data
     const swatchStore = useSwatchStore();
@@ -185,53 +187,58 @@ const OutputButtons = () => {
         <>
             <div className={"sticky-bottom figma-p-md"}>
                 <div id="nav-bottom">
-                    <div className={"hstack gap-0"}>
-                        <div className={"vstack gap-2"}>
-                            <div className={"hstack mx-auto"}>
-                                <button
-                                    className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                                    onClick={handleCreateVariables}
-                                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                                >
-                                    {isCreatingVariables ? "Creating..." : "Add Variables"}
-                                </button>
-                                <button
-                                    className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                                    onClick={handleCreateStyles}
-                                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                                >
-                                    {isCreatingStyles ? "Creating..." : "Add Styles"}
-                                </button>
-                                <button
-                                    className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                                    onClick={handleCreateSwatches}
-                                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                                >
-                                    {isCreatingSwatches ? "Creating..." : "Create Swatches"}
-                                </button>
-                            </div>
-                            <div className={"hstack mx-auto"}>
-                                <button
-                                    className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                                    onClick={handleExportCSS}
-                                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                                >
-                                    Copy CSS Variables
-                                </button>
-                                <button
-                                    className={"btn btn-primary figma-bg-primary figma-text-light"}
-                                    onClick={handleExportSCSS}
-                                    disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                                >
-                                    Copy SCSS Variables
-                                </button>
-                            </div>
-                        </div>
-                        <div className={"d-inline-block figma-ml-xs"}>
-                            <Help {...getTooltipProps("OUTPUT_BUTTONS")} className={"figma-ml-xs"}
-                            />
-                        </div>
+                    <div className={"hstack gap-0 ms-auto me-auto"}>
+                        <NamingOptionsButton showIcon={false} />
+                        <Help {...getTooltipProps("NAMING_MODAL")} className={"figma-ml-xs"} />
+                        {/* naming modal */}
 
+                        <div className={"hstack gap-0 separator"}>
+                            <div className={"vstack gap-2"}>
+                                <div className={"hstack mx-auto"}>
+                                    <button
+                                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                                        onClick={handleCreateVariables}
+                                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                                    >
+                                        {isCreatingVariables ? "Creating..." : "Add Variables"}
+                                    </button>
+                                    <button
+                                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                                        onClick={handleCreateStyles}
+                                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                                    >
+                                        {isCreatingStyles ? "Creating..." : "Add Styles"}
+                                    </button>
+                                    <button
+                                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                                        onClick={handleCreateSwatches}
+                                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                                    >
+                                        {isCreatingSwatches ? "Creating..." : "Create Swatches"}
+                                    </button>
+                                </div>
+                                <div className={"hstack mx-auto"}>
+                                    <button
+                                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
+                                        onClick={handleExportCSS}
+                                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                                    >
+                                        Copy CSS Variables
+                                    </button>
+                                    <button
+                                        className={"btn btn-primary figma-bg-primary figma-text-light"}
+                                        onClick={handleExportSCSS}
+                                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                                    >
+                                        Copy SCSS Variables
+                                    </button>
+                                </div>
+                            </div>
+                            <div className={"d-inline-block figma-ml-xs"}>
+                                <Help {...getTooltipProps("OUTPUT_BUTTONS")} className={"figma-ml-xs"}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
