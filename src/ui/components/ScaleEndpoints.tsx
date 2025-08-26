@@ -52,10 +52,10 @@ const ScaleEndpoints = forwardRef<HTMLDivElement, ScaleEndpointsProps>(
                 <div className={"row"}>
                     <div className={"col col-6"}>
                         <div className={"figma-subtitle text-center"}>
-                            {leftSide.label}
-                            <Help{...getTooltipProps('SCALE_START')} className={"figma-ml-xs"}
-                            /><br />
-                            0
+                            {leftSide.label} 0
+                            <Help {...getTooltipProps('SCALE_START')} className={"figma-ml-xs"}
+                            />
+
 
                         </div>
                         <Swatch
@@ -72,10 +72,9 @@ const ScaleEndpoints = forwardRef<HTMLDivElement, ScaleEndpointsProps>(
 
                     <div className={"col col-6"}>
                         <div className={"figma-subtitle text-center"}>
-                            {rightSide.label}
+                            {rightSide.label} 1000
                             <Help {...getTooltipProps('SCALE_END')} className={"figma-ml-xs"}
-                            /><br />
-                            1000
+                            />
 
                         </div>
                         <Swatch
@@ -97,7 +96,7 @@ const ScaleEndpoints = forwardRef<HTMLDivElement, ScaleEndpointsProps>(
                             className={"figma-text-primary"}
                             onClick={swapScaleEndpoints}
                             data-testid="swap-scale-button"
-                            style={{padding: '4px 8px'}}
+                            style={{padding: '2px 4px'}}
                         >
                             <FontAwesomeIcon icon="arrows-rotate" />
                         </span>

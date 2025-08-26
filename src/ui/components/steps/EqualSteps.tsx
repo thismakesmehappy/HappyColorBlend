@@ -8,7 +8,7 @@ import TooltipWrapper from '../helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
 import {getTooltipProps} from "@ui/constants/tooltips";
 
-export const EqualSteps = ({className = "", style = {}}: ClassAndStyle) => {
+export const EqualSteps = ({className = "", style = {}, id}: ClassAndStyle) => {
     const numberOfSteps = useSwatchStore((state) => state.numberOfSteps);
     const increaseSteps = useSwatchStore((state) => state.increaseSteps);
     const decreaseSteps = useSwatchStore((state) => state.decreaseSteps);
@@ -25,7 +25,7 @@ export const EqualSteps = ({className = "", style = {}}: ClassAndStyle) => {
     };
 
     return (
-        <div className={className} style={style} data-testid="equal-steps">
+        <div className={className} style={style} data-testid="equal-steps" id={id}>
             <NumberToggle
                 decreaseFunction={handleDecrease}
                 increaseFunction={handleIncrease}

@@ -4,6 +4,7 @@ import {SwatchStoreSwatch} from "../../store/useSwatchStore";
 import ChipOutput from "./ChipOutput";
 import {computeTokenName} from "../../helpers/computeTokenName";
 import useTokenNameStore from "../../store/useTokenNameStore";
+import {Col, Row} from "react-bootstrap";
 
 interface SwatchGroupSwatchesProps {
     colorName: string;
@@ -49,12 +50,17 @@ const SwatchGroupSwatches = ({
             <br />
 
         </p>
-        <div className={"swatches-container row gx-0"} data-testid="swatches-container">
-            {swatches.map((swatch, index) =>
-                <SwatchColorChip key={`${swatch.color}-${swatch.step}-${index}`} color={swatch.color}
-                                 step={swatch.step} className={'col col-3'} />
+        <Row xs={6} className={"swatches-container gx-0"} data-testid="swatches-container">
+            {swatches.map((swatch, index) => {
+                    return (
+                        <Col>
+                            <SwatchColorChip key={`${swatch.color}-${swatch.step}-${index}`} color={swatch.color}
+                                             step={swatch.step} />
+                        </Col>
+                    )
+                }
             )}
-        </div>
+        </Row>
     </div>);
 };
 

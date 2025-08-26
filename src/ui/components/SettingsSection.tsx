@@ -6,7 +6,6 @@ import Case from "@ui/components/tokenSettings/Case";
 import Spaces from "@ui/components/tokenSettings/Spaces";
 import Leading from "@ui/components/tokenSettings/Leading";
 import Separator from "@ui/components/tokenSettings/Separator";
-import "@ui/styles/bootstrap/bootstrap.scss"
 import CustomStepBadges from "@ui/components/steps/CustomStepBadges";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import Help from "@ui/components/helpers/Help";
@@ -41,7 +40,7 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
             )}
             <hr />
             <div className="figma-subtitle">Token Name Settings
-                <Help{...getTooltipProps('TOKEN_SETTINGS')} className={"figma-ml-xs"}
+                <Help {...getTooltipProps('TOKEN_SETTINGS')} className={"figma-ml-xs"}
                 />
             </div>
             <Case />

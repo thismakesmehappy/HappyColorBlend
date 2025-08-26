@@ -5,7 +5,7 @@ const CustomStepBadges = () => {
     const customSteps = useSwatchStore((state) => state.customSteps);
     const removeCustomStep = useSwatchStore((state) => state.removeCustomStep);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
-    return (<div className="figma-mt-sm p-0" data-testid="custom-steps-badges">
+    return (<div className="figma-mt-sm p-0" data-testid="custom-steps-badges d-flex">
         {Array.from(customSteps).map(step => {
             return <Badge key={`custom-${step}`} className={"figma-mr-sm figma-mb-xs"}
                           type="primary" iconRight={"minus"} onClick={() => {

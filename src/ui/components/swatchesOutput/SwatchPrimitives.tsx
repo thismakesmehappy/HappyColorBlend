@@ -4,6 +4,7 @@ import React from "react";
 import Swatch from "@ui/components/swatchesInput";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 import {computeTokenName} from "@ui/helpers/computeTokenName";
+import {Col, Row} from "react-bootstrap";
 
 const SwatchPrimitives = () => {
     const scaleEnd = useSwatchStore(state => state.scaleEnd);
@@ -38,9 +39,13 @@ const SwatchPrimitives = () => {
         appendSeparatorToPrimitives
     );
 
-    return (<div className={"row gx-0 figma-mb-lg"}>
-        <Swatch color={scaleStart.color} name={scaleStartColorToken} displayOnly={true} className={'col col-4'} />
-        <Swatch color={scaleEnd.color} name={scaleEndColorToken} displayOnly={true} className={'col col-4'} />
+    return (<Row xs={5} className={"gx-0 figma-mb-lg"}>
+        <Col>
+            <Swatch color={scaleStart.color} name={scaleStartColorToken} displayOnly={true} />
+        </Col>
+        <Col>
+            <Swatch color={scaleEnd.color} name={scaleEndColorToken} displayOnly={true} />
+        </Col>
         {primary.map((color) => {
             const colorTokenName = computeTokenName(
                 color.name,
@@ -52,11 +57,13 @@ const SwatchPrimitives = () => {
                 separatorCharType,
                 appendSeparatorToPrimitives
             );
-            return <Swatch color={color.color} name={colorTokenName} displayOnly={true}
-                           key={`${color.color}-${color.name}`}
-                           className={'col col-4'} />
+            return (
+                <Col>
+                    <Swatch color={color.color} name={colorTokenName} displayOnly={true}
+                            key={`${color.color}-${color.name}`} />
+                </Col>)
         })}
-    </div>);
+    </Row>);
 };
 
 export default SwatchPrimitives

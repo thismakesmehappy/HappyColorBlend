@@ -91,7 +91,7 @@ export const TOOLTIPS = {
         maxWidth: TOOLTIP_WIDTHS.MEDIUM
     },
     TOKEN_SETTINGS: {
-        content: "Customize how token names are formatted relative to the swatch name: how words are cased, how spaces are treated, and if you want to prefix or sufix with dashed or underscores",
+        content: "Customize how token names are formatted relative to the swatch name: how words are cased, how spaces are treated, and if you want to prefix or suffix with dashed or underscores",
         id: "token-settings-tooltip",
         placement: PLACEMENTS.TOP,
         type: TOOLTIP_TYPES.COMPONENT,

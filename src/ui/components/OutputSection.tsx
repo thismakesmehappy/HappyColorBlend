@@ -4,12 +4,14 @@ import React from "react";
 import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
 import Help from "@ui/components/helpers/Help";
 import {getTooltipProps} from "@ui/constants/tooltips";
+import StepsSection from "@ui/components/tokenSettings/StepsSection";
 
 interface SwatchesOutputProps extends ClassAndStyle {
 }
 
 const OutputSection = ({className, style}: SwatchesOutputProps) => {
     return (<div id="output-section" className={className}>
+        <StepsSection className="sticky-top" />
         <p className={"title"}>Results
             <Help {...getTooltipProps('PREVIEW_SWATCHES')} className={"figma-ml-xs"} />
         </p>

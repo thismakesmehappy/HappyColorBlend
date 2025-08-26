@@ -15,7 +15,7 @@ import {getTooltipProps} from "@ui/constants/tooltips";
 interface CustomStepsProps extends ClassAndStyle {
 }
 
-export const CustomSteps = ({className = "", style = {}}: CustomStepsProps) => {
+export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [showToast, setShowToast] = useState<boolean>(false);
     const [toastMessage, setToastMessage] = useState<string>('');
@@ -100,7 +100,7 @@ export const CustomSteps = ({className = "", style = {}}: CustomStepsProps) => {
     };
 
     return (
-        <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps">
+        <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps" id={id}>
             <span>
                  <input
                      type="text"

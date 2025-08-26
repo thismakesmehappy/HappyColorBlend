@@ -1,18 +1,48 @@
 @use '../figma/figma-styles' as figma;
 
+$window-width: 1000px;
+$window-height: 616px;
+$separator-space: figma.$spacing-md;
+$padding: figma.$spacing-md;
+$separator-line: 1px;
+$separator-width: $separator-space + $separator-line + $separator-space;
+//$output-section-width: $window-width - $input-section-width - $separator-width;
+
+$input-section-width: 250px;
+$output-section-width: $window-width - $input-section-width - $separator-width - $padding;
+
+$steps-section-width: $output-section-width - $padding;
+$steps-section-inner-width: $steps-section-width - $padding - $padding;
+
+$equal-steps-section-width: 120px;
+$custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-width - $separator-width - $padding - $padding;
+
+.separator {
+  padding-left: $separator-space;
+  border-left: $separator-line figma.$color-text-secondary solid;
+  margin-left: $separator-space;
+}
+
+.float {
+  backdrop-filter: blur(20px);
+  background-color: rgba(240, 240, 240, 0.8);
+  padding: $padding;
+  border-radius: 1em;
+
+}
+
 #main-box {
-  width: 100%;
-  height: 100%;
+  width: $window-width;
+  height: $window-height;
   display: flex;
   margin: 0;
-  padding: 0;
+  padding: $padding;
+  border: 1px solid red;
 }
 
 #input-section {
-  width: 240px !important;
-  //height: 100%;
+  width: $input-section-width !important;
   overflow: auto;
-  padding: figma.$spacing-md;
   white-space: wrap;
 }
 
@@ -22,13 +52,38 @@
   overflow: auto;
   padding: figma.$spacing-md figma.$spacing-md figma.$spacing-md 0;
   white-space: wrap;
-
 }
 
 #output-section {
-  width: 500px !important;
-  //height: 100%;
+  width: $output-section-width !important;
   overflow: auto;
-  padding: figma.$spacing-md figma.$spacing-md figma.$spacing-md 0;
   white-space: wrap;
+  @extend .separator;
+}
+
+#steps-section {
+  padding: $padding;
+  width: $steps-section-width;
+  margin: 0;
+
+  .inner {
+    width: $steps-section-inner-width;
+    @extend .float;
+  }
+}
+
+#equal-steps-section {
+  width: $equal-steps-section-width;
+  display: inline-block;
+}
+
+#custom-steps-section {
+  width: $custom-steps-section-width;
+  overflow: scroll;
+  display: inline-block;
+  @extend .separator;
+}
+
+#nav-bottom {
+  @extend .float;
 }
