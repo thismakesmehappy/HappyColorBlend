@@ -2,18 +2,15 @@ import SwatchesOutput from "@ui/components/SwatchesOutput";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import React from "react";
 import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
-import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
-import TooltipWrapper from './helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
+import {getTooltipProps} from "@ui/constants/tooltips";
 
 interface SwatchesOutputProps extends ClassAndStyle {
 }
 
 const OutputSection = ({className, style}: SwatchesOutputProps) => {
     return (<div id="output-section" className={className}>
-        <p className={"title"}>Results<Help content={"Preview your generated color swatches"}
-                                            id="results-tooltip"
-                                            placement={"bottom"}
+        <p className={"title"}>Results<Help {...getTooltipProps('PREVIEW_SWATCHES')}
                                             className={"figma-ml-xs"}
         />
         </p>

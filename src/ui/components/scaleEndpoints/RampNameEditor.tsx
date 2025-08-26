@@ -1,9 +1,8 @@
 import TextAndInput from "@ui/components/helpers/TextAndInput";
 import React from "react";
 import useSwatchStore from "@ui/store/useSwatchStore";
-import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
-import TooltipWrapper from '@ui/components/helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
+import {getTooltipProps} from "@ui/constants/tooltips";
 
 const RampNameEditor = () => {
     const neutralScaleName = useSwatchStore(state => state.getNeutralScaleName());
@@ -13,8 +12,7 @@ const RampNameEditor = () => {
         <p className={"figma-subtitle"}>
             What do we call the neutral scale?
             <Help
-                content="Name for the gradation created by blending your start and end colors; if mixing black and white, this would be your gray scale"
-                id="ramp-name-tooltip"
+                {...getTooltipProps('NEUTRAL_SCALE_NAME')}
                 className={"figma-ml-xs"}
             />
         </p>

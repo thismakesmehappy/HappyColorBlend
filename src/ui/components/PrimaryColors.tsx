@@ -5,8 +5,8 @@ import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
 import {v4 as uuidv4} from 'uuid';
 import ColorNamer from 'color-namer';
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
-import TooltipWrapper from './helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
+import {getTooltipProps} from "@ui/constants/tooltips";
 import {UI_CHANNEL} from "@ui/app.network";
 import {PLUGIN} from "@common/networkSides";
 import Toast from "./helpers/Toast";
@@ -106,8 +106,7 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
                 </span>
                 {" "}
                 <Help
-                    content="These are the base colors that will be mixed"
-                    id="primary-colors-tooltip"
+                    {...getTooltipProps('PRIMARY_COLORS')}
                 />
             </div>
 

@@ -2,6 +2,7 @@ import TooltipWrapper from "@ui/components/helpers/TooltipWrapper";
 import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
 import React from "react";
 import {OverlayTriggerProps} from "react-bootstrap";
+import {AlertType} from "@ui/interfaces/AlertLevel";
 
 export interface HelpProps {
     content: string;
@@ -9,6 +10,7 @@ export interface HelpProps {
     maxWidth?: string;
     id?: string;
     className?: string;
+    type?: AlertType;
 }
 
 const Help = ({
@@ -17,6 +19,7 @@ const Help = ({
                   maxWidth = '150',
                   id = 'tooltip',
                   className = '',
+                  type = 'component',
               }: HelpProps) => {
     return (<div className={"d-inline-block"} style={{verticalAlign: 'middle'}}>
         <TooltipWrapper
@@ -25,7 +28,7 @@ const Help = ({
             className={className}
             placement={placement}
             maxWidth={maxWidth}
-            type={"component"}
+            type={type}
         >
             <FontAwesomeIcon icon={"circle-question"}
                              className={`figma-text-component ${className}`}

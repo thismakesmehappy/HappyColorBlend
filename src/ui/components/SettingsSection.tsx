@@ -7,13 +7,10 @@ import Spaces from "@ui/components/tokenSettings/Spaces";
 import Leading from "@ui/components/tokenSettings/Leading";
 import Separator from "@ui/components/tokenSettings/Separator";
 import "@ui/styles/bootstrap/bootstrap.scss"
-import EqualStepsBadges from "@ui/components/steps/EqualStepsBadges";
 import CustomStepBadges from "@ui/components/steps/CustomStepBadges";
 import useSwatchStore from "@ui/store/useSwatchStore";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import TooltipWrapper from '@ui/components/helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
-import CleanVariables from "@ui/components/tokenSettings/CleanVariables";
+import {getTooltipProps} from "@ui/constants/tooltips";
 
 
 interface LeftColumnProps extends ClassAndStyle {
@@ -44,8 +41,7 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
             )}
             <hr />
             <div className="figma-subtitle">Token Name Settings<Help
-                content="Customize how token names are formatted relative to the swatch name: how words are cased, how spaces are treated, and if you want to prefix or sufix with dashed or underscores"
-                id="token-settings-tooltip"
+                {...getTooltipProps('TOKEN_SETTINGS')}
                 className={"figma-ml-xs"}
             />
             </div>

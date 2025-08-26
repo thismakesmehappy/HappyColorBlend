@@ -4,8 +4,8 @@ import useSwatchStore from "../store/useSwatchStore";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import RampNameEditor from "@ui/components/scaleEndpoints/RampNameEditor";
 import FontAwesomeIcon from "./helpers/FontAwesomeIcon";
-import TooltipWrapper from './helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
+import {getTooltipProps} from "@ui/constants/tooltips";
 
 interface ScaleEndpointsProps extends ClassAndStyle {
 }
@@ -36,8 +36,7 @@ const ScaleEndpoints = forwardRef<HTMLDivElement, ScaleEndpointsProps>(
             displayColor: startColor,
             displayName: startName,
             label: "Start",
-            updateFn: setScaleStart,
-            helpContent: "The starting color of your scale that will be mixed with your primary colors"
+            updateFn: setScaleStart
         };
 
         const rightSide = {
@@ -45,8 +44,7 @@ const ScaleEndpoints = forwardRef<HTMLDivElement, ScaleEndpointsProps>(
             displayColor: endColor,
             displayName: endName,
             label: "End",
-            updateFn: setScaleEnd,
-            helpContent: "The ending color of your scale that will be mixed with your primary colors"
+            updateFn: setScaleEnd
         };
 
         return (
@@ -55,9 +53,7 @@ const ScaleEndpoints = forwardRef<HTMLDivElement, ScaleEndpointsProps>(
                     <div className={"col col-6"}>
                         <div className={"figma-subtitle text-center"}>
                             {leftSide.label} <Help
-                            content={leftSide.helpContent}
-                            id={`${leftSide.color.id}-tooltip`}
-                            placement={"bottom-start"}
+                            {...getTooltipProps('SCALE_START')}
                             className={"figma-ml-xs"}
                         /><br />
                             0
@@ -78,9 +74,7 @@ const ScaleEndpoints = forwardRef<HTMLDivElement, ScaleEndpointsProps>(
                     <div className={"col col-6"}>
                         <div className={"figma-subtitle text-center"}>
                             {rightSide.label} <Help
-                            content={rightSide.helpContent}
-                            id={`${rightSide.color.id}-tooltip`}
-                            placement={"bottom-start"}
+                            {...getTooltipProps('SCALE_END')}
                             className={"figma-ml-xs"}
                         /><br />
                             1000

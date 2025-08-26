@@ -1,7 +1,6 @@
 import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
 import {blendPrimaryColor, blendColor} from "../helpers/colorMethods";
-import steps from "../components/Steps";
 
 export const initialState = {
     // Scale properties
@@ -70,7 +69,7 @@ export interface SwatchStoreState {
     scaleStart: SwatchStoreInputSwatch;
     scaleEnd: SwatchStoreInputSwatch;
     neutralScaleName: string;
-    
+
     // Common state properties
     primaryColors: SwatchStoreInputSwatch[];
     swatches: SwatchStoreSwatches[];
@@ -83,7 +82,7 @@ export interface SwatchStoreState {
     getScaleStart: () => SwatchStoreInputSwatch;
     getScaleEnd: () => SwatchStoreInputSwatch;
     getNeutralScaleName: () => string;
-    
+
     // Common getters
     getPrimaryColors: () => SwatchStoreInputSwatch[];
     getSwatches: () => SwatchStoreSwatches[];
@@ -98,7 +97,7 @@ export interface SwatchStoreState {
     setScaleEnd: (color: string, name: string) => void;
     setNeutralScaleName: (name: string) => void;
     swapScaleEndpoints: () => void;
-    
+
     // Common methods
     increaseSteps: () => void;
     decreaseSteps: () => void;
@@ -127,7 +126,7 @@ const useSwatchStore = create<SwatchStoreState>()(
         getScaleStart: () => get().scaleStart,
         getScaleEnd: () => get().scaleEnd,
         getNeutralScaleName: () => get().neutralScaleName,
-        
+
         // Common getters
         getPrimaryColors: () => get().primaryColors,
         getSwatches: () => get().swatches,
@@ -185,7 +184,7 @@ const useSwatchStore = create<SwatchStoreState>()(
             set({neutralScaleName: name});
         },
         swapScaleEndpoints: () => {
-            const { scaleStart, scaleEnd } = get();
+            const {scaleStart, scaleEnd} = get();
             set({
                 scaleStart: {
                     color: scaleEnd.color,
@@ -258,7 +257,7 @@ const useSwatchStore = create<SwatchStoreState>()(
             const state = get();
             state.setCombinedSteps();
             const combinedSteps = Array.from(state.getCombinedSteps());
-            const { scaleStart, scaleEnd } = state;
+            const {scaleStart, scaleEnd} = state;
 
             // Always calculate from scaleStart(0) to scaleEnd(1000), no gradient direction logic
             const colorScale: SwatchStoreSwatch[] = combinedSteps.map((step) => {

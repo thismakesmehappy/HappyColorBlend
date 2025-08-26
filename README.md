@@ -1,37 +1,34 @@
 # 🎨 Happy Color Blend Vibe
 
-A powerful Figma plugin for creating beautiful color palettes and swatches with intelligent blending and color extraction capabilities.
+A Figma plugin for creating color scales from primary colors. The plugin allows the user to create production-ready
+assets: swatches, color styles, Figma variables, and SCSS/CSS variables.
 
 ## ✨ Features
 
 ### 🎯 **Primary Color Management**
-- **Eye-Dropper Color Extraction**: Extract colors directly from selected Figma objects
-- **Duplicate Prevention**: Automatically detects and prevents duplicate colors (case-insensitive)
-- **Smart Color Naming**: Uses intelligent color naming with the color-namer library
-- **Random Color Generation**: Generate random colors for inspiration
-- **Interactive Swatches**: Edit, rename, and delete primary colors with ease
+
+- **Color Extraction**: Extract colors directly from selected Figma objects or enter them manually
+- **Smart Color Naming**: Uses intelligent color naming with the color-namer library; user can edit all color names
+- **Random Color Generation**: Generates random colors for inspiration
+- **Interactive Swatches**: Edit, rename, and delete primary colors with ease and see the results live
 
 ### 🌈 **Advanced Color Blending**
-- **Shade & Tint Generation**: Create darker shades and lighter tints from your primary colors
-- **Gradient Direction Control**: Flip between shade-to-tint (shade at 0, tint at 1000) and tint-to-shade (tint at 0, shade at 1000) directions
-- **Custom Step Control**: Define custom step values for precise color gradations
-- **Equal Steps Mode**: Generate evenly distributed color steps
-- **Real-time Preview**: See your color palette update in real-time
+
+- **Select color endpoints**: Select endpoints to replace black and white in the mixing of colors
+- **Gradient Direction Control**: Flip the endpoints to flip the order of the mix
+- **Step Control**: Define the number of evenly distributed color steps or specify custom step values for precise color
+  gradations
 
 ### 🎨 **Design Token Export**
-- **Multiple Formats**: Export as CSS variables, JSON, or other design token formats
-- **Configurable Naming**: Customize naming conventions for your design tokens
-- **Professional Output**: Generate production-ready color systems
 
-### 🔧 **Developer-Friendly**
-- **Type-Safe**: Built with TypeScript for reliability
-- **Comprehensive Testing**: 390+ test cases ensuring robust functionality
-- **Modern Architecture**: React + Vite + Zustand for optimal performance
-- **Toast Notifications**: User-friendly feedback for all actions
+- **Figma assets**: Generate Figma variables, color styles, or swatches
+- **CSS/SCSS variables**: Export color variables fo CSS or SCSS
+- **Configurable Naming**: Customize naming conventions for your design tokens
 
 ## 🚀 How to Use
 
 ### 1. Installing the Plugin
+
 1. In Figma, go to **Plugins > Development > Import plugin from manifest...**
 2. Select the `dist/manifest.json` file from this project
 3. The plugin will appear in your **Plugins > Development** menu
@@ -39,40 +36,46 @@ A powerful Figma plugin for creating beautiful color palettes and swatches with 
 ### 2. Creating Primary Colors
 
 #### **Manual Color Addition**
-- Click the **➕ plus icon** to add a random color
-- Click any swatch to edit its color and name
-- Use the **🗑️ delete button** to remove unwanted colors
+
+- Click the **plus icon** to add a random color
+- Click any **pencil icon**  to edit its color and name
+- Use the **trash can icon** to remove unwanted colors
 
 #### **Eye-Dropper Extraction**
+
 1. Select objects in your Figma design
-2. Click the **👁️ eye-dropper icon** in the Primary Colors section
+2. Click the **eyedropper icon** in the Primary Colors section
 3. The plugin will extract all unique colors from your selection
 4. Duplicate colors are automatically filtered out with a helpful warning
+5. For endpoints, select a single object before clicking the eyedropper.
 
 ### 3. Generating Color Palettes
-1. **Choose your blend mode**: 
-   - **Shade & Tint**: Create darker and lighter variations
-   - **Custom Steps**: Define specific step values for precise control
-2. **Set gradient direction**: 
-   - **Shade to Tint** (default): Shade at step 0, tint at step 1000
-   - **Tint to Shade**: Tint at step 0, shade at step 1000
-   - Use the **🔄 flip button** to toggle between directions
-3. **Set step count**: Choose how many color variations you want
-4. **Preview in real-time**: Your palette updates automatically
+
+1. **Choose your steps**:
+    - **Equal steps**: Divides the space into equal steps
+    - **Custom Steps**: You can define additional steps manually for added control
+2. **Naming conventions**:
+    - **Casing** Determine if words will be lowercase, all caps, title case, or preserve case
+    - **Spaces**: Keep spaces, remove spaces, or convert them to dashes or underscores
+    - **Leading and trailing characters**: Add leading dashes or underscores
 
 ### 4. Exporting Design Tokens
-1. Configure your naming conventions in the settings
-2. Choose your export format (CSS, JSON, etc.)
-3. Copy the generated tokens to use in your design system
+
+1. Create Figma variables
+2. Create color styles
+3. Create swatches on your figma file
+4. Export CSS or SCSS variables to the clipboard
 
 ## 🛠️ Development
 
 ### Prerequisites
+
 - Node.js (v16 or higher)
 - npm or yarn
 - Figma Desktop App
 
 ### Setup
+
 ```bash
 # Clone and install dependencies
 npm install
@@ -88,6 +91,7 @@ npm run build
 ```
 
 ### Development Commands
+
 - `npm run dev` - Start development with hot reload
 - `npm run dev:ui-only` - Develop UI in browser without Figma context
 - `npm run test` - Run the test suite
@@ -96,6 +100,7 @@ npm run build
 - `npm run types` - Type check the codebase
 
 ### File Structure
+
 ```
 src/
 ├── common/          # Shared code between plugin and UI
@@ -111,12 +116,14 @@ src/
 ## 🧪 Testing
 
 The plugin includes comprehensive testing with:
+
 - **Unit Tests**: 390+ test cases covering all functionality
 - **Integration Tests**: Complete user workflow testing
 - **Error Handling**: Robust error scenarios and edge cases
 - **React Testing Library**: Modern testing practices
 
 Run tests with:
+
 ```bash
 npm test                    # Run all tests
 npm test -- --watch        # Watch mode
@@ -136,15 +143,21 @@ npm test -- ComponentName  # Run specific tests
 
 ## 📝 License & Attribution
 
-This project is built on top of the excellent [Figma Plugin Boilerplate: React + Vite](https://github.com/CoconutGoodie/figma-plugin-react-vite) by Taha Anılcan Metinyurt (iGoodie).
+This project is built on top of the
+excellent [Figma Plugin Boilerplate: React + Vite](https://github.com/CoconutGoodie/figma-plugin-react-vite) by Taha
+Anılcan Metinyurt (iGoodie).
 
 ### Parent Project License
-The original boilerplate is licensed under the [Attribution-ShareAlike 4.0 International](http://creativecommons.org/licenses/by-sa/4.0/) license.
+
+The original boilerplate is licensed under
+the [Attribution-ShareAlike 4.0 International](http://creativecommons.org/licenses/by-sa/4.0/) license.
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
 
 ### Acknowledgments
+
 Special thanks to:
+
 - **Taha Anılcan Metinyurt (iGoodie)** for the amazing Figma plugin boilerplate
 - **The Figma Plugin Community** for inspiration and best practices
 - **Contributors** to the open-source libraries that make this plugin possible
