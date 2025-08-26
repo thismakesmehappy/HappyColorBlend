@@ -105,9 +105,7 @@ const PrimaryColors = ({className, style}: PrimaryColorsProps) => {
                     <FontAwesomeIcon icon={"eye-dropper"} className={"figma-icon figma-text-primary fa-2x"} />
                 </span>
                 {" "}
-                <Help
-                    {...getTooltipProps('PRIMARY_COLORS')}
-                />
+                <Help {...getTooltipProps('PRIMARY_COLORS')} className={"figma-ml-xs"} />
             </div>
 
             <div className={"row"}>

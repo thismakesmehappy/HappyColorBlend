@@ -9,6 +9,7 @@ import {prepareSwatchCreationData} from "@ui/helpers/swatchDataPrep";
 import {generateCSSVariables, generateSCSSVariables, copyToClipboard} from "@ui/helpers/variableExport";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
+import {getTooltipProps} from "@ui/constants/tooltips";
 
 const OutputButtons = () => {
     const [isCreatingVariables, setIsCreatingVariables] = useState(false);
@@ -225,11 +226,7 @@ const OutputButtons = () => {
                         </div>
                     </div>
                     <div className={"d-inline-block figma-ml-xs"}>
-                        <Help
-                            content={"These buttons will create Figma variables, color styles, or swatch components from your generated color palette"}
-                            id="output-buttons-tooltip"
-                            placement={"top"}
-                            className={"figma-ml-xs"}
+                        <Help {...getTooltipProps("OUTPUT_BUTTONS")} className={"figma-ml-xs"}
                         />
                     </div>
 

@@ -52,10 +52,9 @@ const ScaleEndpoints = forwardRef<HTMLDivElement, ScaleEndpointsProps>(
                 <div className={"row"}>
                     <div className={"col col-6"}>
                         <div className={"figma-subtitle text-center"}>
-                            {leftSide.label} <Help
-                            {...getTooltipProps('SCALE_START')}
-                            className={"figma-ml-xs"}
-                        /><br />
+                            {leftSide.label}
+                            <Help{...getTooltipProps('SCALE_START')} className={"figma-ml-xs"}
+                            /><br />
                             0
 
                         </div>
@@ -73,10 +72,9 @@ const ScaleEndpoints = forwardRef<HTMLDivElement, ScaleEndpointsProps>(
 
                     <div className={"col col-6"}>
                         <div className={"figma-subtitle text-center"}>
-                            {rightSide.label} <Help
-                            {...getTooltipProps('SCALE_END')}
-                            className={"figma-ml-xs"}
-                        /><br />
+                            {rightSide.label}
+                            <Help {...getTooltipProps('SCALE_END')} className={"figma-ml-xs"}
+                            /><br />
                             1000
 
                         </div>

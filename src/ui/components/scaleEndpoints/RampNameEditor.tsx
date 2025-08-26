@@ -11,9 +11,7 @@ const RampNameEditor = () => {
     return (<div id="shade-tint-ramp-name">
         <p className={"figma-subtitle"}>
             What do we call the neutral scale?
-            <Help
-                {...getTooltipProps('NEUTRAL_SCALE_NAME')}
-                className={"figma-ml-xs"}
+            <Help {...getTooltipProps('NEUTRAL_SCALE_NAME')} className={"figma-ml-xs"}
             />
         </p>
         <div>

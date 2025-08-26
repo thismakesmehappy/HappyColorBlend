@@ -122,9 +122,7 @@ export const CustomSteps = ({className = "", style = {}}: CustomStepsProps) => {
                         className={`figma-icon ${isValidInput() ? 'figma-text-primary' : 'figma-text-secondary'}`}
                     />
                 </span>
-                <Help {...getTooltipProps('CUSTOM_STEPS_INPUT')}
-                      className={"figma-ml-xs"}
-                />
+                <Help {...getTooltipProps('CUSTOM_STEPS_INPUT')} className={"figma-ml-xs"} />
             </span>
             <Toast
                 message={toastMessage}

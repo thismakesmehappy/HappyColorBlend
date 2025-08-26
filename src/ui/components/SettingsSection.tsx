@@ -40,10 +40,9 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
                 <CustomStepBadges />
             )}
             <hr />
-            <div className="figma-subtitle">Token Name Settings<Help
-                {...getTooltipProps('TOKEN_SETTINGS')}
-                className={"figma-ml-xs"}
-            />
+            <div className="figma-subtitle">Token Name Settings
+                <Help{...getTooltipProps('TOKEN_SETTINGS')} className={"figma-ml-xs"}
+                />
             </div>
             <Case />
             <Spaces />
