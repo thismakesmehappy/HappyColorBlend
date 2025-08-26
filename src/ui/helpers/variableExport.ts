@@ -92,7 +92,7 @@ export const generateCSSVariables = (
     swatchStore: SwatchStoreState,
     tokenStore: TokenNameStoreState
 ): string => {
-    let lines = ':root \n';
+    let lines = ':root {\n';
     lines += generateVariables(swatchStore, tokenStore, '    ', '--');
     lines += '}';
 
