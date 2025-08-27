@@ -1,4 +1,4 @@
-export const WINDOW_WIDTH = 1000;
+export const WINDOW_WIDTH = 900;
 export const WINDOW_HEIGHT = 700;
 export const TOAST_DURATION = 3000
 export const MINIMUM_STEPS = 3;

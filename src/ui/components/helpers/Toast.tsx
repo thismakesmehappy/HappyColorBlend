@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {createPortal} from "react-dom";
 import {AlertType} from "../../interfaces/AlertLevel";
 
 interface ToastProps {
@@ -64,13 +65,16 @@ const Toast: React.FC<ToastProps> = ({
         return className;
     };
 
-    return (
+    const toastElement = (
         <div className="figma-toast-container">
             <div className={getToastClassName()}>
                 {message}
             </div>
         </div>
     );
+
+    // Render toast at the document root to ensure proper fixed positioning
+    return createPortal(toastElement, document.body);
 };
 
 export default Toast;

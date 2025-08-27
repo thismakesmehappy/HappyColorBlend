@@ -399,7 +399,7 @@ $placements: (
 /* Figma Toast Notifications */
 .figma-toast-container {
   position: fixed;
-  top: $spacing-md;
+  bottom: $spacing-md;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10000;

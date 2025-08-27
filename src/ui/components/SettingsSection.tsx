@@ -30,11 +30,15 @@ const SettingsColumn = ({className, style}: LeftColumnProps) => {
                 {/*                     className='figma-text-component' />*/}
                 {/*</TooltipWrapper>*/}
             </p>
-            <span className="figma-subtitle">Equal Steps: </span>
-            <EqualSteps className="figma-mb-sm figma-ml-xs d-inline-block" />
+            <div className="figma-mb-sm">
+                <span className="figma-subtitle">Equal Steps: </span>
+                <EqualSteps className="figma-ml-xs" style={{marginTop: '-4px', display: 'inline-block'}} />
+            </div>
             <hr />
-            <span className="figma-subtitle d-inline-block">Custom Steps: </span>
-            <CustomSteps className="figma-ml-sm d-inline-block" />
+            <div>
+                <span className="figma-subtitle">Custom Steps: </span>
+                <CustomSteps className="figma-ml-sm" style={{display: 'inline-block'}} />
+            </div>
             {customSteps.size > 0 && (
                 <CustomStepBadges />
             )}
