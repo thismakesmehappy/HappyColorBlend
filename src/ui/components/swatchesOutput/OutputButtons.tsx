@@ -200,21 +200,21 @@ const OutputButtons = () => {
                                         onClick={handleCreateVariables}
                                         disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                                     >
-                                        {isCreatingVariables ? "Creating..." : "Add Variables"}
+                                        {isCreatingVariables ? "Adding Variables" : "Add Variables"}
                                     </button>
                                     <button
                                         className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
                                         onClick={handleCreateStyles}
                                         disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                                     >
-                                        {isCreatingStyles ? "Creating..." : "Add Styles"}
+                                        {isCreatingStyles ? "Adding Styles" : "Add Styles"}
                                     </button>
                                     <button
                                         className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
                                         onClick={handleCreateSwatches}
                                         disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                                     >
-                                        {isCreatingSwatches ? "Creating..." : "Create Swatches"}
+                                        {isCreatingSwatches ? "Creating Swatches" : "Create Swatches"}
                                     </button>
                                 </div>
                                 <div className={"hstack mx-auto"}>

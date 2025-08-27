@@ -50,3 +50,24 @@ $purple: figma.$color-component;
 .btn-dark {
   color: figma.$color-light !important;
 }
+
+// Remove Bootstrap button hover effects and reduce padding for flat design
+.btn {
+  padding: figma.$spacing-xs figma.$spacing-sm; // Reduce padding
+  transition: none !important; // Remove transitions
+  border-width: 0 !important; // Remove borders for flat design
+}
+
+// Remove all hover/focus/active states for flat design
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active,
+.btn:focus-visible {
+  background-color: figma.$color-primary !important;
+  border: none;
+  color: figma.$color-light !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
