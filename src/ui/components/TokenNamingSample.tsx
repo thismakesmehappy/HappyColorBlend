@@ -43,19 +43,12 @@ const TokenNamingSample: React.FC<TokenNamingSampleProps> = ({
         <div className={`token-naming-sample ${className}`}>
             <div className="d-flex justify-content-between gap-3">
                 <div className="">
-                    <p className="figma-text-secondary figma-mr-xs">Sample:</p>
-                    <p className="figma-text-dark border-dark border-1 figma-border rounded-2 p-1">
-                        {sampleInput}
-                    </p>
-                </div>
-
-                <div className="">
                     <p className="figma-text-secondary figma-mr-xs">Preview Token:</p>
                     <p className="figma-text-dark border-dark border-1 figma-border rounded-2 p-1">
                         {transformedToken}<span className={"figma-text-mid"}>500</span>
                     </ p>
                 </div>
-                <div className="">
+                <div className="text-end">
                     <p className="figma-text-secondary figma-mr-xs">Preview Primitive:</p>
                     <p className="figma-text-dark border-dark border-1 figma-border rounded-2 p-1">
                         {transformedPrimitive}<span className={"figma-text-mid"}></span>

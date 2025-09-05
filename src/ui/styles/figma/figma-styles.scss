@@ -448,3 +448,27 @@ $placements: (
 .figma-border {
   border: 1px solid $color-border;
 }
+
+/* Global text selection behavior - prevent double-click selection but allow click and drag */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow text selection on click and drag for input elements and contenteditable */
+input, textarea, [contenteditable="true"] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Allow text selection for output results (swatches and token names) */
+.selectable-text {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}

@@ -48,7 +48,7 @@ const NamingOptionsModal: React.FC<NamingOptionsModalProps> = ({show, onHide}) =
                 <div className="figma-p-md">
                     <TokenNamingSample className="figma-mb-lg" />
 
-                    <Row xs={2}>
+                    <Row xs={2} className="fixed-cols-2">
 
                         <Col className="figma-mb-lg">
                             <h6 className="figma-mb-sm">Text Case</h6>

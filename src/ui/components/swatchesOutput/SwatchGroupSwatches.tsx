@@ -5,6 +5,7 @@ import ChipOutput from "./ChipOutput";
 import {computeTokenName} from "../../helpers/computeTokenName";
 import useTokenNameStore from "../../store/useTokenNameStore";
 import {Col, Row} from "react-bootstrap";
+import {SWATCH_COLUMNS_PER_ROW} from "../../../constants/uiConstants";
 
 interface SwatchGroupSwatchesProps {
     colorName: string;
@@ -39,18 +40,18 @@ const SwatchGroupSwatches = ({
         <p className={"figma-subtitle"} data-testid="swatch-group-title">
             <ChipOutput color={color!} />
 
-            <span data-testid="primary-color-info">#{color} |
+            <span className="selectable-text" data-testid="primary-color-info">#{color} |
                 {secondColor && (
-                    <span data-testid="secondary-color-info">
+                    <span className="selectable-text" data-testid="secondary-color-info">
                     <ChipOutput color={secondColor!} className="figma-ml-sm" />
                     #{secondColor!} | </span>
                 )}
-                <span> {colorTokenName}<span
+                <span className="selectable-text"> {colorTokenName}<span
                     className={"figma-text-mid"}>500</span></span></span>
             <br />
 
         </p>
-        <Row xs={6} className={"swatches-container gx-0"} data-testid="swatches-container">
+        <Row xs={SWATCH_COLUMNS_PER_ROW} className={`swatches-container fixed-cols-${SWATCH_COLUMNS_PER_ROW} gx-0`} data-testid="swatches-container">
             {swatches.map((swatch, index) => {
                     return (
                         <Col>

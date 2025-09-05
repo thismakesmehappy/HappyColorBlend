@@ -39,7 +39,7 @@ const SwatchPrimitives = () => {
         appendSeparatorToPrimitives
     );
 
-    return (<Row xs={5} className={"gx-0 figma-mb-lg"}>
+    return (<Row xs={4} className={"gx-0 figma-mb-lg fixed-cols-4"}>
         <Col>
             <Swatch color={scaleStart.color} name={scaleStartColorToken} displayOnly={true} />
         </Col>

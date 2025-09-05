@@ -17,10 +17,10 @@
   overflow: clip;
 }
 
-.swatches-container {
-  display: flex;
-  flex-wrap: wrap;
-}
+//.swatches-container {
+//  display: flex;
+//  flex-wrap: wrap;
+//}
 
 .color-chip-container {
   min-width: calc(2 * (4ch + 2 * figma.$spacing-sm));
@@ -38,4 +38,12 @@
 
 input[type=radio] {
   margin-right: figma.$spacing-sm;
+}
+
+@for $i from 1 through 12 {
+  .fixed-cols-#{$i} .col {
+    flex: 0 0 calc(100% / #{$i}) !important;
+    max-width: calc(100% / #{$i}) !important;
+    width: calc(100% / #{$i}) !important;
+  }
 }

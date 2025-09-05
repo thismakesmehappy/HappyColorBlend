@@ -16,7 +16,7 @@ const SwatchColorChip = ({color, step, name, className, style}: SwatchColorChipP
         <div className={`color-chip-container ${className}`} data-testid="swatch-color-chip-container">
             <div
                 style={{backgroundColor: "#" + color, color: textColor}}
-                className={`color-chip fw-bold`}
+                className={`color-chip fw-bold selectable-text`}
                 data-testid="swatch-color-chip"
                 data-color={color}
                 data-step={step}>

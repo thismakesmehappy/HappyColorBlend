@@ -1,6 +1,6 @@
 @use '../figma/figma-styles' as figma;
 
-$window-width: 900px;
+$window-width: 925px;
 $window-height: 700px;
 $separator-space: figma.$spacing-md;
 $padding: figma.$spacing-md;
@@ -25,7 +25,7 @@ $custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-w
 
 .float {
   backdrop-filter: blur(20px);
-  background-color: rgba(240, 240, 240, 0.8);
+  background-color: rgba(240, 245, 250, 0.75);
   padding: $padding;
   border-radius: 1em;
 

@@ -28,7 +28,7 @@ export const TOOLTIP_WIDTHS = {
 // Centralized tooltip configuration
 export const TOOLTIPS = {
     PREVIEW_SWATCHES: {
-        content: "Preview your generated color swatches",
+        content: "Preview your generated color swatches; the text for the results is selectable if you want to copy-paste any values",
         id: "preview-swatches-tooltip",
         placement: PLACEMENTS.BOTTOM_START,
         type: TOOLTIP_TYPES.COMPONENT,

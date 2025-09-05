@@ -70,10 +70,10 @@ const SwatchLabels = ({
 
     return (
         <div className={"vstack"} data-testid="swatch-labels-display">
-            <p className="container-fluid fw-bold mb-0" data-testid="swatch-name-display">
+            <p className="container-fluid fw-bold mb-0 selectable-text" data-testid="swatch-name-display">
                 {swatchName}
             </p>
-            <p className="container-fluid" data-testid="swatch-color-display">
+            <p className="container-fluid selectable-text" data-testid="swatch-color-display">
                 #{swatchColor}</p>
         </div>
     );

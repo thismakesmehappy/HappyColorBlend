@@ -4,7 +4,7 @@
 
 // 2. Include any default variable overrides here
 //$grid-columns: 10 !default;
-$grid-gutter-width: 2em;
+$grid-gutter-width: 1em;
 $blue: figma.$color-primary;
 $red: figma.$color-danger;
 $green: figma.$color-success;
@@ -56,6 +56,8 @@ $purple: figma.$color-component;
   padding: figma.$spacing-xs figma.$spacing-sm; // Reduce padding
   transition: none !important; // Remove transitions
   border-width: 0 !important; // Remove borders for flat design
+  line-height: 1.1em !important;
+
 }
 
 // Remove all hover/focus/active states for flat design

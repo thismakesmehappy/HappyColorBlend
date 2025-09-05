@@ -29,25 +29,16 @@ const NumberToggle = ({
         setCanDecrease(getCanDecrease());
     }, [value, minValue, maxValue]);
 
-    // Common style to prevent text selection
-    const noSelectStyle = {
-        userSelect: 'none' as const,
-        WebkitUserSelect: 'none' as const,
-        MozUserSelect: 'none' as const,
-        msUserSelect: 'none' as const
-    };
 
     return (
         <span className={className}>
             <span
-
                 onClick={() => {
                     if (canDecrease) {
                         decreaseFunction();
                     }
                 }}
                 data-testid="decrease-steps-button"
-                style={noSelectStyle}
             >
                 <FontAwesomeIcon
                     icon="circle-minus"
@@ -57,7 +48,6 @@ const NumberToggle = ({
             <span
                 className="figma-text figma-pl-md figma-pr-md"
                 data-testid="steps-count"
-                style={noSelectStyle}
             >
                 {value}
             </span>
@@ -68,7 +58,6 @@ const NumberToggle = ({
                     }
                 }}
                 data-testid="increase-steps-button"
-                style={noSelectStyle}
             >
 
 

@@ -1,7 +1,10 @@
-export const WINDOW_WIDTH = 900;
+export const WINDOW_WIDTH = 925;
 export const WINDOW_HEIGHT = 700;
 export const TOAST_DURATION = 3000
 export const MINIMUM_STEPS = 3;
+
+// Swatch display configuration
+export const SWATCH_COLUMNS_PER_ROW = 6;
 // Toast messages
 export const INVALID_HEX_COLOR_MESSAGE = "Input should be a six digits hex color without the #";
 export const INVALID_CUSTOM_STEP_NON_NUMERIC = "Custom step must be a number";
