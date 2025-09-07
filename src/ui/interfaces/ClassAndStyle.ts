@@ -1,7 +1,3 @@
-import React from "react";
+import { BaseComponentProps } from "./BaseInterfaces";
 
-export interface ClassAndStyle {
-    className?: string;
-    style?: React.CSSProperties;
-    id?: string;
-}
+export interface ClassAndStyle extends BaseComponentProps {}

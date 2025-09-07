@@ -1,97 +1,22 @@
 import { Networker } from "monorepo-networker";
+import { BaseSwatchData, BaseCreationResult } from "./BaseNetworkInterfaces";
+import { BaseColor } from "../ui/interfaces/BaseInterfaces";
 
-export interface SwatchVariableData {
-  // Scale primitives
-  scaleStart: { name: string; color: string };
-  scaleEnd: { name: string; color: string };
-  
-  primaryColors: Array<{ name: string; color: string }>;
-  
-  // Neutral scale ramp
-  neutralScaleName: string;
-  neutralScaleSwatches: Array<{ color: string; step: number }>;
-  
-  primarySwatches: Array<{
-    name: string;
-    swatches: Array<{ color: string; step: number }>;
-  }>;
-  
-  // Token naming settings for separator construction
-  tokenSettings: {
-    separatorCharsCount: number;
-    separatorCharType: 'dash' | 'underscore';
-  };
-}
+export interface SwatchVariableData extends BaseSwatchData {}
 
-export interface VariableCreationResult {
-  success: boolean;
-  message: string;
-  count?: number;
-  error?: string;
-}
+export interface VariableCreationResult extends BaseCreationResult {}
 
-export interface SwatchStyleData {
-  // Scale primitives
-  scaleStart: { name: string; color: string };
-  scaleEnd: { name: string; color: string };
-  
-  primaryColors: Array<{ name: string; color: string }>;
-  
-  // Neutral scale ramp
-  neutralScaleName: string;
-  neutralScaleSwatches: Array<{ color: string; step: number }>;
-  
-  primarySwatches: Array<{
-    name: string;
-    swatches: Array<{ color: string; step: number }>;
-  }>;
-  
-  // Token naming settings for separator construction
-  tokenSettings: {
-    separatorCharsCount: number;
-    separatorCharType: 'dash' | 'underscore';
-  };
-}
+export interface SwatchStyleData extends BaseSwatchData {}
 
-export interface StyleCreationResult {
-  success: boolean;
-  message: string;
-  count?: number;
-  error?: string;
-}
+export interface StyleCreationResult extends BaseCreationResult {}
 
-export interface SwatchCreationData {
-  // Scale primitives
-  scaleStart: { name: string; color: string };
-  scaleEnd: { name: string; color: string };
-  primaryColors: Array<{ name: string; color: string }>;
-  
-  // Neutral scale ramp
-  neutralScaleName: string;
-  neutralScaleSwatches: Array<{ color: string; step: number }>;
-  primarySwatches: Array<{
-    name: string;
-    swatches: Array<{ color: string; step: number }>;
-  }>;
-  
-  // Token naming settings
-  tokenSettings: {
-    separatorCharsCount: number;
-    separatorCharType: 'dash' | 'underscore';
-  };
-
-  // Display settings
+export interface SwatchCreationData extends BaseSwatchData {
   displayWidth?: number;
   swatchSize?: number;
   fontSize?: number;
 }
 
-export interface SwatchCreationResult {
-  success: boolean;
-  message: string;
-  count?: number;
-  error?: string;
-}
+export interface SwatchCreationResult extends BaseCreationResult {}
 
 export const UI = Networker.createSide("UI-side").listens<{
   ping(): "pong";
@@ -103,8 +28,8 @@ export const PLUGIN = Networker.createSide("Plugin-side").listens<{
   hello(text: string): void;
   createRect(width: number, height: number): void;
   exportSelection(): Promise<string>;
-  extractColorsFromSelection(): Promise<Array<{ color: string; name: string }>>;
-  extractSingleColorFromSelection(): Promise<{ color: string; name: string }>;
+  extractColorsFromSelection(): Promise<BaseColor[]>;
+  extractSingleColorFromSelection(): Promise<BaseColor>;
   createVariables(data: SwatchVariableData): Promise<VariableCreationResult>;
   createStyles(data: SwatchStyleData): Promise<StyleCreationResult>;
   createSwatches(data: SwatchCreationData): Promise<SwatchCreationResult>;

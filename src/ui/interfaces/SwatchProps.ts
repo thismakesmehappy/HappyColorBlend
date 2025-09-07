@@ -1,11 +1,11 @@
-interface SwatchProps {
+import { BaseComponentProps } from "./BaseInterfaces";
+
+interface SwatchProps extends BaseComponentProps {
     color: string;
     name: string;
     displayOnly?: boolean;
     canDelete?: boolean;
     canPick?: boolean;
-    className?: string;
-    id?: string;
     updateSwatch?: (color: string, name: string, id?: string) => void;
     onDelete?: (id: string) => void;
 }

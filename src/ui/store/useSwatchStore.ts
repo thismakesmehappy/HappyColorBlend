@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
 import {blendPrimaryColor, blendColor} from "../helpers/colorMethods";
+import { IdentifiableColor } from "../interfaces/BaseInterfaces";
 
 export const initialState = {
     // Scale properties
@@ -17,9 +18,9 @@ export const initialState = {
 }
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
-    scaleStart: SwatchStoreInputSwatch,
-    scaleEnd: SwatchStoreInputSwatch,
-    primaryColors: SwatchStoreInputSwatch[],
+    scaleStart: IdentifiableColor,
+    scaleEnd: IdentifiableColor,
+    primaryColors: IdentifiableColor[],
     state: SwatchStoreState,
 ) => {
     state.setCombinedSteps();
@@ -47,12 +48,7 @@ export const buildNewSwatches = (
 };
 
 
-export interface SwatchStoreInputSwatch {
-    color: string;
-    name: string;
-    id?: string;
-}
-
+export interface SwatchStoreInputSwatch extends IdentifiableColor {}
 export interface SwatchStoreSwatch {
     color: string;
     step: number;
