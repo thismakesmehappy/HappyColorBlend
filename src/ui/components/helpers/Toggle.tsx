@@ -23,7 +23,7 @@ const Toggle: React.FC<ToggleProps> = ({value, onChange, className = "", size = 
                 display: "flex",
                 alignItems: "center",
                 width: `${3 * size}em`,
-                height: `$1.875em`,
+                height: `1.875em`,
                 borderRadius: `${0.9375 * size}em`,
                 cursor: "pointer",
                 position: "relative",
@@ -39,7 +39,7 @@ const Toggle: React.FC<ToggleProps> = ({value, onChange, className = "", size = 
                     justifyContent: toggleJustification,
                     alignItems: "center",
                     width: `100%`,
-                    height: `100%`,
+                    height: `1.875em`,
                     padding: `0.25rem`,
                     borderRadius: "50%"
                 }}
