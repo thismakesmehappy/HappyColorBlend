@@ -6,6 +6,7 @@ import "@ui/styles/bootstrap/bootstrap.scss"
 import OutputSection from "@ui/components/OutputSection";
 import SwatchInputSection from "@ui/components/SwatchInputSection";
 import StylePlayground from "@ui/components/StylePlayground";
+import AccordionMenu from "@ui/components/Accordion/AccordionMenu";
 
 function App() {
     // Show playground in development mode only
@@ -18,7 +19,8 @@ function App() {
     return (
         <div>
             <div id="main-box">
-                <SwatchInputSection />
+                {/*<SwatchInputSection />*/}
+                <AccordionMenu />
                 <OutputSection />
             </div>
         </div>

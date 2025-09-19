@@ -47,3 +47,21 @@ input[type=radio] {
     width: calc(100% / #{$i}) !important;
   }
 }
+
+.explain {
+  font-size: figma.$font-size-md;
+  color: figma.$color-text-primary;
+  background-color: figma.$color-border;
+  margin-top: figma.$spacing-sm;
+  margin-bottom: figma.$spacing-sm;
+  padding: figma.$spacing-sm;
+  border-radius: figma.$spacing-sm;
+}
+
+.group {
+  padding-top: figma.$spacing-md;
+  &:not(:last-of-type) {
+    border-bottom: 1px solid figma.$color-border;
+    padding-bottom: figma.$spacing-md;
+  }
+}

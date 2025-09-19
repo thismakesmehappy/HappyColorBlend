@@ -50,6 +50,9 @@ const Badge: React.FC<BadgeProps> = ({
                 // Default toast has no additional class
                 newClassName += " figma-bg-primary figma-text-light";
                 break;
+            case "light":
+                newClassName += " figma-bg-light figma-text-primary";
+                break;
             default:
                 // Default toast has no additional class
                 newClassName += " figma-bg-component figma-text-light";

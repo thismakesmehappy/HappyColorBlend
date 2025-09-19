@@ -11,13 +11,7 @@ interface SwatchesOutputProps extends ClassAndStyle {
 
 const OutputSection = ({className, style}: SwatchesOutputProps) => {
     return (<div id="output-section" className={className}>
-        <StepsSection className="sticky-top" />
-        <p className={"title"}>Results
-            <Help {...getTooltipProps('PREVIEW_SWATCHES')} className={"figma-ml-xs"} />
-        </p>
         <SwatchesOutput />
-        <OutputButtons />
-
     </div>);
 };
 

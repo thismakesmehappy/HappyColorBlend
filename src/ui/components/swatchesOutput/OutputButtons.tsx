@@ -11,7 +11,10 @@ import useSwatchStore from "@ui/store/useSwatchStore";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 import {getTooltipProps} from "@ui/constants/tooltips";
 import "@ui/styles/bootstrap/bootstrap.scss";
-import NamingOptionsButton from "../NamingOptionsButton";
+import Explain from "@ui/components/helpers/Explain";
+import Group from "@ui/components/helpers/Group";
+import {Stack} from "react-bootstrap";
+import Toggle from "@ui/components/helpers/Toggle";
 
 const OutputButtons = () => {
     const [isCreatingVariables, setIsCreatingVariables] = useState(false);
@@ -20,7 +23,8 @@ const OutputButtons = () => {
     const [toastMessage, setToastMessage] = useState("");
     const [toastType, setToastType] = useState<"success" | "error" | "primary">("success");
     const [showToast, setShowToast] = useState(false);
-    const [showNamingModal, setShowNamingModal] = useState(false);
+    const keepCSSClean = useTokenNameStore(state => state.keepCSSClean);
+    const toggleKeepCSSClean = useTokenNameStore(state => state.toggleKeepCSSClean);
 
     // Get store data
     const swatchStore = useSwatchStore();
@@ -183,65 +187,71 @@ const OutputButtons = () => {
         setShowToast(false);
     };
 
+    let outputButtonClasses = "btn btn-primary figma-bg-primary figma-text-light w-75 mx-auto";
     return (
         <>
-            <div className={"sticky-bottom figma-p-md"}>
-                <div id="nav-bottom">
-                    <div className={"hstack gap-0 ms-auto me-auto"}>
-                        <NamingOptionsButton showIcon={false} />
-                        <Help {...getTooltipProps("NAMING_MODAL")} className={"figma-ml-xs"} />
-                        {/* naming modal */}
-
-                        <div className={"hstack gap-0 separator"}>
-                            <div className={"vstack gap-2"}>
-                                <div className={"hstack mx-auto"}>
-                                    <button
-                                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                                        onClick={handleCreateVariables}
-                                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                                    >
-                                        {isCreatingVariables ? "Adding Variables" : "Add Variables"}
-                                    </button>
-                                    <button
-                                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                                        onClick={handleCreateStyles}
-                                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                                    >
-                                        {isCreatingStyles ? "Adding Styles" : "Add Styles"}
-                                    </button>
-                                    <button
-                                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                                        onClick={handleCreateSwatches}
-                                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                                    >
-                                        {isCreatingSwatches ? "Creating Swatches" : "Create Swatches"}
-                                    </button>
-                                </div>
-                                <div className={"hstack mx-auto"}>
-                                    <button
-                                        className={"btn btn-primary figma-bg-primary figma-text-light figma-mr-sm"}
-                                        onClick={handleExportCSS}
-                                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                                    >
-                                        Copy CSS Variables
-                                    </button>
-                                    <button
-                                        className={"btn btn-primary figma-bg-primary figma-text-light"}
-                                        onClick={handleExportSCSS}
-                                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                                    >
-                                        Copy SCSS Variables
-                                    </button>
-                                </div>
-                            </div>
-                            <div className={"d-inline-block figma-ml-xs"}>
-                                <Help {...getTooltipProps("OUTPUT_BUTTONS")} className={"figma-ml-xs"}
-                                />
-                            </div>
+            <Explain>
+                Produce assets based on the color scales you have created.
+            </Explain>
+            <Group>
+                <Stack gap={2}>
+                    <button
+                        className={outputButtonClasses}
+                        onClick={handleCreateVariables}
+                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                    >
+                        {isCreatingVariables ? "Adding Figma Variables" : "Add Figma Variables"}
+                    </button>
+                    <button
+                        className={outputButtonClasses}
+                        onClick={handleCreateStyles}
+                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                    >
+                        {isCreatingStyles ? "Adding Figma Styles" : "Add Figma Styles"}
+                    </button>
+                    <button
+                        className={outputButtonClasses}
+                        onClick={handleCreateSwatches}
+                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                    >
+                        {isCreatingSwatches ? "Creating Figma Swatches" : "Create Figma Swatches"}
+                    </button>
+                </Stack>
+            </Group>
+            <Group>
+                <Stack gap={2}>
+                    <button
+                        className={outputButtonClasses}
+                        onClick={handleExportCSS}
+                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                    >
+                        Copy CSS Variables to Clipboard
+                    </button>
+                    <button
+                        className={outputButtonClasses}
+                        onClick={handleExportSCSS}
+                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                    >
+                        Copy SCSS Variables to Clipboard
+                    </button>
+                </Stack>
+                {/*<Help {...getTooltipProps("OUTPUT_BUTTONS")} className={"figma-ml-xs"} />*/}
+            </Group>
+            <Group>
+                <div className="figma-mt-sm">
+                    <div className="figma-mr-sm d-flex"><Toggle
+                        value={keepCSSClean}
+                        onChange={toggleKeepCSSClean}
+                        className={"d-inline-block figma-mr-sm"}
+                        size={2}
+                    />
+                        <div className={"d-inline-block"}>Keep CSS variables clean (do not append leading characters)
                         </div>
                     </div>
+
                 </div>
-            </div>
+            </Group>
+
 
             <Toast
                 message={toastMessage}

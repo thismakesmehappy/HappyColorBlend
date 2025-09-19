@@ -13,6 +13,8 @@ const Toggle: React.FC<ToggleProps> = ({value, onChange, className = "", size = 
         onChange(!value);
     };
 
+    const toggleJustification = value ? 'start' : 'end';
+
     return (
         <div
             className={`toggle-container ${value ? 'figma-bg-primary' : 'figma-bg-secondary-gray'} ${className}`}
@@ -21,9 +23,8 @@ const Toggle: React.FC<ToggleProps> = ({value, onChange, className = "", size = 
                 display: "flex",
                 alignItems: "center",
                 width: `${3 * size}em`,
-                height: `${1.875 * size}em`,
+                height: `$1.875em`,
                 borderRadius: `${0.9375 * size}em`,
-                padding: `${0.125 * size}em`,
                 cursor: "pointer",
                 position: "relative",
                 transition: "all 0.3s ease"
@@ -32,21 +33,21 @@ const Toggle: React.FC<ToggleProps> = ({value, onChange, className = "", size = 
             <div
                 className="toggle-button"
                 style={{
-                    position: "absolute",
-                    left: value ? `calc(100% - ${1.75 * size}em)` : `${0.125 * size}em`,
-                    transition: "left 0.3s ease",
+                    transition: "all 0.3s ease",
                     display: "flex",
-                    justifyContent: "center",
+                    // justifyContent: `{${value ? 'start' : 'end'}`,
+                    justifyContent: toggleJustification,
                     alignItems: "center",
-                    width: `${1.625 * size}em`,
-                    height: `${1.625 * size}em`,
+                    width: `100%`,
+                    height: `100%`,
+                    padding: `0.25rem`,
                     borderRadius: "50%"
                 }}
             >
                 <FontAwesomeIcon
                     icon={value ? "circle-check" : "circle-xmark"}
                     className="figma-icon figma-text-light"
-                    style={{fontSize: `${size}em`}}
+                    style={{fontSize: `${size}em`, padding: 0, margin: 0}}
                 />
             </div>
         </div>

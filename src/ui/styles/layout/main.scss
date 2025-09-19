@@ -6,16 +6,22 @@ $separator-space: figma.$spacing-md;
 $padding: figma.$spacing-md;
 $separator-line: 1px;
 $separator-width: $separator-space + $separator-line + $separator-space;
+
 //$output-section-width: $window-width - $input-section-width - $separator-width;
 
 $input-section-width: 250px;
-$output-section-width: $window-width - $input-section-width - $separator-width - $padding;
+$output-section-width: $window-width - $input-section-width - $separator-width + $separator-width - $padding;
 
 $steps-section-width: $output-section-width - $padding;
 $steps-section-inner-width: $steps-section-width - $padding - $padding;
 
 $equal-steps-section-width: 120px;
 $custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-width - $separator-width - $padding;
+
+$accordion-header-height: 32px;
+$accordion-header-line: 1px;
+$accordion-items: 6;
+$accordion-body-height: $window-height - ($accordion-items * $accordion-header-height); // - (($accordion-items - 1) * $accordion-header-line);
 
 .separator {
   padding-left: $separator-space;
@@ -36,13 +42,18 @@ $custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-w
   height: $window-height;
   display: flex;
   margin: 0;
-  padding: $padding;
+  //padding: $padding;
 }
 
 #input-section {
   width: $input-section-width !important;
   overflow: auto;
   white-space: wrap;
+}
+
+#accordion-menu {
+  width: $input-section-width;
+  height: $window-height;
 }
 
 #settings-section {
@@ -58,6 +69,8 @@ $custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-w
   overflow: auto;
   white-space: wrap;
   @extend .separator;
+  margin-left: 0;
+  padding: $padding;
 }
 
 #steps-section {

@@ -6,14 +6,14 @@ import useTokenNameStore from "../../store/useTokenNameStore";
 const Separator = () => {
     const separatorCharsCount = useTokenNameStore(state => state.separatorCharsCount);
     const separatorCharType = useTokenNameStore(state => state.separatorCharType);
-    const appendSeparatorToPrimitive = useTokenNameStore(state => state.appendSeparatorToPrimitive);
+    // const appendSeparatorToPrimitive = useTokenNameStore(state => state.appendSeparatorToPrimitive);
     const setSeparatorCharType = useTokenNameStore(state => state.setSeparatorCharType);
-    const toggleAppendSeparatorToPrimitive = useTokenNameStore(state => state.toggleAppendSeparatorToPrimitive);
+    // const toggleAppendSeparatorToPrimitive = useTokenNameStore(state => state.toggleAppendSeparatorToPrimitive);
     const incrementSeparatorChars = useTokenNameStore(state => state.incrementSeparatorChars);
     const decrementSeparatorChars = useTokenNameStore(state => state.decrementSeparatorChars);
     return (
         <div id="settings-separator">
-            <div className={"figma-mt-sm"}>Separator Character:</div>
+            <div className={"figma-mt-sm form-check"}>Separator Character:</div>
             <NumberToggle
                 decreaseFunction={decrementSeparatorChars}
                 increaseFunction={incrementSeparatorChars}
@@ -26,7 +26,9 @@ const Separator = () => {
                         name="separator"
                         value="dash"
                         checked={separatorCharType === 'dash'}
-                        onChange={() => setSeparatorCharType('dash')} />
+                        onChange={() => setSeparatorCharType('dash')}
+                        className="form-check-input"
+                    />
                     <span>Dash (-)</span>
                 </label>
                 <label className="figma-mr-sm">
@@ -35,20 +37,22 @@ const Separator = () => {
                         name="separator"
                         value="underscore"
                         checked={separatorCharType === 'underscore'}
-                        onChange={() => setSeparatorCharType('underscore')} />
+                        onChange={() => setSeparatorCharType('underscore')}
+                        className="form-check-input"
+                    />
                     <span>Under (_)</span>
                 </label>
             </div>
-            <div className="figma-mt-sm">
-                <div className="figma-mr-sm d-flex"><Toggle
-                    value={appendSeparatorToPrimitive}
-                    onChange={toggleAppendSeparatorToPrimitive}
-                    className={"d-inline-block figma-mr-sm"}
-                />
-                    <div className={"d-inline-block"}>Append to primitives</div>
-                </div>
+            {/*<div className="figma-mt-sm">*/}
+            {/*    <div className="figma-mr-sm d-flex"><Toggle*/}
+            {/*        value={appendSeparatorToPrimitive}*/}
+            {/*        onChange={toggleAppendSeparatorToPrimitive}*/}
+            {/*        className={"d-inline-block figma-mr-sm"}*/}
+            {/*    />*/}
+            {/*        <div className={"d-inline-block"}>Append to primitives</div>*/}
+            {/*    </div>*/}
 
-            </div>
+            {/*</div>*/}
         </div>
     );
 };

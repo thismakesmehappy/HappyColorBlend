@@ -7,7 +7,7 @@ const Spaces = () => {
     return (
         <div id="settings-space">
             <div className={"figma-mt-sm"}>Spaces:</div>
-            <div data-testid="space-treatment-radio">
+            <div data-testid="space-treatment-radio" className={"form-check"}>
                 <div>
                     <label className="figma-radio figma-mr-md">
                         <input
@@ -15,7 +15,9 @@ const Spaces = () => {
                             name="space-treatment"
                             value="keep"
                             checked={spaceTreatment === 'keep'}
-                            onChange={() => setSpaceTreatment('keep')} />
+                            onChange={() => setSpaceTreatment('keep')}
+                            className="form-check-input"
+                        />
                         <span>Keep</span>
                     </label>
                     <label className="figma-mr-md">
@@ -24,7 +26,9 @@ const Spaces = () => {
                             name="space-treatment"
                             value="remove"
                             checked={spaceTreatment === 'remove'}
-                            onChange={() => setSpaceTreatment('remove')} />
+                            onChange={() => setSpaceTreatment('remove')}
+                            className="form-check-input"
+                        />
                         <span>Remove</span>
                     </label>
                 </div>
@@ -35,7 +39,9 @@ const Spaces = () => {
                             name="space-treatment"
                             value="dash"
                             checked={spaceTreatment === 'dash'}
-                            onChange={() => setSpaceTreatment('dash')} />
+                            onChange={() => setSpaceTreatment('dash')}
+                            className="form-check-input"
+                        />
                         <span>Dash (-)</span>
                     </label>
                     <label className="figma-mr-md">
@@ -44,7 +50,9 @@ const Spaces = () => {
                             name="space-treatment"
                             value="underscore"
                             checked={spaceTreatment === 'underscore'}
-                            onChange={() => setSpaceTreatment('underscore')} />
+                            onChange={() => setSpaceTreatment('underscore')}
+                            className="form-check-input"
+                        />
                         <span>Under (_)</span>
                     </label>
                 </div>

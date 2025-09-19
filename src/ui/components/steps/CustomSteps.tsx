@@ -109,8 +109,9 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
                      value={inputValue}
                      onChange={handleInputChange}
                      onKeyDown={handleKeyDown}
-                     style={{width: '8ch'}}
+                     style={{width: '6ch'}}
                      data-testid="custom-step-input"
+                     className={"form-control d-inline"}
                  />
                 <span
                     onClick={handleAddStep}
