@@ -18,13 +18,20 @@ import Leading from "@ui/components/tokenSettings/Leading";
 import Separator from "@ui/components/tokenSettings/Separator";
 
 const AccordionMenu = () => {
-    const [expanded, setExpanded] = useState({0: false, 1: true, 2: false, 3: false, 4: false, 5: false});
+    const [expanded, setExpanded] = useState<{ [key: number]: boolean }>({
+        0: false,
+        1: true,
+        2: false,
+        3: false,
+        4: false,
+        5: false
+    });
 
     const sleep = (ms: number): Promise<void> => {
         return new Promise(resolve => setTimeout(resolve, ms));
     };
     const updateExpanded = async (index: number) => {
-        if (expanded[index] === true) return;
+        if (expanded[index]) return;
         setExpanded({0: false, 1: false, 2: false, 3: false, 4: false, 5: false});
         await sleep(300); // Changed to 300ms as per your request
         setExpanded(prev => ({
