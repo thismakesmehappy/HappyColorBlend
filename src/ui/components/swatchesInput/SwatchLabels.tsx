@@ -1,75 +1,18 @@
-import React, {useEffect, useState, useRef} from "react";
-import {isValidHexColor} from "../../helpers/colorMethods";
-
 interface SwatchLabelsProps {
-    isEditing: boolean;
     swatchColor: string;
     swatchName: string;
-    tempSwatchColor: string;
-    setTempSwatchColor: (newState: any) => void;
-    tempSwatchName: string;
-    setTempSwatchName: (newState: any) => void;
-    onSave?: () => void;
-    onCancel?: () => void;
+    className?: string;
 }
 
 const SwatchLabels = ({
-                          isEditing,
                           swatchColor,
                           swatchName,
-                          tempSwatchColor,
-                          setTempSwatchColor,
-                          tempSwatchName,
-                          setTempSwatchName,
-                          onSave,
-                          onCancel,
+                          className
                       }: SwatchLabelsProps) => {
 
-    const [isValidColor, setIsValidColor] = useState(isValidHexColor(tempSwatchColor))
-    const colorInputRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        setIsValidColor(isValidHexColor(tempSwatchColor));
-    }, [tempSwatchColor]);
-
-    useEffect(() => {
-        if (isEditing && colorInputRef.current) {
-            colorInputRef.current.focus();
-        }
-    }, [isEditing]);
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            onSave?.();
-        } else if (e.key === 'Escape') {
-            e.preventDefault();
-            onCancel?.();
-        }
-    };
-
-    if (isEditing) return (
-        <div className={"vstack"} data-testid="swatch-labels-edit">
-            <div>
-                <input className="container-fluid text-center fw-bold" value={tempSwatchName}
-                       onChange={(e) => setTempSwatchName(e.currentTarget.value)}
-                       onKeyDown={handleKeyDown}
-                       data-testid="swatch-name-input" />
-            </div>
-            <div>
-                <input className={`container-fluid text-center ${!isValidColor ? 'border-danger' : ''}`}
-                       value={tempSwatchColor}
-                       onChange={(e) => setTempSwatchColor(e.currentTarget.value)}
-                       onKeyDown={handleKeyDown}
-                       ref={colorInputRef}
-                       data-testid="swatch-color-input" />
-            </div>
-            <div>{isValidColor}</div>
-        </div>
-    )
 
     return (
-        <div className={"vstack"} data-testid="swatch-labels-display">
+        <div className={"vstack " + className} data-testid="swatch-labels-display">
             <p className="container-fluid fw-bold mb-0 selectable-text" data-testid="swatch-name-display">
                 {swatchName}
             </p>

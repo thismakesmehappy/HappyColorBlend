@@ -90,7 +90,7 @@ $placements: (
 }
 
 /* Figma Colors */
-.figma-bg-primary {
+.figma-bg-primary:not(.btn) {
   &,
   &.tooltip .arrow,
   &.tooltip .tooltip-inner {

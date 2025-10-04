@@ -32,6 +32,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "bootstrap": "^5.3.7",
+    "bootstrap-icons": "^1.13.1",
     "color-namer": "^1.4.0",
     "figma-plugin-ds": "^1.0.1",
     "monorepo-networker": "^2.1.0",

@@ -60,13 +60,13 @@ $purple: figma.$color-component;
 
 }
 
-// Remove all hover/focus/active states for flat design
-.btn,
-.btn:hover,
-.btn:focus,
-.btn:active,
-.btn.active,
-.btn:focus-visible {
+// Remove all hover/focus/active states for flat design - only for primary buttons
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary:focus-visible {
   background-color: figma.$color-primary !important;
   border: none;
   color: figma.$color-light !important;

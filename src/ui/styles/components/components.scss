@@ -7,6 +7,35 @@
   border-style: solid;
 }
 
+.brand-color-chip {
+  border-color: figma.$color-border;
+  min-width: 3em;
+  //border-width: 2px;
+  //border-style: solid;
+}
+
+.brand-color-display {
+  border: solid figma.$color-border 2px;
+  padding: 0;
+
+  .brand-color-display-content {
+    padding: figma.$spacing-xs figma.$spacing-sm figma.$spacing-sm;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .btn, form {
+    margin: 0;
+  }
+}
+
+.invalid-form-value {
+  border-color: figma.$color-danger;
+}
+
 .swatch-label-text {
   font-size: figma.$font-size-md;
   text-wrap: auto;
@@ -23,7 +52,6 @@
 //}
 
 .color-chip-container {
-  min-width: calc(2 * (4ch + 2 * figma.$spacing-sm));
   text-align: center;
   vertical-align: center;
 }
@@ -60,6 +88,7 @@ input[type=radio] {
 
 .group {
   padding-top: figma.$spacing-md;
+
   &:not(:last-of-type) {
     border-bottom: 1px solid figma.$color-border;
     padding-bottom: figma.$spacing-md;

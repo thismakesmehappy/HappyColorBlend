@@ -1,8 +1,11 @@
 // Validate if a string is a valid 6-digit hex color
-export const isValidHexColor = (color: string): boolean => {
-    return /^[0-9A-Fa-f]{6}$/.test(color);
+export const isValidHexColor = (color: any): boolean => {
+    return typeof color === "string" && /^[0-9A-Fa-f]{6}$/.test(color);
 };
 
+export const isValidColorName = (colorName: string | undefined | null) => {
+    return (colorName !== undefined && colorName !== "" && colorName !== null);
+}
 /**
  * Converts a hex color string to RGB values
  * @param hex - Hex color string without the # (e.g., "FF0000")

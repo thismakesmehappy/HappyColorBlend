@@ -110,6 +110,20 @@ export const TOOLTIPS = {
         placement: PLACEMENTS.TOP,
         type: TOOLTIP_TYPES.COMPONENT,
         maxWidth: TOOLTIP_WIDTHS.MEDIUM
+    },
+    BRAND_COLOR_HEX: {
+        content: "Enter a six-digit hex color code; do not enter the trailing #",
+        id: "brand-color-name-tooltip.",
+        placement: PLACEMENTS.TOP,
+        type: TOOLTIP_TYPES.COMPONENT,
+        maxWidth: TOOLTIP_WIDTHS.WIDE
+    },
+    BRAND_COLOR_NAME: {
+        content: "Enter a non-empty color name. Use spaces and upper and lower case, we will convert it to a consistent token name.",
+        id: "brand-color-name-tooltip",
+        placement: PLACEMENTS.TOP,
+        type: TOOLTIP_TYPES.COMPONENT,
+        maxWidth: TOOLTIP_WIDTHS.WIDE
     }
 } as const;
 

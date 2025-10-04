@@ -62,15 +62,9 @@ const Swatch = ({
             </div>
             <div className={"separator-md"}></div>
             <div data-testid="swatch-labels-container">
-                <SwatchLabels isEditing={isEditing}
-                              swatchColor={swatchColor}
-                              swatchName={swatchName}
-                              tempSwatchColor={tempSwatchColor}
-                              setTempSwatchColor={setTempSwatchColor}
-                              tempSwatchName={tempSwatchName}
-                              setTempSwatchName={setTempSwatchName}
-                              onSave={() => swatchControlsRef.current?.update()}
-                              onCancel={() => swatchControlsRef.current?.reset()}
+                <SwatchLabels
+                    swatchColor={swatchColor}
+                    swatchName={swatchName}
                 />
             </div>
         </div>

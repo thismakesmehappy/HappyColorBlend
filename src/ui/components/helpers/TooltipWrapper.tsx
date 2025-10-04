@@ -4,7 +4,7 @@ import {AlertType} from '../../interfaces/AlertLevel';
 
 export interface TooltipWrapperProps {
     children: React.ReactNode;
-    content: string;
+    content: React.ReactNode;
     placement?: OverlayTriggerProps['placement'];
     maxWidth?: string;
     type?: AlertType;

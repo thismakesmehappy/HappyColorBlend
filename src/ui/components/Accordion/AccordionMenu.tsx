@@ -16,6 +16,7 @@ import Case from "@ui/components/tokenSettings/Case";
 import Spaces from "@ui/components/tokenSettings/Spaces";
 import Leading from "@ui/components/tokenSettings/Leading";
 import Separator from "@ui/components/tokenSettings/Separator";
+import BrandColors from "@ui/components/BrandColors/BrandColors";
 
 const AccordionMenu = () => {
     const [expanded, setExpanded] = useState<{ [key: number]: boolean }>({
@@ -52,22 +53,7 @@ const AccordionMenu = () => {
                 <AccordionItem expanded={expanded[1]}>
                     <AccordionHeader badge="1" header="Brand Colors" onClick={() => updateExpanded(1)} />
                     <AccordionBody expanded={expanded[1]}>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
-                        <p>Lorem ipsum what?</p>
+                        <BrandColors />
                     </AccordionBody>
                 </AccordionItem>
                 <AccordionItem expanded={expanded[2]}>
