@@ -3,15 +3,10 @@ import AccordionHeader from "@ui/components/Accordion/AccordionHeader";
 import AccordionItem from "@ui/components/Accordion/AccordionItem";
 import AccordionBody from "@ui/components/Accordion/AccordionBody";
 import React, {useState} from "react";
-import Explain from "@ui/components/helpers/Explain";
-import Group from "@ui/components/helpers/Group";
 import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
-import Case from "@ui/components/tokenSettings/Case";
-import Spaces from "@ui/components/tokenSettings/Spaces";
-import Leading from "@ui/components/tokenSettings/Leading";
-import Separator from "@ui/components/tokenSettings/Separator";
 import BrandColors from "@ui/components/BrandColors/BrandColors";
 import Steps from "@ui/components/Steps/Steps";
+import TokenSettings from "@ui/components/TokenSettings/TokenSettings";
 
 const AccordionMenu = () => {
     const [expanded, setExpanded] = useState<{ [key: number]: boolean }>({
@@ -67,23 +62,7 @@ const AccordionMenu = () => {
                 <AccordionItem expanded={expanded[4]}>
                     <AccordionHeader badge="4" header="Naming Options" onClick={() => updateExpanded(4)} />
                     <AccordionBody expanded={expanded[4]}>
-                        {/*TODO: Fix column alignment for all sections*/}
-                        <Explain>
-                            Configure how the color names will be converted to token names.
-                        </Explain>
-                        {/*<TokenNamingSample className="figma-mb-lg" />*/}
-                        <Group>
-                            <Case />
-                        </Group>
-                        <Group>
-                            <Spaces />
-                        </Group>
-                        <Group>
-                            <Leading />
-                        </Group>
-                        <Group>
-                            <Separator />
-                        </Group>
+                        <TokenSettings />
                     </AccordionBody>
                 </AccordionItem>
                 <AccordionItem expanded={expanded[5]}>
