@@ -9,6 +9,7 @@ import {Col, Row} from "react-bootstrap";
 const SwatchPrimitives = () => {
     const light = useSwatchStore(state => state.light);
     const dark = useSwatchStore(state => state.dark);
+    const isDarkStart = useSwatchStore(state => state.isDarkStart)
     const primary = useSwatchStore(state => state.primaryColors);
     const caseTreatment = useTokenNameStore(state => state.caseTreatment)
     const spaceTreatment = useTokenNameStore(state => state.spaceTreatment)
@@ -17,8 +18,11 @@ const SwatchPrimitives = () => {
     const leadingCharType = useTokenNameStore(state => state.leadingCharType)
     const separatorCharType = useTokenNameStore(state => state.separatorCharType)
     const appendSeparatorToPrimitives = useTokenNameStore(state => state.appendSeparatorToPrimitive)
-    const scaleEndColorToken = computeTokenName(
-        light.name,
+    const start = isDarkStart ? dark : light;
+    const end = isDarkStart ? light : dark;
+
+    const startColorToken = computeTokenName(
+        start.name,
         caseTreatment,
         spaceTreatment,
         leadingCharsCount,
@@ -28,8 +32,8 @@ const SwatchPrimitives = () => {
         appendSeparatorToPrimitives
     );
 
-    const scaleStartColorToken = computeTokenName(
-        dark.name,
+    const endColorToken = computeTokenName(
+        end.name,
         caseTreatment,
         spaceTreatment,
         leadingCharsCount,
@@ -41,10 +45,10 @@ const SwatchPrimitives = () => {
 
     return (<Row xs={4} className={"gx-0 figma-mb-lg fixed-cols-4"}>
         <Col>
-            <Swatch color={light.color} name={scaleStartColorToken} displayOnly={true} />
+            <Swatch color={start.color} name={startColorToken} displayOnly={true} />
         </Col>
         <Col>
-            <Swatch color={dark.color} name={scaleEndColorToken} displayOnly={true} />
+            <Swatch color={end.color} name={endColorToken} displayOnly={true} />
         </Col>
         {primary.map((color) => {
             const colorTokenName = computeTokenName(
