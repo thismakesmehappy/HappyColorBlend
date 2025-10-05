@@ -21,9 +21,7 @@ export const initialState = {
 }
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
-    scaleStart: IdentifiableColor,
     light: IdentifiableColor,
-    scaleEnd: IdentifiableColor,
     dark: IdentifiableColor,
     isDarkStart: boolean,
     primaryColors: IdentifiableColor[],
@@ -291,7 +289,7 @@ const useSwatchStore = create<SwatchStoreState>()(
 
         buildSwatches: () => {
             const state = get();
-            const newSwatches = buildNewSwatches(state.scaleStart, state.scaleEnd, state.primaryColors, state);
+            const newSwatches = buildNewSwatches(state.light, state.dark, state.isDarkStart, state.primaryColors, state);
 
             // Update the swatches in the store
             set({swatches: newSwatches});
@@ -303,7 +301,8 @@ const useSwatchStore = create<SwatchStoreState>()(
             const state = get();
             state.setCombinedSteps();
             const combinedSteps = Array.from(state.getCombinedSteps());
-            const {scaleStart, scaleEnd} = state;
+            const scaleStart = state.isDarkStart ? state.dark : state.light;
+            const scaleEnd = state.isDarkStart ? state.light : state.dark;
 
             // Always calculate from scaleStart(0) to scaleEnd(1000), no gradient direction logic
             const colorScale: SwatchStoreSwatch[] = combinedSteps.map((step) => {
