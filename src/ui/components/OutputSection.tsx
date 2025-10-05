@@ -10,7 +10,7 @@ interface SwatchesOutputProps extends ClassAndStyle {
 }
 
 const OutputSection = ({className, style}: SwatchesOutputProps) => {
-    return (<div id="output-section" className={className}>
+    return (<div id="output-section" className={className + " show-scroll"}>
         <SwatchesOutput />
     </div>);
 };

@@ -10,7 +10,7 @@ const AccordionBody = ({children, expanded}: AccordionBodyProps) => {
     return (
         <Collapse in={expanded} timeout={200}>
             <div className="accordion-body-container">
-                <div className="accordion-body-content">
+                <div className="accordion-body-content show-scroll">
                     {children}
                 </div>
             </div>
