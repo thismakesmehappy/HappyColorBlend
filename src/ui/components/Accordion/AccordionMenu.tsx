@@ -7,6 +7,7 @@ import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
 import BrandColors from "@ui/components/BrandColors/BrandColors";
 import Steps from "@ui/components/Steps/Steps";
 import TokenSettings from "@ui/components/TokenSettings/TokenSettings";
+import LightAndDark from "@ui/components/LightAndDark/LightAndDark";
 
 const AccordionMenu = () => {
     const [expanded, setExpanded] = useState<{ [key: number]: boolean }>({
@@ -56,7 +57,7 @@ const AccordionMenu = () => {
                 <AccordionItem expanded={expanded[3]}>
                     <AccordionHeader badge="3" header="Light and Dark" onClick={() => updateExpanded(3)} />
                     <AccordionBody expanded={expanded[3]}>
-                        <p>Lorem ipsum what?</p>
+                        <LightAndDark />
                     </AccordionBody>
                 </AccordionItem>
                 <AccordionItem expanded={expanded[4]}>

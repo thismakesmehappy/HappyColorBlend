@@ -1,12 +1,15 @@
 import {create} from 'zustand';
 import {MINIMUM_STEPS} from "../../constants/uiConstants";
 import {blendPrimaryColor, blendColor} from "../helpers/colorMethods";
-import { IdentifiableColor } from "../interfaces/BaseInterfaces";
+import {IdentifiableColor} from "../interfaces/BaseInterfaces";
 
 export const initialState = {
     // Scale properties
     scaleStart: {color: "000000", name: "Black", id: "scaleStart"},
+    dark: {color: "000000", name: "Black", id: "scaleStart"},
     scaleEnd: {color: "FFFFFF", name: "White", id: "scaleEnd"},
+    light: {color: "FFFFFF", name: "White", id: "scaleEnd"},
+    isDarkStart: true,
     neutralScaleName: "Neutral",
     // Common properties
     primaryColors: [],
@@ -19,7 +22,10 @@ export const initialState = {
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
     scaleStart: IdentifiableColor,
+    light: IdentifiableColor,
     scaleEnd: IdentifiableColor,
+    dark: IdentifiableColor,
+    isDarkStart: boolean,
     primaryColors: IdentifiableColor[],
     state: SwatchStoreState,
 ) => {
@@ -34,9 +40,12 @@ export const buildNewSwatches = (
             swatches: []
         };
 
+        const start = isDarkStart ? dark : light;
+        const end = isDarkStart ? light : dark;
+
         for (let step of combinedSteps) {
             swatch.swatches.push({
-                color: blendPrimaryColor(scaleStart.color, scaleEnd.color, primaryColors[primary].color, step),
+                color: blendPrimaryColor(start.color, end.color, primaryColors[primary].color, step),
                 step: step
             });
         }
@@ -48,7 +57,9 @@ export const buildNewSwatches = (
 };
 
 
-export interface SwatchStoreInputSwatch extends IdentifiableColor {}
+export interface SwatchStoreInputSwatch extends IdentifiableColor {
+}
+
 export interface SwatchStoreSwatch {
     color: string;
     step: number;
@@ -63,7 +74,10 @@ export interface SwatchStoreSwatches {
 export interface SwatchStoreState {
     // Scale properties
     scaleStart: SwatchStoreInputSwatch;
+    dark: SwatchStoreInputSwatch;
+    light: SwatchStoreInputSwatch;
     scaleEnd: SwatchStoreInputSwatch;
+    isDarkStart: boolean;
     neutralScaleName: string;
 
     // Common state properties
@@ -76,7 +90,10 @@ export interface SwatchStoreState {
 
     // Scale getters
     getScaleStart: () => SwatchStoreInputSwatch;
+    getDark: () => SwatchStoreInputSwatch;
     getScaleEnd: () => SwatchStoreInputSwatch;
+    getLight: () => SwatchStoreInputSwatch;
+    getIsDarkStart: () => boolean;
     getNeutralScaleName: () => string;
 
     // Common getters
@@ -90,8 +107,11 @@ export interface SwatchStoreState {
 
     // Scale setters
     setScaleStart: (color: string, name: string) => void;
+    setDark: (color: string, name: string) => void;
     setScaleEnd: (color: string, name: string) => void;
+    setLight: (color: string, name: string) => void;
     setNeutralScaleName: (name: string) => void;
+    setIsDarkStart: (isDarkStart: boolean) => void;
     swapScaleEndpoints: () => void;
 
     // Common methods
@@ -108,6 +128,7 @@ export interface SwatchStoreState {
     removeCustomStep: (step: number) => void;
     buildSwatches: () => SwatchStoreSwatches[];
     buildColorScale: () => SwatchStoreSwatch[];
+    toggleIsDarkStart: () => void;
 }
 
 
@@ -120,6 +141,9 @@ const useSwatchStore = create<SwatchStoreState>()(
 
         // Scale getters
         getScaleStart: () => get().scaleStart,
+        getLight: () => get().light,
+        getDark: () => get().dark,
+        getIsDarkStart: () => get().isDarkStart,
         getScaleEnd: () => get().scaleEnd,
         getNeutralScaleName: () => get().neutralScaleName,
 
@@ -176,8 +200,34 @@ const useSwatchStore = create<SwatchStoreState>()(
                 }
             });
         },
+        setDark: (color: string, name: string) => {
+            const colorUpper = color.toUpperCase();
+            set({
+                dark: {
+                    color: colorUpper,
+                    name: name,
+                    id: "scaleEnd"
+                }
+            });
+        },
+        setLight: (color: string, name: string) => {
+            const colorUpper = color.toUpperCase();
+            set({
+                light: {
+                    color: colorUpper,
+                    name: name,
+                    id: "scaleEnd"
+                }
+            });
+        },
         setNeutralScaleName: (name: string) => {
             set({neutralScaleName: name});
+        },
+        setIsDarkStart: (isDarkStart: boolean) => {
+            set({isDarkStart: isDarkStart});
+        },
+        toggleIsDarkStart: () => {
+            set((state) => ({isDarkStart: !state.isDarkStart}));
         },
         swapScaleEndpoints: () => {
             const {scaleStart, scaleEnd} = get();
