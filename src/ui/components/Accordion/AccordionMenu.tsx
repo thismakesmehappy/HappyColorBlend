@@ -3,20 +3,15 @@ import AccordionHeader from "@ui/components/Accordion/AccordionHeader";
 import AccordionItem from "@ui/components/Accordion/AccordionItem";
 import AccordionBody from "@ui/components/Accordion/AccordionBody";
 import React, {useState} from "react";
-import EqualSteps from "@ui/components/steps/EqualSteps";
-import CustomSteps from "@ui/components/steps/CustomSteps";
-import CustomStepBadges from "@ui/components/steps/CustomStepBadges";
 import Explain from "@ui/components/helpers/Explain";
-import VerticalSeparator from "@ui/components/helpers/VerticalSeparator";
 import Group from "@ui/components/helpers/Group";
 import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
-import TokenNamingSample from "@ui/components/TokenNamingSample";
-import {Col, Row} from "react-bootstrap";
 import Case from "@ui/components/tokenSettings/Case";
 import Spaces from "@ui/components/tokenSettings/Spaces";
 import Leading from "@ui/components/tokenSettings/Leading";
 import Separator from "@ui/components/tokenSettings/Separator";
 import BrandColors from "@ui/components/BrandColors/BrandColors";
+import Steps from "@ui/components/Steps/Steps";
 
 const AccordionMenu = () => {
     const [expanded, setExpanded] = useState<{ [key: number]: boolean }>({
@@ -59,19 +54,7 @@ const AccordionMenu = () => {
                 <AccordionItem expanded={expanded[2]}>
                     <AccordionHeader badge="2" header="Number of Steps" onClick={() => updateExpanded(2)} />
                     <AccordionBody expanded={expanded[2]}>
-                        <div>
-                            <Explain>How many tints and shades are generated for each scale.</Explain>
-                            <Group>
-                                <div className={"d-flex align-middle"}><p className={"me-2"}>Equal steps:</p>
-                                    <EqualSteps /></div>
-                            </Group>
-                            <Group>
-                                <div className={"d-flex align-middle"}><p className={"me-2"}>Custom steps:</p>
-                                    <CustomSteps />
-                                </div>
-                                <CustomStepBadges />
-                            </Group>
-                        </div>
+                        <Steps />
 
                     </AccordionBody>
                 </AccordionItem>
