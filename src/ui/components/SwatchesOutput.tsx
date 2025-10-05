@@ -1,7 +1,6 @@
 import React from 'react';
 import useSwatchStore from "../store/useSwatchStore";
 import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
-import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
 import SwatchPrimitives from "@ui/components/swatchesOutput/SwatchPrimitives";
 
 
@@ -12,11 +11,14 @@ interface SwatchesProps {
 
 const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
     const swatches = useSwatchStore((state) => state.getSwatches());
-    const scaleEndColor = useSwatchStore((state) => state.getScaleEnd());
-    const scaleStartColor = useSwatchStore((state) => state.getScaleStart());
+    const lightColor = useSwatchStore((state) => state.getLight());
+    const darkColor = useSwatchStore((state) => state.getDark());
+    const isDarkStart = useSwatchStore((state) => state.getIsDarkStart());
     const neutralScaleName = useSwatchStore(state => state.getNeutralScaleName());
     const buildColorScale = useSwatchStore(state => state.buildColorScale);
     const colorScale = buildColorScale();
+    const scaleStartColor = isDarkStart ? darkColor : lightColor;
+    const scaleEndColor = isDarkStart ? lightColor : darkColor;
     return (
         <div
             className={className}

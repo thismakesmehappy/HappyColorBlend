@@ -7,8 +7,8 @@ import {computeTokenName} from "@ui/helpers/computeTokenName";
 import {Col, Row} from "react-bootstrap";
 
 const SwatchPrimitives = () => {
-    const scaleEnd = useSwatchStore(state => state.scaleEnd);
-    const scaleStart = useSwatchStore(state => state.scaleStart);
+    const light = useSwatchStore(state => state.light);
+    const dark = useSwatchStore(state => state.dark);
     const primary = useSwatchStore(state => state.primaryColors);
     const caseTreatment = useTokenNameStore(state => state.caseTreatment)
     const spaceTreatment = useTokenNameStore(state => state.spaceTreatment)
@@ -18,7 +18,7 @@ const SwatchPrimitives = () => {
     const separatorCharType = useTokenNameStore(state => state.separatorCharType)
     const appendSeparatorToPrimitives = useTokenNameStore(state => state.appendSeparatorToPrimitive)
     const scaleEndColorToken = computeTokenName(
-        scaleEnd.name,
+        light.name,
         caseTreatment,
         spaceTreatment,
         leadingCharsCount,
@@ -29,7 +29,7 @@ const SwatchPrimitives = () => {
     );
 
     const scaleStartColorToken = computeTokenName(
-        scaleStart.name,
+        dark.name,
         caseTreatment,
         spaceTreatment,
         leadingCharsCount,
@@ -41,10 +41,10 @@ const SwatchPrimitives = () => {
 
     return (<Row xs={4} className={"gx-0 figma-mb-lg fixed-cols-4"}>
         <Col>
-            <Swatch color={scaleStart.color} name={scaleStartColorToken} displayOnly={true} />
+            <Swatch color={light.color} name={scaleStartColorToken} displayOnly={true} />
         </Col>
         <Col>
-            <Swatch color={scaleEnd.color} name={scaleEndColorToken} displayOnly={true} />
+            <Swatch color={dark.color} name={scaleEndColorToken} displayOnly={true} />
         </Col>
         {primary.map((color) => {
             const colorTokenName = computeTokenName(
