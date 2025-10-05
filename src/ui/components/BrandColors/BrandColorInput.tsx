@@ -28,6 +28,13 @@ const BrandColorInput = () => {
         }
     }
 
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter' && isFormValid) {
+            event.preventDefault();
+            handleColorSubmit();
+        }
+    }
+
     const handleColorSubmit = () => {
         const newBrandColor: SwatchStoreInputSwatch = {
             color: (colorHex as string).toUpperCase(),
@@ -51,6 +58,7 @@ const BrandColorInput = () => {
                                  id="brand-color-input-name"
                                  value={colorName}
                                  onChange={(event) => handleColorNameChange(event)}
+                                 onKeyDown={handleKeyDown}
                                  className={colorName === "" ? "" : "alert-danger"}
                     />
                 </FormGroup>
@@ -64,6 +72,7 @@ const BrandColorInput = () => {
                                 <FormControl type="text"
                                              value={colorHex}
                                              onChange={(event) => handleColorHexChange(event)}
+                                             onKeyDown={handleKeyDown}
                                              className={isValidHexColor(colorHex) ? "" : "invalid-form-value"}
                                 />
                                 <InputGroupText className={"p-0"}>
