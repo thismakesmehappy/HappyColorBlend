@@ -13,6 +13,12 @@ const BrandColorDisplay = ({
                                className
                            }: SwatchProps) => {
     const removePrimaryColor = useSwatchStore(state => state.removePrimaryColor);
+    const buildSwatches = useSwatchStore((state) => state.buildSwatches);
+
+    const handleDelete = (id: string) => {
+        removePrimaryColor(id as string);
+        buildSwatches();
+    }
 
     return (
         <div className={"d-flex flex-row align-items-center mb-3"}>
@@ -28,7 +34,7 @@ const BrandColorDisplay = ({
             </div>
             <div style={{flexShrink: 0}}>
                 <Button
-                    onClick={() => removePrimaryColor(id as string)}
+                    onClick={() => handleDelete(id as string)}
                     variant={"danger"}
                 >
                     <i className="bi bi-trash"></i></Button>
