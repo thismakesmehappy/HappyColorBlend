@@ -66,12 +66,12 @@ const AccordionMenu = () => {
                         <TokenSettings />
                     </AccordionBody>
                 </AccordionItem>
-                <AccordionItem expanded={expanded[5]}>
-                    <AccordionHeader badge="5" header="Output" onClick={() => updateExpanded(5)} />
-                    <AccordionBody expanded={expanded[5]}>
-                        <OutputButtons />
-                    </AccordionBody>
-                </AccordionItem>
+                {/*<AccordionItem expanded={expanded[5]}>*/}
+                {/*    <AccordionHeader badge="5" header="Output" onClick={() => updateExpanded(5)} />*/}
+                {/*    <AccordionBody expanded={expanded[5]}>*/}
+                {/*        <OutputButtons />*/}
+                {/*    </AccordionBody>*/}
+                {/*</AccordionItem>*/}
             </Accordion>
 
         </div>

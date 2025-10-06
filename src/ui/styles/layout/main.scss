@@ -20,7 +20,7 @@ $custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-w
 
 $accordion-header-height: 32px;
 $accordion-header-line: 1px;
-$accordion-items: 6;
+$accordion-items: 5;
 $accordion-body-height: $window-height - ($accordion-items * $accordion-header-height); // - (($accordion-items - 1) * $accordion-header-line);
 
 .separator {
