@@ -1,7 +1,7 @@
 import React from 'react';
 import useSwatchStore from "../store/useSwatchStore";
-import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
-import SwatchPrimitives from "@ui/components/swatchesOutput/SwatchPrimitives";
+import SwatchGroupSwatches from "@ui/components/SwatchesOutput/SwatchGroupSwatches";
+import SwatchPrimitives from "@ui/components/SwatchesOutput/SwatchPrimitives";
 
 // TODO: Refactor to an Output directory
 

@@ -127,5 +127,5 @@ $accordion-body-height: $window-height - ($accordion-items * $accordion-header-h
   backdrop-filter: blur(10px);
   width: $output-section-width - $padding * 4 !important;
   border-radius: $padding;
-  background-color: rgba(240, 245, 250, 0.75);
+  background-color: rgba(figma.$color-border, 0.75);
 }

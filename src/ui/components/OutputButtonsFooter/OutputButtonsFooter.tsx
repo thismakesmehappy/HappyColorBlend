@@ -244,12 +244,7 @@ const OutputButtonsFooter = () => {
                         </div>
                     </div>
                 </div>
-                {/*<Help {...getTooltipProps("OUTPUT_BUTTONS")} className={"figma-ml-xs"} />*/}
             </Stack>
-            <div className="figma-mt-sm">
-
-
-            </div>
 
 
             <Toast
