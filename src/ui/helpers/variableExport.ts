@@ -29,7 +29,9 @@ export const generateVariables = (
     indent: string = '',
     prepend: string = ''
 ): string => {
-    const {scaleStart, scaleEnd, swatches, neutralScaleName, primaryColors} = swatchStore;
+    const {dark, light, isDarkStart, swatches, neutralScaleName, primaryColors} = swatchStore;
+    const scaleStart = isDarkStart ? dark : light;
+    const scaleEnd = isDarkStart ? light : dark;
     const lines: string[] = [];
 
     const colorScale: SwatchStoreSwatch[] = swatchStore.buildColorScale();

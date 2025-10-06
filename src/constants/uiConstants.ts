@@ -5,6 +5,10 @@ export const MINIMUM_STEPS = 3;
 
 // Swatch display configuration
 export const SWATCH_COLUMNS_PER_ROW = 6;
+export const SWATCH_BOARD_GROUP_WIDTH = 1200;
+export const SWATCH_BOARD_SWATCH_SIZE = 64;
+export const SWATCH_BOARD_FONT_SIZE = 12;
+
 // Toast messages
 export const INVALID_HEX_COLOR_MESSAGE = "Input should be a six digits hex color without the #";
 export const INVALID_CUSTOM_STEP_NON_NUMERIC = "Custom step must be a number";

@@ -15,6 +15,11 @@ import {Stack} from "react-bootstrap";
 import Toggle from "@ui/components/helpers/Toggle";
 import Help from "@ui/components/helpers/Help";
 import {getTooltipProps} from "@ui/constants/tooltips";
+import {
+    SWATCH_BOARD_FONT_SIZE,
+    SWATCH_BOARD_GROUP_WIDTH,
+    SWATCH_BOARD_SWATCH_SIZE
+} from "../../../constants/uiConstants";
 
 const OutputButtonsFooter = () => {
     const [isCreatingVariables, setIsCreatingVariables] = useState(false);
@@ -97,9 +102,9 @@ const OutputButtonsFooter = () => {
         try {
             // Prepare the data with default display settings using the full store object
             const swatchData = prepareSwatchCreationData(swatchStore, tokenStore, {
-                displayWidth: 1200,
-                swatchSize: 64,
-                fontSize: 12
+                displayWidth: SWATCH_BOARD_GROUP_WIDTH,
+                swatchSize: SWATCH_BOARD_SWATCH_SIZE,
+                fontSize: SWATCH_BOARD_FONT_SIZE
             });
 
             // Call the plugin
