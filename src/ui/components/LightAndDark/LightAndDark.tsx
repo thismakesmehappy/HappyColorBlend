@@ -9,6 +9,7 @@ import BrandColorChip from "@ui/components/BrandColors/BrandColorChip";
 import useSwatchStore, {buildNewSwatches, SwatchStoreInputSwatch} from "@ui/store/useSwatchStore";
 import Chip from "@ui/components/swatchesInput/Chip";
 import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
+import Group from "@ui/components/helpers/Group";
 
 const LightAndDark = () => {
     const dark = useSwatchStore((state) => state.dark);
@@ -50,6 +51,16 @@ const LightAndDark = () => {
             setName(name);
             setValue(normalizedColorHex);
         }
+
+    const handleColorReset =
+        (name: string,
+         value: string,
+         setName: (name: string) => void,
+         setValue: (value: string) => void,
+        ) => {
+            setName(name);
+            setValue(value);
+        }
     const handleOrderSwap = () => {
         toggleIsDarkStart();
         buildSwatches();
@@ -69,21 +80,41 @@ const LightAndDark = () => {
     }
 
     return (<>
-        <Explain>Define the light (tint) and dark (shade) values, names, and order.</Explain>
-        <div>
+        <Explain>Define the light and dark colors.</Explain>
+        <Group>
+            <div className={"d-flex"}>
+                <p>Order</p>
+                <div className={"w-100 d-flex justify-content-center align-items-center gap-2"}
+                     onClick={handleOrderSwap}>
+                    <Chip color={start.color} width="2em" height="2em" />
+
+                    <Button className={"text-center"}>
+                        <FontAwesomeIcon icon={'right-left'} /> Swap
+                    </Button>
+
+                    <Chip color={end.color} width="2em" height="2em" />
+                </div>
+
+            </div>
+        </Group>
+        <Group>
             <Form>
-                <FormGroup controlId="dark-color-input-name" className={"mb-2"}>
-                    <FormLabel htmlFor="dark-color-input-name">Dark Name<Help {...getTooltipProps('BRAND_COLOR_NAME')}
-                                                                              className={"figma-ml-xs"} /></FormLabel>
-                    <FormControl type="text"
-                                 id="brand-color-input-name"
-                                 value={darkName}
-                                 onChange={(event) => setDarkName(event.currentTarget.value)}
-                                 className={darkName === "" ? "" : "alert-danger"}
-                    />
-                </FormGroup>
-                <Row className={"column-gap-0 align-items-end"}>
-                    <Col xs={7}>
+                <Row>
+                    <Col xs={6}>
+                        <FormGroup controlId="dark-color-input-name" className={"mb-2"}>
+                            <FormLabel
+                                htmlFor="dark-color-input-name">Dark Name<Help {...getTooltipProps('BRAND_COLOR_NAME')}
+                                                                               className={"figma-ml-xs"} /></FormLabel>
+                            <FormControl type="text"
+                                         id="brand-color-input-name"
+                                         value={darkName}
+                                         onChange={(event) => setDarkName(event.currentTarget.value)}
+                                         className={darkName === "" ? "" : "alert-danger"}
+                            />
+
+                        </FormGroup>
+                    </Col>
+                    <Col xs={6}>
                         <FormGroup controlId="brand-color-input-hex">
                             <FormLabel>Hex <Help {...getTooltipProps('BRAND_COLOR_HEX')}
                                                  className={"figma-ml-xs"} /></FormLabel>
@@ -95,36 +126,41 @@ const LightAndDark = () => {
                                              className={isValidHexColor(darkValue) ? "" : "invalid-form-value"}
                                 />
                                 <InputGroupText className={"p-0"}>
-                                    <BrandColorChip color={darkValue} />
+                                    <BrandColorChip color={darkValue} width={"1em"} />
                                 </InputGroupText>
                             </InputGroup>
                         </FormGroup>
-
-
                     </Col>
                     <Col>
                         <Button className={addButtonStyle(darkName, darkValue)}
                                 disabled={!isFormValid(darkName, darkValue)}
-                                onClick={() => handleColorSubmit(darkName, darkValue, updateDark, setDarkName, setDarkValue)}>Add</Button>
+                                onClick={() => handleColorSubmit(darkName, darkValue, updateDark, setDarkName, setDarkValue)}>Update</Button>
+                    </Col>
+                    <Col>
+                        <Button className={addStyle}
+                                onClick={() => handleColorReset(dark.name, dark.color, setDarkName, setDarkValue)}>Reset</Button>
                     </Col>
                 </Row>
             </Form>
 
-        </div>
-        <div>
+        </Group>
+        <Group>
             <Form>
-                <FormGroup controlId="light-color-input-name" className={"mb-2"}>
-                    <FormLabel htmlFor="light-color-input-name">Light Name<Help {...getTooltipProps('BRAND_COLOR_NAME')}
-                                                                                className={"figma-ml-xs"} /></FormLabel>
-                    <FormControl type="text"
-                                 id="brand-color-input-name"
-                                 value={lightName}
-                                 onChange={(event) => setLightName(event.currentTarget.value)}
-                                 className={lightName === "" ? "" : "alert-danger"}
-                    />
-                </FormGroup>
-                <Row className={"column-gap-0 align-items-end"}>
-                    <Col xs={7}>
+                <Row>
+                    <Col xs={6}>
+                        <FormGroup controlId="light-color-input-name" className={"mb-2"}>
+                            <FormLabel
+                                htmlFor="light-color-input-name">Light Name<Help {...getTooltipProps('BRAND_COLOR_NAME')}
+                                                                                 className={"figma-ml-xs"} /></FormLabel>
+                            <FormControl type="text"
+                                         id="brand-color-input-name"
+                                         value={lightName}
+                                         onChange={(event) => setLightName(event.currentTarget.value)}
+                                         className={lightName === "" ? "" : "alert-danger"}
+                            />
+                        </FormGroup>
+                    </Col>
+                    <Col xs={6}>
                         <FormGroup controlId="brand-color-input-hex">
                             <FormLabel>Hex <Help {...getTooltipProps('BRAND_COLOR_HEX')}
                                                  className={"figma-ml-xs"} /></FormLabel>
@@ -146,31 +182,24 @@ const LightAndDark = () => {
                     <Col>
                         <Button className={addButtonStyle(lightName, lightValue)}
                                 disabled={!isFormValid(lightName, lightValue)}
-                                onClick={() => handleColorSubmit(lightName, lightValue, updateLight, setLightName, setLightValue)}>Add</Button>
+                                onClick={() => handleColorSubmit(lightName, lightValue, updateLight, setLightName, setLightValue)}>Update</Button>
+                    </Col>
+                    <Col>
+                        <Button className={addStyle}
+                                onClick={() => handleColorReset(light.name, light.color, setLightName, setLightValue)}>Reset</Button>
                     </Col>
                 </Row>
             </Form>
 
-        </div>
-        <div>
-            <p>Order</p>
-            <div className={"w-100 d-flex justify-content-center align-items-center gap-2"} onClick={handleOrderSwap}>
-                <Chip color={start.color} width="3em" height="3em" />
-
-                <Button className={"text-center"}>
-                    <FontAwesomeIcon icon={'right-left'} /> Swap
-                </Button>
-
-                <Chip color={end.color} width="3em" height="3em" />
-            </div>
-
-        </div>
-        <div>
-            <p>Scale name</p>
+        </Group>
+        <Group>
             <Form>
                 <FormGroup controlId="neutral-scale-name-input-name" className={"mb-2"}>
+                    <FormLabel
+                        htmlFor="neutral-scale-input-name">Scale Name<Help {...getTooltipProps('NEUTRAL_SCALE_NAME')}
+                                                                           className={"figma-ml-xs"} /></FormLabel>
                     <FormControl type="text"
-                                 id="brand-color-input-name"
+                                 id="neutral-scale-input-name"
                                  value={neutralName}
                                  onChange={(event) => setNeutralName(event.currentTarget.value)}
                                  className={neutralName === "" ? "" : "alert-danger"}
@@ -180,7 +209,7 @@ const LightAndDark = () => {
                     <Col>
                         <Button className={addNeutralStyle(neutralName)}
                                 disabled={neutralName === ""}
-                                onClick={() => handleNeutralSubmit()}>Add</Button>
+                                onClick={() => handleNeutralSubmit()}>Update</Button>
                     </Col>
                     <Col>
                         <Button className={addStyle}
@@ -188,7 +217,7 @@ const LightAndDark = () => {
                     </Col>
                 </Row>
             </Form>
-        </div>
+        </Group>
     </>);
 };
 

@@ -13,7 +13,7 @@
 
 .brand-color-chip {
   border-color: figma.$color-border;
-  min-width: 3em;
+  min-width: 2em;
   //border-width: 2px;
   //border-style: solid;
 }
@@ -91,10 +91,10 @@ input[type=radio] {
 }
 
 .group {
-  padding-top: figma.$spacing-md;
+  padding-top: 10px;
 
   &:not(:last-of-type) {
     border-bottom: 1px solid figma.$color-border;
-    padding-bottom: figma.$spacing-md;
+    padding-bottom: 10px;
   }
 }
