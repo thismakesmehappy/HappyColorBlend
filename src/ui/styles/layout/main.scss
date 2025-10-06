@@ -66,11 +66,12 @@ $accordion-body-height: $window-height - ($accordion-items * $accordion-header-h
 
 #output-section {
   width: $output-section-width !important;
-  overflow: auto;
+  overflow: clip;
   white-space: wrap;
   @extend .separator;
   margin-left: 0;
   padding: $padding;
+  position: relative;
 }
 
 #steps-section {
@@ -108,4 +109,23 @@ $accordion-body-height: $window-height - ($accordion-items * $accordion-header-h
 .app-navigation {
   background-color: figma.$color-light;
   border-bottom: 1px solid figma.$color-border;
+}
+
+#swatches-output {
+  padding-bottom: 90px + $padding;
+  height: $window-height;
+  overflow: auto;
+  width: 100%;
+}
+
+#output-buttons {
+  position: absolute;
+  right: $padding* 2;
+  bottom: $padding;
+  height: 90px;
+  display: flex;
+  backdrop-filter: blur(10px);
+  width: $output-section-width - $padding * 4 !important;
+  border-radius: $padding;
+  background-color: rgba(240, 245, 250, 0.75);
 }
