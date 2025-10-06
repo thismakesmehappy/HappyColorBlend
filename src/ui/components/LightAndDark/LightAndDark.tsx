@@ -7,7 +7,7 @@ import {isValidColorName, isValidHexColor} from "@ui/helpers/colorMethods";
 import InputGroupText from "react-bootstrap/InputGroupText";
 import BrandColorChip from "@ui/components/BrandColors/BrandColorChip";
 import useSwatchStore from "@ui/store/useSwatchStore";
-import Chip from "@ui/components/swatchesInput/Chip";
+import Chip from "@ui/components/SwatchesInput/Chip";
 import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
 import Group from "@ui/components/helpers/Group";
 

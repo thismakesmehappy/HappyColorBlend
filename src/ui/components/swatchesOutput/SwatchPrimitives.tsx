@@ -1,9 +1,9 @@
 import useSwatchStore from "@ui/store/useSwatchStore";
 import React from "react";
-import Swatch from "@ui/components/swatchesInput/Swatch";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 import {computeTokenName} from "@ui/helpers/computeTokenName";
 import {Col, Row} from "react-bootstrap";
+import Swatch from "@ui/components/SwatchesInput/Swatch";
 
 const SwatchPrimitives = () => {
     const light = useSwatchStore(state => state.light);

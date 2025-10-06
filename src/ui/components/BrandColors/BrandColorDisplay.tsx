@@ -1,10 +1,10 @@
 import SwatchProps from "../../interfaces/SwatchProps";
-import Chip from "@ui/components/swatchesInput/Chip";
-import SwatchLabels from "@ui/components/swatchesInput/SwatchLabels";
 import {Button} from "react-bootstrap";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import Chip from "@ui/components/SwatchesInput/Chip";
+import SwatchLabels from "@ui/components/SwatchesInput/SwatchLabels";
 
 const BrandColorDisplay = ({
                                color,
