@@ -10,7 +10,7 @@ $separator-width: $separator-space + $separator-line + $separator-space;
 //$output-section-width: $window-width - $input-section-width - $separator-width;
 
 $input-section-width: 250px;
-$output-section-width: $window-width - $input-section-width - $separator-width + $separator-width - $padding;
+$output-section-width: $window-width - $input-section-width; //- $separator-width + $separator-width - $padding;
 
 $steps-section-width: $output-section-width - $padding;
 $steps-section-inner-width: $steps-section-width - $padding - $padding;
@@ -42,7 +42,7 @@ $accordion-body-height: $window-height - ($accordion-items * $accordion-header-h
   height: $window-height;
   display: flex;
   margin: 0;
-  //padding: $padding;
+  padding: 0;
 }
 
 #input-section {

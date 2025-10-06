@@ -91,7 +91,7 @@ input[type=radio] {
 }
 
 .group {
-  padding-top: 10px;
+  padding-top: figma.$spacing-md;
 
   &:not(:last-of-type) {
     border-bottom: 1px solid figma.$color-border;
