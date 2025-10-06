@@ -1,10 +1,14 @@
 @use '../figma/figma-styles' as figma;
 
-.chip {
-  border-radius: 100%;
+.light-border {
   border-color: figma.$color-border;
   border-width: 2px;
   border-style: solid;
+}
+
+.chip {
+  border-radius: 100%;
+  @extend .light-border;
 }
 
 .brand-color-chip {

@@ -6,14 +6,16 @@ import React, {useState} from "react";
 import {isValidColorName, isValidHexColor} from "@ui/helpers/colorMethods";
 import InputGroupText from "react-bootstrap/InputGroupText";
 import BrandColorChip from "@ui/components/BrandColors/BrandColorChip";
-import useSwatchStore, {SwatchStoreInputSwatch} from "@ui/store/useSwatchStore";
+import useSwatchStore, {buildNewSwatches, SwatchStoreInputSwatch} from "@ui/store/useSwatchStore";
+import Chip from "@ui/components/swatchesInput/Chip";
+import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
 
 const LightAndDark = () => {
     const dark = useSwatchStore((state) => state.dark);
     const updateDark = useSwatchStore((state) => state.setDark);
     const updateLight = useSwatchStore((state) => state.setLight);
     const light = useSwatchStore((state) => state.light);
-    const isDarkStart = useSwatchStore((state) => state.getIsDarkStart);
+    const isDarkStart = useSwatchStore((state) => state.isDarkStart);
     const toggleIsDarkStart = useSwatchStore((state) => state.toggleIsDarkStart);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
 
@@ -21,6 +23,9 @@ const LightAndDark = () => {
     const [darkValue, setDarkValue] = useState(dark.color);
     const [lightName, setLightName] = useState(light.name);
     const [lightValue, setLightValue] = useState(light.color);
+    const start = isDarkStart ? dark : light;
+    const end = isDarkStart ? light : dark;
+
 
     const isFormValid = (name: string, color: string) => (isValidHexColor(color) && isValidColorName(name));
     const addButtonStyle = (name: string, color: string) => `btn btn-primary figma-bg-primary figma-text-light w-100 mx-auto ${!isFormValid(name, color) ? "bg-dark" : ""}`;
@@ -39,6 +44,10 @@ const LightAndDark = () => {
             setName(name);
             setValue(normalizedColorHex);
         }
+    const handleOrderSwap = () => {
+        toggleIsDarkStart();
+        buildSwatches();
+    }
 
     const handleColorHexChange = (event: any, setValue: (value: string) => void) => {
         const newValue = event.currentTarget.value;
@@ -130,6 +139,19 @@ const LightAndDark = () => {
                     </Col>
                 </Row>
             </Form>
+
+        </div>
+        <div>
+            <p>Order</p>
+            <div className={"w-100 d-flex justify-content-center align-items-center gap-2"} onClick={handleOrderSwap}>
+                <Chip color={start.color} width="3em" height="3em" />
+
+                <Button className={"text-center"}>
+                    <FontAwesomeIcon icon={'right-left'} /> Swap
+                </Button>
+
+                <Chip color={end.color} width="3em" height="3em" />
+            </div>
 
         </div>
     </>);
