@@ -1,6 +1,4 @@
-import {ReactNode} from "react";
 import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
-import Badge from "@ui/components/helpers/Badge";
 
 interface AccordionHeaderProps {
     badge?: string;

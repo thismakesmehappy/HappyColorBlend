@@ -3,7 +3,6 @@ import AccordionHeader from "@ui/components/Accordion/AccordionHeader";
 import AccordionItem from "@ui/components/Accordion/AccordionItem";
 import AccordionBody from "@ui/components/Accordion/AccordionBody";
 import React, {useState} from "react";
-import OutputButtons from "@ui/components/swatchesOutput/OutputButtons";
 import BrandColors from "@ui/components/BrandColors/BrandColors";
 import Steps from "@ui/components/Steps/Steps";
 import TokenSettings from "@ui/components/TokenSettings/TokenSettings";
@@ -66,12 +65,6 @@ const AccordionMenu = () => {
                         <TokenSettings />
                     </AccordionBody>
                 </AccordionItem>
-                {/*<AccordionItem expanded={expanded[5]}>*/}
-                {/*    <AccordionHeader badge="5" header="Output" onClick={() => updateExpanded(5)} />*/}
-                {/*    <AccordionBody expanded={expanded[5]}>*/}
-                {/*        <OutputButtons />*/}
-                {/*    </AccordionBody>*/}
-                {/*</AccordionItem>*/}
             </Accordion>
 
         </div>

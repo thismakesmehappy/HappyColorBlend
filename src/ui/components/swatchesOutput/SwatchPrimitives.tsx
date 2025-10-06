@@ -1,7 +1,6 @@
 import useSwatchStore from "@ui/store/useSwatchStore";
-import SwatchColorChip from "@ui/components/swatchesOutput/SwatchColorChip";
 import React from "react";
-import Swatch from "@ui/components/swatchesInput";
+import Swatch from "@ui/components/swatchesInput/Swatch";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 import {computeTokenName} from "@ui/helpers/computeTokenName";
 import {Col, Row} from "react-bootstrap";

@@ -6,7 +6,7 @@ import React, {useState} from "react";
 import {isValidColorName, isValidHexColor} from "@ui/helpers/colorMethods";
 import InputGroupText from "react-bootstrap/InputGroupText";
 import BrandColorChip from "@ui/components/BrandColors/BrandColorChip";
-import useSwatchStore, {buildNewSwatches, SwatchStoreInputSwatch} from "@ui/store/useSwatchStore";
+import useSwatchStore from "@ui/store/useSwatchStore";
 import Chip from "@ui/components/swatchesInput/Chip";
 import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
 import Group from "@ui/components/helpers/Group";
@@ -79,6 +79,7 @@ const LightAndDark = () => {
         }
     }
 
+    // TODO: Refactor
     return (<>
         <Explain>Define the light and dark colors.</Explain>
         <Group>

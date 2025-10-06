@@ -1,7 +1,6 @@
 import NumberToggle from "../helpers/NumberToggle";
 import React from "react";
 import useTokenNameStore from "../../store/useTokenNameStore";
-import Toggle from "@ui/components/helpers/Toggle";
 import {Col, Row} from "react-bootstrap";
 
 const Leading = () => {

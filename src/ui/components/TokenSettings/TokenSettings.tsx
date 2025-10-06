@@ -12,7 +12,6 @@ const TokenSettings = () => {
             <Explain>
                 Configure how the color names will be converted to token names.
             </Explain>
-            {/*<TokenNamingSample className="figma-mb-lg" />*/}
             <Group>
                 <Case />
             </Group>

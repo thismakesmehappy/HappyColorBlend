@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => ({
     },
     preprocessorOptions: {
       scss: {
-        api: "modern-compiler",
+        // Remove the api option that's causing the TypeScript error
       },
     },
   },

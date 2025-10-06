@@ -1,6 +1,6 @@
 import React from "react";
 import {hex} from "wcag-contrast";
-import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
+import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 
 interface ChipOutputProps extends ClassAndStyle {
     color: string;

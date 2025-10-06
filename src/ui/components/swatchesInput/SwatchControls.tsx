@@ -1,6 +1,6 @@
 import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
 import React, {useEffect, useState, useImperativeHandle, forwardRef} from "react";
-import {isValidHexColor} from "../../helpers/colorMethods";
+import {isValidHexColor} from "@ui/helpers/colorMethods";
 import Toast from "../helpers/Toast";
 import {INVALID_HEX_COLOR_MESSAGE, TOAST_DURATION} from "../../../constants/uiConstants";
 import {UI_CHANNEL} from "@ui/app.network";
@@ -35,20 +35,20 @@ interface SwatchControlsProps {
 }
 
 const SwatchControls = forwardRef<SwatchControlsRef, SwatchControlsProps>(({
-                            isEditing,
-                            canDelete,
-                            canPick,
-                            setIsEditing,
-                            swatchColor,
-                            setSwatchColor,
-                            swatchName,
-                            setSwatchName,
-                            tempSwatchColor,
-                            setTempSwatchColor,
-                            tempSwatchName,
-                            setTempSwatchName,
-                            onDelete,
-                        }, ref) => {
+                                                                               isEditing,
+                                                                               canDelete,
+                                                                               canPick,
+                                                                               setIsEditing,
+                                                                               swatchColor,
+                                                                               setSwatchColor,
+                                                                               swatchName,
+                                                                               setSwatchName,
+                                                                               tempSwatchColor,
+                                                                               setTempSwatchColor,
+                                                                               tempSwatchName,
+                                                                               setTempSwatchName,
+                                                                               onDelete,
+                                                                           }, ref) => {
 
     const [isValidColor, setIsValidColor] = useState(isValidHexColor(tempSwatchColor));
     const [showToast, setShowToast] = useState(false);

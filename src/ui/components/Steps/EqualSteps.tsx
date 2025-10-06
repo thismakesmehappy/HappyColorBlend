@@ -1,10 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import useSwatchStore from "../../store/useSwatchStore";
-import {ClassAndStyle} from "../../interfaces/ClassAndStyle";
+import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import NumberToggle from "../helpers/NumberToggle";
-import EqualStepsBadges from "@ui/components/steps/EqualStepsBadges";
-import FontAwesomeIcon from "../helpers/FontAwesomeIcon";
-import TooltipWrapper from '../helpers/TooltipWrapper';
 import Help from "@ui/components/helpers/Help";
 import {getTooltipProps} from "@ui/constants/tooltips";
 

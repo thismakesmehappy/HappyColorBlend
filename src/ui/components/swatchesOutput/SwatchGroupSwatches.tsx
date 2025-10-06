@@ -1,8 +1,8 @@
 import SwatchColorChip from "./SwatchColorChip";
 import React from "react";
-import {SwatchStoreSwatch} from "../../store/useSwatchStore";
+import {SwatchStoreSwatch} from "@ui/store/useSwatchStore";
 import ChipOutput from "./ChipOutput";
-import {computeTokenName} from "../../helpers/computeTokenName";
+import {computeTokenName} from "@ui/helpers/computeTokenName";
 import useTokenNameStore from "../../store/useTokenNameStore";
 import {Col, Row} from "react-bootstrap";
 import {SWATCH_COLUMNS_PER_ROW} from "../../../constants/uiConstants";
@@ -51,7 +51,8 @@ const SwatchGroupSwatches = ({
             <br />
 
         </p>
-        <Row xs={SWATCH_COLUMNS_PER_ROW} className={`swatches-container fixed-cols-${SWATCH_COLUMNS_PER_ROW} gx-0`} data-testid="swatches-container">
+        <Row xs={SWATCH_COLUMNS_PER_ROW} className={`swatches-container fixed-cols-${SWATCH_COLUMNS_PER_ROW} gx-0`}
+             data-testid="swatches-container">
             {swatches.map((swatch, index) => {
                     return (
                         <Col>

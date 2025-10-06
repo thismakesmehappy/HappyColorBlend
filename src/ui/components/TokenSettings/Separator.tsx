@@ -1,5 +1,4 @@
 import NumberToggle from "../helpers/NumberToggle";
-import Toggle from "../helpers/Toggle";
 import React from "react";
 import useTokenNameStore from "../../store/useTokenNameStore";
 import {Col, Row} from "react-bootstrap";

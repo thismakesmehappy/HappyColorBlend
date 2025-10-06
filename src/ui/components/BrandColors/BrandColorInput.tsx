@@ -68,6 +68,7 @@ const BrandColorInput = () => {
 
     return (
         <div>
+            {/*TODO: Refactor into a component to be used with dark light as well*/}
             <Form>
                 <FormGroup controlId="brand-color-input-name" className={"mb-2"}>
                     <FormLabel htmlFor="brand-color-input-name">Name<Help {...getTooltipProps('BRAND_COLOR_NAME')}

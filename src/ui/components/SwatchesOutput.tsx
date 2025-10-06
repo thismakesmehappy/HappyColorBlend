@@ -3,6 +3,7 @@ import useSwatchStore from "../store/useSwatchStore";
 import SwatchGroupSwatches from "./swatchesOutput/SwatchGroupSwatches";
 import SwatchPrimitives from "@ui/components/swatchesOutput/SwatchPrimitives";
 
+// TODO: Refactor to an Output directory
 
 interface SwatchesProps {
     className?: string;

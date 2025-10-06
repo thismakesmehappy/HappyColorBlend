@@ -1,6 +1,6 @@
 import React from "react";
 import useTokenNameStore from "../../store/useTokenNameStore";
-import {Col, Row, Stack} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 
 const Case = () => {
     const caseTreatment = useTokenNameStore(state => state.caseTreatment);

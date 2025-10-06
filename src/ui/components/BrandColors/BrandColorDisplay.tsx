@@ -1,7 +1,7 @@
 import SwatchProps from "../../interfaces/SwatchProps";
 import Chip from "@ui/components/swatchesInput/Chip";
 import SwatchLabels from "@ui/components/swatchesInput/SwatchLabels";
-import {Button, Form} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";

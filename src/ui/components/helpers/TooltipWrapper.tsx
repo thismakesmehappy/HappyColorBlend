@@ -1,6 +1,6 @@
 import React from 'react';
 import {OverlayTrigger, Tooltip, OverlayTriggerProps} from 'react-bootstrap';
-import {AlertType} from '../../interfaces/AlertLevel';
+import {AlertType} from '@ui/interfaces/AlertLevel';
 
 export interface TooltipWrapperProps {
     children: React.ReactNode;

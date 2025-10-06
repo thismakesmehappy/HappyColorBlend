@@ -4,22 +4,12 @@ import "@ui/styles/figma/figma-styles.scss"
 import "@ui/styles/components/components.scss";
 import "@ui/styles/bootstrap/bootstrap.scss"
 import OutputSection from "@ui/components/OutputSection";
-import SwatchInputSection from "@ui/components/SwatchInputSection";
-import StylePlayground from "@ui/components/StylePlayground";
 import AccordionMenu from "@ui/components/Accordion/AccordionMenu";
 
 function App() {
-    // Show playground in development mode only
-    const showPlayground = process.env.NODE_ENV === 'development' && window.location.search.includes('playground');
-
-    if (showPlayground) {
-        return <StylePlayground />;
-    }
-
     return (
         <div>
             <div id="main-box">
-                {/*<SwatchInputSection />*/}
                 <AccordionMenu />
                 <OutputSection />
             </div>

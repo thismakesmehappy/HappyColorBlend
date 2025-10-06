@@ -9,8 +9,6 @@ import {generateCSSVariables, generateSCSSVariables, copyToClipboard} from "@ui/
 import useSwatchStore from "@ui/store/useSwatchStore";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 import "@ui/styles/bootstrap/bootstrap.scss";
-import Explain from "@ui/components/helpers/Explain";
-import Group from "@ui/components/helpers/Group";
 import {Stack} from "react-bootstrap";
 import Toggle from "@ui/components/helpers/Toggle";
 import Help from "@ui/components/helpers/Help";
