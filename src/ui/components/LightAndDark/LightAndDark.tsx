@@ -18,6 +18,9 @@ const LightAndDark = () => {
     const isDarkStart = useSwatchStore((state) => state.isDarkStart);
     const toggleIsDarkStart = useSwatchStore((state) => state.toggleIsDarkStart);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
+    const neutral = useSwatchStore((state) => state.neutralScaleName);
+    const updateNeutral = useSwatchStore((state) => state.setNeutralScaleName);
+
 
     const [darkName, setDarkName] = useState(dark.name);
     const [darkValue, setDarkValue] = useState(dark.color);
@@ -25,10 +28,13 @@ const LightAndDark = () => {
     const [lightValue, setLightValue] = useState(light.color);
     const start = isDarkStart ? dark : light;
     const end = isDarkStart ? light : dark;
+    const [neutralName, setNeutralName] = useState(neutral);
 
 
     const isFormValid = (name: string, color: string) => (isValidHexColor(color) && isValidColorName(name));
-    const addButtonStyle = (name: string, color: string) => `btn btn-primary figma-bg-primary figma-text-light w-100 mx-auto ${!isFormValid(name, color) ? "bg-dark" : ""}`;
+    const addStyle = 'btn btn-primary figma-bg-primary figma-text-light w-100 mx-auto';
+    const addButtonStyle = (name: string, color: string) => `${addStyle} ${!isFormValid(name, color) ? "bg-dark" : ""}`;
+    const addNeutralStyle = (name: string) => `${addStyle} ${name === "" ? "bg-dark" : ""}`;
     const handleColorSubmit =
         (name: string,
          value: string,
@@ -47,6 +53,11 @@ const LightAndDark = () => {
     const handleOrderSwap = () => {
         toggleIsDarkStart();
         buildSwatches();
+    }
+
+    const handleNeutralSubmit = () => {
+        updateNeutral(neutralName);
+        setNeutralName(neutralName)
     }
 
     const handleColorHexChange = (event: any, setValue: (value: string) => void) => {
@@ -153,6 +164,30 @@ const LightAndDark = () => {
                 <Chip color={end.color} width="3em" height="3em" />
             </div>
 
+        </div>
+        <div>
+            <p>Scale name</p>
+            <Form>
+                <FormGroup controlId="neutral-scale-name-input-name" className={"mb-2"}>
+                    <FormControl type="text"
+                                 id="brand-color-input-name"
+                                 value={neutralName}
+                                 onChange={(event) => setNeutralName(event.currentTarget.value)}
+                                 className={neutralName === "" ? "" : "alert-danger"}
+                    />
+                </FormGroup>
+                <Row className={"column-gap-0 align-items-end"}>
+                    <Col>
+                        <Button className={addNeutralStyle(neutralName)}
+                                disabled={neutralName === ""}
+                                onClick={() => handleNeutralSubmit()}>Add</Button>
+                    </Col>
+                    <Col>
+                        <Button className={addStyle}
+                                onClick={() => setNeutralName(neutral)}>Reset</Button>
+                    </Col>
+                </Row>
+            </Form>
         </div>
     </>);
 };
