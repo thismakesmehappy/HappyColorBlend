@@ -9,7 +9,7 @@ $separator-width: $separator-space + $separator-line + $separator-space;
 
 //$output-section-width: $window-width - $input-section-width - $separator-width;
 
-$input-section-width: 250px;
+$input-section-width: 275px;
 $output-section-width: $window-width - $input-section-width; //- $separator-width + $separator-width - $padding;
 
 $steps-section-width: $output-section-width - $padding;
