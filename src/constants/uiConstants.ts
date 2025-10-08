@@ -4,7 +4,7 @@ export const TOAST_DURATION = 3000
 export const MINIMUM_STEPS = 3;
 
 // Swatch display configuration
-export const SWATCH_COLUMNS_PER_ROW = 6;
+export const SWATCH_COLUMNS_PER_ROW = 7;
 export const SWATCH_BOARD_GROUP_WIDTH = 1200;
 export const SWATCH_BOARD_SWATCH_SIZE = 64;
 export const SWATCH_BOARD_FONT_SIZE = 12;

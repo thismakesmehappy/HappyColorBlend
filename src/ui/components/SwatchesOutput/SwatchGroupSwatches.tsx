@@ -1,7 +1,7 @@
-import SwatchColorChip from "./SwatchColorChip";
+import SwatchColorChip from "@ui/components/SwatchesOutput/SwatchColorChip";
 import React from "react";
 import {SwatchStoreSwatch} from "@ui/store/useSwatchStore";
-import ChipOutput from "./ChipOutput";
+import ChipOutput from "@ui/components/SwatchesOutput/ChipOutput";
 import {computeTokenName} from "@ui/helpers/computeTokenName";
 import useTokenNameStore from "../../store/useTokenNameStore";
 import {Col, Row} from "react-bootstrap";
