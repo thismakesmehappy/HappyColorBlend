@@ -11,6 +11,7 @@ import Chip from "@ui/components/SwatchesInput/Chip";
 import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
 import Group from "@ui/components/helpers/Group";
 
+// TODO: Add funcitonality for keyboard enter
 const LightAndDark = () => {
     const dark = useSwatchStore((state) => state.dark);
     const updateDark = useSwatchStore((state) => state.setDark);

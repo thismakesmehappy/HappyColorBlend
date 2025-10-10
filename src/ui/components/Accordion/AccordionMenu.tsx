@@ -34,12 +34,6 @@ const AccordionMenu = () => {
     return (
         <div id="accordion-menu">
             <Accordion>
-                <AccordionItem expanded={expanded[0]}>
-                    <AccordionHeader badge="?" header="Instructions" onClick={() => updateExpanded(0)} />
-                    <AccordionBody expanded={expanded[0]}>
-                        <p>Lorem ipsum what?</p>
-                    </AccordionBody>
-                </AccordionItem>
                 <AccordionItem expanded={expanded[1]}>
                     <AccordionHeader badge="1" header="Brand Colors" onClick={() => updateExpanded(1)} />
                     <AccordionBody expanded={expanded[1]}>
