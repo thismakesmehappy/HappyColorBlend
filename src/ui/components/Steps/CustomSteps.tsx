@@ -11,6 +11,7 @@ import {
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import Help from "@ui/components/helpers/Help";
 import {getTooltipProps} from "@ui/constants/tooltips";
+import Button from "@ui/components/helpers/Button";
 
 interface CustomStepsProps extends ClassAndStyle {
 }
@@ -100,7 +101,6 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
         }
     };
 
-    const addButtonStyle = `btn btn-primary figma-bg-primary figma-text-light ms-3 mx-auto ${!isValidInput() ? "bg-dark" : ""}`;
 
     return (
         <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps" id={id}>
@@ -116,13 +116,14 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
                      data-testid="custom-step-input"
                      className={"form-control d-inline"}
                  />
-                <button
-                    className={addButtonStyle}
+                <Button
+                    className={'ms-3'}
                     onClick={handleAddStep}
                     disabled={!isValidInput()}
+                    type={'primary'}
                 >
                         Add
-                    </button>
+                    </Button>
             </span>
             <Toast
                 message={toastMessage}

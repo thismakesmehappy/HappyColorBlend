@@ -40,6 +40,25 @@
 - [ ] Improve overall user guidance throughout the interface
 - [x] Remove Instructions from accordion
 
+## UI Improvements
+
+- [x] Refactor buttons for consistency
+- [ ] Audit UI consistency
+
+## Code TODOs (Found in codebase)
+
+### Refactoring Tasks
+
+- [ ] **SwatchesOutput.tsx**: Refactor to an Output directory
+- [ ] **OutputSection.tsx**: Refactor to an Output directory
+- [ ] **LightAndDark.tsx**: Refactor code (line with TODO comment)
+
+### Component Improvements
+
+- [ ] **BrandColorInput.tsx**: Refactor color input into reusable component for dark/light sections
+- [ ] **LightAndDark.tsx**: Add functionality for keyboard enter support
+- [ ] **LightAndDark.tsx**: Change all form control inputs to size sm (appears twice)
+
 ---
 
 ## FOR REFERENCE

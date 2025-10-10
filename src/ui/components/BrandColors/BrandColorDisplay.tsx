@@ -1,10 +1,10 @@
 import SwatchProps from "../../interfaces/SwatchProps";
-import {Button} from "react-bootstrap";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Chip from "@ui/components/SwatchesInput/Chip";
 import SwatchLabels from "@ui/components/SwatchesInput/SwatchLabels";
+import Button from "@ui/components/helpers/Button";
 
 const BrandColorDisplay = ({
                                color,
@@ -35,7 +35,7 @@ const BrandColorDisplay = ({
             <div style={{flexShrink: 0}}>
                 <Button
                     onClick={() => handleDelete(id as string)}
-                    variant={"danger"}
+                    type={'danger'}
                 >
                     <i className="bi bi-trash"></i></Button>
             </div>

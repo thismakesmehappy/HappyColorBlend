@@ -1,11 +1,12 @@
 import React, {useState} from "react";
-import {Button, Col, Form, FormControl, FormGroup, FormLabel, InputGroup, Row} from "react-bootstrap";
+import {Col, Form, FormControl, FormGroup, FormLabel, InputGroup, Row} from "react-bootstrap";
 import BrandColorChip from "@ui/components/BrandColors/BrandColorChip";
 import {isValidColorName, isValidHexColor} from "@ui/helpers/colorMethods";
 import useSwatchStore, {SwatchStoreInputSwatch} from "@ui/store/useSwatchStore";
 import {v4 as uuidv4} from "uuid";
 import InputGroupText from "react-bootstrap/InputGroupText";
 import Help from "@ui/components/helpers/Help";
+import Button from "@ui/components/helpers/Button";
 import {getTooltipProps} from "@ui/constants/tooltips";
 import Toast from "@ui/components/helpers/Toast";
 import {TOAST_DURATION} from "../../../constants/uiConstants";
@@ -19,7 +20,7 @@ const BrandColorInput = () => {
     const [colorName, setColorName] = useState<string>("");
     const [showErrorToast, setShowErrorToast] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const isFormValid = (isValidHexColor(colorHex) && isValidColorName(colorName));
+    const isFormValid = isValidHexColor(colorHex) && isValidColorName(colorName);
 
     const hideErrorToast = () => {
         setShowErrorToast(false);
@@ -64,11 +65,10 @@ const BrandColorInput = () => {
         setColorHex("");
         setColorName("");
     }
-    const addButtonStyle = `btn btn-primary figma-bg-primary figma-text-light w-100 mx-auto ${!isFormValid ? "bg-dark" : ""}`;
+    const addButtonStyle = `w-100 mx-auto`;
 
     return (
         <div>
-            {/*TODO: Refactor into a component to be used with dark light as well*/}
 
             <Form>
                 <FormGroup controlId="brand-color-input-name" className={"mb-2"}>
@@ -105,8 +105,12 @@ const BrandColorInput = () => {
                     </Col>
                     <Col>
                         <Button className={addButtonStyle}
+                                type={'primary'}
                                 disabled={!isFormValid}
-                                onClick={handleColorSubmit}>Add</Button>
+                                onClick={handleColorSubmit}
+                        >
+                            Add
+                        </Button>
                     </Col>
                 </Row>
 

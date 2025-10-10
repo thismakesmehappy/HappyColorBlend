@@ -1,5 +1,5 @@
 import Explain from "@ui/components/helpers/Explain";
-import {Button, Col, Form, FormControl, FormGroup, FormLabel, InputGroup, Row} from "react-bootstrap";
+import {Col, Form, FormControl, FormGroup, FormLabel, InputGroup, Row} from "react-bootstrap";
 import Help from "@ui/components/helpers/Help";
 import {getTooltipProps} from "@ui/constants/tooltips";
 import React, {useState} from "react";
@@ -10,6 +10,7 @@ import useSwatchStore from "@ui/store/useSwatchStore";
 import Chip from "@ui/components/SwatchesInput/Chip";
 import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
 import Group from "@ui/components/helpers/Group";
+import Button from "@ui/components/helpers/Button";
 
 // TODO: Add funcitonality for keyboard enter
 const LightAndDark = () => {
@@ -34,7 +35,7 @@ const LightAndDark = () => {
 
 
     const isFormValid = (name: string, color: string) => (isValidHexColor(color) && isValidColorName(name));
-    const addStyle = 'btn btn-primary figma-bg-primary figma-text-light w-100 mx-auto';
+    const addStyle = '';
     const addButtonStyle = (name: string, color: string) => `${addStyle} ${!isFormValid(name, color) ? "bg-dark" : ""}`;
     const addNeutralStyle = (name: string) => `${addStyle} ${name === "" ? "bg-dark" : ""}`;
     const handleColorSubmit =
@@ -97,6 +98,8 @@ const LightAndDark = () => {
                     />
 
                 </FormGroup>
+                {/*TODO: Change all form control inputs to size sm*/}
+                {/*TODO: Change all form control inputs to size sm*/}
                 <Row className={"gx-2 align-items-end"}>
                     <Col xs={5}>
                         <FormGroup controlId="brand-color-input-hex">
@@ -115,14 +118,20 @@ const LightAndDark = () => {
                             </InputGroup>
                         </FormGroup>
                     </Col>
-                    <Col xs={4}>
-                        <Button className={addButtonStyle(darkName, darkValue)}
-                                disabled={!isFormValid(darkName, darkValue)}
-                                onClick={() => handleColorSubmit(darkName, darkValue, updateDark, setDarkName, setDarkValue)}>Update</Button>
-                    </Col>
-                    <Col xs={3}>
+                    <Col xs={7}>
                         <Button className={addStyle}
-                                onClick={() => handleColorReset(dark.name, dark.color, setDarkName, setDarkValue)}>Reset</Button>
+                                disabled={!isFormValid(darkName, darkValue)}
+                                onClick={() => handleColorSubmit(darkName, darkValue, updateDark, setDarkName, setDarkValue)}
+                                type={'primary'}
+                        >
+                            Update
+                        </Button>
+                        <Button className={addStyle + " ms-2"}
+                                onClick={() => handleColorReset(dark.name, dark.color, setDarkName, setDarkValue)}
+                                type={'secondary'}
+                        >
+                            Reset
+                        </Button>
                     </Col>
                 </Row>
             </Form>
@@ -158,14 +167,20 @@ const LightAndDark = () => {
                             </InputGroup>
                         </FormGroup>
                     </Col>
-                    <Col xs={4}>
-                        <Button className={addButtonStyle(lightName, lightValue)}
-                                disabled={!isFormValid(lightName, lightValue)}
-                                onClick={() => handleColorSubmit(lightName, lightValue, updateLight, setLightName, setLightValue)}>Update</Button>
-                    </Col>
-                    <Col xs={3}>
+                    <Col xs={7}>
                         <Button className={addStyle}
-                                onClick={() => handleColorReset(light.name, light.color, setLightName, setLightValue)}>Reset</Button>
+                                disabled={!isFormValid(lightName, lightValue)}
+                                onClick={() => handleColorSubmit(lightName, lightValue, updateLight, setLightName, setLightValue)}
+                                type={'primary'}
+                        >
+                            Update
+                        </Button>
+                        <Button className={addStyle + 'ms-2'}
+                                onClick={() => handleColorReset(light.name, light.color, setLightName, setLightValue)}
+                                type={'secondary'}
+                        >
+                            Reset
+                        </Button>
                     </Col>
                 </Row>
             </Form>
@@ -186,13 +201,21 @@ const LightAndDark = () => {
                 </FormGroup>
                 <Row className={"column-gap-0 align-items-end"}>
                     <Col>
-                        <Button className={addNeutralStyle(neutralName)}
+                        <Button className={addStyle + 'w-100'}
                                 disabled={neutralName === ""}
-                                onClick={() => handleNeutralSubmit()}>Update</Button>
+                                onClick={() => handleNeutralSubmit()}
+                                type={'primary'}
+                        >
+                            Update
+                        </Button>
                     </Col>
                     <Col>
-                        <Button className={addStyle}
-                                onClick={() => setNeutralName(neutral)}>Reset</Button>
+                        <Button className={addStyle + ' w-100'}
+                                onClick={() => setNeutralName(neutral)}
+                                type={'secondary'}
+                        >
+                            Reset
+                        </Button>
                     </Col>
                 </Row>
             </Form>
@@ -200,7 +223,9 @@ const LightAndDark = () => {
                  onClick={handleOrderSwap}>
                 <Chip color={start.color} width="2em" height="2em" />
 
-                <Button className={"text-center"}>
+                <Button
+                    type={'primary'}
+                >
                     <FontAwesomeIcon icon={'right-left'} /> Swap
                 </Button>
 

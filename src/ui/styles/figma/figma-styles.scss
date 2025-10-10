@@ -22,6 +22,7 @@ $color-component: #8638e5;
 $color-text-primary: #000000e5;
 $color-text-secondary: #0000004d;
 $color-border: #e5e5e5;
+$color-disabled: #555;
 
 // Spacing
 $spacing-xs: 4px;
@@ -265,14 +266,19 @@ $placements: (
 .figma-btn {
   border-radius: $border-radius-lg;
   font-weight: $font-weight-medium;
-  padding: $spacing-sm $spacing-md;
+  padding: $spacing-xs $spacing-sm;
   transition: $transition-default;
   border: none;
+  display: inline-block;
 }
 
 .figma-btn-primary {
   background-color: $color-primary;
   color: $color-light;
+
+  &.disabled, &.disabled:hover {
+    background-color: $color-disabled;
+  }
 }
 
 .figma-btn-primary:hover {
@@ -281,16 +287,28 @@ $placements: (
 
 .figma-btn-secondary {
   background-color: $color-secondary;
-  color: $color-text-primary;
+  box-shadow: 0 0 0 2px $color-primary inset;
+  color: $color-primary;
+  font-weight: bold;
+
+  &.disabled, &.disabled:hover {
+    border-color: $color-disabled;
+    color: $color-disabled;
+  }
 }
 
 .figma-btn-secondary:hover {
-  background-color: $color-secondary-hover;
+  box-shadow: 0 0 0 2px $color-primary-hover inset;
+  color: $color-primary-hover;
 }
 
 .figma-btn-danger {
   background-color: $color-danger;
   color: $color-light;
+
+  &.disabled, &.disabled:hover {
+    background-color: $color-disabled;
+  }
 }
 
 .figma-btn-danger:hover {

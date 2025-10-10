@@ -3,8 +3,6 @@ import useSwatchStore from "../store/useSwatchStore";
 import SwatchGroupSwatches from "@ui/components/SwatchesOutput/SwatchGroupSwatches";
 import SwatchPrimitives from "@ui/components/SwatchesOutput/SwatchPrimitives";
 
-// TODO: Refactor to an Output directory
-
 interface SwatchesProps {
     className?: string;
     style?: React.CSSProperties;
