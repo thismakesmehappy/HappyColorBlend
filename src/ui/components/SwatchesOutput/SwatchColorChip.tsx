@@ -11,21 +11,19 @@ interface SwatchColorChipProps extends ClassAndStyle {
 const SwatchColorChip = ({color, step, name, className, style}: SwatchColorChipProps) => {
     const ratioWhite = hex("#FFF", "#" + color);
     const textColor = ratioWhite > 3 ? "#FFFFFF" : "#000000";
-
+    
     return (
-        <div className={`color-chip-container ${className}`} data-testid="swatch-color-chip-container">
-            <div
-                style={{backgroundColor: "#" + color, color: textColor}}
-                className={`color-chip fw-bold selectable-text`}
-                data-testid="swatch-color-chip"
-                data-color={color}
-                data-step={step}>
-                {name &&
-                    <>{name}<br /></>}
-                {step &&
-                    <>{step.toString().padStart(3, '0')}<br /></>}
-                #{color}
-            </div>
+        <div
+            style={{backgroundColor: "#" + color, color: textColor}}
+            className={`color-chip selectable-text`}
+            data-testid="swatch-color-chip"
+            data-color={color}
+            data-step={step}>
+            {name &&
+                <>{name}<br /></>}
+            {step &&
+                <>{step.toString().padStart(3, '0')}<br /></>}
+            #{color}
         </div>
     );
 };

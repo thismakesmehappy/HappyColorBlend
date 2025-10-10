@@ -20,8 +20,8 @@
 
 ## Visual Design Improvements
 
-- [ ] Add padding between color lines to prevent "connected" appearance
-- [ ] Match padding style used on the board
+- [x] Add padding between color lines to prevent "connected" appearance
+- [x] Match padding style used on the board
 - [ ] Fix color preview that looks like a picker (make it clearer it's display-only)
 
 ## Light and Dark Section
@@ -44,6 +44,9 @@
 
 - [x] Refactor buttons for consistency
 - [ ] Audit UI consistency
+- [ ] Consider monospace for output/chips
+- [ ] Fix borders around focused input
+- [ ] Move Clean variables toggle to naming options
 
 ## Code TODOs (Found in codebase)
 

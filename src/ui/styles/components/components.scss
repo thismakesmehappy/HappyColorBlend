@@ -48,6 +48,11 @@
 .swatch-group {
   width: 100%;
   overflow: clip;
+  -bottom: figma.$spacing-md;
+
+  &:not(:last-of-type) {
+    border-bottom: solid 1px figma.$color-border;
+  }
 }
 
 //.swatches-container {
@@ -56,16 +61,24 @@
 //}
 
 .color-chip-container {
-  text-align: center;
   vertical-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  margin-bottom: figma.$spacing-md;
 }
 
 .color-chip {
-  box-sizing: border-box;
-  width: 100%;
-  padding: figma.$spacing-xs;
+  padding: figma.$spacing-xs figma.$spacing-md;
   display: inline-block;
   line-height: 1.2em;
+  text-align: center;
+  font-weight: bold;
+  min-width: 7rem;
+  border-radius: figma.$spacing-sm;
+  margin-right: figma.$spacing-sm;
+  margin-bottom: figma.$spacing-sm;
+
 }
 
 input[type=radio] {

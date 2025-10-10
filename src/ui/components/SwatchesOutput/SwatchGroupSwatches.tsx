@@ -51,18 +51,16 @@ const SwatchGroupSwatches = ({
             <br />
 
         </p>
-        <Row xs={SWATCH_COLUMNS_PER_ROW} className={`swatches-container fixed-cols-${SWATCH_COLUMNS_PER_ROW} gx-0`}
+        <div className={`swatches-container`}
              data-testid="swatches-container">
             {swatches.map((swatch, index) => {
                     return (
-                        <Col>
-                            <SwatchColorChip key={`${swatch.color}-${swatch.step}-${index}`} color={swatch.color}
-                                             step={swatch.step} />
-                        </Col>
+                        <SwatchColorChip key={`${swatch.color}-${swatch.step}-${index}`} color={swatch.color}
+                                         step={swatch.step} />
                     )
                 }
             )}
-        </Row>
+        </div>
     </div>);
 };
 
