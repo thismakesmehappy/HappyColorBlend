@@ -16,7 +16,7 @@ export const initialState = {
     swatches: [],
     numberOfSteps: 9,
     steps: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-    customSteps: new Set<number>([50, 950]),
+    customSteps: new Set<number>([]),
     combinedSteps: new Set<number>(),
 }
 // Function to build swatches based on parameters

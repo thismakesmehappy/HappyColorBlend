@@ -23,6 +23,7 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
     const customSteps = useSwatchStore((state) => state.customSteps);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
 
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
@@ -99,6 +100,8 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
         }
     };
 
+    const addButtonStyle = `btn btn-primary figma-bg-primary figma-text-light ms-3 mx-auto ${!isValidInput() ? "bg-dark" : ""}`;
+
     return (
         <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps" id={id}>
             <span>
@@ -113,17 +116,13 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
                      data-testid="custom-step-input"
                      className={"form-control d-inline"}
                  />
-                <span
+                <button
+                    className={addButtonStyle}
                     onClick={handleAddStep}
-                    style={{marginLeft: '8px', cursor: 'pointer'}}
-                    data-testid="add-custom-step-button"
+                    disabled={!isValidInput()}
                 >
-                    <FontAwesomeIcon
-                        icon="circle-plus"
-                        className={`figma-icon ${isValidInput() ? 'figma-text-primary' : 'figma-text-secondary'}`}
-                    />
-                </span>
-                <Help {...getTooltipProps('CUSTOM_STEPS_INPUT')} className={"figma-ml-xs"} />
+                        Add
+                    </button>
             </span>
             <Toast
                 message={toastMessage}

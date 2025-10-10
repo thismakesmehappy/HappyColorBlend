@@ -30,7 +30,6 @@ export const EqualSteps = ({className = "", style = {}, id}: ClassAndStyle) => {
                 minValue={3}
                 className="figma-mb-sm"
             />
-            <Help {...getTooltipProps('EQUAL_STEPS')} className={"figma-ml-xs"} />
         </div>
     );
 };
