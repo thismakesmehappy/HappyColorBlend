@@ -7,9 +7,9 @@
 
 ## Custom Steps UX Improvements
 
-- [ ] Start with empty custom steps instead of pre-populated
-- [ ] Improve custom steps intuition and user flow
-- [ ] Add better guidance for custom step input
+- [x] Start with empty custom steps instead of pre-populated
+- [x] Improve custom steps intuition and user flow
+- [x] Add better guidance for custom step input
 
 ## Color Management
 
@@ -36,19 +36,20 @@
 
 ## Instructions and Guidance
 
-- [ ] Add instructions to each step/section
-- [ ] Improve overall user guidance throughout the interface
+- [x] Add instructions to each step/section
+- [x] Improve overall user guidance throughout the interface
 - [x] Remove Instructions from accordion
 
 ## UI Improvements
 
 - [x] Refactor buttons for consistency
-- [ ] Create Components for different types of bussins
+- [ ] Create Components for different types of buttons
 - [ ] Audit UI consistency
 - [ ] Consider monospace for output/chips
 - [ ] Fix borders around focused input
-- [ ] Move Clean variables toggle to naming options
 - [x] Fix issue with controlId
+- [ ] Move clean CSS/SCSS variables to naming options
+    - Make it compliant vs custom (follow standard naming vs include naming options)
 
 ## Code TODOs (Found in codebase)
 
@@ -62,7 +63,7 @@
 
 - [ ] **BrandColorInput.tsx**: Refactor color input into reusable component for dark/light sections
 - [ ] **LightAndDark.tsx**: Add functionality for keyboard enter support
-- [ ] **LightAndDark.tsx**: Change all form control inputs to size sm (appears twice)
+- [x] **LightAndDark.tsx**: Change all form control inputs to size sm (appears twice)
 
 ---
 

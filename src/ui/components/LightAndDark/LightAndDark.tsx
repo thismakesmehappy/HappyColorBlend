@@ -95,11 +95,10 @@ const LightAndDark = () => {
                                  value={darkName}
                                  onChange={(event) => setDarkName(event.currentTarget.value)}
                                  className={darkName === "" ? "" : "alert-danger"}
+                                 size={'sm'}
                     />
 
                 </FormGroup>
-                {/*TODO: Change all form control inputs to size sm*/}
-                {/*TODO: Change all form control inputs to size sm*/}
                 <Row className={"gx-2 align-items-end"}>
                     <Col xs={5}>
                         <FormGroup>
@@ -111,6 +110,7 @@ const LightAndDark = () => {
                                              value={darkValue}
                                              onChange={(event) => handleColorHexChange(event, setDarkValue)}
                                              className={isValidHexColor(darkValue) ? "" : "invalid-form-value"}
+                                             size={'sm'}
                                 />
                                 <InputGroupText className={"p-0"}>
                                     <BrandColorChip color={darkValue} width={"1em"} />
@@ -147,6 +147,7 @@ const LightAndDark = () => {
                                  value={lightName}
                                  onChange={(event) => setLightName(event.currentTarget.value)}
                                  className={lightName === "" ? "" : "alert-danger"}
+                                 size={'sm'}
                     />
                 </FormGroup>
                 <Row className={"gx-2 align-items-end"}>
@@ -160,6 +161,7 @@ const LightAndDark = () => {
                                              value={lightValue}
                                              onChange={(event) => handleColorHexChange(event, setLightValue)}
                                              className={isValidHexColor(lightValue) ? "" : "invalid-form-value"}
+                                             size={'sm'}
                                 />
                                 <InputGroupText className={"p-0"}>
                                     <BrandColorChip color={lightValue} />
@@ -197,6 +199,7 @@ const LightAndDark = () => {
                                  value={neutralName}
                                  onChange={(event) => setNeutralName(event.currentTarget.value)}
                                  className={neutralName === "" ? "" : "alert-danger"}
+                                 size={'sm'}
                     />
                 </FormGroup>
                 <Row className={"column-gap-0 align-items-end"}>

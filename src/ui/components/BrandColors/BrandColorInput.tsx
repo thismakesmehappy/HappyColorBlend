@@ -80,6 +80,7 @@ const BrandColorInput = () => {
                                  onChange={(event) => handleColorNameChange(event)}
                                  onKeyDown={handleKeyDown}
                                  className={colorName === "" ? "" : "alert-danger"}
+                                 size={'sm'}
                     />
                 </FormGroup>
                 <Row className={"column-gap-0 align-items-end"}>
@@ -94,6 +95,7 @@ const BrandColorInput = () => {
                                              onChange={(event) => handleColorHexChange(event)}
                                              onKeyDown={handleKeyDown}
                                              className={isValidHexColor(colorHex) ? "" : "invalid-form-value"}
+                                             size={'sm'}
                                 />
                                 <InputGroupText className={"p-0"}>
                                     <BrandColorChip color={colorHex} />

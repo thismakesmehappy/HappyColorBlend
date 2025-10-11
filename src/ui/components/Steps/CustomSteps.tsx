@@ -12,6 +12,7 @@ import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import Help from "@ui/components/helpers/Help";
 import {getTooltipProps} from "@ui/constants/tooltips";
 import Button from "@ui/components/helpers/Button";
+import {FormControl} from "react-bootstrap";
 
 interface CustomStepsProps extends ClassAndStyle {
 }
@@ -105,7 +106,7 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
     return (
         <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps" id={id}>
             <span>
-                 <input
+                 <FormControl
                      type="text"
                      maxLength={4}
                      // className="figma-input"
@@ -115,6 +116,7 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
                      style={{width: '6ch'}}
                      data-testid="custom-step-input"
                      className={"form-control d-inline"}
+                     size={'sm'}
                  />
                 <Button
                     className={'ms-3'}
