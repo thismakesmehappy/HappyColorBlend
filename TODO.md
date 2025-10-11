@@ -43,10 +43,12 @@
 ## UI Improvements
 
 - [x] Refactor buttons for consistency
+- [ ] Create Components for different types of bussins
 - [ ] Audit UI consistency
 - [ ] Consider monospace for output/chips
 - [ ] Fix borders around focused input
 - [ ] Move Clean variables toggle to naming options
+- [x] Fix issue with controlId
 
 ## Code TODOs (Found in codebase)
 

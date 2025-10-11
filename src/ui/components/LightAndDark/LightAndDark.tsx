@@ -86,7 +86,7 @@ const LightAndDark = () => {
         <Explain>Define the light and dark colors.</Explain>
         <Group>
             <Form>
-                <FormGroup controlId="start-color-input-name" className={"mb-2"}>
+                <FormGroup className={"mb-2"}>
                     <FormLabel
                         htmlFor="start-color-input-name">Dark Name<Help {...getTooltipProps('BRAND_COLOR_NAME')}
                                                                         className={"figma-ml-xs"} /></FormLabel>
@@ -102,7 +102,7 @@ const LightAndDark = () => {
                 {/*TODO: Change all form control inputs to size sm*/}
                 <Row className={"gx-2 align-items-end"}>
                     <Col xs={5}>
-                        <FormGroup controlId="brand-color-input-hex">
+                        <FormGroup>
                             <FormLabel>Hex <Help {...getTooltipProps('BRAND_COLOR_HEX')}
                                                  className={"figma-ml-xs"} /></FormLabel>
                             <InputGroup>
@@ -138,7 +138,7 @@ const LightAndDark = () => {
         </Group>
         <Group>
             <Form>
-                <FormGroup controlId="light-color-input-name" className={"mb-2"}>
+                <FormGroup className={"mb-2"}>
                     <FormLabel
                         htmlFor="light-color-input-name">Light Name<Help {...getTooltipProps('BRAND_COLOR_NAME')}
                                                                          className={"figma-ml-xs"} /></FormLabel>
@@ -151,7 +151,7 @@ const LightAndDark = () => {
                 </FormGroup>
                 <Row className={"gx-2 align-items-end"}>
                     <Col xs={5}>
-                        <FormGroup controlId="brand-color-input-hex">
+                        <FormGroup>
                             <FormLabel>Hex <Help {...getTooltipProps('BRAND_COLOR_HEX')}
                                                  className={"figma-ml-xs"} /></FormLabel>
                             <InputGroup>
@@ -188,7 +188,7 @@ const LightAndDark = () => {
 
         <Group>
             <Form>
-                <FormGroup controlId="neutral-scale-name-input-name" className={"mb-2"}>
+                <FormGroup className={"mb-2"}>
                     <FormLabel
                         htmlFor="neutral-scale-input-name">Scale Name<Help {...getTooltipProps('NEUTRAL_SCALE_NAME')}
                                                                            className={"figma-ml-xs"} /></FormLabel>

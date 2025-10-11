@@ -71,7 +71,7 @@ const BrandColorInput = () => {
         <div>
 
             <Form>
-                <FormGroup controlId="brand-color-input-name" className={"mb-2"}>
+                <FormGroup className={"mb-2"}>
                     <FormLabel htmlFor="brand-color-input-name">Name<Help {...getTooltipProps('BRAND_COLOR_NAME')}
                                                                           className={"figma-ml-xs"} /></FormLabel>
                     <FormControl type="text"
@@ -84,7 +84,7 @@ const BrandColorInput = () => {
                 </FormGroup>
                 <Row className={"column-gap-0 align-items-end"}>
                     <Col xs={7}>
-                        <FormGroup controlId="brand-color-input-hex">
+                        <FormGroup>
                             <FormLabel>Hex <Help {...getTooltipProps('BRAND_COLOR_HEX')}
                                                  className={"figma-ml-xs"} /></FormLabel>
                             <InputGroup>
