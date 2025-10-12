@@ -10,13 +10,10 @@ interface SwatchesProps {
 
 const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
     const swatches = useSwatchStore((state) => state.getSwatches());
-    const lightColor = useSwatchStore((state) => state.getLight());
-    const darkColor = useSwatchStore((state) => state.getDark());
-    const isDarkStart = useSwatchStore((state) => state.getIsDarkStart());
+    const end = useSwatchStore((state) => state.getScaleEnd());
+    const start = useSwatchStore((state) => state.getScaleStart());
     const neutralScaleName = useSwatchStore(state => state.getNeutralScaleName());
     const colorScale = useSwatchStore(state => state.getColorScale()); // Use getter instead
-    const scaleStartColor = isDarkStart ? darkColor : lightColor;
-    const scaleEndColor = isDarkStart ? lightColor : darkColor;
     return (
         <div
             className={className}
@@ -28,8 +25,8 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
             <SwatchGroupSwatches
                 key="neutral-scale"
                 colorName={neutralScaleName}
-                color={scaleEndColor.color}
-                secondColor={scaleStartColor.color}
+                color={start.color}
+                secondColor={end.color}
                 swatches={colorScale}
             />
 

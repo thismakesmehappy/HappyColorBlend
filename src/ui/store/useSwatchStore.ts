@@ -6,9 +6,7 @@ import {IdentifiableColor} from "../interfaces/BaseInterfaces";
 export const initialState = {
     // Scale properties
     scaleStart: {color: "000000", name: "Black", id: "scaleStart"},
-    dark: {color: "000000", name: "Black", id: "scaleStart"},
     scaleEnd: {color: "FFFFFF", name: "White", id: "scaleEnd"},
-    light: {color: "FFFFFF", name: "White", id: "scaleEnd"},
     isDarkStart: true,
     neutralScaleName: "Neutral",
     // Common properties
@@ -22,9 +20,8 @@ export const initialState = {
 }
 // Function to build swatches based on parameters
 export const buildNewSwatches = (
-    light: IdentifiableColor,
-    dark: IdentifiableColor,
-    isDarkStart: boolean,
+    start: IdentifiableColor,
+    end: IdentifiableColor,
     primaryColors: IdentifiableColor[],
     state: SwatchStoreState,
 ) => {
@@ -38,9 +35,6 @@ export const buildNewSwatches = (
             base: primaryColors[primary],
             swatches: []
         };
-
-        const start = isDarkStart ? dark : light;
-        const end = isDarkStart ? light : dark;
 
         for (let step of combinedSteps) {
             swatch.swatches.push({
@@ -73,8 +67,6 @@ export interface SwatchStoreSwatches {
 export interface SwatchStoreState {
     // Scale properties
     scaleStart: SwatchStoreInputSwatch;
-    dark: SwatchStoreInputSwatch;
-    light: SwatchStoreInputSwatch;
     scaleEnd: SwatchStoreInputSwatch;
     isDarkStart: boolean;
     neutralScaleName: string;
@@ -90,10 +82,7 @@ export interface SwatchStoreState {
 
     // Scale getters
     getScaleStart: () => SwatchStoreInputSwatch;
-    getDark: () => SwatchStoreInputSwatch;
     getScaleEnd: () => SwatchStoreInputSwatch;
-    getLight: () => SwatchStoreInputSwatch;
-    getIsDarkStart: () => boolean;
     getNeutralScaleName: () => string;
 
     // Common getters
@@ -108,9 +97,7 @@ export interface SwatchStoreState {
 
     // Scale setters
     setScaleStart: (color: string, name: string) => void;
-    setDark: (color: string, name: string) => void;
     setScaleEnd: (color: string, name: string) => void;
-    setLight: (color: string, name: string) => void;
     setNeutralScaleName: (name: string) => void;
     setIsDarkStart: (isDarkStart: boolean) => void;
     swapScaleEndpoints: () => void;
@@ -143,9 +130,6 @@ const useSwatchStore = create<SwatchStoreState>()(
 
         // Scale getters
         getScaleStart: () => get().scaleStart,
-        getLight: () => get().light,
-        getDark: () => get().dark,
-        getIsDarkStart: () => get().isDarkStart,
         getScaleEnd: () => get().scaleEnd,
         getNeutralScaleName: () => get().neutralScaleName,
 
@@ -197,26 +181,6 @@ const useSwatchStore = create<SwatchStoreState>()(
             const colorUpper = color.toUpperCase();
             set({
                 scaleEnd: {
-                    color: colorUpper,
-                    name: name,
-                    id: "scaleEnd"
-                }
-            });
-        },
-        setDark: (color: string, name: string) => {
-            const colorUpper = color.toUpperCase();
-            set({
-                dark: {
-                    color: colorUpper,
-                    name: name,
-                    id: "scaleEnd"
-                }
-            });
-        },
-        setLight: (color: string, name: string) => {
-            const colorUpper = color.toUpperCase();
-            set({
-                light: {
                     color: colorUpper,
                     name: name,
                     id: "scaleEnd"
@@ -296,11 +260,11 @@ const useSwatchStore = create<SwatchStoreState>()(
             const state = get();
             // Call setCombinedSteps first, before both build functions
             state.setCombinedSteps();
-            const newSwatches = buildNewSwatches(state.light, state.dark, state.isDarkStart, state.primaryColors, state);
+            const newSwatches = buildNewSwatches(state.scaleStart, state.scaleEnd, state.primaryColors, state);
 
             // Update the swatches in the store
             set({swatches: newSwatches});
-            
+
             // Also rebuild color scale since it uses the same combined steps
             state.buildColorScale();
 
@@ -311,8 +275,8 @@ const useSwatchStore = create<SwatchStoreState>()(
             const state = get();
             // Don't call setCombinedSteps here to avoid circular updates
             const combinedSteps = Array.from(state.getCombinedSteps());
-            const scaleStart = state.isDarkStart ? state.dark : state.light;
-            const scaleEnd = state.isDarkStart ? state.light : state.dark;
+            const scaleStart = state.scaleStart;
+            const scaleEnd = state.scaleEnd;
 
             const colorScale: SwatchStoreSwatch[] = combinedSteps.map((step) => {
                 return {

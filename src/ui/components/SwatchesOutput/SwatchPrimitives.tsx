@@ -6,9 +6,8 @@ import {Col, Row} from "react-bootstrap";
 import Swatch from "@ui/components/SwatchesInput/Swatch";
 
 const SwatchPrimitives = () => {
-    const light = useSwatchStore(state => state.light);
-    const dark = useSwatchStore(state => state.dark);
-    const isDarkStart = useSwatchStore(state => state.isDarkStart)
+    const start = useSwatchStore(state => state.scaleStart);
+    const end = useSwatchStore(state => state.scaleEnd);
     const primary = useSwatchStore(state => state.primaryColors);
     const caseTreatment = useTokenNameStore(state => state.caseTreatment)
     const spaceTreatment = useTokenNameStore(state => state.spaceTreatment)
@@ -17,8 +16,6 @@ const SwatchPrimitives = () => {
     const leadingCharType = useTokenNameStore(state => state.leadingCharType)
     const separatorCharType = useTokenNameStore(state => state.separatorCharType)
     const appendSeparatorToPrimitives = useTokenNameStore(state => state.appendSeparatorToPrimitive)
-    const start = isDarkStart ? dark : light;
-    const end = isDarkStart ? light : dark;
 
     const startColorToken = computeTokenName(
         start.name,

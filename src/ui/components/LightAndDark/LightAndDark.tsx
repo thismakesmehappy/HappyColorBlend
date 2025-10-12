@@ -11,23 +11,20 @@ import Button from "@ui/components/helpers/Button";
 import ColorInput from "@ui/components/helpers/ColorInput";
 
 const LightAndDark = () => {
-    const dark = useSwatchStore((state) => state.dark);
-    const updateDark = useSwatchStore((state) => state.setDark);
-    const updateLight = useSwatchStore((state) => state.setLight);
-    const light = useSwatchStore((state) => state.light);
-    const isDarkStart = useSwatchStore((state) => state.isDarkStart);
-    const toggleIsDarkStart = useSwatchStore((state) => state.toggleIsDarkStart);
+    const start = useSwatchStore((state) => state.scaleStart);
+    const updateStart = useSwatchStore((state) => state.setScaleStart);
+    const end = useSwatchStore((state) => state.scaleEnd);
+    const updateEnd = useSwatchStore((state) => state.setScaleEnd);
+    const swapStartEnd = useSwatchStore((state) => state.swapScaleEndpoints);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
     const neutral = useSwatchStore((state) => state.neutralScaleName);
     const updateNeutral = useSwatchStore((state) => state.setNeutralScaleName);
 
 
-    const start = isDarkStart ? dark : light;
-    const end = isDarkStart ? light : dark;
     const [neutralName, setNeutralName] = useState(neutral);
 
     const handleOrderSwap = () => {
-        toggleIsDarkStart();
+        swapStartEnd();
         buildSwatches();
     }
 
@@ -38,13 +35,13 @@ const LightAndDark = () => {
 
     const handleUpdateDark = (name: string, hex: string) => {
         const normalizedColorHex = hex.toUpperCase();
-        updateDark(normalizedColorHex, name);
+        updateStart(normalizedColorHex, name);
         buildSwatches();
     }
 
     const handleUpdateLight = (name: string, hex: string) => {
         const normalizedColorHex = hex.toUpperCase();
-        updateLight(normalizedColorHex, name);
+        updateEnd(normalizedColorHex, name);
         buildSwatches();
     }
 
@@ -54,8 +51,8 @@ const LightAndDark = () => {
             <ColorInput
                 title={"Dark"}
                 onSubmit={handleUpdateDark}
-                nameSource={dark.name}
-                hexSource={dark.color}
+                nameSource={start.name}
+                hexSource={start.color}
                 submitLabel={"Update"}
             />
         </Group>
@@ -63,8 +60,8 @@ const LightAndDark = () => {
             <ColorInput
                 title={"Light"}
                 onSubmit={handleUpdateLight}
-                nameSource={light.name}
-                hexSource={light.color}
+                nameSource={end.name}
+                hexSource={end.color}
                 submitLabel={"Update"}
             />
         </Group>
