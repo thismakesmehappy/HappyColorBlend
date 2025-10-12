@@ -57,6 +57,16 @@ const ColorInput = ({
         }
     }
 
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter' && isFormValid) {
+            event.preventDefault();
+            handleUpdate(event as any);
+        } else if (event.key === 'Escape') {
+            event.preventDefault();
+            handleCancel();
+        }
+    };
+
     const handleCancel = () => {
         setName(nameSource);
         setHex(hexSource);
@@ -74,6 +84,7 @@ const ColorInput = ({
                                          size={'sm'}
                                          value={hex}
                                          onChange={handleHexChange}
+                                         onKeyDown={handleKeyDown}
                                          className={!isValidHexColor(hex) ? 'invalid' : ''}
                             />
                         </Col>
@@ -95,6 +106,7 @@ const ColorInput = ({
                                          size={'sm'}
                                          value={name}
                                          onChange={handleNameChange}
+                                         onKeyDown={handleKeyDown}
                                          className={!isValidColorName(name) ? 'invalid' : ''}
                             />
                         </Col>
