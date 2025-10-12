@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import Button from "@ui/components/helpers/Button";
 import BrandColorChip from "@ui/components/BrandColors/BrandColorChip";
 import {isValidColorName, isValidHexColor} from "@ui/helpers/colorMethods";
+import ColorNamer from 'color-namer';
 
 interface ColorInputInterface {
     title?: string;
@@ -57,6 +58,15 @@ const ColorInput = ({
         }
     }
 
+    const handleNameColor = () => {
+        if (isValidHexColor(hex)) {
+            const colorName = ColorNamer(`#${hex}`).ntc[0].name;
+            // Filter to only alphabetic characters and spaces
+            const cleanName = colorName.replace(/[^a-zA-Z\s]/g, '').trim();
+            setName(cleanName);
+        }
+    };
+
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter' && isFormValid) {
             event.preventDefault();
@@ -93,6 +103,7 @@ const ColorInput = ({
                                 type={"tertiary"}
                                 className={"w-100"}
                                 disabled={!isValidHexColor(hex)}
+                                onClick={handleNameColor}
                             >
                                 Name it
                             </Button>
