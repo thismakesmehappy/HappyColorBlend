@@ -14,6 +14,7 @@ export const initialState = {
     // Common properties
     primaryColors: [],
     swatches: [],
+    colorScale: [], // Add colorScale as stored field
     numberOfSteps: 9,
     steps: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     customSteps: new Set<number>([]),
@@ -27,7 +28,7 @@ export const buildNewSwatches = (
     primaryColors: IdentifiableColor[],
     state: SwatchStoreState,
 ) => {
-    state.setCombinedSteps();
+    // Don't call setCombinedSteps here - it should be called before this function
     const combinedSteps = state.getCombinedSteps();
     const swatches: SwatchStoreSwatches[] = [];
 
@@ -81,6 +82,7 @@ export interface SwatchStoreState {
     // Common state properties
     primaryColors: SwatchStoreInputSwatch[];
     swatches: SwatchStoreSwatches[];
+    colorScale: SwatchStoreSwatch[];
     numberOfSteps: number;
     steps: number[];
     customSteps: Set<number>;
@@ -97,6 +99,7 @@ export interface SwatchStoreState {
     // Common getters
     getPrimaryColors: () => SwatchStoreInputSwatch[];
     getSwatches: () => SwatchStoreSwatches[];
+    getColorScale: () => SwatchStoreSwatch[];
     getNumberOfSteps: () => number;
     getCustomSteps: () => Set<number>;
     getTotalUniqueSteps: () => number;
@@ -125,8 +128,9 @@ export interface SwatchStoreState {
     addCustomStep: (step: number) => void;
     removeCustomStep: (step: number) => void;
     buildSwatches: () => SwatchStoreSwatches[];
-    buildColorScale: () => SwatchStoreSwatch[];
+    buildColorScale: () => void;
     toggleIsDarkStart: () => void;
+    colorExists: (hex: string) => boolean;
 }
 
 
@@ -148,6 +152,7 @@ const useSwatchStore = create<SwatchStoreState>()(
         // Common getters
         getPrimaryColors: () => get().primaryColors,
         getSwatches: () => get().swatches,
+        getColorScale: () => get().colorScale,
         getNumberOfSteps: () => get().numberOfSteps,
         getCustomSteps: () => get().customSteps,
         getTotalUniqueSteps: () => get().combinedSteps.size,
@@ -289,22 +294,26 @@ const useSwatchStore = create<SwatchStoreState>()(
 
         buildSwatches: () => {
             const state = get();
+            // Call setCombinedSteps first, before both build functions
+            state.setCombinedSteps();
             const newSwatches = buildNewSwatches(state.light, state.dark, state.isDarkStart, state.primaryColors, state);
 
             // Update the swatches in the store
             set({swatches: newSwatches});
+            
+            // Also rebuild color scale since it uses the same combined steps
+            state.buildColorScale();
 
             return newSwatches;
         },
 
         buildColorScale: () => {
             const state = get();
-            state.setCombinedSteps();
+            // Don't call setCombinedSteps here to avoid circular updates
             const combinedSteps = Array.from(state.getCombinedSteps());
             const scaleStart = state.isDarkStart ? state.dark : state.light;
             const scaleEnd = state.isDarkStart ? state.light : state.dark;
 
-            // Always calculate from scaleStart(0) to scaleEnd(1000), no gradient direction logic
             const colorScale: SwatchStoreSwatch[] = combinedSteps.map((step) => {
                 return {
                     color: blendColor(scaleStart.color, scaleEnd.color, step),
@@ -312,15 +321,19 @@ const useSwatchStore = create<SwatchStoreState>()(
                 }
             });
 
-            return colorScale;
+            set({colorScale});
+        },
+        colorExists: (hex: string) => {
+            const state = get();
+            const hexUpper = hex.toUpperCase();
+            return state.primaryColors.some(color => color.color.toUpperCase() === hexUpper);
         }
     })
 );
 
 
-// Initialize steps array
+// Initialize steps array only
 useSwatchStore.getState().createSteps();
-useSwatchStore.getState().setCombinedSteps();
-useSwatchStore.getState().buildSwatches();
+// Don't call setCombinedSteps or buildSwatches on initialization
 
 export default useSwatchStore;
