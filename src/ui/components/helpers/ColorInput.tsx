@@ -70,7 +70,7 @@ const ColorInput = ({
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter' && isFormValid) {
             event.preventDefault();
-            handleUpdate(event as any);
+            handleUpdate();
         } else if (event.key === 'Escape') {
             event.preventDefault();
             handleCancel();

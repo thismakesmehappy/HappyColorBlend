@@ -22,34 +22,11 @@ const BrandColorChip: React.FC<BrandColorChipProps> = ({color, width, height, st
 
     return (
         <div
-            className={"brand-color-chip " + className || ""}
+            className={`brand-color-chip ${!isValidHexColor(color) && "invalid"} ${className}`}
             style={combinedStyle}
             data-testid="color-chip"
             data-color={color}
         >
-            {!isValidHexColor(color) &&
-                <svg
-                    style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        pointerEvents: "none"
-                    }}
-                    viewBox="0 0 100 100"
-                    preserveAspectRatio="none"
-                >
-                    <line
-                        x1="0"
-                        y1="100"
-                        x2="100"
-                        y2="0"
-                        stroke="red"
-                        strokeWidth="2"
-                        vectorEffect="non-scaling-stroke"
-                    />
-                </svg>}
         </div>
     );
 };

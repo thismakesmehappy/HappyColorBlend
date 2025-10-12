@@ -12,10 +12,13 @@
 }
 
 .brand-color-chip {
-  border-color: figma.$color-border;
+  box-shadow: 0 0 0 1px figma.$color-border inset;
   min-width: 2em;
-  //border-width: 2px;
-  //border-style: solid;
+
+  &.invalid {
+    box-shadow: 0 0 0 2px figma.$color-danger inset;
+  }
+
 }
 
 .brand-color-display {
