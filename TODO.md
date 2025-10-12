@@ -17,6 +17,7 @@
 - [ ] Add automatic color naming from hex values
 - [ ] Allow users to overwrite auto-generated names
 - [ ] Explore multiple name generation options per color
+- [ ] Change preview to have a red outline rather than a line-through
 
 ## Visual Design Improvements
 
@@ -50,6 +51,10 @@
 - [x] Fix issue with controlId
 - [ ] Move clean CSS/SCSS variables to naming options
     - Make it compliant vs custom (follow standard naming vs include naming options)
+- [ ] Move scale name to naming options
+- [ ] Move Light and Dark arond with explanations
+- [ ] Add red outline to custom steps when invalid
+- [ ] Limit custom steps to 3 digits
 
 ## Code TODOs (Found in codebase)
 

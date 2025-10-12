@@ -292,7 +292,25 @@ $placements: (
   font-weight: bold;
 
   &.disabled, &.disabled:hover {
-    border-color: $color-disabled;
+    box-shadow: 0 0 0 2px $color-disabled inset;
+    color: $color-disabled;
+  }
+}
+
+.figma-btn-secondary:hover {
+  box-shadow: 0 0 0 2px $color-primary-hover inset;
+  color: $color-primary-hover;
+}
+
+.figma-btn-tertiary {
+  background-color: $color-secondary;
+  color: $color-primary;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-underline-style: wave;
+  font-weight: bold;
+
+  &.disabled, &.disabled:hover {
     color: $color-disabled;
   }
 }

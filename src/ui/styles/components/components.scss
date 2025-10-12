@@ -114,7 +114,7 @@ input[type="text"]:focus {
   box-shadow: 0 0 0 2px figma.$color-component inset;
 
   &.invalid {
-    box-shadow: figma.$color-danger;
+    box-shadow: 0 0 0 2px figma.$color-danger inset;
   }
 }
 
@@ -123,5 +123,11 @@ input[type="radio"]:focus {
 
   &.invalid {
     box-shadow: figma.$color-danger;
+  }
+}
+
+.color-input {
+  p {
+    margin-bottom: 0.5rem;
   }
 }

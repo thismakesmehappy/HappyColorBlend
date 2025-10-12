@@ -14,8 +14,7 @@ const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
     const darkColor = useSwatchStore((state) => state.getDark());
     const isDarkStart = useSwatchStore((state) => state.getIsDarkStart());
     const neutralScaleName = useSwatchStore(state => state.getNeutralScaleName());
-    const buildColorScale = useSwatchStore(state => state.buildColorScale);
-    const colorScale = buildColorScale();
+    const colorScale = useSwatchStore(state => state.getColorScale()); // Use getter instead
     const scaleStartColor = isDarkStart ? darkColor : lightColor;
     const scaleEndColor = isDarkStart ? lightColor : darkColor;
     return (

@@ -2,7 +2,7 @@ import React from "react";
 
 interface ButtonProps {
     className?: string;
-    type: 'primary' | 'secondary' | 'danger';
+    type: 'primary' | 'secondary' | 'danger' | 'tertiary';
     disabled?: boolean;
     onClick?: () => void;
     children?: React.ReactNode;
@@ -12,6 +12,7 @@ interface ButtonProps {
 const styles = {
     'primary': 'figma-btn figma-btn-primary',
     'secondary': 'figma-btn figma-btn-secondary',
+    'tertiary': 'figma-btn figma-btn-tertiary',
     'danger': 'figma-btn figma-btn-danger'
 }
 

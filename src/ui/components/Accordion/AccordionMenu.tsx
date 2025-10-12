@@ -34,7 +34,7 @@ const AccordionMenu = () => {
     return (
         <div id="accordion-menu">
             <Accordion>
-                <AccordionItem expanded={expanded[1]}>
+                <AccordionItem key="brand-colors" expanded={expanded[1]}>
                     <AccordionHeader badge="1" header="Brand Colors" onClick={() => updateExpanded(1)} />
                     <AccordionBody expanded={expanded[1]}>
                         <BrandColors />
