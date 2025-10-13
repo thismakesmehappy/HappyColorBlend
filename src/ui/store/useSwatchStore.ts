@@ -265,9 +265,6 @@ const useSwatchStore = create<SwatchStoreState>()(
             // Update the swatches in the store
             set({swatches: newSwatches});
 
-            // Also rebuild color scale since it uses the same combined steps
-            state.buildColorScale();
-
             return newSwatches;
         },
 

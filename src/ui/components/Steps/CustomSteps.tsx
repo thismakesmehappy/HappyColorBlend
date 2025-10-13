@@ -24,6 +24,7 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
     const addCustomStep = useSwatchStore((state) => state.addCustomStep);
     const customSteps = useSwatchStore((state) => state.customSteps);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
+    const buildColorScale = useSwatchStore((state) => state.buildColorScale);
 
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,6 +87,7 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
             const step = parseInt(inputValue, 10);
             addCustomStep(step);
             buildSwatches();
+            buildColorScale();
             setInputValue('');
         } else {
             showToastMessage(getErrorMessage());

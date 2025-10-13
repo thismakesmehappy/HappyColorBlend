@@ -10,15 +10,18 @@ export const EqualSteps = ({className = "", style = {}, id}: ClassAndStyle) => {
     const increaseSteps = useSwatchStore((state) => state.increaseSteps);
     const decreaseSteps = useSwatchStore((state) => state.decreaseSteps);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
+    const buildColorScale = useSwatchStore((state) => state.buildColorScale);
 
     const handleDecrease = () => {
         decreaseSteps();
         buildSwatches();
+        buildColorScale();
     };
 
     const handleIncrease = () => {
         increaseSteps();
         buildSwatches();
+        buildColorScale();
     };
 
     return (

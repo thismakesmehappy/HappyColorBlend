@@ -1,56 +1,66 @@
 import Explain from "@ui/components/helpers/Explain";
 import {Col, Form, FormControl, FormGroup, FormLabel, InputGroup, Row} from "react-bootstrap";
-import Help from "@ui/components/helpers/Help";
-import {getTooltipProps} from "@ui/constants/tooltips";
 import React, {useState} from "react";
 import useSwatchStore from "@ui/store/useSwatchStore";
-import Chip from "@ui/components/SwatchesInput/Chip";
 import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
 import Group from "@ui/components/helpers/Group";
 import Button from "@ui/components/helpers/Button";
 import ColorInput from "@ui/components/helpers/ColorInput";
 
-const LightAndDark = () => {
+const TintAndShade = () => {
     const start = useSwatchStore((state) => state.scaleStart);
     const updateStart = useSwatchStore((state) => state.setScaleStart);
     const end = useSwatchStore((state) => state.scaleEnd);
     const updateEnd = useSwatchStore((state) => state.setScaleEnd);
     const swapStartEnd = useSwatchStore((state) => state.swapScaleEndpoints);
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
+    const buildColorScales = useSwatchStore((state) => state.buildColorScale);
     const neutral = useSwatchStore((state) => state.neutralScaleName);
     const updateNeutral = useSwatchStore((state) => state.setNeutralScaleName);
 
 
     const [neutralName, setNeutralName] = useState(neutral);
 
-    const handleOrderSwap = () => {
-        swapStartEnd();
+    const handleNeutralSubmit = () => {
+        updateNeutral(neutralName);
         buildSwatches();
     }
 
-    const handleNeutralSubmit = () => {
-        updateNeutral(neutralName);
-        setNeutralName(neutralName)
+    const handleNeutralReset = () => {
+        setNeutralName(neutral);
     }
 
-    const handleUpdateDark = (name: string, hex: string) => {
+    const handleSwapStartEnd = () => {
+        swapStartEnd();
+        buildSwatches();
+        buildColorScales();
+    }
+
+
+    const handleUpdateStart = (name: string, hex: string) => {
         const normalizedColorHex = hex.toUpperCase();
         updateStart(normalizedColorHex, name);
         buildSwatches();
+        buildColorScales();
     }
 
-    const handleUpdateLight = (name: string, hex: string) => {
+    const handleUpdateEnd = (name: string, hex: string) => {
         const normalizedColorHex = hex.toUpperCase();
         updateEnd(normalizedColorHex, name);
         buildSwatches();
+        buildColorScales();
     }
 
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+    };
+
     return (<>
-        <Explain>Define the light and dark colors.</Explain>
+        <Explain>Customize the colors used to mix the tints and shades.</Explain>
         <Group>
             <ColorInput
-                title={"Dark"}
-                onSubmit={handleUpdateDark}
+                title={"Start (0)"}
+                onSubmit={handleUpdateStart}
                 nameSource={start.name}
                 hexSource={start.color}
                 submitLabel={"Update"}
@@ -58,20 +68,19 @@ const LightAndDark = () => {
         </Group>
         <Group>
             <ColorInput
-                title={"Light"}
-                onSubmit={handleUpdateLight}
+                title={"End (1000)"}
+                onSubmit={handleUpdateEnd}
                 nameSource={end.name}
                 hexSource={end.color}
                 submitLabel={"Update"}
             />
         </Group>
-
+        <Explain>Customize the name for the neutral scale and the order of the endpoints.</Explain>
         <Group>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <FormGroup className={"mb-2"}>
                     <FormLabel
-                        htmlFor="neutral-scale-input-name">Scale Name<Help {...getTooltipProps('NEUTRAL_SCALE_NAME')}
-                                                                           className={"figma-ml-xs"} /></FormLabel>
+                        htmlFor="neutral-scale-input-name">Scale Name</FormLabel>
                     <FormControl type="text"
                                  id="neutral-scale-input-name"
                                  value={neutralName}
@@ -80,11 +89,11 @@ const LightAndDark = () => {
                                  size={'sm'}
                     />
                 </FormGroup>
-                <Row className={"column-gap-0 align-items-end"}>
+                <Row className={"gx-2 align-items-end"}>
                     <Col>
                         <Button className={'w-100'}
                                 disabled={neutralName === ""}
-                                onClick={() => handleNeutralSubmit()}
+                                onClick={handleNeutralSubmit}
                                 type={'primary'}
                         >
                             Update
@@ -92,28 +101,24 @@ const LightAndDark = () => {
                     </Col>
                     <Col>
                         <Button className={' w-100'}
-                                onClick={() => setNeutralName(neutral)}
+                                onClick={handleNeutralReset}
                                 type={'secondary'}
                         >
-                            Reset
+                            Cancel
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button
+                            type={'tertiary'}
+                            onClick={handleSwapStartEnd}
+                        >
+                            <FontAwesomeIcon icon={'right-left'} /> Swap
                         </Button>
                     </Col>
                 </Row>
             </Form>
-            <div className={"w-100 d-flex justify-content-center align-items-center gap-2"}
-                 onClick={handleOrderSwap}>
-                <Chip color={start.color} width="2em" height="2em" />
-
-                <Button
-                    type={'primary'}
-                >
-                    <FontAwesomeIcon icon={'right-left'} /> Swap
-                </Button>
-
-                <Chip color={end.color} width="2em" height="2em" />
-            </div>
         </Group>
     </>);
 };
 
-export default LightAndDark
+export default TintAndShade
