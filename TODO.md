@@ -13,27 +13,27 @@
 
 ## Color Management
 
-- [ ] Implement hex-first color input approach
-- [ ] Add automatic color naming from hex values
-- [ ] Allow users to overwrite auto-generated names
+- [x] Implement hex-first color input approach
+- [x] Add automatic color naming from hex values
+- [x] Allow users to overwrite auto-generated names
 - [ ] Explore multiple name generation options per color
-- [ ] Change preview to have a red outline rather than a line-through
+- [x] Change preview to have a red outline rather than a line-through
 
 ## Visual Design Improvements
 
 - [x] Add padding between color lines to prevent "connected" appearance
 - [x] Match padding style used on the board
-- [ ] Fix color preview that looks like a picker (make it clearer it's display-only)
+- [x] Fix color preview that looks like a picker (make it clearer it's display-only)
 
 ## Light and Dark Section
 
-- [ ] Rename "Light and Dark" to "Start and End" for better context
-- [ ] Simplify the interface
-- [ ] Reduce number of blue buttons
-- [ ] Implement single "Update" button (blue primary)
-- [ ] Keep reset buttons per field as secondary
-- [ ] Change "Reset" to "Cancel" where appropriate
-- [ ] Update style guide accordingly
+- [x] Rename "Light and Dark" to "Start and End" for better context
+- [x] Simplify the interface
+- [x] Reduce number of blue buttons
+- [x] Implement single "Update" button (blue primary)
+- [x] Keep reset buttons per field as secondary
+- [x] Change "Reset" to "Cancel" where appropriate
+- [x] Update style guide accordingly
 
 ## Instructions and Guidance
 
@@ -51,9 +51,8 @@
 - [x] Fix issue with controlId
 - [ ] Move clean CSS/SCSS variables to naming options
     - Make it compliant vs custom (follow standard naming vs include naming options)
-- [ ] Move scale name to naming options
-- [ ] Move Light and Dark arond with explanations
-- [ ] Add red outline to custom steps when invalid
+- [x] Move Light and Dark arond with explanations
+- [x] Add red outline to custom steps when invalid
 - [ ] Limit custom steps to 3 digits
 
 ## Code TODOs (Found in codebase)
@@ -62,12 +61,12 @@
 
 - [ ] **SwatchesOutput.tsx**: Refactor to an Output directory
 - [ ] **OutputSection.tsx**: Refactor to an Output directory
-- [ ] **LightAndDark.tsx**: Refactor code (line with TODO comment)
+- [x] **LightAndDark.tsx**: Refactor code (line with TODO comment)
 
 ### Component Improvements
 
-- [ ] **BrandColorInput.tsx**: Refactor color input into reusable component for dark/light sections
-- [ ] **LightAndDark.tsx**: Add functionality for keyboard enter support
+- [x] **BrandColorInput.tsx**: Refactor color input into reusable component for dark/light sections
+- [x] **LightAndDark.tsx**: Add functionality for keyboard enter support
 - [x] **LightAndDark.tsx**: Change all form control inputs to size sm (appears twice)
 
 ---

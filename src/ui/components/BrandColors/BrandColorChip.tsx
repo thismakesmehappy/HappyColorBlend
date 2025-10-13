@@ -1,5 +1,6 @@
 import React from 'react';
 import {isValidHexColor} from "@ui/helpers/colorMethods";
+import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
 
 interface BrandColorChipProps {
     color?: string; // Hex color value
@@ -22,11 +23,12 @@ const BrandColorChip: React.FC<BrandColorChipProps> = ({color, width, height, st
 
     return (
         <div
-            className={`brand-color-chip ${!isValidHexColor(color) && "invalid"} ${className}`}
+            className={`brand-color-chip ${color !== "" && !isValidHexColor(color) && "invalid"} ${className}`}
             style={combinedStyle}
             data-testid="color-chip"
             data-color={color}
         >
+            {color !== "" && !isValidHexColor(color) && <FontAwesomeIcon icon={'ban'} />}
         </div>
     );
 };

@@ -14,9 +14,14 @@
 .brand-color-chip {
   box-shadow: 0 0 0 1px figma.$color-border inset;
   min-width: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 
   &.invalid {
     box-shadow: 0 0 0 2px figma.$color-danger inset;
+    color: figma.$color-danger;
   }
 
 }
