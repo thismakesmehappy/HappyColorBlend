@@ -11,7 +11,7 @@ const BrandColorsPreview = () => {
         {
             brandColors.map(color => {
                 return (
-                    <Col>
+                    <Col key={color.id}>
                         <BrandColorDisplay color={color.color} name={color.name} id={color.id} />
                     </Col>
                 )

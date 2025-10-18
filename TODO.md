@@ -62,8 +62,8 @@
 
 ### Refactoring Tasks
 
-- [ ] **SwatchesOutput.tsx**: Refactor to an Output directory
-- [ ] **OutputSection.tsx**: Refactor to an Output directory
+- [x] **SwatchesOutput.tsx**: Refactor to an Output directory
+- [x] **OutputSection.tsx**: Refactor to an Output directory
 - [x] **LightAndDark.tsx**: Refactor code (line with TODO comment)
 
 ### Component Improvements
