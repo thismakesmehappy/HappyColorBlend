@@ -58,7 +58,7 @@ const SwatchPrimitives = () => {
                 appendSeparatorToPrimitives
             );
             return (
-                <Col>
+                <Col key={`${color.color}-${color.name}-group`}>
                     <Swatch color={color.color} name={colorTokenName} displayOnly={true}
                             key={`${color.color}-${color.name}`} />
                 </Col>)
