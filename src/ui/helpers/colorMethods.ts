@@ -1,6 +1,6 @@
 // Validate if a string is a valid 6-digit hex color
 export const isValidHexColor = (color: any): boolean => {
-    return typeof color === "string" && /^[0-9A-Fa-f]{6}$/.test(color);
+    return typeof color === "string" && color !== "" && color !== undefined && /^[0-9A-Fa-f]{6}$/.test(color);
 };
 
 export const isValidColorName = (colorName: string | undefined | null) => {
