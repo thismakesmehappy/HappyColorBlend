@@ -6,7 +6,7 @@ import React, {useState} from "react";
 import BrandColors from "@ui/components/BrandColors/BrandColors";
 import Steps from "@ui/components/Steps/Steps";
 import TokenSettings from "@ui/components/TokenSettings/TokenSettings";
-import TintAndShade from "@ui/components/LightAndDark/TintAndShade";
+import TintAndShade from "@ui/components/TintAndShade/TintAndShade";
 
 const AccordionMenu = () => {
     const [expanded, setExpanded] = useState<{ [key: number]: boolean }>({
