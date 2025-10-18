@@ -1,5 +1,5 @@
 import React from 'react';
-import useSwatchStore from "../store/useSwatchStore";
+import useSwatchStore from "../../store/useSwatchStore";
 import SwatchGroupSwatches from "@ui/components/SwatchesOutput/SwatchGroupSwatches";
 import SwatchPrimitives from "@ui/components/SwatchesOutput/SwatchPrimitives";
 

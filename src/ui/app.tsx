@@ -3,15 +3,15 @@ import "@ui/styles/layout/main.scss";
 import "@ui/styles/figma/figma-styles.scss"
 import "@ui/styles/components/components.scss";
 import "@ui/styles/bootstrap/bootstrap.scss"
-import OutputSection from "@ui/components/OutputSection";
+import OutputSection from "@ui/components/Output/OutputSection";
 import AccordionMenu from "@ui/components/Accordion/AccordionMenu";
 import useSwatchStore from "@ui/store/useSwatchStore";
-import { useEffect } from "react";
+import {useEffect} from "react";
 
 function App() {
     const buildSwatches = useSwatchStore(state => state.buildSwatches);
     const buildColorScale = useSwatchStore(state => state.buildColorScale);
-    
+
     // Initialize swatches on app load
     useEffect(() => {
         buildSwatches();

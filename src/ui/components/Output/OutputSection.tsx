@@ -1,4 +1,4 @@
-import SwatchesOutput from "@ui/components/SwatchesOutput";
+import SwatchesOutput from "@ui/components/Output/SwatchesOutput";
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
 import React from "react";
 import OutputButtonsFooter from "@ui/components/OutputButtonsFooter/OutputButtonsFooter";
