@@ -216,19 +216,20 @@ const OutputButtonsFooter = () => {
                     </Button>
                 </div>
                 <div className={"d-flex justify-content-center align-items-center gap-3"}>
+                    Copy to clipboard:
                     <Button
                         onClick={handleExportCSS}
                         disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                         type={'secondary'}
                     >
-                        Copy CSS Variables
+                        CSS Variables
                     </Button>
                     <Button
                         onClick={handleExportSCSS}
                         disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                         type={'secondary'}
                     >
-                        Copy SCSS Variables
+                        SCSS Variables
                     </Button>
                 </div>
             </Stack>
