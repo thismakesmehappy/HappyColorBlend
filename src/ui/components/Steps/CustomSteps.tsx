@@ -28,7 +28,10 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
 
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value);
+        const numericRegex = /^[0-9]+$/;
+        if (e.target.value.length <= 3 && numericRegex.test(e.target.value)) {
+            setInputValue(e.target.value);
+        }
     };
 
     const isValidInput = (): boolean => {

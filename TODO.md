@@ -47,7 +47,7 @@
 - [ ] Create Components for different types of buttons
 - [ ] Audit UI consistency
 - [ ] Consider monospace for output/chips
-- [ ] Fix borders around focused input
+- [x] Fix borders around focused input
 - [x] Fix issue with controlId
 - [x] #### Move clean CSS/SCSS variables to naming options
     - Make it compliant vs custom (follow standard naming vs include naming options)
@@ -57,6 +57,7 @@
 - [x] Fix stray line before brand color previews
 - [ ] Update output swatches to be more evenly space
 - [ ] Differentiate the tint and shade in the output
+- [ ] Fix explanation for custom steps ("add them as custom steps")
 
 ## Code TODOs (Found in codebase)
 
