@@ -29,12 +29,13 @@ export const generateVariables = (
     indent: string = '',
     prepend: string = ''
 ): string => {
-    const {dark, light, isDarkStart, swatches, neutralScaleName, primaryColors} = swatchStore;
+    const {scaleStart: dark, scaleEnd: light, isDarkStart, swatches, neutralScaleName, primaryColors} = swatchStore;
     const scaleStart = isDarkStart ? dark : light;
     const scaleEnd = isDarkStart ? light : dark;
     const lines: string[] = [];
 
-    const colorScale: SwatchStoreSwatch[] = swatchStore.buildColorScale();
+    swatchStore.buildColorScale();
+    const colorScale: SwatchStoreSwatch[] = swatchStore.getColorScale();
 
 
     // Add scale endpoint variables (primitives group)

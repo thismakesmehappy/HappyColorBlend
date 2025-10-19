@@ -34,8 +34,8 @@ export function prepareSwatchVariableData(
         );
     };
 
-    const scaleStartColor = swatchStore.isDarkStart ? swatchStore.dark : swatchStore.light;
-    const scaleEndColor = swatchStore.isDarkStart ? swatchStore.light : swatchStore.dark;
+    const scaleStartColor = swatchStore.isDarkStart ? swatchStore.scaleStart : swatchStore.scaleEnd;
+    const scaleEndColor = swatchStore.isDarkStart ? swatchStore.scaleEnd : swatchStore.scaleStart;
 
     // Prepare scale start data
     const scaleStart = {
@@ -59,7 +59,8 @@ export function prepareSwatchVariableData(
     const neutralScaleName = applyTokenName(swatchStore.getNeutralScaleName(), false);
 
     // Prepare neutral scale swatches using buildColorScale() for simplified logic
-    const neutralScaleSwatches = swatchStore.buildColorScale();
+    swatchStore.buildColorScale();
+    const neutralScaleSwatches = swatchStore.getColorScale();
 
     // Prepare primary swatches
     const primarySwatches = swatchStore.getSwatches().map(primarySwatch => {

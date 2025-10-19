@@ -24,6 +24,15 @@ PLUGIN_CHANNEL.registerMessageHandler("hello", (text) => {
     console.log("UI side said:", text);
 });
 
+PLUGIN_CHANNEL.registerMessageHandler("saveState", async (state) => {
+    figma.root.setPluginData("pluginState", JSON.stringify(state));
+});
+
+PLUGIN_CHANNEL.registerMessageHandler("loadState", async () => {
+    const data = figma.root.getPluginData("pluginState");
+    return data ? JSON.parse(data) : null;
+});
+
 PLUGIN_CHANNEL.registerMessageHandler("createRect", (width, height) => {
     if (figma.editorType === "figma") {
         const rect = figma.createRectangle();

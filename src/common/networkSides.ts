@@ -33,4 +33,6 @@ export const PLUGIN = Networker.createSide("Plugin-side").listens<{
   createVariables(data: SwatchVariableData): Promise<VariableCreationResult>;
   createStyles(data: SwatchStyleData): Promise<StyleCreationResult>;
   createSwatches(data: SwatchCreationData): Promise<SwatchCreationResult>;
+  saveState(state: any): Promise<void>;
+  loadState(): Promise<any>;
 }>();

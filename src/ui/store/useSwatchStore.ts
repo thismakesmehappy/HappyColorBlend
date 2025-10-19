@@ -119,6 +119,8 @@ export interface SwatchStoreState {
     toggleIsDarkStart: () => void;
     colorExists: (hex: string) => boolean;
     reset: () => void;
+    saveState: () => Promise<void>;
+    loadState: () => Promise<void>;
 }
 
 
@@ -292,6 +294,40 @@ const useSwatchStore = create<SwatchStoreState>()(
         },
         reset: () => {
             set(initialState);
+        },
+        saveState: async () => {
+            const state = get();
+            const stateToSave = {
+                scaleStart: state.scaleStart,
+                scaleEnd: state.scaleEnd,
+                isDarkStart: state.isDarkStart,
+                neutralScaleName: state.neutralScaleName,
+                primaryColors: state.primaryColors,
+                numberOfSteps: state.numberOfSteps,
+                steps: state.steps,
+                customSteps: Array.from(state.customSteps)
+            };
+            
+            // Import UI_CHANNEL dynamically to avoid circular imports
+            const { UI_CHANNEL } = await import("@ui/app.network");
+            const { PLUGIN } = await import("@common/networkSides");
+            await UI_CHANNEL.request(PLUGIN, "saveState", [stateToSave]);
+        },
+        loadState: async () => {
+            // Import UI_CHANNEL dynamically to avoid circular imports
+            const { UI_CHANNEL } = await import("@ui/app.network");
+            const { PLUGIN } = await import("@common/networkSides");
+            
+            const savedState = await UI_CHANNEL.request(PLUGIN, "loadState", []);
+            
+            if (savedState) {
+                set({
+                    ...savedState,
+                    customSteps: new Set(savedState.customSteps || [])
+                });
+                get().setCombinedSteps();
+                get().buildSwatches();
+            }
         }
     })
 );

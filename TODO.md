@@ -2,8 +2,8 @@
 
 ## Data Persistence
 
-- [ ] Investigate Figma persistence capabilities
-- [ ] Implement data persistence if possible
+- [x] Investigate Figma persistence capabilities
+- [x] Implement data persistence if possible
 
 ## Custom Steps UX Improvements
 
@@ -57,7 +57,7 @@
 - [x] Fix stray line before brand color previews
 - [x] Update output swatches to be more evenly space
 - [ ] Differentiate the tint and shade in the output
-- [ ] Fix explanation for custom steps ("add them as custom steps")
+- [x] Fix explanation for custom steps ("add them as custom steps")
 
 ## Code TODOs (Found in codebase)
 

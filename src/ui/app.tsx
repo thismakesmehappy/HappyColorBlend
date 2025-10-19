@@ -11,12 +11,22 @@ import {useEffect} from "react";
 function App() {
     const buildSwatches = useSwatchStore(state => state.buildSwatches);
     const buildColorScale = useSwatchStore(state => state.buildColorScale);
+    const loadState = useSwatchStore(state => state.loadState);
+    const saveState = useSwatchStore(state => state.saveState);
 
-    // Initialize swatches on app load
+    // Load state on app mount and save on changes
     useEffect(() => {
-        buildSwatches();
-        buildColorScale();
-    }, [buildSwatches, buildColorScale]);
+        loadState().then(() => {
+            buildSwatches();
+            buildColorScale();
+        });
+    }, [loadState, buildSwatches, buildColorScale]);
+
+    // Auto-save state changes
+    useEffect(() => {
+        const unsubscribe = useSwatchStore.subscribe(saveState);
+        return unsubscribe;
+    }, [saveState]);
 
     return (
         <div>
