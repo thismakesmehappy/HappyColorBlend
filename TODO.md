@@ -53,7 +53,7 @@
     - Make it compliant vs custom (follow standard naming vs include naming options)
 - [x] Move Light and Dark arond with explanations
 - [x] Add red outline to custom steps when invalid
-- [ ] Limit custom steps to 3 digits
+- [x] Limit custom steps to 3 digits
 - [x] Fix stray line before brand color previews
 - [ ] Update output swatches to be more evenly space
 - [ ] Differentiate the tint and shade in the output

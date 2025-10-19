@@ -58,17 +58,18 @@
 .swatch-group {
   width: 100%;
   overflow: clip;
-  -bottom: figma.$spacing-md;
+  margin-bottom: figma.$spacing-md;
 
   &:not(:last-of-type) {
     border-bottom: solid 1px figma.$color-border;
   }
 }
 
-//.swatches-container {
-//  display: flex;
-//  flex-wrap: wrap;
-//}
+.swatches-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25%;
+}
 
 .color-chip-container {
   vertical-align: center;
@@ -85,8 +86,8 @@
   text-align: center;
   font-weight: bold;
   min-width: 7rem;
+  width: 19%;
   border-radius: figma.$spacing-sm;
-  margin-right: figma.$spacing-sm;
   margin-bottom: figma.$spacing-sm;
 
 }
