@@ -49,7 +49,7 @@
 - [ ] Consider monospace for output/chips
 - [ ] Fix borders around focused input
 - [x] Fix issue with controlId
-- [ ] Move clean CSS/SCSS variables to naming options
+- [x] Move clean CSS/SCSS variables to naming options
     - Make it compliant vs custom (follow standard naming vs include naming options)
 - [x] Move Light and Dark arond with explanations
 - [x] Add red outline to custom steps when invalid

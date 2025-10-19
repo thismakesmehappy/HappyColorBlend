@@ -27,8 +27,6 @@ const OutputButtonsFooter = () => {
     const [toastMessage, setToastMessage] = useState("");
     const [toastType, setToastType] = useState<"success" | "error" | "primary">("success");
     const [showToast, setShowToast] = useState(false);
-    const keepCSSClean = useTokenNameStore(state => state.keepCSSClean);
-    const toggleKeepCSSClean = useTokenNameStore(state => state.toggleKeepCSSClean);
 
     // Get store data
     const swatchStore = useSwatchStore();
@@ -232,17 +230,6 @@ const OutputButtonsFooter = () => {
                     >
                         Copy SCSS Variables
                     </Button>
-                    <div className="figma-mr-sm d-flex"><Toggle
-                        value={keepCSSClean}
-                        onChange={toggleKeepCSSClean}
-                        className={"d-inline-block figma-mr-sm"}
-                        size={1}
-                    />
-                        <div
-                            className={"d-inline-block"}>Clean variables <Help {...getTooltipProps("OUTPUT_BUTTONS")}
-                                                                               className={"figma-ml-xs"} />
-                        </div>
-                    </div>
                 </div>
             </Stack>
 
