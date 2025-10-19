@@ -31,7 +31,7 @@ const TokenSettings = () => {
                 <Separator />
             </Group>
             <Explain>
-                Making CSS and SCSS variables conmpliant removes trailing characters. CSS ariables are always prepended with two dashes.
+                Making CSS and SCSS variables conmpliant removes trailing characters. CSS variables are always prepended with two dashes.
             </Explain>
             <Group>
                 <div className="figma-mr-sm d-flex"><Toggle
