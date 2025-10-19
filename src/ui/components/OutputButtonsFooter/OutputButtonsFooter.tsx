@@ -19,6 +19,7 @@ import {
     SWATCH_BOARD_SWATCH_SIZE
 } from "../../../constants/uiConstants";
 import Button from "@ui/components/helpers/Button";
+import swatch from "@ui/components/SwatchesInput/Swatch";
 
 const OutputButtonsFooter = () => {
     const [isCreatingVariables, setIsCreatingVariables] = useState(false);
@@ -189,48 +190,60 @@ const OutputButtonsFooter = () => {
         setShowToast(false);
     };
 
+    const handleReset = () => {
+        swatchStore.reset();
+        swatchStore.buildSwatches();
+        swatchStore.buildColorScale();
+    }
+
     return (
         <div className={"d-flex justify-content-center align-items-center"} id="output-buttons">
-            <Stack gap={1} className={"d-flex justify-content-center align-items-center"}>
-                <div className={"d-flex justify-content-center align-items-center gap-3"}>
-                    <Button
-                        onClick={handleCreateVariables}
-                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                        type={'primary'}
-                    >
-                        {isCreatingVariables ? "Adding Figma Variables" : "Add Figma Variables"}
-                    </Button>
-                    <Button
-                        onClick={handleCreateStyles}
-                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                        type={'primary'}
-                    >
-                        {isCreatingStyles ? "Adding Figma Styles" : "Add Figma Styles"}
-                    </Button>
-                    <Button
-                        onClick={handleCreateSwatches}
-                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                        type={'primary'}
-                    >
-                        {isCreatingSwatches ? "Creating Figma Swatches" : "Create Figma Swatches"}
-                    </Button>
-                </div>
-                <div className={"d-flex justify-content-center align-items-center gap-3"}>
-                    Copy to clipboard:
-                    <Button
-                        onClick={handleExportCSS}
-                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                        type={'secondary'}
-                    >
-                        CSS Variables
-                    </Button>
-                    <Button
-                        onClick={handleExportSCSS}
-                        disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                        type={'secondary'}
-                    >
-                        SCSS Variables
-                    </Button>
+            <Stack direction={"horizontal"}>
+                <Stack gap={1} className={"d-flex justify-content-center align-items-center"}>
+                    <div className={"d-flex justify-content-center align-items-center gap-3"}>
+                        <Button
+                            onClick={handleCreateVariables}
+                            disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                            type={'primary'}
+                        >
+                            {isCreatingVariables ? "Adding Figma Variables" : "Add Figma Variables"}
+                        </Button>
+                        <Button
+                            onClick={handleCreateStyles}
+                            disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                            type={'primary'}
+                        >
+                            {isCreatingStyles ? "Adding Figma Styles" : "Add Figma Styles"}
+                        </Button>
+                        <Button
+                            onClick={handleCreateSwatches}
+                            disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                            type={'primary'}
+                        >
+                            {isCreatingSwatches ? "Creating Figma Swatches" : "Create Figma Swatches"}
+                        </Button>
+                    </div>
+                    <div className={"d-flex justify-content-center align-items-center gap-3"}>
+                        Copy to clipboard:
+                        <Button
+                            onClick={handleExportCSS}
+                            disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                            type={'secondary'}
+                        >
+                            CSS Variables
+                        </Button>
+                        <Button
+                            onClick={handleExportSCSS}
+                            disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                            type={'secondary'}
+                        >
+                            SCSS Variables
+                        </Button>
+                    </div>
+                </Stack>
+                <div
+                    className={'border-start border-1 border-dark-subtle ps-2 ms-2 h d-flex align-items-center'}>
+                    <Button type={"danger"} onClick={handleReset}>Reset</Button>
                 </div>
             </Stack>
 

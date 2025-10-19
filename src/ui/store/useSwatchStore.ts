@@ -118,6 +118,7 @@ export interface SwatchStoreState {
     buildColorScale: () => void;
     toggleIsDarkStart: () => void;
     colorExists: (hex: string) => boolean;
+    reset: () => void;
 }
 
 
@@ -288,6 +289,9 @@ const useSwatchStore = create<SwatchStoreState>()(
             const state = get();
             const hexUpper = hex.toUpperCase();
             return state.primaryColors.some(color => color.color.toUpperCase() === hexUpper);
+        },
+        reset: () => {
+            set(initialState);
         }
     })
 );
