@@ -55,7 +55,7 @@
 - [x] Add red outline to custom steps when invalid
 - [x] Limit custom steps to 3 digits
 - [x] Fix stray line before brand color previews
-- [ ] Update output swatches to be more evenly space
+- [x] Update output swatches to be more evenly space
 - [ ] Differentiate the tint and shade in the output
 - [ ] Fix explanation for custom steps ("add them as custom steps")
 
