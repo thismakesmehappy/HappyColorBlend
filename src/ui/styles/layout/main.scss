@@ -25,6 +25,16 @@ $accordion-header-line: 1px;
   margin-left: $separator-space;
 }
 
+.vertical-separator {
+  width: figma.$spacing-sm;
+  align-self: stretch;
+  min-height: 1rem;
+  max-height: 100rem;
+  display: inline-block;
+  border-left: $separator-line figma.$color-text-secondary solid;
+  margin-left: figma.$spacing-sm;
+}
+
 .float {
   backdrop-filter: blur(20px);
   background-color: rgba(240, 245, 250, 0.75);

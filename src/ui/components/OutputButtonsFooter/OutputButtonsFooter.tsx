@@ -17,6 +17,7 @@ import {
 } from "../../../constants/uiConstants";
 import Button from "@ui/components/helpers/Button";
 import swatch from "@ui/components/SwatchesInput/Swatch";
+import Separator from "@ui/components/TokenSettings/Separator";
 
 const OutputButtonsFooter = () => {
     const [isCreatingVariables, setIsCreatingVariables] = useState(false);
@@ -155,7 +156,7 @@ const OutputButtonsFooter = () => {
             >
                 {isCreatingSwatches ? "Creating Figma Swatches" : "Create Figma Swatches"}
             </Button>
-
+            <div className={"vertical-separator"}></div>
             <Button type={"danger"} onClick={handleReset}>Reset</Button>
             <Toast
                 message={toastMessage}
