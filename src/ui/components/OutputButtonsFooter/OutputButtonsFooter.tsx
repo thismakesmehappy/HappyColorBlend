@@ -10,9 +10,6 @@ import useSwatchStore from "@ui/store/useSwatchStore";
 import useTokenNameStore from "@ui/store/useTokenNameStore";
 import "@ui/styles/bootstrap/bootstrap.scss";
 import {Stack} from "react-bootstrap";
-import Toggle from "@ui/components/helpers/Toggle";
-import Help from "@ui/components/helpers/Help";
-import {getTooltipProps} from "@ui/constants/tooltips";
 import {
     SWATCH_BOARD_FONT_SIZE,
     SWATCH_BOARD_GROUP_WIDTH,
@@ -124,67 +121,6 @@ const OutputButtonsFooter = () => {
         }
     };
 
-    const handleExportCSS = async () => {
-        try {
-            const cssVariables = generateCSSVariables(swatchStore, tokenStore);
-
-            // Check if we have any variables to copy
-            if (!cssVariables || cssVariables.length < 10) {
-                setToastMessage("No color data available to export. Please add some primary colors first.");
-                setToastType("error");
-                setShowToast(true);
-                return;
-            }
-
-            const success = await copyToClipboard(cssVariables);
-
-            if (success) {
-                setToastMessage("CSS variables copied to clipboard!");
-                setToastType("success");
-            } else {
-                // Show the generated content in the error message as a fallback
-                setToastMessage("Clipboard access failed. Check browser console for generated CSS variables.");
-                console.log("Generated CSS Variables:\n", cssVariables);
-                setToastType("error");
-            }
-            setShowToast(true);
-        } catch (error) {
-            setToastMessage(`Failed to export CSS variables: ${error instanceof Error ? error.message : String(error)}`);
-            setToastType("error");
-            setShowToast(true);
-        }
-    };
-
-    const handleExportSCSS = async () => {
-        try {
-            const scssVariables = generateSCSSVariables(swatchStore, tokenStore);
-
-            // Check if we have any variables to copy
-            if (!scssVariables || scssVariables.length < 10) {
-                setToastMessage("No color data available to export. Please add some primary colors first.");
-                setToastType("error");
-                setShowToast(true);
-                return;
-            }
-
-            const success = await copyToClipboard(scssVariables);
-
-            if (success) {
-                setToastMessage("SCSS variables copied to clipboard!");
-                setToastType("success");
-            } else {
-                // Show the generated content in the error message as a fallback
-                setToastMessage("Clipboard access failed. Check browser console for generated SCSS variables.");
-                console.log("Generated SCSS Variables:\n", scssVariables);
-                setToastType("error");
-            }
-            setShowToast(true);
-        } catch (error) {
-            setToastMessage(`Failed to export SCSS variables: ${error instanceof Error ? error.message : String(error)}`);
-            setToastType("error");
-            setShowToast(true);
-        }
-    };
 
     const handleCloseToast = () => {
         setShowToast(false);
@@ -223,23 +159,7 @@ const OutputButtonsFooter = () => {
                             {isCreatingSwatches ? "Creating Figma Swatches" : "Create Figma Swatches"}
                         </Button>
                     </div>
-                    <div className={"d-flex justify-content-center align-items-center gap-3"}>
-                        Copy to clipboard:
-                        <Button
-                            onClick={handleExportCSS}
-                            disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                            type={'secondary'}
-                        >
-                            CSS Variables
-                        </Button>
-                        <Button
-                            onClick={handleExportSCSS}
-                            disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                            type={'secondary'}
-                        >
-                            SCSS Variables
-                        </Button>
-                    </div>
+
                 </Stack>
                 <div
                     className={'border-start border-1 border-dark-subtle ps-2 ms-2 h d-flex align-items-center'}>
