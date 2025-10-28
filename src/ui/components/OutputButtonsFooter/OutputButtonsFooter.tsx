@@ -133,41 +133,30 @@ const OutputButtonsFooter = () => {
     }
 
     return (
-        <div className={"d-flex justify-content-center align-items-center"} id="output-buttons">
-            <Stack direction={"horizontal"}>
-                <Stack gap={1} className={"d-flex justify-content-center align-items-center"}>
-                    <div className={"d-flex justify-content-center align-items-center gap-3"}>
-                        <Button
-                            onClick={handleCreateVariables}
-                            disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                            type={'primary'}
-                        >
-                            {isCreatingVariables ? "Adding Figma Variables" : "Add Figma Variables"}
-                        </Button>
-                        <Button
-                            onClick={handleCreateStyles}
-                            disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                            type={'primary'}
-                        >
-                            {isCreatingStyles ? "Adding Figma Styles" : "Add Figma Styles"}
-                        </Button>
-                        <Button
-                            onClick={handleCreateSwatches}
-                            disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
-                            type={'primary'}
-                        >
-                            {isCreatingSwatches ? "Creating Figma Swatches" : "Create Figma Swatches"}
-                        </Button>
-                    </div>
+        <Stack direction={"horizontal"} id="output-buttons" gap={2} className={"justify-content-center"}>
+            <Button
+                onClick={handleCreateVariables}
+                disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                type={'primary'}
+            >
+                {isCreatingVariables ? "Adding Figma Variables" : "Add Figma Variables"}
+            </Button>
+            <Button
+                onClick={handleCreateStyles}
+                disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                type={'primary'}
+            >
+                {isCreatingStyles ? "Adding Figma Styles" : "Add Figma Styles"}
+            </Button>
+            <Button
+                onClick={handleCreateSwatches}
+                disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
+                type={'primary'}
+            >
+                {isCreatingSwatches ? "Creating Figma Swatches" : "Create Figma Swatches"}
+            </Button>
 
-                </Stack>
-                <div
-                    className={'border-start border-1 border-dark-subtle ps-2 ms-2 h d-flex align-items-center'}>
-                    <Button type={"danger"} onClick={handleReset}>Reset</Button>
-                </div>
-            </Stack>
-
-
+            <Button type={"danger"} onClick={handleReset}>Reset</Button>
             <Toast
                 message={toastMessage}
                 type={toastType}
@@ -175,7 +164,9 @@ const OutputButtonsFooter = () => {
                 onClose={handleCloseToast}
                 duration={toastType === "error" ? 5000 : 3000}
             />
-        </div>
+        </Stack>
+
+
     );
 };
 
