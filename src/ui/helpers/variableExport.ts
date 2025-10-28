@@ -91,10 +91,9 @@ export const generateVariables = (
     return lines.join('\n');
 };
 
-export const generateCSSVariables = (
-    swatchStore: SwatchStoreState,
-    tokenStore: TokenNameStoreState
-): string => {
+export const generateCSSVariables = (): string => {
+    const swatchStore = useSwatchStore.getState();
+    const tokenStore = useTokenNameStore.getState();
     let lines = ':root {\n';
     lines += generateVariables(swatchStore, tokenStore, '    ', '--');
     lines += '}';
@@ -102,10 +101,9 @@ export const generateCSSVariables = (
     return lines;
 };
 
-export const generateSCSSVariables = (
-    swatchStore: SwatchStoreState,
-    tokenStore: TokenNameStoreState
-): string => {
+export const generateSCSSVariables = (): string => {
+    const swatchStore = useSwatchStore.getState();
+    const tokenStore = useTokenNameStore.getState();
     return generateVariables(swatchStore, tokenStore, '', '$');
 };
 
@@ -143,5 +141,98 @@ export const copyToClipboard = async (text: string): Promise<boolean> => {
     } catch (error) {
         console.error('Fallback copy method failed:', error);
         return false;
+    }
+};
+
+import useSwatchStore from "@ui/store/useSwatchStore";
+import useTokenNameStore from "@ui/store/useTokenNameStore";
+
+export const downloadFile = async (text: string, filename?: string): Promise<boolean> => {
+    if (!text || !filename) {
+        throw new Error('Missing text or filename');
+    }
+    // try {
+    //     // Check if running in Figma plugin context
+    //     if (typeof parent !== 'undefined' && parent.postMessage) {
+    //         // Try Figma plugin API first
+    //         parent.postMessage({
+    //             pluginMessage: {
+    //                 type: 'DOWNLOAD_FILE',
+    //                 text,
+    //                 filename
+    //             }
+    //         }, '*');
+    //         return true;
+    //     }
+    // } catch (error) {
+    //     console.warn('Figma plugin API not available, using browser download:', error);
+    // }
+
+    // Fallback to browser download
+    try {
+        const blob = new Blob([text], {type: 'text/plain'});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        return true;
+    } catch (error) {
+        console.error('Download failed:', error);
+        return false;
+    }
+};
+
+export interface ExportResult {
+    success: boolean;
+    message: string;
+    type: 'success' | 'error';
+    data?: string;
+}
+
+export const handleExport = async (
+    generateFn: () => string,
+    outputFn: (text: string, filename?: string) => Promise<boolean>,
+    successMessage: string,
+    filename?: string
+): Promise<ExportResult> => {
+    try {
+        const generatedContent = generateFn();
+
+        if (!generatedContent || generatedContent.length < 10) {
+            return {
+                success: false,
+                message: "No color data available to export. Please add some primary colors first.",
+                type: 'error'
+            };
+        }
+
+        const success = await outputFn(generatedContent, filename);
+
+        if (success) {
+            return {
+                success: true,
+                message: successMessage,
+                type: 'success'
+            };
+        } else {
+            console.log("Generated content:\n", generatedContent);
+            return {
+                success: false,
+                message: "Output failed. Check browser console for generated content.",
+                type: 'error',
+                data: generatedContent
+            };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: `Export failed: ${error instanceof Error ? error.message : String(error)}`,
+            type: 'error'
+        };
     }
 };
