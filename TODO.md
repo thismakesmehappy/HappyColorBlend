@@ -59,6 +59,7 @@
 - [ ] Differentiate the tint and shade in the output
 - [x] Fix explanation for custom steps ("add them as custom steps")
 - [ ] Swap flex for grid or row/col in output for better display
+- [ ] Remove border around invalid color
 
 ## Code TODOs (Found in codebase)
 

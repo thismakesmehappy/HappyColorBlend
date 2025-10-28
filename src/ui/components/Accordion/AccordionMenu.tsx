@@ -19,49 +19,46 @@ const AccordionMenu = () => {
     const updateExpanded = async (expand: accordionOptions) => {
         if (expanded === expand) return;
         setExpanded("none");
-        await sleep(300); // Changed to 300ms as per your request
+        await sleep(250);
         setExpanded(expand);
     };
 
     return (
-        <div id="accordion-menu">
-            <Accordion>
-                <AccordionItem key="brand-colors" expanded={expanded === "brandColors"}>
-                    <AccordionHeader badge="1" header="Brand Colors" onClick={() => updateExpanded("brandColors")} />
-                    <AccordionBody expanded={expanded === "brandColors"}>
-                        <BrandColors />
-                    </AccordionBody>
-                </AccordionItem>
-                <AccordionItem expanded={expanded === "numberSteps"}>
-                    <AccordionHeader badge="2" header="Number of Steps" onClick={() => updateExpanded("numberSteps")} />
-                    <AccordionBody expanded={expanded === "numberSteps"}>
-                        <Steps />
+        <Accordion id="accordion-menu">
+            <AccordionItem key="brand-colors" expanded={expanded === "brandColors"}>
+                <AccordionHeader badge="1" header="Brand Colors" onClick={() => updateExpanded("brandColors")} />
+                <AccordionBody expanded={expanded === "brandColors"}>
+                    <BrandColors />
+                </AccordionBody>
+            </AccordionItem>
+            <AccordionItem expanded={expanded === "numberSteps"}>
+                <AccordionHeader badge="2" header="Number of Steps" onClick={() => updateExpanded("numberSteps")} />
+                <AccordionBody expanded={expanded === "numberSteps"}>
+                    <Steps />
 
-                    </AccordionBody>
-                </AccordionItem>
-                <AccordionItem expanded={expanded === "tintAndShade"}>
-                    <AccordionHeader badge="3" header="Tint and Shade" onClick={() => updateExpanded("tintAndShade")} />
-                    <AccordionBody expanded={expanded === "tintAndShade"}>
-                        <TintAndShade />
-                    </AccordionBody>
-                </AccordionItem>
-                <AccordionItem expanded={expanded === "namingOptions"}>
-                    <AccordionHeader badge="4" header="Naming Options"
-                                     onClick={() => updateExpanded("namingOptions")} />
-                    <AccordionBody expanded={expanded === "namingOptions"}>
-                        <TokenSettings />
-                    </AccordionBody>
-                </AccordionItem>
-                <AccordionItem expanded={expanded === "createTokens"}>
-                    <AccordionHeader badge="5" header="Create Tokens"
-                                     onClick={() => updateExpanded("createTokens")} />
-                    <AccordionBody expanded={expanded === "createTokens"}>
-                        <CreateTokens />
-                    </AccordionBody>
-                </AccordionItem>
-            </Accordion>
-
-        </div>
+                </AccordionBody>
+            </AccordionItem>
+            <AccordionItem expanded={expanded === "tintAndShade"}>
+                <AccordionHeader badge="3" header="Tint and Shade" onClick={() => updateExpanded("tintAndShade")} />
+                <AccordionBody expanded={expanded === "tintAndShade"}>
+                    <TintAndShade />
+                </AccordionBody>
+            </AccordionItem>
+            <AccordionItem expanded={expanded === "namingOptions"}>
+                <AccordionHeader badge="4" header="Naming Options"
+                                 onClick={() => updateExpanded("namingOptions")} />
+                <AccordionBody expanded={expanded === "namingOptions"}>
+                    <TokenSettings />
+                </AccordionBody>
+            </AccordionItem>
+            <AccordionItem expanded={expanded === "createTokens"}>
+                <AccordionHeader badge="5" header="Create Tokens"
+                                 onClick={() => updateExpanded("createTokens")} />
+                <AccordionBody expanded={expanded === "createTokens"}>
+                    <CreateTokens />
+                </AccordionBody>
+            </AccordionItem>
+        </Accordion>
     );
 };
 
