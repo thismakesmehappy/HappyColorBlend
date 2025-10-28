@@ -1,7 +1,7 @@
 @use '../figma/figma-styles' as figma;
 
 $window-width: 925px;
-$window-height: 700px;
+$window-height: 710px;
 $separator-space: figma.$spacing-md;
 $padding: figma.$spacing-md;
 $separator-line: 1px;
@@ -20,9 +20,8 @@ $custom-steps-section-width: $steps-section-inner-width - $equal-steps-section-w
 
 $accordion-header-height: 32px;
 $accordion-header-line: 1px;
-$accordion-items: 4;
-$accordion-body-height: $window-height - ($accordion-items * $accordion-header-height); // - (($accordion-items - 1) * $accordion-header-line);
-
+$accordion-items: 5;
+$accordion-body-height: $window-height - ($accordion-items * $accordion-header-height) - (($accordion-items - 1) * $accordion-header-line) - (1* figma.$spacing-sm) + 2;
 .separator {
   padding-left: $separator-space;
   border-left: $separator-line figma.$color-text-secondary solid;
@@ -39,10 +38,12 @@ $accordion-body-height: $window-height - ($accordion-items * $accordion-header-h
 
 #main-box {
   width: $window-width;
-  height: $window-height;
+  height: 100%;
   display: flex;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 #input-section {

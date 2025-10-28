@@ -60,6 +60,14 @@ $sides: (
 );
 $sizes: ('xs': $spacing-xs, 'sm':$spacing-sm, 'md':$spacing-md, 'lg':$spacing-lg);
 
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
 @each $side in $sides {
   $side-short: map.get($side, "short");
   $side-long: map.get($side, "long");

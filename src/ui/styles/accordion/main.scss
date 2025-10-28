@@ -2,18 +2,23 @@
 @use '../layout/main' as layout;
 
 
-.accordion- {
+.accordion-menu * {
   border: 0;
   padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.accordion-item {
+.accordion-item * {
   border: 0;
   padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .accordion-body-container {
   padding: figma.$spacing-sm 0;
+  margin: 0;
   height: layout.$accordion-body-height;
   box-sizing: border-box;
 }
@@ -25,6 +30,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   box-sizing: border-box;
+  margin: 0;
 }
 
 .show-scroll {
@@ -53,6 +59,8 @@
   height: layout.$accordion-header-height;
   border-bottom: layout.$accordion-header-line white solid;
   padding: 0 figma.$spacing-sm;
+  margin: 0;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -71,17 +79,21 @@
     display: flex;
     align-items: start;
     justify-content: center;
+    margin: 0;
+    padding: 0;
   }
 
   .accordion-badge {
     background-color: figma.$color-primary;
     color: figma.$color-light;
     font-weight: bold;
+    font-size: .9rem;
     border-radius: 1rem;
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 1.25rem;
+    width: 1.25rem;
     display: flex;
     justify-content: center;
+    align-content: center;
   }
 }
 

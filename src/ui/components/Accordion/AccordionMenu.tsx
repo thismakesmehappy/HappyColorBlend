@@ -7,9 +7,10 @@ import BrandColors from "@ui/components/BrandColors/BrandColors";
 import Steps from "@ui/components/Steps/Steps";
 import TokenSettings from "@ui/components/TokenSettings/TokenSettings";
 import TintAndShade from "@ui/components/TintAndShade/TintAndShade";
+import {CreateTokens} from "@ui/components/CreateTokens/CreateTokens";
 
 const AccordionMenu = () => {
-    type accordionOptions = "none" | "brandColors" | "numberSteps" | "tintAndShade" | "namingOptions";
+    type accordionOptions = "none" | "brandColors" | "numberSteps" | "tintAndShade" | "namingOptions" | "createTokens";
     const [expanded, setExpanded] = useState<accordionOptions>("brandColors");
 
     const sleep = (ms: number): Promise<void> => {
@@ -49,6 +50,13 @@ const AccordionMenu = () => {
                                      onClick={() => updateExpanded("namingOptions")} />
                     <AccordionBody expanded={expanded === "namingOptions"}>
                         <TokenSettings />
+                    </AccordionBody>
+                </AccordionItem>
+                <AccordionItem expanded={expanded === "createTokens"}>
+                    <AccordionHeader badge="5" header="Create Tokens"
+                                     onClick={() => updateExpanded("createTokens")} />
+                    <AccordionBody expanded={expanded === "createTokens"}>
+                        <CreateTokens />
                     </AccordionBody>
                 </AccordionItem>
             </Accordion>
