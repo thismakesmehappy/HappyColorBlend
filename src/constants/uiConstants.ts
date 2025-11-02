@@ -18,3 +18,16 @@ export const INVALID_CUSTOM_STEP_RESERVED = "Values 0, 500, and 1000 are already
 export const INVALID_CUSTOM_STEP_DUPLICATED = "Custom step already exists";
 
 export const OUTPUT_NAME_PREFIX = "Color Scales";
+
+export const SCSS_CONSTANTS = {
+    WINDOW_WIDTH,
+    WINDOW_HEIGHT,
+    SWATCH_COLUMNS_PER_ROW,
+    CHIPS_COLUMNS_PER_ROW,
+} as const;
+
+export const generateSCSSConstants = (): string => {
+    return Object.entries(SCSS_CONSTANTS)
+        .map(([key, value]) => `$${key.toLowerCase().replace(/_/g, '-')}: ${value};`)
+        .join('\n');
+}
