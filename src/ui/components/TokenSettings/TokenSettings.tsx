@@ -29,6 +29,7 @@ const TokenSettings = () => {
                 <Separator />
             </Group>
             {/*    Add option to pad numbers with zero or not (050 vs 50*/}
+            {/*    add option to rename how variables are shared*/}
         </div>
     );
 };

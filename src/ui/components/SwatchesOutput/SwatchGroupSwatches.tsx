@@ -4,8 +4,6 @@ import {SwatchStoreSwatch} from "@ui/store/useSwatchStore";
 import ChipOutput from "@ui/components/SwatchesOutput/ChipOutput";
 import {computeTokenName} from "@ui/helpers/computeTokenName";
 import useTokenNameStore from "../../store/useTokenNameStore";
-import {Col, Row} from "react-bootstrap";
-import {SWATCH_COLUMNS_PER_ROW} from "../../../constants/uiConstants";
 
 interface SwatchGroupSwatchesProps {
     colorName: string;
