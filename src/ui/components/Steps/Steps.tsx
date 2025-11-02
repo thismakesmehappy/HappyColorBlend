@@ -13,7 +13,7 @@ const Steps = () => {
                 <div className={"d-flex align-middle"}><p className={"me-2"}>Equal steps:</p>
                     <EqualSteps /></div>
             </Group>
-            <Explain>Yuy can specify custom steps not equally spaced. Values must be between 1 and 999, excluding 500 (which is always included step). </Explain>
+            <Explain>You can specify custom steps not equally spaced. Values must be between 1 and 999, excluding 500 (which is always included step). </Explain>
             <Group>
                 <div className={"d-flex align-middle"}><p className={"me-2"}>Custom steps:</p>
                     <CustomSteps />

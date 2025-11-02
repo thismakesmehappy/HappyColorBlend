@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import FontAwesomeIcon from '../helpers/FontAwesomeIcon';
 import useSwatchStore from '../../store/useSwatchStore';
 import Toast from '../helpers/Toast';
 import {
@@ -9,8 +8,6 @@ import {
     INVALID_CUSTOM_STEP_RESERVED, INVALID_CUSTOM_STEP_DUPLICATED
 } from '../../../constants/uiConstants';
 import {ClassAndStyle} from "@ui/interfaces/ClassAndStyle";
-import Help from "@ui/components/helpers/Help";
-import {getTooltipProps} from "@ui/constants/tooltips";
 import Button from "@ui/components/helpers/Button";
 import {FormControl} from "react-bootstrap";
 
@@ -26,10 +23,11 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
     const buildSwatches = useSwatchStore((state) => state.buildSwatches);
     const buildColorScale = useSwatchStore((state) => state.buildColorScale);
 
+    const numericRegex = /^[0-9]*$/; // * makes an empty string possible;
+                                     // we are already evaluating empty string in isValidInput, so we can share it
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const numericRegex = /^[0-9]+$/;
-        if (e.target.value.length <= 3 && numericRegex.test(e.target.value)) {
+        if (e.target.value.length <= 3 && numericRegex.test(e.target.value) && parseInt(e.target.value) != 0) {
             setInputValue(e.target.value);
         }
     };
@@ -39,7 +37,6 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
         if (!inputValue.trim()) return false;
 
         // Check if input is numeric
-        const numericRegex = /^[0-9]+$/;
         if (!numericRegex.test(inputValue)) return false;
 
         const step = parseInt(inputValue, 10);
@@ -56,6 +53,7 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
 
     };
 
+    // TODO: Can we refactor this to use the previous function rather than redefine what's valid?
     const getErrorMessage = (): string => {
         // Check if input is numeric
         const numericRegex = /^[0-9|-]+$/;
@@ -120,8 +118,9 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
                      onKeyDown={handleKeyDown}
                      style={{width: '6ch'}}
                      data-testid="custom-step-input"
-                     className={"form-control d-inline"}
+                     // className={"form-control d-inline"}
                      size={'sm'}
+                     className={!isValidInput() ? 'invalid' : ''}
                  />
                 <Button
                     className={'ms-3'}

@@ -126,6 +126,7 @@ export const CreateTokens = () => {
                     </Col>
                 </Row>
             </Group>
+            {/*Add option for https://www.designtokens.org*/}
             <Explain>
                 Compliant names remove trailing characters to follow standard names.
             </Explain>
