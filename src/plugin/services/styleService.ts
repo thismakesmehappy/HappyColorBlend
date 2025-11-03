@@ -40,11 +40,13 @@ function archiveExistingStyles(): void {
   existingStyles.forEach(style => {
     if (style.name.match(/^primitives \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//)) {
       const fullPath = style.name.replace(/^primitives \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//, '');
-      const timestamp = style.name.match(/\((\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\)/)[1];
+      const timestampMatch = style.name.match(/\((\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\)/);
+      const timestamp = timestampMatch ? timestampMatch[1] : 'unknown';
       style.name = `archived/archived ${archiveDate}/primitives (${timestamp})/${fullPath}`;
     } else if (style.name.match(/^mixed \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//)) {
       const fullPath = style.name.replace(/^mixed \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//, '');
-      const timestamp = style.name.match(/\((\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\)/)[1];
+      const timestampMatch = style.name.match(/\((\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\)/);
+      const timestamp = timestampMatch ? timestampMatch[1] : 'unknown';
       style.name = `archived/archived ${archiveDate}/mixed (${timestamp})/${fullPath}`;
     }
   });
