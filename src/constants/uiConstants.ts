@@ -1,9 +1,9 @@
-export const WINDOW_WIDTH = 925;
+export const WINDOW_WIDTH = 800;
 export const WINDOW_HEIGHT = 700;
 export const TOAST_DURATION = 3000
 export const MINIMUM_STEPS = 3;
-export const SWATCH_COLUMNS_PER_ROW = 7;
-export const CHIPS_COLUMNS_PER_ROW = 5;
+export const SWATCH_COLUMNS_PER_ROW = 5;
+export const CHIPS_COLUMNS_PER_ROW = 4;
 
 // Swatch display configuration
 export const SWATCH_BOARD_GROUP_WIDTH = 1200;

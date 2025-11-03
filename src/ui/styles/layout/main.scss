@@ -1,7 +1,8 @@
 @use '../figma/figma-styles' as figma;
+@use '../abstracts/constants' as constants;
 
-$window-width: 925px;
-$window-height: 710px;
+$window-width: constants.$window-width * 1px;
+$window-height: constants.$window-height * 1px;
 $separator-space: figma.$spacing-md;
 $padding: figma.$spacing-md;
 $separator-line: 1px;
@@ -51,12 +52,6 @@ $accordion-header-line: 1px;
   padding: 0;
   box-sizing: border-box;
   overflow: hidden;
-}
-
-#input-section {
-  width: $input-section-width !important;
-  overflow: auto;
-  white-space: wrap;
 }
 
 #accordion-menu {

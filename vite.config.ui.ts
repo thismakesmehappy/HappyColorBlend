@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import path from "node:path";
-import { writeFileSync } from "node:fs";
+import { writeFileSync, readFileSync, existsSync } from "node:fs";
 import { viteSingleFile } from "vite-plugin-singlefile";
 import react from "@vitejs/plugin-react";
 import richSvg from "vite-plugin-react-rich-svg";
@@ -11,7 +11,17 @@ const generateSCSSPlugin = () => ({
   name: 'generate-scss-constants',
   buildStart() {
     const scssContent = generateSCSSConstants();
-    writeFileSync('src/ui/styles/abstracts/_constants.scss', scssContent);
+    const scssPath = 'src/ui/styles/abstracts/_constants.scss';
+
+    // Only write if content has changed to prevent build loops
+    let existingContent = '';
+    if (existsSync(scssPath)) {
+      existingContent = readFileSync(scssPath, 'utf-8');
+    }
+
+    if (existingContent !== scssContent) {
+      writeFileSync(scssPath, scssContent);
+    }
   }
 });
 

@@ -4,6 +4,7 @@ import useTokenNameStore from "@ui/store/useTokenNameStore";
 import {computeTokenName} from "@ui/helpers/computeTokenName";
 import {Col, Row} from "react-bootstrap";
 import Swatch from "@ui/components/SwatchesInput/Swatch";
+import {CHIPS_COLUMNS_PER_ROW} from "../../../constants/uiConstants";
 
 const SwatchPrimitives = () => {
     const start = useSwatchStore(state => state.scaleStart);
@@ -39,7 +40,7 @@ const SwatchPrimitives = () => {
         appendSeparatorToPrimitives
     );
 
-    return (<Row xs={4} className={"gx-0 figma-mb-lg fixed-cols-4"}>
+    return (<Row xs={CHIPS_COLUMNS_PER_ROW} className={"gx-0 figma-mb-lg"}>
         <Col>
             <Swatch color={start.color} name={startColorToken} displayOnly={true} />
         </Col>

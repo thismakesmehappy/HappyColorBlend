@@ -1,4 +1,5 @@
 @use '../figma/figma-styles' as figma;
+@use '../abstracts/constants' as constants;
 
 .light-border {
   border-color: figma.$color-border;
@@ -65,11 +66,6 @@
   }
 }
 
-.swatches-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25%;
-}
 
 .color-chip-container {
   vertical-align: center;
@@ -79,17 +75,15 @@
   margin-bottom: figma.$spacing-md;
 }
 
+.swatches-container {
+}
+
 .color-chip {
-  padding: figma.$spacing-xs figma.$spacing-md;
-  display: inline-block;
   line-height: 1.2em;
+  width: 100%;
   text-align: center;
   font-weight: bold;
-  min-width: 7rem;
-  width: 19%;
   border-radius: figma.$spacing-sm;
-  margin-bottom: figma.$spacing-sm;
-
 }
 
 input[type=radio] {
