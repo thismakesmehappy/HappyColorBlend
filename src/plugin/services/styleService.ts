@@ -30,37 +30,51 @@ function createSolidPaint(hexColor: string): SolidPaint {
 }
 
 /**
- * Check if a paint style with the given name exists
+ * Archive existing styles by moving them to archived groups
  */
-function findStyleByName(name: string): PaintStyle | null {
+function archiveExistingStyles(): void {
   const existingStyles = figma.getLocalPaintStyles();
-  return existingStyles.find(style => style.name === name) || null;
+  const archiveDate = new Date().toISOString().split('T')[0];
+
+  // Archive timestamped primitives and mixed styles
+  existingStyles.forEach(style => {
+    if (style.name.match(/^primitives \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//)) {
+      const fullPath = style.name.replace(/^primitives \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//, '');
+      const timestamp = style.name.match(/\((\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\)/)[1];
+      style.name = `archived/archived ${archiveDate}/primitives (${timestamp})/${fullPath}`;
+    } else if (style.name.match(/^mixed \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//)) {
+      const fullPath = style.name.replace(/^mixed \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//, '');
+      const timestamp = style.name.match(/\((\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\)/)[1];
+      style.name = `archived/archived ${archiveDate}/mixed (${timestamp})/${fullPath}`;
+    }
+  });
 }
 
 /**
- * Handle style collision by renaming existing style
+ * Create timestamped group names
  */
-function handleStyleCollision(name: string): void {
-  const existingStyle = findStyleByName(name);
-  if (existingStyle) {
-    // Rename existing style with timestamp (default collision handling)
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    existingStyle.name = `${name} (${timestamp})`;
-  }
+function createTimestampedGroups(): { primitives: string; mixed: string } {
+  const now = new Date();
+  const timestamp = now.getFullYear() + '-' +
+    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+    String(now.getDate()).padStart(2, '0') + ' ' +
+    String(now.getHours()).padStart(2, '0') + ':' +
+    String(now.getMinutes()).padStart(2, '0') + ':' +
+    String(now.getSeconds()).padStart(2, '0');
+
+  return {
+    primitives: `primitives (${timestamp})`,
+    mixed: `mixed (${timestamp})`
+  };
 }
 
 /**
  * Create a paint style, handling collision by renaming existing
  */
 function createColorStyle(name: string, hexColor: string): PaintStyle {
-  // Handle collision by renaming existing style
-  handleStyleCollision(name);
-  
-  // Create new style
   const style = figma.createPaintStyle();
   style.name = name;
   style.paints = [createSolidPaint(hexColor)];
-  
   return style;
 }
 
@@ -87,23 +101,29 @@ export async function createAllSwatchStyles(data: SwatchStyleData): Promise<Styl
     let styleCount = 0;
     const separator = createSeparator(data.tokenSettings.separatorCharsCount, data.tokenSettings.separatorCharType);
 
+    // Archive existing styles first
+    archiveExistingStyles();
+
+    // Create timestamped group names
+    const groups = createTimestampedGroups();
+
     // Create primitive styles
-    createColorStyle(`primitives/${data.scaleStart.name}`, data.scaleStart.color);
+    createColorStyle(`${groups.primitives}/${data.scaleStart.name}`, data.scaleStart.color);
     styleCount++;
 
-    createColorStyle(`primitives/${data.scaleEnd.name}`, data.scaleEnd.color);
+    createColorStyle(`${groups.primitives}/${data.scaleEnd.name}`, data.scaleEnd.color);
     styleCount++;
 
     // Create primary color primitive styles
     data.primaryColors.forEach(color => {
-      createColorStyle(`primitives/${color.name}`, color.color);
+      createColorStyle(`${groups.primitives}/${color.name}`, color.color);
       styleCount++;
     });
 
     // Create shade-tint mixed styles
     data.neutralScaleSwatches.forEach(swatch => {
       const stepString = formatStepNumber(swatch.step);
-      const styleName = `mixed/${data.neutralScaleName}/${data.neutralScaleName}${separator}${stepString}`;
+      const styleName = `${groups.mixed}/${data.neutralScaleName}/${data.neutralScaleName}${separator}${stepString}`;
       createColorStyle(styleName, swatch.color);
       styleCount++;
     });
@@ -112,7 +132,7 @@ export async function createAllSwatchStyles(data: SwatchStyleData): Promise<Styl
     data.primarySwatches.forEach(ramp => {
       ramp.swatches.forEach(swatch => {
         const stepString = formatStepNumber(swatch.step);
-        const styleName = `mixed/${ramp.name}/${ramp.name}${separator}${stepString}`;
+        const styleName = `${groups.mixed}/${ramp.name}/${ramp.name}${separator}${stepString}`;
         createColorStyle(styleName, swatch.color);
         styleCount++;
       });
