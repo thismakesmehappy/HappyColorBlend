@@ -108,7 +108,7 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
 
     return (
         <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps" id={id}>
-            <span>
+            <div className="d-flex align-items-center">
                  <FormControl
                      type="text"
                      maxLength={4}
@@ -130,7 +130,7 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
                 >
                         Add
                     </Button>
-            </span>
+            </div>
             <Toast
                 message={toastMessage}
                 type="error"
