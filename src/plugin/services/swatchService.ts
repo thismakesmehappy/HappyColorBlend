@@ -233,7 +233,24 @@ function createSwatchDisplay(data: SwatchCreationData): GroupNode {
   const allElements: SceneNode[] = [];
   let currentY = 0;
 
-  // 1. Create primitives section
+  // 1. Create main title with timestamp
+  const now = new Date();
+  const timestamp = now.getFullYear() + '-' +
+    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+    String(now.getDate()).padStart(2, '0') + ' ' +
+    String(now.getHours()).padStart(2, '0') + ':' +
+    String(now.getMinutes()).padStart(2, '0') + ':' +
+    String(now.getSeconds()).padStart(2, '0');
+
+  const mainTitle = createTextNode(`Color Swatches (${timestamp})`, fontSize * 1.8);
+  mainTitle.name = "Main Title";
+  mainTitle.x = 0;
+  mainTitle.y = currentY;
+  allElements.push(mainTitle);
+
+  currentY = mainTitle.y + mainTitle.height + GROUP_SPACING;
+
+  // 2. Create primitives section
   const primitivesTitle = createTextNode("Primitives", fontSize * 1.5);
   primitivesTitle.name = "Primitives Title";
   primitivesTitle.x = 0;
@@ -269,7 +286,16 @@ function createSwatchDisplay(data: SwatchCreationData): GroupNode {
   // Move to next section
   currentY += swatchSize + (fontSize * 2) + SPACING + GROUP_SPACING;
 
-  // 2. Create neutral scale ramp section
+  // 3. Create mixed section title
+  const mixedTitle = createTextNode("Mixed", fontSize * 1.5);
+  mixedTitle.name = "Mixed Title";
+  mixedTitle.x = 0;
+  mixedTitle.y = currentY;
+  allElements.push(mixedTitle);
+
+  currentY += mixedTitle.height + SPACING;
+
+  // 4. Create neutral scale ramp section
   if (data.neutralScaleSwatches.length > 0) {
     const rampGroup = createPrimarySwatchGroup(
       {
@@ -289,7 +315,7 @@ function createSwatchDisplay(data: SwatchCreationData): GroupNode {
     currentY += rampHeight + GROUP_SPACING;
   }
 
-  // 3. Create primary color groups
+  // 5. Create primary color groups
   data.primarySwatches.forEach(primarySwatch => {
     const swatchGroup = createPrimarySwatchGroup(
       primarySwatch,
