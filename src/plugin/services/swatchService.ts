@@ -3,13 +3,16 @@
  */
 
 import { SwatchCreationData, SwatchCreationResult } from "@common/networkSides";
+import { 
+  SWATCH_BOARD_GROUP_WIDTH, 
+  SWATCH_BOARD_SWATCH_SIZE, 
+  SWATCH_BOARD_FONT_SIZE,
+  SWATCH_BOARD_COLUMN_GAP,
+  SWATCH_BOARD_ROW_GAP,
+  SWATCH_BOARD_GROUP_GAP
+} from "../../constants/uiConstants";
 
-// Default display settings
-const DEFAULT_DISPLAY_WIDTH = 1200;
-const DEFAULT_SWATCH_SIZE = 64;
-const DEFAULT_FONT_SIZE = 12;
-const SPACING = 16;
-const GROUP_SPACING = 48;
+// (removed - now using constants from uiConstants)
 
 /**
  * Convert hex color to RGB object with values 0-1 for Figma API
@@ -93,10 +96,10 @@ function createCircularSwatch(
   circle.y = 0;
   
   nameText.x = circle.x + (size - nameText.width) / 2;
-  nameText.y = circle.y + size + SPACING / 2;
+  nameText.y = circle.y + size + SWATCH_BOARD_ROW_GAP / 2;
   
   colorText.x = circle.x + (size - colorText.width) / 2;
-  colorText.y = nameText.y + nameText.height + SPACING / 4;
+  colorText.y = nameText.y + nameText.height + SWATCH_BOARD_ROW_GAP / 4;
 
   // Create group
   const group = figma.group([circle, nameText, colorText], figma.currentPage);
@@ -179,7 +182,8 @@ function createPrimarySwatchGroup(
   },
   separator: string,
   swatchSize: number,
-  fontSize: number
+  fontSize: number,
+  maxWidth: number
 ): GroupNode {
   const elements: SceneNode[] = [];
   const swatchWidth = swatchSize * 1.2;
@@ -194,11 +198,21 @@ function createPrimarySwatchGroup(
   elements.push(titleText);
 
   // Position swatches below title with padding
-  currentY = titleText.y + titleText.height + SPACING;
+  currentY = titleText.y + titleText.height + SWATCH_BOARD_ROW_GAP;
   currentX = 0;
 
-  // Create individual swatches with horizontal layout and padding
+  // Calculate how many swatches fit per row
+  const swatchesPerRow = Math.floor(maxWidth / (swatchWidth + SWATCH_BOARD_COLUMN_GAP));
+  let swatchCount = 0;
+
+  // Create individual swatches with wrapping
   data.swatches.forEach((swatch, index) => {
+    if (swatchCount >= swatchesPerRow) {
+      currentY += (swatchSize * 0.8) + (fontSize * 1.7) + SWATCH_BOARD_ROW_GAP;
+      currentX = 0;
+      swatchCount = 0;
+    }
+
     const swatchNode = createRectangularSwatch(
       swatch.color,
       swatch.step,
@@ -206,13 +220,12 @@ function createPrimarySwatchGroup(
       fontSize
     );
     
-    // Position with proper spacing and padding
     swatchNode.x = currentX;
     swatchNode.y = currentY;
     elements.push(swatchNode);
     
-    // Move to next position with padding
-    currentX += swatchWidth + SPACING;
+    currentX += swatchWidth + SWATCH_BOARD_COLUMN_GAP;
+    swatchCount++;
   });
 
   // Create group with all elements
@@ -225,9 +238,9 @@ function createPrimarySwatchGroup(
  * Create the main swatch display
  */
 function createSwatchDisplay(data: SwatchCreationData): GroupNode {
-  const displayWidth = data.displayWidth || DEFAULT_DISPLAY_WIDTH;
-  const swatchSize = data.swatchSize || DEFAULT_SWATCH_SIZE;
-  const fontSize = data.fontSize || DEFAULT_FONT_SIZE;
+  const displayWidth = data.displayWidth || SWATCH_BOARD_GROUP_WIDTH;
+  const swatchSize = data.swatchSize || SWATCH_BOARD_SWATCH_SIZE;
+  const fontSize = data.fontSize || SWATCH_BOARD_FONT_SIZE;
   const separator = createSeparator(data.tokenSettings.separatorCharsCount, data.tokenSettings.separatorCharType);
 
   const allElements: SceneNode[] = [];
@@ -248,7 +261,7 @@ function createSwatchDisplay(data: SwatchCreationData): GroupNode {
   mainTitle.y = currentY;
   allElements.push(mainTitle);
 
-  currentY = mainTitle.y + mainTitle.height + GROUP_SPACING;
+  currentY = mainTitle.y + mainTitle.height + SWATCH_BOARD_GROUP_GAP;
 
   // 2. Create primitives section
   const primitivesTitle = createTextNode("Primitives", fontSize * 1.5);
@@ -258,33 +271,44 @@ function createSwatchDisplay(data: SwatchCreationData): GroupNode {
   allElements.push(primitivesTitle);
 
   // Position primitives below title
-  currentY = primitivesTitle.y + primitivesTitle.height + SPACING;
+  currentY = primitivesTitle.y + primitivesTitle.height + SWATCH_BOARD_ROW_GAP;
   let currentX = 0;
 
-  // Add scale start and end swatches
-  const scaleStartSwatch = createCircularSwatch(data.scaleStart.color, data.scaleStart.name, swatchSize, fontSize);
-  scaleStartSwatch.x = currentX;
-  scaleStartSwatch.y = currentY;
-  allElements.push(scaleStartSwatch);
-  currentX += swatchSize + SPACING * 2;
+  // Calculate how many swatches fit per row
+  const swatchesPerRow = Math.floor(displayWidth / (swatchSize + SWATCH_BOARD_COLUMN_GAP));
+  let swatchCount = 0;
+  let maxRowHeight = 0;
 
-  const scaleEndSwatch = createCircularSwatch(data.scaleEnd.color, data.scaleEnd.name, swatchSize, fontSize);
-  scaleEndSwatch.x = currentX;
-  scaleEndSwatch.y = currentY;
-  allElements.push(scaleEndSwatch);
-  currentX += swatchSize + SPACING * 2;
+  // Collect all primitive swatches
+  const allPrimitives = [
+    { color: data.scaleStart.color, name: data.scaleStart.name },
+    { color: data.scaleEnd.color, name: data.scaleEnd.name },
+    ...data.primaryColors
+  ];
 
-  // Add primary color swatches
-  data.primaryColors.forEach(color => {
-    const colorSwatch = createCircularSwatch(color.color, color.name, swatchSize, fontSize);
-    colorSwatch.x = currentX;
-    colorSwatch.y = currentY;
-    allElements.push(colorSwatch);
-    currentX += swatchSize + SPACING * 2;
+  // Place all primitive swatches with wrapping
+  allPrimitives.forEach(primitive => {
+    if (swatchCount >= swatchesPerRow) {
+      currentY += maxRowHeight + SWATCH_BOARD_ROW_GAP;
+      currentX = 0;
+      swatchCount = 0;
+      maxRowHeight = 0;
+    }
+
+    const swatch = createCircularSwatch(primitive.color, primitive.name, swatchSize, fontSize);
+    swatch.x = currentX;
+    swatch.y = currentY;
+    allElements.push(swatch);
+    
+    // Account for circle + text height
+    const totalSwatchHeight = swatchSize + (fontSize * 2) + SWATCH_BOARD_ROW_GAP;
+    maxRowHeight = Math.max(maxRowHeight, totalSwatchHeight);
+    currentX += swatchSize + SWATCH_BOARD_COLUMN_GAP;
+    swatchCount++;
   });
 
   // Move to next section
-  currentY += swatchSize + (fontSize * 2) + SPACING + GROUP_SPACING;
+  currentY += maxRowHeight + SWATCH_BOARD_ROW_GAP + SWATCH_BOARD_GROUP_GAP;
 
   // 3. Create mixed section title
   const mixedTitle = createTextNode("Mixed", fontSize * 1.5);
@@ -293,7 +317,7 @@ function createSwatchDisplay(data: SwatchCreationData): GroupNode {
   mixedTitle.y = currentY;
   allElements.push(mixedTitle);
 
-  currentY += mixedTitle.height + SPACING;
+  currentY += mixedTitle.height + SWATCH_BOARD_ROW_GAP;
 
   // 4. Create neutral scale ramp section
   if (data.neutralScaleSwatches.length > 0) {
@@ -304,15 +328,15 @@ function createSwatchDisplay(data: SwatchCreationData): GroupNode {
       },
       separator,
       swatchSize,
-      fontSize
+      fontSize,
+      displayWidth
     );
     rampGroup.x = 0;
     rampGroup.y = currentY;
     allElements.push(rampGroup);
     
-    // Calculate height of ramp group for next positioning
-    const rampHeight = fontSize * 1.2 + SPACING + (swatchSize * 0.8) + (fontSize * 2);
-    currentY += rampHeight + GROUP_SPACING;
+    // Use actual group height for next positioning
+    currentY += rampGroup.height + SWATCH_BOARD_GROUP_GAP;
   }
 
   // 5. Create primary color groups
@@ -321,15 +345,15 @@ function createSwatchDisplay(data: SwatchCreationData): GroupNode {
       primarySwatch,
       separator,
       swatchSize,
-      fontSize
+      fontSize,
+      displayWidth
     );
     swatchGroup.x = 0;
     swatchGroup.y = currentY;
     allElements.push(swatchGroup);
     
-    // Calculate height for next positioning
-    const groupHeight = fontSize * 1.2 + SPACING + (swatchSize * 0.8) + (fontSize * 2);
-    currentY += groupHeight + GROUP_SPACING;
+    // Use actual group height for next positioning
+    currentY += swatchGroup.height + SWATCH_BOARD_GROUP_GAP;
   });
 
   // Create main group

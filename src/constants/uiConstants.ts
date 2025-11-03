@@ -7,8 +7,11 @@ export const CHIPS_COLUMNS_PER_ROW = 4;
 
 // Swatch display configuration
 export const SWATCH_BOARD_GROUP_WIDTH = 1200;
-export const SWATCH_BOARD_SWATCH_SIZE = 64;
+export const SWATCH_BOARD_SWATCH_SIZE = 80;
 export const SWATCH_BOARD_FONT_SIZE = 12;
+export const SWATCH_BOARD_COLUMN_GAP = 16;
+export const SWATCH_BOARD_ROW_GAP = 16;
+export const SWATCH_BOARD_GROUP_GAP = 48;
 
 // Toast messages
 export const INVALID_HEX_COLOR_MESSAGE = "Input should be a six digits hex color without the #";
