@@ -13,7 +13,7 @@ const Separator = () => {
     const decrementSeparatorChars = useTokenNameStore(state => state.decrementSeparatorChars);
     return (
         <div id="settings-separator">
-            <div className={"figma-mt-sm"}>Separator Character:{" "}
+            <div className={"figma-mt-sm"}>Separator:{" "}
                 <NumberToggle
                     decreaseFunction={decrementSeparatorChars}
                     increaseFunction={incrementSeparatorChars}

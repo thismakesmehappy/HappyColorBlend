@@ -14,7 +14,6 @@ const Toggle: React.FC<ToggleProps> = ({value, onChange, className = "", size = 
     };
 
     const toggleJustification = value ? 'start' : 'end';
-
     return (
         <div
             className={`toggle-container ${value ? 'figma-bg-primary' : 'figma-bg-secondary-gray'} ${className}`}

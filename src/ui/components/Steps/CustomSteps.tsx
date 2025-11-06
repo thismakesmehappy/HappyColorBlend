@@ -44,9 +44,6 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
         // Check if input is within range
         if (step < 1 || step > 999) return false;
 
-        // Check if input is a reserved value
-        if (step === 0 || step === 500 || step === 1000) return false;
-
         // Check if input is already in the store
         return !customSteps.has(step);
 
@@ -60,9 +57,6 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
         if (!numericRegex.test(inputValue)) return INVALID_CUSTOM_STEP_NON_NUMERIC;
 
         const step = parseInt(inputValue, 10);
-
-        // Check if input is a reserved value
-        if (step === 0 || step === 500 || step === 1000) return INVALID_CUSTOM_STEP_RESERVED;
 
         // Check if input is within range
         if (step < 1 || step > 999) return INVALID_CUSTOM_STEP_OUT_OF_RANGE;
@@ -109,27 +103,27 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
     return (
         <div className={`custom-steps ${className}`} style={style} data-testid="custom-steps" id={id}>
             <div className="d-flex align-items-center">
-                 <FormControl
-                     type="text"
-                     maxLength={4}
-                     // className="figma-input"
-                     value={inputValue}
-                     onChange={handleInputChange}
-                     onKeyDown={handleKeyDown}
-                     style={{width: '6ch'}}
-                     data-testid="custom-step-input"
-                     // className={"form-control d-inline"}
-                     size={'sm'}
-                     className={!isValidInput() ? 'invalid' : ''}
-                 />
+                <FormControl
+                    type="text"
+                    maxLength={4}
+                    // className="figma-input"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    style={{width: '6ch'}}
+                    data-testid="custom-step-input"
+                    // className={"form-control d-inline"}
+                    size={'sm'}
+                    className={!isValidInput() ? 'invalid' : ''}
+                />
                 <Button
                     className={'ms-3'}
                     onClick={handleAddStep}
                     disabled={!isValidInput()}
                     type={'primary'}
                 >
-                        Add
-                    </Button>
+                    Add
+                </Button>
             </div>
             <Toast
                 message={toastMessage}

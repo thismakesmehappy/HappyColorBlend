@@ -56,7 +56,7 @@ const TintAndShade = () => {
     };
 
     return (<>
-        <Explain>Customize the colors used to mix the tints and shades.</Explain>
+        <Explain>Customize the end colors mixed in the scales, and the neutral scale's name.</Explain>
         <Group>
             <ColorInput
                 title={"Start (0)"}
@@ -75,12 +75,11 @@ const TintAndShade = () => {
                 submitLabel={"Update"}
             />
         </Group>
-        <Explain>Customize the name for the neutral scale and the order of the endpoints.</Explain>
         <Group>
             <Form onSubmit={handleSubmit}>
                 <FormGroup className={"mb-2"}>
                     <FormLabel
-                        htmlFor="neutral-scale-input-name">Scale Name</FormLabel>
+                        htmlFor="neutral-scale-input-name">Neutral scale name</FormLabel>
                     <FormControl type="text"
                                  id="neutral-scale-input-name"
                                  value={neutralName}
@@ -112,7 +111,7 @@ const TintAndShade = () => {
                             type={'tertiary'}
                             onClick={handleSwapStartEnd}
                         >
-                            <FontAwesomeIcon icon={'right-left'} /> Swap
+                            Swap
                         </Button>
                     </Col>
                 </Row>

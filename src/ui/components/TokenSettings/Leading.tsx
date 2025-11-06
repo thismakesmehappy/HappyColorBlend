@@ -12,7 +12,7 @@ const Leading = () => {
     return (
         <>
             <div id="settings-leading">
-                <div className={"figma-mt-sm"}>Leading Character:{" "}
+                <div className={"figma-mt-sm"}>Lead:{" "}
                     <NumberToggle
                         decreaseFunction={decrementLeadingChars}
                         increaseFunction={incrementLeadingChars}

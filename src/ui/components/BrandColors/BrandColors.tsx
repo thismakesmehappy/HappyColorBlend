@@ -6,7 +6,7 @@ import BrandColorsPreview from "@ui/components/BrandColors/BrandColorsPreview";
 const BrandColors = () => {
     return (<>
         <Explain>
-            Each brand color on the list will produce a new color scale.
+            Each brand color on the list will produce a new scale.
         </Explain>
         <BrandColorInput />
         <BrandColorsPreview />

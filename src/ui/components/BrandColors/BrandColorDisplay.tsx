@@ -23,8 +23,8 @@ const BrandColorDisplay = ({
     return (
         <div className={"d-flex flex-row align-items-center mb-3"}>
             <div style={{flexShrink: 0}}>
-                <Chip color={color} className={"figma-border"} width={75}
-                      height={75} data-testid="swatch-chip" />
+                <Chip color={color} className={"figma-border"} width={50}
+                      height={50} data-testid="swatch-chip" />
             </div>
             <div className="flex-grow-1 text-start px-2">
                 <SwatchLabels

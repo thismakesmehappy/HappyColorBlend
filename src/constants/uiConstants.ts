@@ -1,5 +1,6 @@
-export const WINDOW_WIDTH = 800;
+export const WINDOW_WIDTH = 750;
 export const WINDOW_HEIGHT = 700;
+export const INPUT_PANEL_WIDTH = 225;
 export const TOAST_DURATION = 3000
 export const MINIMUM_STEPS = 3;
 export const SWATCH_COLUMNS_PER_ROW = 5;
@@ -25,6 +26,7 @@ export const OUTPUT_NAME_PREFIX = "Color Scales";
 export const SCSS_CONSTANTS = {
     WINDOW_WIDTH,
     WINDOW_HEIGHT,
+    INPUT_PANEL_WIDTH,
     SWATCH_COLUMNS_PER_ROW,
     CHIPS_COLUMNS_PER_ROW,
 } as const;

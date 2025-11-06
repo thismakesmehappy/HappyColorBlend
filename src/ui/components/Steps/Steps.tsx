@@ -8,12 +8,12 @@ import React from "react";
 const Steps = () => {
     return (
         <div>
-            <Explain>How many values are generated for each scale. These steps will be evenly spaced. </Explain>
+            <Explain>Evenly spaced steps included in each scale. </Explain>
             <Group>
                 <div className={"d-flex align-middle"}><p className={"me-2"}>Equal steps:</p>
                     <EqualSteps /></div>
             </Group>
-            <Explain>You can specify custom steps not equally spaced. Values must be between 1 and 999, excluding 500 (which is always included step). </Explain>
+            <Explain>Additional custom steps, between 1 and 999. These are always included, regardless of the even steps. </Explain>
             <Group>
                 <div className={"d-flex align-middle"}><p className={"me-2"}>Custom steps:</p>
                     <CustomSteps />

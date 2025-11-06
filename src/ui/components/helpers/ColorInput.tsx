@@ -89,7 +89,7 @@ const ColorInput = ({
                 <FormGroup>
                     <Row className={"gx-2 mb-2"}>
                         <Col xs={"2"}>Hex</Col>
-                        <Col xs={"6"}>
+                        <Col xs={"5"}>
                             <FormControl type={"text"}
                                          size={'sm'}
                                          value={hex}
@@ -98,7 +98,7 @@ const ColorInput = ({
                                          className={!isValidHexColor(hex) ? 'invalid' : ''}
                             />
                         </Col>
-                        <Col xs={"4"}>
+                        <Col xs={"5"}>
                             <Button
                                 type={"tertiary"}
                                 className={"w-100"}

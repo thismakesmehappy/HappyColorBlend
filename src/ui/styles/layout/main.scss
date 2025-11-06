@@ -8,7 +8,7 @@ $padding: figma.$spacing-md;
 $separator-line: 1px;
 $separator-width: $separator-space + $separator-line + $separator-space;
 
-$input-section-width: 275px;
+$input-section-width: constants.$input-panel-width * 1px;
 $output-section-width: $window-width - $input-section-width; //- $separator-width + $separator-width - $padding;
 
 $steps-section-width: $output-section-width - $padding;

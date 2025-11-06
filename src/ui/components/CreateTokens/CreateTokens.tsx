@@ -91,7 +91,7 @@ export const CreateTokens = () => {
                             type={'primary'}
                             className={"w-100"}
                         >
-                            To Clipboard</Button>
+                            Clipboard</Button>
                     </Col>
                     <Col>
                         <Button
@@ -100,7 +100,7 @@ export const CreateTokens = () => {
                             className={"w-100"}
 
                         >
-                            Download File</Button>
+                            File</Button>
                     </Col>
                 </Row>
             </Group>
@@ -114,7 +114,7 @@ export const CreateTokens = () => {
                             className={"w-100"}
 
                         >
-                            To Clipboard</Button>
+                            Clipboard</Button>
                     </Col>
                     <Col xs={6}>
                         <Button
@@ -122,23 +122,25 @@ export const CreateTokens = () => {
                             type={'primary'}
                             className={"w-100"}
                         >
-                            Download File</Button>
+                            File</Button>
                     </Col>
                 </Row>
             </Group>
-            {/*Add option for https://www.designtokens.org*/}
+            {/*TODO: Add option for https://www.designtokens.org*/}
+            {/*TODO: We now only remove training characters; let's make all standards*/}
             <Explain>
-                Compliant names remove trailing characters to follow standard names.
+                Compliant names ignore naming options and use standard naming per output.
             </Explain>
             <Group>
-                <div className="figma-mr-sm d-flex"><Toggle
-                    value={keepCSSClean}
-                    onChange={toggleKeepCSSClean}
-                    className={"d-inline-block figma-mr-sm"}
-                    size={2}
-                />
+                <div className="figma-mr-sm d-flex">
+                    <Toggle
+                        value={keepCSSClean}
+                        onChange={toggleKeepCSSClean}
+                        className={"d-inline-block figma-mr-sm"}
+                        size={1}
+                    />
                     <div
-                        className={"d-inline-block"}>Make CSS and SCSS variable names compliant
+                        className={"d-inline-block"}>Compliant variable names
                     </div>
                 </div>
             </Group>

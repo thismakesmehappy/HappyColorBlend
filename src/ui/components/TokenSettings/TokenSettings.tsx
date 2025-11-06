@@ -14,7 +14,7 @@ const TokenSettings = () => {
     return (
         <div>
             <Explain>
-                Configure how the color names will be converted to token names.
+                Configure how token names are generated.
             </Explain>
             <Group>
                 <Case />
