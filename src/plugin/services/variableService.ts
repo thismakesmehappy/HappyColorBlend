@@ -25,34 +25,23 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } {
 function createOrUpdateCollection(name: string): VariableCollection {
     const existingCollections = figma.variables.getLocalVariableCollections();
 
-    // Find existing collection with exact name or archived pattern
-    const existingCollection = existingCollections.find(collection => {
-        return collection.name === name ||
-            collection.name.match(new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\(archived \\d{4}-\\d{2}-\\d{2}( \\d+)?\\)$`)) ||
-            collection.name.match(new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\)$`));
-    });
+    // Find the active collection (exact name match, not archived)
+    const activeCollection = existingCollections.find(collection => collection.name === name);
 
-    if (existingCollection) {
+    if (activeCollection) {
         // Get current date for archiving
         const now = new Date();
         const archiveDate = now.getFullYear() + '-' +
             String(now.getMonth() + 1).padStart(2, '0') + '-' +
             String(now.getDate()).padStart(2, '0');
 
-        // Check if there's already an archived collection for this date
-        const baseArchiveName = `${name} (archived ${archiveDate})`;
-        const hasCollision = existingCollections.some(collection => collection.name === baseArchiveName);
+        // Find all existing archived collections for today
+        const archivedToday = existingCollections.filter(collection => 
+            collection.name.includes(`(archived ${archiveDate}`)
+        );
 
-        if (hasCollision) {
-            // Find next sequential number for this date
-            const archivedCollections = existingCollections.filter(collection =>
-                collection.name.match(new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\(archived ${archiveDate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\d+\\)$`))
-            );
-            const nextNumber = archivedCollections.length + 2; // +2 because we start at 2 (1 is the base name without number)
-            existingCollection.name = `${name} (archived ${archiveDate} ${nextNumber})`;
-        } else {
-            existingCollection.name = baseArchiveName;
-        }
+        const nextNumber = archivedToday.length + 1;
+        activeCollection.name = `${name} (archived ${archiveDate} ${nextNumber})`;
     }
 
     // Create new collection without timestamp

@@ -9,6 +9,8 @@ export interface VariableExportData {
     neutralScaleName: string;
 }
 
+// TODO: Refactor to allow for different types of variables
+
 const formatVariableName = (name: string, tokenStore: TokenNameStoreState, appendSeparator = tokenStore.appendSeparatorToPrimitive): string => {
     if (tokenStore.keepCSSClean) {
         // Use standard CSS/SCSS naming: lowercase + dashes, no leading chars

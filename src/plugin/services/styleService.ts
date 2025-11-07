@@ -39,45 +39,53 @@ function archiveExistingStyles(): void {
     String(now.getMonth() + 1).padStart(2, '0') + '-' +
     String(now.getDate()).padStart(2, '0');
 
-  // Check if there are already archived styles for this date
-  const baseArchivePattern = `\\(archived ${archiveDate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\)$`;
-  const hasCollision = existingStyles.some(style => 
-    style.name.match(new RegExp(baseArchivePattern))
-  );
+  // Find all existing archived folders for this date by looking at style paths
+  const archivedFolders = new Set<string>();
+  existingStyles.forEach(style => {
+    // Look for archived folder patterns in style names
+    const baseMatch = style.name.match(new RegExp(`Color Scales/archived/(?:primitives|mixed) \\(archived ${archiveDate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\)/`));
+    const numberedMatch = style.name.match(new RegExp(`Color Scales/archived/(?:primitives|mixed) \\(archived ${archiveDate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} (\\d+)\\)/`));
+    
+    if (baseMatch) {
+      archivedFolders.add(`(archived ${archiveDate})`);
+    }
+    if (numberedMatch) {
+      archivedFolders.add(`(archived ${archiveDate} ${numberedMatch[1]})`);
+    }
+  });
 
   let archiveSuffix;
-  if (hasCollision) {
-    // Find next sequential number for this date
-    const archivedStyles = existingStyles.filter(style =>
-      style.name.match(new RegExp(`\\(archived ${archiveDate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\d+\\)$`))
-    );
-    const nextNumber = archivedStyles.length + 2; // +2 because we start at 2
+  if (archivedFolders.size > 0) {
+    // Find the highest existing number
+    let maxNumber = 0;
+    archivedFolders.forEach(folder => {
+      const match = folder.match(new RegExp(`\\(archived ${archiveDate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} (\\d+)\\)`));
+      if (match) {
+        maxNumber = Math.max(maxNumber, parseInt(match[1]));
+      }
+    });
+    const nextNumber = maxNumber + 1;
     archiveSuffix = `(archived ${archiveDate} ${nextNumber})`;
   } else {
-    archiveSuffix = `(archived ${archiveDate})`;
+    archiveSuffix = `(archived ${archiveDate} 1)`;
   }
 
   // Archive current Color Scales styles
   existingStyles.forEach(style => {
     if (style.name.startsWith('Color Scales/primitives/')) {
       const styleName = style.name.replace('Color Scales/primitives/', '');
-      style.name = `Color Scales/archived/primitives ${styleName} ${archiveSuffix}`;
+      style.name = `Color Scales/archived/primitives ${archiveSuffix}/${styleName}`;
     } else if (style.name.startsWith('Color Scales/mixed/')) {
-      const pathParts = style.name.replace('Color Scales/mixed/', '').split('/');
-      const groupName = pathParts[0];
-      const styleName = pathParts[1];
-      style.name = `Color Scales/archived/mixed ${groupName} ${styleName} ${archiveSuffix}`;
+      const remainingPath = style.name.replace('Color Scales/mixed/', '');
+      style.name = `Color Scales/archived/mixed ${archiveSuffix}/${remainingPath}`;
     }
     // Also handle old timestamped styles for backward compatibility
     else if (style.name.match(/^primitives \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//)) {
       const fullPath = style.name.replace(/^primitives \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//, '');
-      style.name = `Color Scales/archived/primitives ${fullPath} ${archiveSuffix}`;
+      style.name = `Color Scales/archived/primitives ${archiveSuffix}/${fullPath}`;
     } else if (style.name.match(/^mixed \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//)) {
       const fullPath = style.name.replace(/^mixed \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//, '');
-      const pathParts = fullPath.split('/');
-      const groupName = pathParts[0];
-      const styleName = pathParts[1];
-      style.name = `Color Scales/archived/mixed ${groupName} ${styleName} ${archiveSuffix}`;
+      style.name = `Color Scales/archived/mixed ${archiveSuffix}/${fullPath}`;
     }
   });
 }
