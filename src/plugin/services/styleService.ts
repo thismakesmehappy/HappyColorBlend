@@ -54,7 +54,7 @@ function archiveExistingStyles(): void {
     }
   });
 
-  let archiveSuffix;
+  let archiveSuffix: string;
   if (archivedFolders.size > 0) {
     // Find the highest existing number
     let maxNumber = 0;
