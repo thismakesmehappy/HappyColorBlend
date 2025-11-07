@@ -30,43 +30,65 @@ function createSolidPaint(hexColor: string): SolidPaint {
 }
 
 /**
- * Archive existing styles by moving them to archived groups
+ * Archive existing styles by moving them to archived groups with sequential numbering
  */
 function archiveExistingStyles(): void {
   const existingStyles = figma.getLocalPaintStyles();
-  const archiveDate = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  const archiveDate = now.getFullYear() + '-' +
+    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+    String(now.getDate()).padStart(2, '0');
 
-  // Archive timestamped primitives and mixed styles
+  // Check if there are already archived styles for this date
+  const baseArchivePattern = `\\(archived ${archiveDate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\)$`;
+  const hasCollision = existingStyles.some(style => 
+    style.name.match(new RegExp(baseArchivePattern))
+  );
+
+  let archiveSuffix;
+  if (hasCollision) {
+    // Find next sequential number for this date
+    const archivedStyles = existingStyles.filter(style =>
+      style.name.match(new RegExp(`\\(archived ${archiveDate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\d+\\)$`))
+    );
+    const nextNumber = archivedStyles.length + 2; // +2 because we start at 2
+    archiveSuffix = `(archived ${archiveDate} ${nextNumber})`;
+  } else {
+    archiveSuffix = `(archived ${archiveDate})`;
+  }
+
+  // Archive current Color Scales styles
   existingStyles.forEach(style => {
-    if (style.name.match(/^primitives \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//)) {
+    if (style.name.startsWith('Color Scales/primitives/')) {
+      const styleName = style.name.replace('Color Scales/primitives/', '');
+      style.name = `Color Scales/archived/primitives ${styleName} ${archiveSuffix}`;
+    } else if (style.name.startsWith('Color Scales/mixed/')) {
+      const pathParts = style.name.replace('Color Scales/mixed/', '').split('/');
+      const groupName = pathParts[0];
+      const styleName = pathParts[1];
+      style.name = `Color Scales/archived/mixed ${groupName} ${styleName} ${archiveSuffix}`;
+    }
+    // Also handle old timestamped styles for backward compatibility
+    else if (style.name.match(/^primitives \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//)) {
       const fullPath = style.name.replace(/^primitives \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//, '');
-      const timestampMatch = style.name.match(/\((\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\)/);
-      const timestamp = timestampMatch ? timestampMatch[1] : 'unknown';
-      style.name = `archived/archived ${archiveDate}/primitives (${timestamp})/${fullPath}`;
+      style.name = `Color Scales/archived/primitives ${fullPath} ${archiveSuffix}`;
     } else if (style.name.match(/^mixed \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//)) {
       const fullPath = style.name.replace(/^mixed \(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\)\//, '');
-      const timestampMatch = style.name.match(/\((\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\)/);
-      const timestamp = timestampMatch ? timestampMatch[1] : 'unknown';
-      style.name = `archived/archived ${archiveDate}/mixed (${timestamp})/${fullPath}`;
+      const pathParts = fullPath.split('/');
+      const groupName = pathParts[0];
+      const styleName = pathParts[1];
+      style.name = `Color Scales/archived/mixed ${groupName} ${styleName} ${archiveSuffix}`;
     }
   });
 }
 
 /**
- * Create timestamped group names
+ * Create group names without timestamps
  */
-function createTimestampedGroups(): { primitives: string; mixed: string } {
-  const now = new Date();
-  const timestamp = now.getFullYear() + '-' +
-    String(now.getMonth() + 1).padStart(2, '0') + '-' +
-    String(now.getDate()).padStart(2, '0') + ' ' +
-    String(now.getHours()).padStart(2, '0') + ':' +
-    String(now.getMinutes()).padStart(2, '0') + ':' +
-    String(now.getSeconds()).padStart(2, '0');
-
+function createGroups(): { primitives: string; mixed: string } {
   return {
-    primitives: `primitives (${timestamp})`,
-    mixed: `mixed (${timestamp})`
+    primitives: 'Color Scales/primitives',
+    mixed: 'Color Scales/mixed'
   };
 }
 
@@ -106,8 +128,8 @@ export async function createAllSwatchStyles(data: SwatchStyleData): Promise<Styl
     // Archive existing styles first
     archiveExistingStyles();
 
-    // Create timestamped group names
-    const groups = createTimestampedGroups();
+    // Create group names
+    const groups = createGroups();
 
     // Create primitive styles
     createColorStyle(`${groups.primitives}/${data.scaleStart.name}`, data.scaleStart.color);

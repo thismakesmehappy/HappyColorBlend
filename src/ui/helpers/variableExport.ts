@@ -10,17 +10,33 @@ export interface VariableExportData {
 }
 
 const formatVariableName = (name: string, tokenStore: TokenNameStoreState, appendSeparator = tokenStore.appendSeparatorToPrimitive): string => {
-    return computeTokenName(
-        name,
-        tokenStore.caseTreatment,
-        tokenStore.spaceTreatment,
-        tokenStore.leadingCharsCount,
-        tokenStore.separatorCharsCount,
-        tokenStore.leadingCharType,
-        tokenStore.separatorCharType,
-        appendSeparator,
-        !tokenStore.keepCSSClean
-    );
+    if (tokenStore.keepCSSClean) {
+        // Use standard CSS/SCSS naming: lowercase + dashes, no leading chars
+        return computeTokenName(
+            name,
+            'lower',           // Always lowercase
+            'dash',            // Always use dashes for spaces
+            0,                 // No leading chars
+            appendSeparator ? tokenStore.separatorCharsCount : 0, // Keep separator logic
+            'dash',            // Always dash for leading (not used)
+            'dash',            // Always dash for separator
+            appendSeparator,
+            false              // No leading chars
+        );
+    } else {
+        // Use custom naming options
+        return computeTokenName(
+            name,
+            tokenStore.caseTreatment,
+            tokenStore.spaceTreatment,
+            tokenStore.leadingCharsCount,
+            tokenStore.separatorCharsCount,
+            tokenStore.leadingCharType,
+            tokenStore.separatorCharType,
+            appendSeparator,
+            true               // Use leading chars when not keeping CSS clean
+        );
+    }
 };
 
 export const generateVariables = (
@@ -95,7 +111,8 @@ export const generateCSSVariables = (): string => {
     const swatchStore = useSwatchStore.getState();
     const tokenStore = useTokenNameStore.getState();
     let lines = ':root {\n';
-    lines += generateVariables(swatchStore, tokenStore, '    ', '--');
+    const prepend = tokenStore.keepCSSClean ? '--' : '';
+    lines += generateVariables(swatchStore, tokenStore, '    ', prepend);
     lines += '}';
 
     return lines;

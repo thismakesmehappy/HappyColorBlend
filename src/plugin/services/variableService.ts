@@ -25,32 +25,38 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } {
 function createOrUpdateCollection(name: string): VariableCollection {
     const existingCollections = figma.variables.getLocalVariableCollections();
 
-    // Find existing collection created by our plugin (matches base name + timestamp pattern)
+    // Find existing collection with exact name or archived pattern
     const existingCollection = existingCollections.find(collection => {
-        // Match exact base name or base name with timestamp pattern
         return collection.name === name ||
+            collection.name.match(new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\(archived \\d{4}-\\d{2}-\\d{2}( \\d+)?\\)$`)) ||
             collection.name.match(new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\)$`));
     });
 
     if (existingCollection) {
-        // Rename existing collection with archived timestamp
+        // Get current date for archiving
         const now = new Date();
         const archiveDate = now.getFullYear() + '-' +
             String(now.getMonth() + 1).padStart(2, '0') + '-' +
             String(now.getDate()).padStart(2, '0');
-        existingCollection.name = `${name} (archived ${archiveDate})`;
+
+        // Check if there's already an archived collection for this date
+        const baseArchiveName = `${name} (archived ${archiveDate})`;
+        const hasCollision = existingCollections.some(collection => collection.name === baseArchiveName);
+
+        if (hasCollision) {
+            // Find next sequential number for this date
+            const archivedCollections = existingCollections.filter(collection =>
+                collection.name.match(new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\(archived ${archiveDate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\d+\\)$`))
+            );
+            const nextNumber = archivedCollections.length + 2; // +2 because we start at 2 (1 is the base name without number)
+            existingCollection.name = `${name} (archived ${archiveDate} ${nextNumber})`;
+        } else {
+            existingCollection.name = baseArchiveName;
+        }
     }
 
-    // Create new collection with timestamp
-    const now = new Date();
-    const timestamp = now.getFullYear() + '-' +
-        String(now.getMonth() + 1).padStart(2, '0') + '-' +
-        String(now.getDate()).padStart(2, '0') + ' ' +
-        String(now.getHours()).padStart(2, '0') + ':' +
-        String(now.getMinutes()).padStart(2, '0') + ':' +
-        String(now.getSeconds()).padStart(2, '0');
-
-    return figma.variables.createVariableCollection(`${name} (${timestamp})`);
+    // Create new collection without timestamp
+    return figma.variables.createVariableCollection(name);
 }
 
 /**
