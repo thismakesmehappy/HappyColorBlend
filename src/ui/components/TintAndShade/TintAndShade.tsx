@@ -1,6 +1,6 @@
 import Explain from "@ui/components/helpers/Explain";
 import {Col, Form, FormControl, FormGroup, FormLabel, InputGroup, Row} from "react-bootstrap";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import useSwatchStore from "@ui/store/useSwatchStore";
 import FontAwesomeIcon from "@ui/components/helpers/FontAwesomeIcon";
 import Group from "@ui/components/helpers/Group";
@@ -20,6 +20,10 @@ const TintAndShade = () => {
 
 
     const [neutralName, setNeutralName] = useState(neutral);
+
+    useEffect(() => {
+        setNeutralName(neutral);
+    }, [neutral]);
 
     const handleNeutralSubmit = () => {
         updateNeutral(neutralName);

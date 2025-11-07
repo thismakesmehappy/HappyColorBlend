@@ -25,6 +25,10 @@ const TextAndInput = ({className = '', style = {}, inputText, setInputText}: Tex
         }
     }, [isEditing]);
 
+    useEffect(() => {
+        setTempText(inputText);
+    }, [inputText]);
+
     // Function to show toast
     const showToastMessage = (message: string) => {
         setToastMessage(message);
