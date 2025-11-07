@@ -1,77 +1,54 @@
-# 🎨 Happy Color Blend Vibe
+# 🎨 Color Scales
 
-A Figma plugin for creating color scales from primary colors. The plugin allows the user to create production-ready
-assets: swatches, color styles, Figma variables, and SCSS/CSS variables.
+**Generate professional color scales with live preview and multiple output formats.**
 
-## ✨ Features
+Create consistent color systems from brand colors with advanced blending controls, custom naming conventions, and instant export to Figma assets or code.
 
-### 🎯 **Primary Color Management**
+## How to use Color Scales
 
-- **Color Extraction**: Extract colors directly from selected Figma objects or enter them manually
-- **Smart Color Naming**: Uses intelligent color naming with the color-namer library; user can edit all color names
-- **Random Color Generation**: Generates random colors for inspiration
-- **Interactive Swatches**: Edit, rename, and delete primary colors with ease and see the results live
+1) **Add brand colors** - Input hex values and name them manually or let the plugin auto-name them
+2) **Set steps** - Choose equal steps or define custom step values
+3) **Configure tint and shade** - Customize blend endpoints and neutral scale name
+4) **Adjust naming options** - Set case, spacing, and separator preferences
+5) **Create assets** - Generate Figma variables, styles, swatches, or export CSS/SCSS
 
-### 🌈 **Advanced Color Blending**
+## Why use Color Scales?
 
-- **Select color endpoints**: Select endpoints to replace black and white in the mixing of colors
-- **Gradient Direction Control**: Flip the endpoints to flip the order of the mix
-- **Step Control**: Define the number of evenly distributed color steps or specify custom step values for precise color
-  gradations
+**See results instantly** with live preview as you adjust settings
+**Create Figma assets directly** - variables, color styles, and swatches in your file
+**Export clean code** with CSS/SCSS variables (clipboard or file download)
+**Customize everything** from blend endpoints to naming conventions
+**Maintain organized systems** with smart archiving and version control
+**Settings remember automatically** - your configuration saves with each Figma file
 
-### 🎨 **Design Token Export**
+## Key Features
 
-- **Figma assets**: Generate Figma variables, color styles, or swatches
-- **CSS/SCSS variables**: Export color variables fo CSS or SCSS
-- **Configurable Naming**: Customize naming conventions for your design tokens
+🎨 **Smart Color Input** - Input hex values and name manually or use auto-naming
+📐 **Flexible Step Control** - Choose equal steps or define custom step values
+🌈 **Advanced Blending** - Set custom start/end colors beyond black/white mixing
+🏷️ **Smart Naming** - Configurable case, spacing, and separator options
+📦 **Multiple Outputs** - Figma variables, styles, swatches, CSS, and SCSS
+👀 **Live Preview** - See color scales update instantly as you change settings
+💾 **Auto-Save Settings** - Configuration remembers automatically in each file
+🗂️ **Archive Management** - Organized versioning with date-based collections
 
-## 🚀 How to Use
+## Perfect for
 
-### 1. Installing the Plugin
+Design system creators building consistent palettes
+UI/UX teams needing organized color workflows
+Developers wanting clean design tokens
+Anyone creating professional color scales with precise control
 
-1. In Figma, go to **Plugins > Development > Import plugin from manifest...**
-2. Select the `dist/manifest.json` file from this project
-3. The plugin will appear in your **Plugins > Development** menu
+## 🚀 Installation
 
-### 2. Creating Primary Colors
-
-#### **Manual Color Addition**
-
-- Click the **plus icon** to add a random color
-- Click any **pencil icon**  to edit its color and name
-- Use the **trash can icon** to remove unwanted colors
-
-#### **Eye-Dropper Extraction**
-
-1. Select objects in your Figma design
-2. Click the **eyedropper icon** in the Primary Colors section
-3. The plugin will extract all unique colors from your selection
-4. Duplicate colors are automatically filtered out with a helpful warning
-5. For endpoints, select a single object before clicking the eyedropper.
-
-### 3. Generating Color Palettes
-
-1. **Choose your steps**:
-    - **Equal steps**: Divides the space into equal steps
-    - **Custom Steps**: You can define additional steps manually for added control
-2. **Naming conventions**:
-    - **Casing** Determine if words will be lowercase, all caps, title case, or preserve case
-    - **Spaces**: Keep spaces, remove spaces, or convert them to dashes or underscores
-    - **Leading and trailing characters**: Add leading dashes or underscores
-
-### 4. Exporting Design Tokens
-
-1. Create Figma variables
-2. Create color styles
-3. Create swatches on your figma file
-4. Export CSS or SCSS variables to the clipboard
+Find **Color Scales** in the Figma Community plugins and install it directly to your account.
 
 ## 🛠️ Development
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
-- npm or yarn
+- Node.js (v18 or higher)
+- npm
 - Figma Desktop App
 
 ### Setup
@@ -81,7 +58,7 @@ assets: swatches, color styles, Figma variables, and SCSS/CSS variables.
 npm install
 
 # Start development mode
-npm run dev
+npm run watch
 
 # Run tests
 npm test
@@ -92,12 +69,18 @@ npm run build
 
 ### Development Commands
 
-- `npm run dev` - Start development with hot reload
-- `npm run dev:ui-only` - Develop UI in browser without Figma context
-- `npm run test` - Run the test suite
-- `npm run test -- --watch` - Run tests in watch mode
+- `npm run watch` - Start development with hot reload
+- `npm run preview` - Preview the plugin during development
+- `npm test` - Run the test suite
+- `npm test -- --watch` - Run tests in watch mode
 - `npm run build` - Build for production
 - `npm run types` - Type check the codebase
+
+### Installing Development Version
+
+1. In Figma, go to **Plugins > Development > Import plugin from manifest...**
+2. Select the `dist/manifest.json` file from this project
+3. The plugin will appear in your **Plugins > Development** menu
 
 ### File Structure
 
@@ -141,41 +124,16 @@ npm test -- ComponentName  # Run specific tests
 - **Jest + RTL**: Comprehensive testing framework
 - **Figma Plugin API**: Deep Figma integration
 
-## 📝 License & Attribution
-
-This project is built on top of the
-excellent [Figma Plugin Boilerplate: React + Vite](https://github.com/CoconutGoodie/figma-plugin-react-vite) by Taha
-Anılcan Metinyurt (iGoodie).
-
-### Parent Project License
-
-The original boilerplate is licensed under
-the [Attribution-ShareAlike 4.0 International](http://creativecommons.org/licenses/by-sa/4.0/) license.
-
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
-
 ### Acknowledgments
 
-Special thanks to:
+Special thanks to **Christine Sheller** and **Luis Cielak** for providing valuable user feedback
 
-- **Taha Anılcan Metinyurt (iGoodie)** for the amazing Figma plugin boilerplate
-- **The Figma Plugin Community** for inspiration and best practices
-- **Contributors** to the open-source libraries that make this plugin possible
+## 📞 Contact & Support
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and add tests
-4. Ensure all tests pass: `npm test`
-5. Commit your changes: `git commit -m 'Add amazing feature'`
-6. Push to the branch: `git push origin feature/amazing-feature`
-7. Open a Pull Request
-
-## 🐛 Issues & Support
-
-If you encounter any issues or have suggestions for improvements, please open an issue on the repository.
+- **Email**: figma@thismakesmehappy.co
+- **Website**: thismakesmehappy.co/figma
+- **Issues**: Open an issue on this repository for bug reports or feature requests
 
 ---
 
-**Happy Color Blending!** 🎨✨
+**Create beautiful color scales!** 🎨✨
