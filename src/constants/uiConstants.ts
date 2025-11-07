@@ -1,5 +1,5 @@
-export const WINDOW_WIDTH = 750;
-export const WINDOW_HEIGHT = 700;
+export const WINDOW_WIDTH = 700;
+export const WINDOW_HEIGHT = 650;
 export const INPUT_PANEL_WIDTH = 225;
 export const TOAST_DURATION = 3000
 export const MINIMUM_STEPS = 3;

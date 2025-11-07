@@ -80,7 +80,7 @@ export const CreateTokens = () => {
     return (
         <div>
             <Explain>
-                Copy or export design tokens to use in your project.
+                Export design tokens.
             </Explain>
             <Group>
                 <p>CSS Variables</p>
@@ -129,7 +129,7 @@ export const CreateTokens = () => {
             {/*TODO: Add option for https://www.designtokens.org*/}
             {/*TODO: We now only remove training characters; let's make all standards*/}
             <Explain>
-                Compliant names ignore naming options and use standard naming per output.
+                Compliant names use standard naming and ignore naming options.
             </Explain>
             <Group>
                 <div className="figma-mr-sm d-flex">
@@ -140,7 +140,7 @@ export const CreateTokens = () => {
                         size={1}
                     />
                     <div
-                        className={"d-inline-block"}>Compliant variable names
+                        className={"d-inline-block"}>Compliant names
                     </div>
                 </div>
             </Group>

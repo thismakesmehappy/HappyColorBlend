@@ -140,21 +140,21 @@ const OutputButtonsFooter = () => {
                 disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                 type={'primary'}
             >
-                {isCreatingVariables ? "Adding Figma Variables" : "Add Figma Variables"}
+                {isCreatingVariables ? "Creating Variables" : "Create Variables"}
             </Button>
             <Button
                 onClick={handleCreateStyles}
                 disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                 type={'primary'}
             >
-                {isCreatingStyles ? "Adding Figma Styles" : "Add Figma Styles"}
+                {isCreatingStyles ? "Creating Styles" : "Create Styles"}
             </Button>
             <Button
                 onClick={handleCreateSwatches}
                 disabled={isCreatingVariables || isCreatingStyles || isCreatingSwatches}
                 type={'primary'}
             >
-                {isCreatingSwatches ? "Creating Figma Swatches" : "Create Figma Swatches"}
+                {isCreatingSwatches ? "Creating Swatches" : "Create Swatches"}
             </Button>
             <div className={"vertical-separator"}></div>
             <Button type={"danger"} onClick={handleReset}>Reset</Button>
