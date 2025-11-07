@@ -88,8 +88,8 @@ const ColorInput = ({
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Row className={"gx-2 mb-2"}>
-                        <Col xs={"2"}>Hex</Col>
-                        <Col xs={"5"}>
+                        <Col xs={"3"}>Hex</Col>
+                        <Col xs={"4"}>
                             <FormControl type={"text"}
                                          size={'sm'}
                                          value={hex}
@@ -111,8 +111,8 @@ const ColorInput = ({
                         </Col>
                     </Row>
                     <Row className={"gx-2 mb-2"}>
-                        <Col xs={"2"}>Name</Col>
-                        <Col xs={"10"}>
+                        <Col xs={"3"}>Name</Col>
+                        <Col xs={"9"}>
                             <FormControl type={"text"}
                                          size={'sm'}
                                          value={name}
