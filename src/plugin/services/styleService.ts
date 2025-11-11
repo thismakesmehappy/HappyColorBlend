@@ -32,8 +32,8 @@ function createSolidPaint(hexColor: string): SolidPaint {
 /**
  * Archive existing styles by moving them to archived groups with sequential numbering
  */
-function archiveExistingStyles(): void {
-  const existingStyles = figma.getLocalPaintStyles();
+async function archiveExistingStyles(): Promise<void> {
+  const existingStyles = await figma.getLocalPaintStylesAsync();
   const now = new Date();
   const archiveDate = now.getFullYear() + '-' +
     String(now.getMonth() + 1).padStart(2, '0') + '-' +
@@ -134,7 +134,7 @@ export async function createAllSwatchStyles(data: SwatchStyleData): Promise<Styl
     const separator = createSeparator(data.tokenSettings.separatorCharsCount, data.tokenSettings.separatorCharType);
 
     // Archive existing styles first
-    archiveExistingStyles();
+    await archiveExistingStyles();
 
     // Create group names
     const groups = createGroups();

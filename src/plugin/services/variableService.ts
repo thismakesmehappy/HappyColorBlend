@@ -22,8 +22,8 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } {
 /**
  * Create or update a variable collection with collision handling
  */
-function createOrUpdateCollection(name: string): VariableCollection {
-    const existingCollections = figma.variables.getLocalVariableCollections();
+async function createOrUpdateCollection(name: string): Promise<VariableCollection> {
+    const existingCollections = await figma.variables.getLocalVariableCollectionsAsync();
 
     // Find the active collection (exact name match, not archived)
     const activeCollection = existingCollections.find(collection => collection.name === name);
@@ -51,9 +51,9 @@ function createOrUpdateCollection(name: string): VariableCollection {
 /**
  * Check if a variable with the given name exists in the collection
  */
-function findVariableByName(collection: VariableCollection, name: string): Variable | null {
+async function findVariableByName(collection: VariableCollection, name: string): Promise<Variable | null> {
     for (const variableId of collection.variableIds) {
-        const variable = figma.variables.getVariableById(variableId);
+        const variable = await figma.variables.getVariableByIdAsync(variableId);
         if (variable && variable.name === name) {
             return variable;
         }
@@ -64,21 +64,21 @@ function findVariableByName(collection: VariableCollection, name: string): Varia
 /**
  * Create a color variable, replacing existing one if it exists
  */
-function createColorVariable(
+async function createColorVariable(
     collection: VariableCollection,
     name: string,
     hexColor: string
-): Variable {
+): Promise<Variable> {
     const rgb = hexToRgb(hexColor);
 
     // Check if variable already exists and remove it
-    const existingVariable = findVariableByName(collection, name);
+    const existingVariable = await findVariableByName(collection, name);
     if (existingVariable) {
         existingVariable.remove();
     }
 
     // Create new variable
-    const variable = figma.variables.createVariable(name, collection.id, "COLOR");
+    const variable = figma.variables.createVariable(name, collection, "COLOR");
 
     // Set the color value for the default mode
     const modes = collection.modes;
@@ -112,20 +112,20 @@ export async function createAllSwatchVariables(data: SwatchVariableData): Promis
         let variableCount = 0;
 
         // 1. Create collection
-        const collection = createOrUpdateCollection(OUTPUT_NAME_PREFIX);
+        const collection = await createOrUpdateCollection(OUTPUT_NAME_PREFIX);
 
         // 2. Create primitive variables (using naming convention for organization)
         // Create scale start variable
-        createColorVariable(collection, `primitives/${data.scaleStart.name}`, data.scaleStart.color);
+        await createColorVariable(collection, `primitives/${data.scaleStart.name}`, data.scaleStart.color);
         variableCount++;
 
         // Create scale end variable
-        createColorVariable(collection, `primitives/${data.scaleEnd.name}`, data.scaleEnd.color);
+        await createColorVariable(collection, `primitives/${data.scaleEnd.name}`, data.scaleEnd.color);
         variableCount++;
 
         // Create primary color variables
         for (const primaryColor of data.primaryColors) {
-            createColorVariable(collection, `primitives/${primaryColor.name}`, primaryColor.color);
+            await createColorVariable(collection, `primitives/${primaryColor.name}`, primaryColor.color);
             variableCount++;
         }
 
@@ -133,7 +133,7 @@ export async function createAllSwatchVariables(data: SwatchVariableData): Promis
         const separator = createSeparator(data.tokenSettings.separatorCharsCount, data.tokenSettings.separatorCharType);
         for (const swatch of data.neutralScaleSwatches) {
             const variableName = `mixed/${data.neutralScaleName}/${data.neutralScaleName}${separator}${formatStepNumber(swatch.step)}`;
-            createColorVariable(collection, variableName, swatch.color);
+            await createColorVariable(collection, variableName, swatch.color);
             variableCount++;
         }
 
@@ -141,7 +141,7 @@ export async function createAllSwatchVariables(data: SwatchVariableData): Promis
         for (const primaryRamp of data.primarySwatches) {
             for (const swatch of primaryRamp.swatches) {
                 const variableName = `mixed/${primaryRamp.name}/${primaryRamp.name}${separator}${formatStepNumber(swatch.step)}`;
-                createColorVariable(collection, variableName, swatch.color);
+                await createColorVariable(collection, variableName, swatch.color);
                 variableCount++;
             }
         }

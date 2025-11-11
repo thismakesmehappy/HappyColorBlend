@@ -20,10 +20,11 @@ export interface MockVariableCollection {
 export interface MockFigmaAPI {
   variables: {
     createVariableCollection: jest.MockedFunction<any>;
-    getLocalVariableCollections: jest.MockedFunction<any>;
+    getLocalVariableCollectionsAsync: jest.MockedFunction<any>;
     createVariable: jest.MockedFunction<any>;
-    getVariableById: jest.MockedFunction<any>;
+    getVariableByIdAsync: jest.MockedFunction<any>;
   };
+  getLocalPaintStylesAsync: jest.MockedFunction<any>;
 }
 
 /**
@@ -74,32 +75,36 @@ export function createMockFigmaAPI(options: {
         return collection;
       }),
 
-      getLocalVariableCollections: jest.fn(() => {
+      getLocalVariableCollectionsAsync: jest.fn(async () => {
         return [...collections, ...createdCollections];
       }),
 
-      createVariable: jest.fn((name: string, collectionId: string, type: string) => {
+      createVariable: jest.fn((name: string, collection: MockVariableCollection, type: string) => {
         if (shouldThrow) throw new Error('Mock variable creation failed');
         
         const variable = createMockVariable(name);
         createdVariables.push(variable);
         
         // Add to collection if it exists
-        const collection = [...collections, ...createdCollections]
-          .find(c => c.id === collectionId);
-        if (collection) {
-          collection.variableIds.push(variable.id);
+        const targetCollection = [...collections, ...createdCollections]
+          .find(c => c.id === collection.id);
+        if (targetCollection) {
+          targetCollection.variableIds.push(variable.id);
         }
         
         return variable;
       }),
 
-      getVariableById: jest.fn((id: string) => {
+      getVariableByIdAsync: jest.fn(async (id: string) => {
         return variableMap.get(id) || 
                createdVariables.find(v => v.id === id) || 
                null;
       })
-    }
+    },
+
+    getLocalPaintStylesAsync: jest.fn(async () => {
+      return [];
+    })
   };
 
   return mockAPI;
