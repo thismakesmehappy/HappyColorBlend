@@ -7,7 +7,7 @@ export default {
     ui: "index.html",
     capabilities: [],
     enableProposedApi: false,
-    editorType: ["figma", "figjam"],
+    editorType: ["figma"],
     networkAccess: {"allowedDomains": ["none"]},
     documentAccess: "dynamic-page"
 
