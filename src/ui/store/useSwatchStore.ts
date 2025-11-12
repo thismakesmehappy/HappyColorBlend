@@ -25,7 +25,7 @@ export const buildNewSwatches = (
     state: SwatchStoreState,
 ) => {
     // Don't call setCombinedSteps here - it should be called before this function
-    const combinedSteps = state.getCombinedSteps();
+    const combinedSteps = state.combinedSteps;
     const swatches: SwatchStoreSwatches[] = [];
 
     // Always calculate from scaleStart(0) to scaleEnd(1000), no gradient direction logic
@@ -78,20 +78,8 @@ export interface SwatchStoreState {
     customSteps: Set<number>;
     combinedSteps: Set<number>;
 
-    // Scale getters
-    getScaleStart: () => SwatchStoreInputSwatch;
-    getScaleEnd: () => SwatchStoreInputSwatch;
-    getNeutralScaleName: () => string;
-
     // Common getters
-    getPrimaryColors: () => SwatchStoreInputSwatch[];
-    getSwatches: () => SwatchStoreSwatches[];
-    getColorScale: () => SwatchStoreSwatch[];
-    getNumberOfSteps: () => number;
-    getCustomSteps: () => Set<number>;
-    getTotalUniqueSteps: () => number;
     getCombinedSteps: () => Set<number>;
-    getSteps: () => number[];
 
     // Scale setters
     setScaleStart: (color: string, name: string) => void;
@@ -102,8 +90,6 @@ export interface SwatchStoreState {
     // Common methods
     increaseSteps: () => void;
     decreaseSteps: () => void;
-    setSteps: (steps: number) => void;
-    setNumberOfSteps: (numberOfSteps: number) => void;
     setCombinedSteps: () => void;
     addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => void;
     updatePrimaryColor: (id: string, color: string, name: string) => void;
@@ -127,30 +113,14 @@ const useSwatchStore = create<SwatchStoreState>()(
         // Initial state
         ...initialState,
 
-        // Scale getters
-        getScaleStart: () => get().scaleStart,
-        getScaleEnd: () => get().scaleEnd,
-        getNeutralScaleName: () => get().neutralScaleName,
-
         // Common getters
-        getPrimaryColors: () => get().primaryColors,
-        getSwatches: () => get().swatches,
-        getColorScale: () => get().colorScale,
-        getNumberOfSteps: () => get().numberOfSteps,
-        getCustomSteps: () => get().customSteps,
-        getTotalUniqueSteps: () => get().combinedSteps.size,
         getCombinedSteps: () => get().combinedSteps,
-        getSteps: () => get().steps,
         setCombinedSteps: () => {
             const {steps, customSteps} = get();
             set({combinedSteps: new Set([...steps, ...customSteps].sort((a, b) => a - b))});
         },
 
         // Common setters
-        setNumberOfSteps: (steps) => {
-            set({numberOfSteps: steps});
-            get().createSteps();
-        },
         increaseSteps: () => {
             set((state) => ({numberOfSteps: state.numberOfSteps + 2}));
             get().createSteps();
@@ -160,10 +130,6 @@ const useSwatchStore = create<SwatchStoreState>()(
                 set((state) => ({numberOfSteps: state.numberOfSteps - 2}));
                 get().createSteps();
             }
-        },
-        setSteps: (steps: number) => {
-            set({numberOfSteps: steps});
-            get().createSteps();
         },
         // Scale setters
         setScaleStart: (color: string, name: string) => {
@@ -264,7 +230,7 @@ const useSwatchStore = create<SwatchStoreState>()(
         buildColorScale: () => {
             const state = get();
             // Don't call setCombinedSteps here to avoid circular updates
-            const combinedSteps = Array.from(state.getCombinedSteps());
+            const combinedSteps = Array.from(state.combinedSteps);
             const scaleStart = state.scaleStart;
             const scaleEnd = state.scaleEnd;
 

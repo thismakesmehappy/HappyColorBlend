@@ -51,7 +51,7 @@ export const generateVariables = (
     const lines: string[] = [];
 
     swatchStore.buildColorScale();
-    const colorScale: SwatchStoreSwatch[] = swatchStore.getColorScale();
+    const colorScale: SwatchStoreSwatch[] = swatchStore.colorScale;
 
 
     // Add scale endpoint variables (primitives group)

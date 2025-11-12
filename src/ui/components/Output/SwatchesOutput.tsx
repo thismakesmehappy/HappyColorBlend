@@ -9,11 +9,11 @@ interface SwatchesProps {
 }
 
 const SwatchesOutput: React.FC<SwatchesProps> = ({className, style}) => {
-    const swatches = useSwatchStore((state) => state.getSwatches());
-    const end = useSwatchStore((state) => state.getScaleEnd());
-    const start = useSwatchStore((state) => state.getScaleStart());
-    const neutralScaleName = useSwatchStore(state => state.getNeutralScaleName());
-    const colorScale = useSwatchStore(state => state.getColorScale()); // Use getter instead
+    const swatches = useSwatchStore((state) => state.swatches);
+    const end = useSwatchStore((state) => state.scaleEnd);
+    const start = useSwatchStore((state) => state.scaleStart);
+    const neutralScaleName = useSwatchStore(state => state.neutralScaleName);
+    const colorScale = useSwatchStore(state => state.colorScale);
     return (
         <div
             className={className}

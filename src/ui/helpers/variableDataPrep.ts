@@ -53,14 +53,14 @@ export function prepareSwatchVariableData(
     }));
 
     // Prepare neutral scale name (no separator for subgroup names unless user wants them)
-    const neutralScaleName = applyTokenName(swatchStore.getNeutralScaleName(), false);
+    const neutralScaleName = applyTokenName(swatchStore.neutralScaleName, false);
 
     // Prepare neutral scale swatches using buildColorScale() for simplified logic
     swatchStore.buildColorScale();
-    const neutralScaleSwatches = swatchStore.getColorScale();
+    const neutralScaleSwatches = swatchStore.colorScale;
 
     // Prepare primary swatches
-    const primarySwatches = swatchStore.getSwatches().map(primarySwatch => {
+    const primarySwatches = swatchStore.swatches.map(primarySwatch => {
         const tokenizedName = applyTokenName(primarySwatch.base.name, false); // No separator for subgroup names
 
         return {
