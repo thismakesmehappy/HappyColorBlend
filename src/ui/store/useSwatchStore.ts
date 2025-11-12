@@ -7,7 +7,6 @@ export const initialState = {
     // Scale properties
     scaleStart: {color: "000000", name: "Black", id: "scaleStart"},
     scaleEnd: {color: "FFFFFF", name: "White", id: "scaleEnd"},
-    isDarkStart: true,
     neutralScaleName: "Neutral",
     // Common properties
     primaryColors: [],
@@ -68,7 +67,6 @@ export interface SwatchStoreState {
     // Scale properties
     scaleStart: SwatchStoreInputSwatch;
     scaleEnd: SwatchStoreInputSwatch;
-    isDarkStart: boolean;
     neutralScaleName: string;
 
     // Common state properties
@@ -99,7 +97,6 @@ export interface SwatchStoreState {
     setScaleStart: (color: string, name: string) => void;
     setScaleEnd: (color: string, name: string) => void;
     setNeutralScaleName: (name: string) => void;
-    setIsDarkStart: (isDarkStart: boolean) => void;
     swapScaleEndpoints: () => void;
 
     // Common methods
@@ -116,7 +113,6 @@ export interface SwatchStoreState {
     removeCustomStep: (step: number) => void;
     buildSwatches: () => SwatchStoreSwatches[];
     buildColorScale: () => void;
-    toggleIsDarkStart: () => void;
     colorExists: (hex: string) => boolean;
     reset: () => void;
     saveState: () => Promise<void>;
@@ -192,12 +188,6 @@ const useSwatchStore = create<SwatchStoreState>()(
         },
         setNeutralScaleName: (name: string) => {
             set({neutralScaleName: name});
-        },
-        setIsDarkStart: (isDarkStart: boolean) => {
-            set({isDarkStart: isDarkStart});
-        },
-        toggleIsDarkStart: () => {
-            set((state) => ({isDarkStart: !state.isDarkStart}));
         },
         swapScaleEndpoints: () => {
             const {scaleStart, scaleEnd} = get();
@@ -300,7 +290,6 @@ const useSwatchStore = create<SwatchStoreState>()(
             const stateToSave = {
                 scaleStart: state.scaleStart,
                 scaleEnd: state.scaleEnd,
-                isDarkStart: state.isDarkStart,
                 neutralScaleName: state.neutralScaleName,
                 primaryColors: state.primaryColors,
                 numberOfSteps: state.numberOfSteps,

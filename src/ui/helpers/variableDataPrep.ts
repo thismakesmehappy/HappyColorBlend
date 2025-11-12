@@ -34,19 +34,16 @@ export function prepareSwatchVariableData(
         );
     };
 
-    const scaleStartColor = swatchStore.isDarkStart ? swatchStore.scaleStart : swatchStore.scaleEnd;
-    const scaleEndColor = swatchStore.isDarkStart ? swatchStore.scaleEnd : swatchStore.scaleStart;
-
     // Prepare scale start data
     const scaleStart = {
-        name: applyTokenName(scaleStartColor.name, appendSeparatorToPrimitive),
-        color: scaleStartColor.color
+        name: applyTokenName(swatchStore.scaleStart.name, appendSeparatorToPrimitive),
+        color: swatchStore.scaleStart.color
     };
 
     // Prepare scale end data
     const scaleEnd = {
-        name: applyTokenName(scaleEndColor.name, appendSeparatorToPrimitive),
-        color: scaleEndColor.color
+        name: applyTokenName(swatchStore.scaleEnd.name, appendSeparatorToPrimitive),
+        color: swatchStore.scaleEnd.color
     };
 
     // Prepare primary colors data
