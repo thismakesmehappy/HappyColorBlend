@@ -7,6 +7,7 @@ interface ButtonProps {
     onClick?: () => void;
     children?: React.ReactNode;
     round?: boolean;
+    'data-testid'?: string;
 }
 
 const styles = {
@@ -17,11 +18,12 @@ const styles = {
 }
 
 
-const Button = ({className, type, disabled, onClick, children}: ButtonProps) => {
+const Button = ({className, type, disabled, onClick, children, 'data-testid': dataTestId}: ButtonProps) => {
     const style = `${styles[type]} ${disabled && 'disabled'} ${className}`.trim();
     return (<button className={style}
                     disabled={disabled}
-                    onClick={onClick}>{children}
+                    onClick={onClick}
+                    data-testid={dataTestId}>{children}
     </button>);
 };
 

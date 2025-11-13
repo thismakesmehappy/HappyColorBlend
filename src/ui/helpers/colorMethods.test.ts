@@ -17,8 +17,8 @@ describe('isValidHexColor', () => {
         expect(isValidHexColor('abcdef')).toBe(true);
     });
 
-    test('validates number with the right format', () => {
-        expect(isValidHexColor(123456 as any)).toBe(true);
+    test('rejects number input (requires string)', () => {
+        expect(isValidHexColor(123456 as any)).toBe(false);
     });
 
 

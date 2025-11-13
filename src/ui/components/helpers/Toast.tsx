@@ -67,7 +67,7 @@ const Toast: React.FC<ToastProps> = ({
 
     const toastElement = (
         <div className="figma-toast-container">
-            <div className={getToastClassName()}>
+            <div className={getToastClassName()} data-testid="toast">
                 {message}
             </div>
         </div>

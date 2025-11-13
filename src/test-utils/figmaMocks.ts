@@ -152,24 +152,15 @@ export function createTestSwatchStore(overrides: any = {}) {
     // Mock getters
     getShade: jest.fn(),
     getTint: jest.fn(),
-    getPrimaryColors: jest.fn(),
-    getSwatches: jest.fn(),
-    getNumberOfSteps: jest.fn(),
-    getCustomSteps: jest.fn(),
-    getTotalUniqueSteps: jest.fn(),
     getCombinedSteps: jest.fn(),
-    getSteps: jest.fn(),
     getShadeTintRampName: jest.fn(),
     // Mock setters
     setShade: jest.fn(),
     setTint: jest.fn(),
     increaseSteps: jest.fn(),
     decreaseSteps: jest.fn(),
-    setSteps: jest.fn(),
-    setNumberOfSteps: jest.fn(),
     setCombinedSteps: jest.fn(),
     addPrimaryColor: jest.fn(),
-    updatePrimaryColor: jest.fn(),
     removePrimaryColor: jest.fn(),
     createSteps: jest.fn(),
     addCustomStep: jest.fn(),
@@ -183,13 +174,7 @@ export function createTestSwatchStore(overrides: any = {}) {
   // Set up getter return values
   merged.getShade.mockReturnValue(merged.shade);
   merged.getTint.mockReturnValue(merged.tint);
-  merged.getPrimaryColors.mockReturnValue(merged.primaryColors);
-  merged.getSwatches.mockReturnValue(merged.swatches);
-  merged.getNumberOfSteps.mockReturnValue(merged.numberOfSteps);
-  merged.getCustomSteps.mockReturnValue(merged.customSteps);
-  merged.getTotalUniqueSteps.mockReturnValue(merged.combinedSteps.size);
   merged.getCombinedSteps.mockReturnValue(merged.combinedSteps);
-  merged.getSteps.mockReturnValue(merged.steps);
   merged.getShadeTintRampName.mockReturnValue(merged.shadeTintRampName);
 
   return merged;

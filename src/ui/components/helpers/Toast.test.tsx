@@ -35,7 +35,7 @@ describe('Toast Component', () => {
 
   test('applies default class when no type is provided', () => {
     const handleClose = jest.fn();
-    const { container } = render(
+    render(
       <Toast 
         message="Default Toast" 
         isVisible={true} 
@@ -43,7 +43,7 @@ describe('Toast Component', () => {
       />
     );
     
-    const toast = container.querySelector('.figma-toast');
+    const toast = screen.getByTestId('toast');
     expect(toast).toHaveClass('show');
     expect(toast).not.toHaveClass('figma-toast-error');
     expect(toast).not.toHaveClass('figma-toast-success');
@@ -52,7 +52,7 @@ describe('Toast Component', () => {
 
   test('applies error class when type is error', () => {
     const handleClose = jest.fn();
-    const { container } = render(
+    render(
       <Toast 
         message="Error Toast" 
         type="error"
@@ -61,13 +61,13 @@ describe('Toast Component', () => {
       />
     );
     
-    const toast = container.querySelector('.figma-toast');
+    const toast = screen.getByTestId('toast');
     expect(toast).toHaveClass('figma-toast-error');
   });
 
   test('applies success class when type is success', () => {
     const handleClose = jest.fn();
-    const { container } = render(
+    render(
       <Toast 
         message="Success Toast" 
         type="success"
@@ -76,13 +76,13 @@ describe('Toast Component', () => {
       />
     );
     
-    const toast = container.querySelector('.figma-toast');
+    const toast = screen.getByTestId('toast');
     expect(toast).toHaveClass('figma-toast-success');
   });
 
   test('applies warning class when type is warning', () => {
     const handleClose = jest.fn();
-    const { container } = render(
+    render(
       <Toast 
         message="Warning Toast" 
         type="warning"
@@ -91,7 +91,7 @@ describe('Toast Component', () => {
       />
     );
     
-    const toast = container.querySelector('.figma-toast');
+    const toast = screen.getByTestId('toast');
     expect(toast).toHaveClass('figma-toast-warning');
   });
 

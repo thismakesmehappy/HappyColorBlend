@@ -42,12 +42,15 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
         const step = parseInt(inputValue, 10);
 
         // Check if input is within range
-        if (step < 1 || step > 999) return false;
+        return step >= 1 && step <= 999;
+    };
 
+    const canAddStep = (): boolean => {
+        if (!isValidInput()) return false;
+        
+        const step = parseInt(inputValue, 10);
         // Check if input is already in the store
         return !customSteps.has(step);
-
-
     };
 
     // TODO: Can we refactor this to use the previous function rather than redefine what's valid?
@@ -78,7 +81,7 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
     };
 
     const handleAddStep = () => {
-        if (isValidInput()) {
+        if (canAddStep()) {
             const step = parseInt(inputValue, 10);
             addCustomStep(step);
             buildSwatches();
@@ -121,6 +124,7 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
                     onClick={handleAddStep}
                     disabled={!isValidInput()}
                     type={'primary'}
+                    data-testid="add-custom-step-button"
                 >
                     Add
                 </Button>
@@ -131,7 +135,6 @@ export const CustomSteps = ({className = "", style = {}, id}: CustomStepsProps) 
                 duration={TOAST_DURATION}
                 isVisible={showToast}
                 onClose={hideToast}
-                data-testid="custom-step-toast"
             />
         </div>
     );

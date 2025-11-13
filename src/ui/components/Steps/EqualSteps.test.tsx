@@ -16,7 +16,8 @@ jest.mock('../../store/useSwatchStore', () => ({
       numberOfSteps: 5,
       decreaseSteps: mockDecreaseSteps,
       increaseSteps: mockIncreaseSteps,
-      buildSwatches: mockBuildSwatches
+      buildSwatches: mockBuildSwatches,
+      buildColorScale: jest.fn()
     };
     return selector(state);
   })

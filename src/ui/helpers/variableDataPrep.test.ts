@@ -55,18 +55,7 @@ describe('prepareSwatchVariableData', () => {
       steps: [100, 200, 300, 400, 500],
       customSteps: new Set([50, 950]),
       combinedSteps: new Set([50, 100, 200, 300, 400, 500, 950]),
-      // Scale getters
-      getScaleStart: () => mockSwatchStore.scaleStart,
-      getScaleEnd: () => mockSwatchStore.scaleEnd,
-      getNeutralScaleName: () => mockSwatchStore.neutralScaleName,
-      // Common getters
-      getPrimaryColors: () => mockSwatchStore.primaryColors,
-      getSwatches: () => mockSwatchStore.swatches,
-      getNumberOfSteps: () => mockSwatchStore.numberOfSteps,
-      getCustomSteps: () => mockSwatchStore.customSteps,
-      getTotalUniqueSteps: () => mockSwatchStore.combinedSteps.size,
       getCombinedSteps: () => mockSwatchStore.combinedSteps,
-      getSteps: () => mockSwatchStore.steps,
       // Scale setters
       setScaleStart: jest.fn(),
       setScaleEnd: jest.fn(),
@@ -75,25 +64,29 @@ describe('prepareSwatchVariableData', () => {
       // Common setters
       increaseSteps: jest.fn(),
       decreaseSteps: jest.fn(),
-      setSteps: jest.fn(),
-      setNumberOfSteps: jest.fn(),
       setCombinedSteps: jest.fn(),
       addPrimaryColor: jest.fn(),
-      updatePrimaryColor: jest.fn(),
       removePrimaryColor: jest.fn(),
       createSteps: jest.fn(),
       addCustomStep: jest.fn(),
       removeCustomStep: jest.fn(),
       buildSwatches: jest.fn(),
-      buildColorScale: jest.fn().mockReturnValue([
-        { color: '323232', step: 50 },
-        { color: '646464', step: 100 },
-        { color: 'C8C8C8', step: 200 },
-        { color: '2BC2BC', step: 300 },
-        { color: '909090', step: 400 },
-        { color: 'F4F4F4', step: 500 },
-        { color: '3B63B6', step: 950 }
-      ])
+      buildColorScale: jest.fn().mockImplementation(() => {
+        mockSwatchStore.colorScale = [
+          { color: '323232', step: 50 },
+          { color: '646464', step: 100 },
+          { color: 'C8C8C8', step: 200 },
+          { color: '2BC2BC', step: 300 },
+          { color: '909090', step: 400 },
+          { color: 'F4F4F4', step: 500 },
+          { color: '3B63B6', step: 950 }
+        ];
+      }),
+      colorScale: [],
+      colorExists: jest.fn(),
+      reset: jest.fn(),
+      saveState: jest.fn(),
+      loadState: jest.fn()
     };
 
     // Create mock token store
@@ -177,7 +170,9 @@ describe('prepareSwatchVariableData', () => {
         { color: '3B63B6', step: 950 }
       ];
       
-      (mockSwatchStore.buildColorScale as jest.Mock).mockReturnValue(expectedSwatches);
+      (mockSwatchStore.buildColorScale as jest.Mock).mockImplementation(() => {
+        mockSwatchStore.colorScale = expectedSwatches;
+      });
 
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 
@@ -190,7 +185,9 @@ describe('prepareSwatchVariableData', () => {
     });
 
     it('should handle empty buildColorScale result', () => {
-      (mockSwatchStore.buildColorScale as jest.Mock).mockReturnValue([]);
+      (mockSwatchStore.buildColorScale as jest.Mock).mockImplementation(() => {
+        mockSwatchStore.colorScale = [];
+      });
 
       const result = prepareSwatchVariableData(mockSwatchStore, mockTokenStore);
 

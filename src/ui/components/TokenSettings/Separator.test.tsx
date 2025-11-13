@@ -105,12 +105,7 @@ describe('Separator Component', () => {
         expect(screen.getByText('Under (_)')).toBeInTheDocument();
 
         // Check that the labels are rendered
-        expect(screen.getByText('Separator Character:')).toBeInTheDocument();
-        expect(screen.getByText('Append' +
-            ' to primitives')).toBeInTheDocument();
-
-        // Check that the toggle component is rendered
-        expect(screen.getByTestId('mock-toggle')).toBeInTheDocument();
+        expect(screen.getByText('Separator:')).toBeInTheDocument();
     });
 
     test('calls incrementSeparatorChars when increase button is clicked', () => {
@@ -141,15 +136,5 @@ describe('Separator Component', () => {
 
         // Check that setSeparatorCharType was called with 'underscore'
         expect(mockSetSeparatorCharType).toHaveBeenCalledWith('underscore');
-    });
-
-    test('calls toggleAppendSeparatorToPrimitive when toggle button is clicked', () => {
-        render(<Separator />);
-
-        // Click the toggle button
-        fireEvent.click(screen.getByTestId('toggle-button'));
-
-        // Check that toggleAppendSeparatorToPrimitive was called
-        expect(mockToggleAppendSeparatorToPrimitive).toHaveBeenCalled();
     });
 });

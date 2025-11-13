@@ -6,9 +6,7 @@ import {Col, Row} from "react-bootstrap";
 const Separator = () => {
     const separatorCharsCount = useTokenNameStore(state => state.separatorCharsCount);
     const separatorCharType = useTokenNameStore(state => state.separatorCharType);
-    // const appendSeparatorToPrimitive = useTokenNameStore(state => state.appendSeparatorToPrimitive);
     const setSeparatorCharType = useTokenNameStore(state => state.setSeparatorCharType);
-    // const toggleAppendSeparatorToPrimitive = useTokenNameStore(state => state.toggleAppendSeparatorToPrimitive);
     const incrementSeparatorChars = useTokenNameStore(state => state.incrementSeparatorChars);
     const decrementSeparatorChars = useTokenNameStore(state => state.decrementSeparatorChars);
     return (
