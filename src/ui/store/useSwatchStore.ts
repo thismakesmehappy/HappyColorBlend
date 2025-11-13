@@ -92,7 +92,6 @@ export interface SwatchStoreState {
     decreaseSteps: () => void;
     setCombinedSteps: () => void;
     addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => void;
-    updatePrimaryColor: (id: string, color: string, name: string) => void;
     removePrimaryColor: (id: string) => void;
     createSteps: () => number[];
     addCustomStep: (step: number) => void;
@@ -171,18 +170,6 @@ const useSwatchStore = create<SwatchStoreState>()(
             });
         },
         addPrimaryColor: (primaryColor: SwatchStoreInputSwatch) => set((state) => ({primaryColors: [...state.primaryColors, primaryColor]})),
-        updatePrimaryColor: (id: string, color: string, name: string) => set((state) => ({
-            primaryColors: state.primaryColors.map((p) => {
-                if (p.id === id) {
-                    return {
-                        color: color,
-                        name: name,
-                        id: id,
-                    };
-                }
-                return p;
-            })
-        })),
         removePrimaryColor: (id: string) => set((state) => ({primaryColors: state.primaryColors.filter((p) => p.id !== id)})),
         createSteps: () => {
             const state = get();
