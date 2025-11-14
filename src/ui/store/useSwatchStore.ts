@@ -123,11 +123,13 @@ const useSwatchStore = create<SwatchStoreState>()(
         increaseSteps: () => {
             set((state) => ({numberOfSteps: state.numberOfSteps + 2}));
             get().createSteps();
+            get().setCombinedSteps();
         },
         decreaseSteps: () => {
             if (get().numberOfSteps > MINIMUM_STEPS) {
                 set((state) => ({numberOfSteps: state.numberOfSteps - 2}));
                 get().createSteps();
+                get().setCombinedSteps();
             }
         },
         // Scale setters
@@ -193,6 +195,7 @@ const useSwatchStore = create<SwatchStoreState>()(
                 customSteps.sort((a, b) => a - b)
                 return {customSteps: new Set(customSteps)};
             });
+            get().setCombinedSteps();
         },
         removeCustomStep: (step: number) => {
             set((state) => {
@@ -200,12 +203,15 @@ const useSwatchStore = create<SwatchStoreState>()(
                 newCustomSteps.delete(step);
                 return {customSteps: newCustomSteps};
             });
+            get().setCombinedSteps();
         },
 
         buildSwatches: () => {
-            const state = get();
             // Call setCombinedSteps first, before both build functions
-            state.setCombinedSteps();
+            get().setCombinedSteps();
+
+            // Get fresh state after setCombinedSteps has updated combinedSteps
+            const state = get();
             const newSwatches = buildNewSwatches(state.scaleStart, state.scaleEnd, state.primaryColors, state);
 
             // Update the swatches in the store
@@ -215,8 +221,11 @@ const useSwatchStore = create<SwatchStoreState>()(
         },
 
         buildColorScale: () => {
+            // Update combinedSteps first to ensure we have latest steps
+            get().setCombinedSteps();
+
+            // Get fresh state after setCombinedSteps has updated combinedSteps
             const state = get();
-            // Don't call setCombinedSteps here to avoid circular updates
             const combinedSteps = Array.from(state.combinedSteps);
             const scaleStart = state.scaleStart;
             const scaleEnd = state.scaleEnd;
